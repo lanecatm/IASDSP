@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.WorkflowInformations" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="workflow_informations">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column name="name"/>
+        </property>
+        <property generated="never" lazy="false" name="introduction" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="introduction"/>
+        </property>
+        <property generated="never" lazy="false" name="detialDescription" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="detial_description"/>
+        </property>
+        <property generated="never" lazy="false" name="versionName" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="version_name"/>
+        </property>
+        <property generated="never" lazy="false" name="categoryId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="category_id"/>
+        </property>
+        <property generated="never" lazy="false" name="tagId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="tag_id"/>
+        </property>
+        <property generated="never" lazy="false" name="authorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="author_id"/>
+        </property>
+        <property generated="never" lazy="false" name="lastEditorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="last_editor_id"/>
+        </property>
+        <property generated="never" lazy="false" name="status" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="status"/>
+        </property>
+        <property generated="never" lazy="false" name="createtime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="createtime"/>
+        </property>
+        <property generated="never" lazy="false" name="validFrom" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="valid_from"/>
+        </property>
+        <property generated="never" lazy="false" name="validTo" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="valid_to"/>
+        </property>
+        <property generated="never" lazy="false" name="persistent" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="persistent"/>
+        </property>
+        <property generated="never" lazy="false" name="priority" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="priority"/>
+        </property>
+        <property generated="never" lazy="false" name="mostPossibleDuration" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="most_possible_duration"/>
+        </property>
+        <property generated="never" lazy="false" name="minimalDuration" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="minimal_duration"/>
+        </property>
+        <property generated="never" lazy="false" name="maximalDuration" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="maximal_duration"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="xml" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="xml"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiAndWorkflowInformationses" optimistic-lock="true" sort="unsorted" table="wiki_and_workflow_informations">
+            <key on-delete="noaction">
+                <column name="workflow_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeInformationses" optimistic-lock="true" sort="unsorted" table="node_informations">
+            <key on-delete="noaction">
+                <column name="workflow_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.NodeInformations" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

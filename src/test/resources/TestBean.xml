@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- autowire="byName" 自动完成相同名字的注入，不推荐 -->
+	<!-- autowire="byType" 自动完成相同类型的注入,更加不推荐 -->
+	<!-- autowire="no" 不自动注入 -->
+	<!-- 如果没有做scope配置，默认单例 -->
+	<bean id="testModel" class="cn.edu.sjtu.iasdsp.Spring.TestModel">
+		<!-- property 是通过set注入的 -->
+		<!-- name中的方法会调用set<Name>注入 ref=要注入的bean id -->
+		<property name="testInput" ref="testInput"></property>
+		<!-- 通过构造方法注入,不常用 -->
+		<constructor-arg ref="testInput1"></constructor-arg>
+		<!-- 注入属性 -->
+		<property name="id" value="1"></property>
+		<property name="content" value="hello"></property>
+		<property name="list">
+			<list>
+				<value>hello</value>
+				<value>world</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="testInput" class="cn.edu.sjtu.iasdsp.Spring.TestInput" />
+	<bean id="testInput1" class="cn.edu.sjtu.iasdsp.Spring.TestInput" />
+
+</beans>

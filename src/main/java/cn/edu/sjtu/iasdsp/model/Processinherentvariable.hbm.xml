@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Processinherentvariable" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="processinherentvariable">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ProcessID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="objectId" optimistic-lock="true" type="int" unique="false">
+            <column name="ObjectID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="objectName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ObjectName"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Description"/>
+        </property>
+        <property generated="never" lazy="false" name="valueType" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="ValueType"/>
+        </property>
+        <property generated="never" lazy="false" name="initialValue" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="InitialValue"/>
+        </property>
+        <property generated="never" lazy="false" name="value" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Value"/>
+        </property>
+    </class>
+</hibernate-mapping>

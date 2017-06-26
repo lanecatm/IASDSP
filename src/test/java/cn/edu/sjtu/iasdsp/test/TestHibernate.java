@@ -1,0 +1,14 @@
+package cn.edu.sjtu.iasdsp.test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class TestHibernate {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

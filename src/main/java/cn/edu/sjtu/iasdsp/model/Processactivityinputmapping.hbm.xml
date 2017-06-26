@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Processactivityinputmapping" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="processactivityinputmapping">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ProcessID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="activityId" optimistic-lock="true" type="int" unique="false">
+            <column name="ActivityID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="dataflowId" optimistic-lock="true" type="int" unique="false">
+            <column name="DataflowID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="inputSchema" optimistic-lock="true" type="string" unique="false">
+            <column length="16777215" name="InputSchema"/>
+        </property>
+        <property generated="never" lazy="false" name="inputXml" optimistic-lock="true" type="string" unique="false">
+            <column length="16777215" name="InputXML"/>
+        </property>
+        <property generated="never" lazy="false" name="xslt" optimistic-lock="true" type="string" unique="false">
+            <column length="16777215" name="XSLT"/>
+        </property>
+    </class>
+</hibernate-mapping>

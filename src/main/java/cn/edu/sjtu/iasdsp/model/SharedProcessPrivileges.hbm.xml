@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.SharedProcessPrivileges" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="shared_process_privileges">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="process_id"/>
+        </property>
+        <property generated="never" lazy="false" name="editDepartmentId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="edit_department_id"/>
+        </property>
+        <property generated="never" lazy="false" name="executeDepartmentId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="execute_department_id"/>
+        </property>
+        <property generated="never" lazy="false" name="deleteDepartmentId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="delete_department_id"/>
+        </property>
+        <property generated="never" lazy="false" name="isSharedSampleInput" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="is_shared_sample_input"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

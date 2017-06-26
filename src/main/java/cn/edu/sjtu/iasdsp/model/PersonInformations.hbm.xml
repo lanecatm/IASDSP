@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.PersonInformations" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="person_informations">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="personName" optimistic-lock="true" type="string" unique="false">
+            <column name="person_name"/>
+        </property>
+        <property generated="never" lazy="false" name="userName" optimistic-lock="true" type="string" unique="false">
+            <column name="user_name"/>
+        </property>
+        <property generated="never" lazy="false" name="gender" optimistic-lock="true" type="string" unique="false">
+            <column name="gender"/>
+        </property>
+        <property generated="never" lazy="false" name="birthday" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="birthday"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="description"/>
+        </property>
+        <property generated="never" lazy="false" name="phoneNumber" optimistic-lock="true" type="string" unique="false">
+            <column name="phone_number"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="technicalPost" optimistic-lock="true" type="string" unique="false">
+            <column name="technical_post"/>
+        </property>
+        <property generated="never" lazy="false" name="state" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="state"/>
+        </property>
+        <property generated="never" lazy="false" name="password" optimistic-lock="true" type="string" unique="false">
+            <column name="password"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.HomelandReplies" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="homeland_replies">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="userId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="user_id"/>
+        </property>
+        <property generated="never" lazy="false" name="topicId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="topic_id"/>
+        </property>
+        <property generated="never" lazy="false" name="body" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="body"/>
+        </property>
+        <property generated="never" lazy="false" name="bodyHtml" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="body_html"/>
+        </property>
+        <property generated="never" lazy="false" name="deletedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="deleted_at"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="replyToId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="reply_to_id"/>
+        </property>
+    </class>
+</hibernate-mapping>

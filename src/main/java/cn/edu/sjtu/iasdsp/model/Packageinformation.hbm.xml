@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Packageinformation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="packageinformation">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="packageId" optimistic-lock="true" type="int" unique="false">
+            <column name="PackageID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="packageName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="PackageName"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="16777215" name="Description"/>
+        </property>
+        <property generated="never" lazy="false" name="durationUnit" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="DurationUnit"/>
+        </property>
+        <property generated="never" lazy="false" name="costUnit" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="CostUnit" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="authorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="AuthorID"/>
+        </property>
+        <property generated="never" lazy="false" name="createDate" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="CreateDate"/>
+        </property>
+        <property generated="never" lazy="false" name="goalOwluri" optimistic-lock="true" type="string" unique="false">
+            <column length="200" name="GoalOWLURI"/>
+        </property>
+    </class>
+</hibernate-mapping>

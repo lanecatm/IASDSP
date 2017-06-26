@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Workflowflow" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="workflowflow">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="modelType" optimistic-lock="true" type="short" unique="false">
+            <column name="ModelType" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="workflowId" optimistic-lock="true" type="int" unique="false">
+            <column name="WorkflowID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="flowId" optimistic-lock="true" type="int" unique="false">
+            <column name="FlowID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="parentId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="ParentID"/>
+        </property>
+        <property generated="never" lazy="false" name="type" optimistic-lock="true" type="short" unique="false">
+            <column name="Type" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="fromObjectType" optimistic-lock="true" type="short" unique="false">
+            <column name="FromObjectType" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="objectId1" optimistic-lock="true" type="int" unique="false">
+            <column name="ObjectId1" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="toObjectType" optimistic-lock="true" type="short" unique="false">
+            <column name="ToObjectType" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="objectId2" optimistic-lock="true" type="int" unique="false">
+            <column name="ObjectID2" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

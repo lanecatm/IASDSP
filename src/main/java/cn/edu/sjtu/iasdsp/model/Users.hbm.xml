@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Users" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="users">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column name="email" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="encryptedPassword" optimistic-lock="true" type="string" unique="false">
+            <column name="encrypted_password" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="userName" optimistic-lock="true" type="string" unique="false">
+            <column name="user_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="personName" optimistic-lock="true" type="string" unique="false">
+            <column name="person_name"/>
+        </property>
+        <property generated="never" lazy="false" name="gender" optimistic-lock="true" type="string" unique="false">
+            <column name="gender"/>
+        </property>
+        <property generated="never" lazy="false" name="birthday" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="birthday"/>
+        </property>
+        <property generated="never" lazy="false" name="phoneNumber" optimistic-lock="true" type="string" unique="false">
+            <column name="phone_number"/>
+        </property>
+        <property generated="never" lazy="false" name="resetPasswordToken" optimistic-lock="true" type="string" unique="false">
+            <column name="reset_password_token" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="resetPasswordSentAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="reset_password_sent_at"/>
+        </property>
+        <property generated="never" lazy="false" name="rememberCreatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="remember_created_at"/>
+        </property>
+        <property generated="never" lazy="false" name="signInCount" optimistic-lock="true" type="int" unique="false">
+            <column name="sign_in_count" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="currentSignInAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="current_sign_in_at"/>
+        </property>
+        <property generated="never" lazy="false" name="lastSignInAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="last_sign_in_at"/>
+        </property>
+        <property generated="never" lazy="false" name="currentSignInIp" optimistic-lock="true" type="string" unique="false">
+            <column name="current_sign_in_ip"/>
+        </property>
+        <property generated="never" lazy="false" name="lastSignInIp" optimistic-lock="true" type="string" unique="false">
+            <column name="last_sign_in_ip"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at"/>
+        </property>
+        <property generated="never" lazy="false" name="role" optimistic-lock="true" type="string" unique="false">
+            <column name="role"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="userPictureses" optimistic-lock="true" sort="unsorted" table="user_pictures">
+            <key on-delete="noaction">
+                <column name="user_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.UserPictures" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

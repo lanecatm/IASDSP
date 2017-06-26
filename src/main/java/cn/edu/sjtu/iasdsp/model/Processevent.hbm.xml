@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Processevent" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="processevent">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ProcessID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="eventId" optimistic-lock="true" type="int" unique="false">
+            <column name="EventID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="eventRepresentation" optimistic-lock="true" type="string" unique="false">
+            <column name="EventRepresentation"/>
+        </property>
+        <property generated="never" lazy="false" name="expressionforParse" optimistic-lock="true" type="string" unique="false">
+            <column name="ExpressionforParse"/>
+        </property>
+        <property generated="never" lazy="false" name="eventType" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="EventType"/>
+        </property>
+        <property generated="never" lazy="false" name="logicType" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="LogicType"/>
+        </property>
+        <property generated="never" lazy="false" name="activityId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="ActivityID"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedTime" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="RepeatedTime"/>
+        </property>
+        <property generated="never" lazy="false" name="activeTime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="ActiveTime"/>
+        </property>
+        <property generated="never" lazy="false" name="eventName" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="EventName"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="Description"/>
+        </property>
+    </class>
+</hibernate-mapping>

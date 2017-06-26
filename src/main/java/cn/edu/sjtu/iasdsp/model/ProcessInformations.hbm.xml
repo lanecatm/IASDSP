@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.ProcessInformations" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="process_informations">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="workflowInformationId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="workflow_information_id"/>
+        </property>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column name="name"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="description"/>
+        </property>
+        <property generated="never" lazy="false" name="createrId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="creater_id"/>
+        </property>
+        <property generated="never" lazy="false" name="userId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="user_id"/>
+        </property>
+        <property generated="never" lazy="false" name="isShared" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="is_shared"/>
+        </property>
+        <property generated="never" lazy="false" name="parentCaseId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="parent_case_id"/>
+        </property>
+        <property generated="never" lazy="false" name="persistent" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="persistent"/>
+        </property>
+        <property generated="never" lazy="false" name="state" optimistic-lock="true" type="string" unique="false">
+            <column length="65535" name="state"/>
+        </property>
+        <property generated="never" lazy="false" name="caseType" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="case_type"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="processType" optimistic-lock="true" type="string" unique="false">
+            <column name="process_type"/>
+        </property>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="process_id"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="processFileses" optimistic-lock="true" sort="unsorted" table="process_files">
+            <key on-delete="noaction">
+                <column name="process_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.ProcessFiles" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="downloadFileses" optimistic-lock="true" sort="unsorted" table="download_files">
+            <key on-delete="noaction">
+                <column name="process_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.DownloadFiles" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="uploadFileses" optimistic-lock="true" sort="unsorted" table="upload_files">
+            <key on-delete="noaction">
+                <column name="process_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.UploadFiles" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="processResultses" optimistic-lock="true" sort="unsorted" table="process_results">
+            <key on-delete="noaction">
+                <column name="process_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.ProcessResults" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

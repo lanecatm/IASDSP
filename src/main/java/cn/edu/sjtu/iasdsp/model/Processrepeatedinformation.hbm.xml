@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Processrepeatedinformation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="processrepeatedinformation">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ProcessID"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedType" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="RepeatedType"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedId1" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="RepeatedID1"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedId2" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="RepeatedID2"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedTime" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="RepeatedTime"/>
+        </property>
+        <property generated="never" lazy="false" name="startTime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="StartTime"/>
+        </property>
+        <property generated="never" lazy="false" name="endTime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="EndTime"/>
+        </property>
+        <property generated="never" lazy="false" name="parameter1" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Parameter1"/>
+        </property>
+        <property generated="never" lazy="false" name="parameter2" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Parameter2"/>
+        </property>
+        <property generated="never" lazy="false" name="parameter3" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Parameter3"/>
+        </property>
+    </class>
+</hibernate-mapping>

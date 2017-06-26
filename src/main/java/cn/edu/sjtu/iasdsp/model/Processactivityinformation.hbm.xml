@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.Processactivityinformation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="processactivityinformation">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="processId" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ProcessID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="activityId" optimistic-lock="true" type="int" unique="false">
+            <column name="ActivityID" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="activityName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="ActivityName"/>
+        </property>
+        <property generated="never" lazy="false" name="activityType" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="ActivityType"/>
+        </property>
+        <property generated="never" lazy="false" name="activityImplementation" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="ActivityImplementation"/>
+        </property>
+        <property generated="never" lazy="false" name="layer" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="Layer"/>
+        </property>
+        <property generated="never" lazy="false" name="parentId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="ParentID"/>
+        </property>
+        <property generated="never" lazy="false" name="description" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="Description"/>
+        </property>
+        <property generated="never" lazy="false" name="choiceManager" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="ChoiceManager"/>
+        </property>
+        <property generated="never" lazy="false" name="startTime" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="StartTime" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="duration" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="Duration" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="iconId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="IconID"/>
+        </property>
+        <property generated="never" lazy="false" name="activityUrl" optimistic-lock="true" type="string" unique="false">
+            <column name="ActivityURL"/>
+        </property>
+        <property generated="never" lazy="false" name="multiPersonMode" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="MultiPersonMode"/>
+        </property>
+        <property generated="never" lazy="false" name="submitPersonNumber" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="SubmitPersonNumber"/>
+        </property>
+        <property generated="never" lazy="false" name="repeatedTime" optimistic-lock="true" type="java.lang.Short" unique="false">
+            <column name="RepeatedTime"/>
+        </property>
+        <property generated="never" lazy="false" name="twcid" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="TWCID"/>
+        </property>
+        <property generated="never" lazy="false" name="state" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="State"/>
+        </property>
+        <property generated="never" lazy="false" name="isCallback" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="isCallback"/>
+        </property>
+    </class>
+</hibernate-mapping>
