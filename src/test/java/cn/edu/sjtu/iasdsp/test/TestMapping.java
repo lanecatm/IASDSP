@@ -5,9 +5,8 @@ import java.util.Date;
 import org.hibernate.Session;
 import org.junit.Test;
 
-import com.xfhuang.util.HiberlateUtil;
-
 import cn.edu.sjtu.iasdsp.model.NodeCategories;
+import cn.edu.sjtu.iasdsp.util.HiberlateUtil;
 
 public class TestMapping {
 

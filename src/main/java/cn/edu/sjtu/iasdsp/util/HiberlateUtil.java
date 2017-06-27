@@ -1,4 +1,4 @@
-package com.xfhuang.util;
+package cn.edu.sjtu.iasdsp.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HiberlateUtil {
+	
 
 	private final static SessionFactory SESSION_FACTORY = buildSessionFactory();
 	private static SessionFactory buildSessionFactory(){
