@@ -53,28 +53,7 @@ public class HomeController {
 		model.addAttribute(username);
 		return "home";
 	}
-	/**
-	 * 例子: Rest 风格地址 id
-	 * Sample: Restful
-	 *  /user/:id
-	 * 	/user/:id/delete
-	 *  /user/:id/update
-	 *  /users
-	 */
-	@RequestMapping(value="/home", method = RequestMethod.GET)
-	public String home2(String username, Model model){
-		System.out.println("username");
-		System.out.println(username);
-		model.addAttribute("username", username);
-		//默认使用对象类型作为key
-		//=model.addAttribute("String", username);
-		model.addAttribute(username);
-		return "home";
-	}
-	/**
-	 * 例子: form表单提交值
-	 * Sample: Form submit
-	 */
+	
 	
 	
 	
