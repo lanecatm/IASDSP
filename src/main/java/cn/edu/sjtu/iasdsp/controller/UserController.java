@@ -28,7 +28,7 @@ public class UserController {
 
 	private Map<String, Users> users = new HashMap<String, Users>();
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		users.put("user1", new Users("user1@sjtu.edu.cn", "password1", "user1", 1));
 		users.put("user2", new Users("user2@sjtu.edu.cn", "password2", "user2", 1));
@@ -38,12 +38,43 @@ public class UserController {
 		return "user/list";
 
 	}
-
+	/**
+	 * 例子: form表单提交值 
+	 * Sample: Form submit
+	 */
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String create(Model model)
 	{
+		model.addAttribute("user", new Users());
+		//服务器端跳转
 		return "user/create";
 	}
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	public String create(Users user)
+	{
+		users.put(user.getUserName(), user);
+		//客户端跳转
+		return "redirect:/user/list";
+	}	
+	
+	/**
+	 * 例子: JSR303 form表单提交值 
+	 * Sample: JSR303 Form submit
+	 */
+	@RequestMapping(value="/create1", method=RequestMethod.GET)
+	public String create1()
+	{
+		//model.addAttribute("user", new Users());
+		//服务器端跳转
+		return "user/create";
+	}
+	@RequestMapping(value="/create1", method=RequestMethod.POST)
+	public String create1(Users user)
+	{
+		users.put(user.getUserName(), user);
+		//客户端跳转
+		return "redirect:/user/list";
+	}	
 	
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Model model)
@@ -57,7 +88,5 @@ public class UserController {
 		return "user/update";
 	}
 	
-	/**
-	 * 例子: form表单提交值 Sample: Form submit
-	 */
+
 }
