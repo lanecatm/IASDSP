@@ -1,13 +1,24 @@
 package cn.edu.sjtu.iasdsp.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cn.edu.sjtu.iasdsp.model.NodeCategories;
 import cn.edu.sjtu.iasdsp.model.Users;
 
 /** 
@@ -25,9 +36,13 @@ import cn.edu.sjtu.iasdsp.model.Users;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private Map<String, Users> users = new HashMap<String, Users>();
 
+	@Resource(type=SessionFactory.class)
+    private SessionFactory sessionFactory;
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		users.put("user1", new Users("user1@sjtu.edu.cn", "password1", "user1", 1));
@@ -38,55 +53,64 @@ public class UserController {
 		return "user/list";
 
 	}
+
 	/**
-	 * 例子: form表单提交值 
-	 * Sample: Form submit
+	 * 例子: form表单提交值 Sample: Form submit
 	 */
-	@RequestMapping(value="/create", method=RequestMethod.GET)
-	public String create(Model model)
-	{
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
 		model.addAttribute("user", new Users());
-		//服务器端跳转
+		// 服务器端跳转
 		return "user/create";
 	}
-	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public String create(Users user)
-	{
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String create(Users user) {
 		users.put(user.getUserName(), user);
-		//客户端跳转
+		// 客户端跳转
 		return "redirect:/user/list";
-	}	
-	
+	}
+
 	/**
-	 * 例子: JSR303 form表单提交值 
-	 * Sample: JSR303 Form submit
+	 * 例子: JSR303 form表单提交值 Sample: JSR303 Form submit
 	 */
-	@RequestMapping(value="/create1", method=RequestMethod.GET)
-	public String create1()
-	{
-		//model.addAttribute("user", new Users());
-		//服务器端跳转
+	@RequestMapping(value = "/create1", method = RequestMethod.GET)
+	public String create1(Model model) {
+		model.addAttribute("user", new Users());
+		// model.addAttribute("user", new Users());
+		// 服务器端跳转
+		try {
+			 Session session = sessionFactory.openSession();//
+			 //从会话工厂获取一个session
+			 Transaction transaction = session.beginTransaction();// 开启一个新的事务
+			 NodeCategories nodeCategory = new NodeCategories();
+			 nodeCategory.setName("test spring hibernate");
+			 nodeCategory.setCreatedAt(new Date());
+			 nodeCategory.setUpdatedAt(new Date());
+			 session.save(nodeCategory);
+			 // 提交事务
+			 transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "user/create";
 	}
-	@RequestMapping(value="/create1", method=RequestMethod.POST)
-	public String create1(Users user)
-	{
+
+	@RequestMapping(value = "/create1", method = RequestMethod.POST)
+	public String create1(Users user) {
 		users.put(user.getUserName(), user);
-		//客户端跳转
+		// 客户端跳转
 		return "redirect:/user/list";
-	}	
-	
-	@RequestMapping(value="/edit", method=RequestMethod.GET)
-	public String edit(Model model)
-	{
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String edit(Model model) {
 		return "user/edit";
 	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(Model model)
-	{
+
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String update(Model model) {
 		return "user/update";
 	}
-	
 
 }
