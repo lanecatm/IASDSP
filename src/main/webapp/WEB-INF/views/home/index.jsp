@@ -17,6 +17,7 @@
 						<div class="col-lg-offset-3 col-lg-6">
 							<hr />
 
+
 							
 							<sf:form  method="POST" modelAttribute="searchDto" cssClass="form-inline" >
 								<sf:select path="searchFor" cssClass="form-control" cssStyle="width: 20%">
@@ -36,6 +37,7 @@
 							
 					
 						
+
 
 						</div>
 					</div>
