@@ -2,49 +2,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+
  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
                     <li>
-                    
-                    <a class="navbar-brand" href="/home/index.jsp">
-                        <img style="width: 90px; height: 25px;" src="./IADSP_files/LOGO_2_w.png" alt="Logo 2 w">
-                    </a>
+						<a class="navbar-brand" href="/home/index.jsp">
+							<s:url value="/resources/image/LOGO_2_w.png" var="logo" />
+						
+							<img style="width: 90px; height: 25px;" src="${logo}" alt="Logo 2 w">
+						</a>
                     
                     </li>
                     <li>
                         <a href="#"> Search </a>                    
                     </li>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Create <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#"> Create Model </a>
-                        </li>
-                        <li>
-                            <a href="#"> Create Analytics Application </a>
-                        </li>
-                    </ul>
-
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Create <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a href="#"> Create Model </a>
+							</li>
+							<li>
+								<a href="#"> Create Analytics Application </a>
+							</li>
+						</ul>
                     </li>
                     <li>
 						<a href="#"> Analytics Applications </a>
                     </li>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						History <span class="caret"></span>
-					</a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							History <span class="caret"></span>
+						</a>
                     <ul class="dropdown-menu" role="menu">
                         <li>Model', history_model_path %></li>
-						<a href="#"> Analytics Applications </a>
-						<a href="#"> Analytics Applications </a>
+							<a href="#"> Models </a>
+							<a href="#"> Analytics Applications </a>
                         <li>
 							<a href="#"> Running case </a>
                         </li>
                         <li>
-                        <a href="#"> Running record </a>
+							<a href="#"> Running record </a>
                         </li>
                     </ul>
                     </li>
@@ -85,5 +86,4 @@
         </div>
         </nav>
 
-        <br/>
-<h1>Toolbar</h1>
+	<br/>

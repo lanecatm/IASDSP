@@ -24,7 +24,7 @@ html {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(/assets/small_lamp.jpg) no-repeat center center;
+    background: url(../image/small_lamp.jpg) no-repeat center center;
     background-size: cover;
 }
 
