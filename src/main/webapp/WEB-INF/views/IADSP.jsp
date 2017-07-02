@@ -18,9 +18,10 @@
         
        <spring:url value="/resources/bootstrap.min.css" var="bootstrapCSS" />
 <spring:url value="/resources/bootstrap.min.js" var="bootstrapJS" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<spring:url value="/resources/" var="IASDSPFiles" />
 <link href="${bootstrapCSS}" rel="stylesheet" />
 <script src="${bootstrapJS}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <spring:url value="/resources/IADSP_files" var="IASDSPFiles" />
 
 <link rel="stylesheet" media="all" href="${IASDSPFiles}/animate.self-066dd43afaa891fb6cb9c597e6bd2379f2546a1489393639eafe04c3dadee305.css" data-turbolinks-track="false">
