@@ -17,18 +17,17 @@
 						<div class="col-lg-offset-3 col-lg-6">
 							<hr />
 
-						
-					<!--  		<sf:form  method="post" >
+							<sf:form  method="post" >
 								<sf:select path="search_for" items="${selectionList}" />
-								<sf:input path="search_content" placeholder="Search for..." />
-								<div class="input-group" style="width: 79%">
+								<sf:input path="search_content"  />
+								<div class="input-group">
 									<div class="input-group-btn">
 										<input class="btn btn-primary btn-block" type="submit" value="Submit" />
 									</div>
-									
 								</div>
-							</sf:form> -->
+							</sf:form> 
 							
+					
 							
 
 						</div>

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cn.edu.sjtu.iasdsp.model.Users;
+
 /**
  * @author xfhuang
  * @email lanecatm@sjtu.edu.cn
@@ -24,6 +26,8 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Locale locale, Model model) {
 		logger.info("Welcome index! The client locale is {}.", locale);
-		return "home/_index";
+		return "home/index";
 	}
+	
+}
 }
