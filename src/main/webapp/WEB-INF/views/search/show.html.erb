@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/jumbotron/ -->
+
+
+
+    <!--
+    <h1 class="text-center">ISDSP</h1>
+    -->
+    <br/>
+    <br/>
+    <br/>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class = "row">
+        <div class="col-md-offset-3 col-md-6">
+            <ul class="nav nav-tabs nav-bordered is-center" role="tablist">
+                <% if params[:search_for] == "model"%>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'all' %>">
+                    <a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'title' %>">
+                    <a href="#title" aria-controls="title" role="tab" data-toggle="tab">Title</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'tag' %>">
+                    <a href="#tag" aria-controls="tag" role="tab" data-toggle="tab">Tag</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'other' %>">
+                    <a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a>
+                    </li>
+                <% end %>
+                <% if params[:search_for] == "use_case"%>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'all' %>">
+                    <a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'title' %>">
+                    <a href="#title" aria-controls="title" role="tab" data-toggle="tab">Title</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'other' %>">
+                    <a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a>
+                    </li>
+                <% end %>
+                <% if params[:search_for] == "task"%>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'all' %>">
+                    <a href="#all" aria-controls="all" role="tab" data-toggle="tab">All</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'title' %>">
+                    <a href="#title" aria-controls="title" role="tab" data-toggle="tab">Title</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'other' %>">
+                    <a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a>
+                    </li>
+                <% end %>
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<br/>
+    <div class="col-md-offset-3 col-md-7">
+<%= render '/search/search_bar' %>
+</div>
+<br/>
+</div>
+
+<div class="container">
+    <div class = "row">
+        <hr/>
+        <div class="col-md-3">
+            <h3>&nbsp;</h3>
+            <p>&nbsp;</h3>
+            <% if params[:search_for] == "model"%>
+            <ul class="list-group">
+                <li class="list-group-item">
+                <b>Catelogy</b>
+                </li>
+
+                <% if @workflow_information_by_categories != nil %>
+                    <% @workflow_information_by_categories.each do |wf_key, wf_value| %>
+                        <% if wf_key != nil %>
+                            <li class="list-group-item">
+                            <%= WorkflowCategory.find(wf_key).name %>
+                            <span class="badge"><%= wf_value %></span>
+                            </li>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            </ul>
+            <% end %>
+
+        </div>
+        <div class="col-md-6">
+            <% if params[:search_for] == "model"%>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="all">
+                        <% @workflow_informations = @all_workflow_informations %>
+                        <% @workflow_informations_without_group = @all_workflow_informations_without_group %>
+                        <%= render '/search/model_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="title">
+                        <% @workflow_informations = @title_workflow_informations %>
+                        <% @workflow_informations_without_group = @title_workflow_informations_without_group %>
+                        <%= render '/search/model_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="tag">
+                        <% @workflow_informations = @tag_workflow_informations %>
+                        <% @workflow_informations_without_group = @tag_workflow_informations_without_group %>
+                        <%= render '/search/model_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="other">
+                        <% @workflow_informations = @other_workflow_informations %>
+                        <% @workflow_informations_without_group = @other_workflow_informations_without_group %>
+                        <%= render '/search/model_content' %>
+                    </div>
+                </div>
+            <% end %>
+            <% if params[:search_for] == "use_case"%>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="all">
+                        <% @process_informations = @all_process_informations %>
+                        <%= render '/search/use_case_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="title">
+                        <% @process_informations = @all_process_informations %>
+                        <%= render '/search/use_case_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="other">
+                        <% @process_informations = @all_process_informations %>
+                        <%= render '/search/use_case_content' %>
+                    </div>
+                </div>
+            <% end %>
+            <% if params[:search_for] == "task"%>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="all">
+                        <% @tasks = @all_tasks%>
+                        <%= render '/search/task_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="title">
+                        <% @tasks= @title_tasks%>
+                        <%= render '/search/task_content' %>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="other">
+                        <% @tasks= @other_tasks %>
+                        <%= render '/search/task_content' %>
+                    </div>
+                </div>
+            <% end %>
+
+
+        </div>
+    </div>
+
+</div> <!-- /container -->
+
+
+

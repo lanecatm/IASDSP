@@ -1,0 +1,101 @@
+<!-- 页面标题 -->
+
+<br/>
+<br/>
+<!-- 表单 -->
+<div class="container">
+    <div class = "row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class = "row">
+                <h3 >
+                    Execute 
+                    <%= @workflow_information.name %>
+                    <small><%= @workflow_information.version_name %></small>
+                </h3>
+
+                <h4>
+                    <small><%= @workflow_information.introduction %></small> 
+                </h4>
+                <hr/>
+            </div>
+            <div class = "row">
+                <ul class="nav nav-justified step step-square"  >
+                    <% @active_page = params[:active_page] == nil ? "input" : params[:active_page] %>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'input' %>"
+                    >
+                    <a href="#input" aria-controls="input" role="tab" data-toggle="tab">Input data</a>
+                    </li>
+                    <li role="presentation" 
+                    class="<%= 'active' if @active_page == 'param' %>"
+                    >
+                    <a href="#param" aria-controls="param" role="tab" data-toggle="tab">Adjust parameters</a>
+                    </li>
+                    <li role="presentation"
+                    class="<%= 'active' if @active_page == 'running' %>"
+                    >
+                    <a href="#running" aria-controls="running" role="tab" data-toggle="tab">Running</a>
+                    </li>
+                    <li role="presentation"
+                    class="<%= 'active' if @active_page == 'output' %>"
+                    >
+                    <a href="#output" aria-controls="output" role="tab" data-toggle="tab">Output data</a>
+                    </li>
+                    <% if @show_share %>
+                        <li role="presentation"
+                        class="<%= 'active' if @active_page == 'share' %>"
+                        >
+                        <a href="#share" aria-controls="share" role="tab" data-toggle="tab">Share</a>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+            <div class="row">
+                <br/>
+                <br/>
+                <div class="col-md-offset-2 col-md-8">
+
+                <!--
+                <div class="col-md-12">
+                -->
+                    <div class="row">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane 
+                                <%= 'active' if @active_page == 'input' %>
+                                " id="input">
+                                <%= render '/process/execute_upload' %>
+                            </div><!-- tab -->
+
+                            <div role="tabpanel" class="tab-pane 
+                                <%= 'active' if @active_page == 'param' %>
+                                " id="param">
+                                <%= render '/process/execute_params' %>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane 
+                                <%= 'active' if @active_page == 'running' %>
+                                " id="running">
+                                <%= render '/process/execute_run' %>
+                            </div><!-- tab -->
+
+                            <div role="tabpanel" class="tab-pane 
+                                <%= 'active' if @active_page == 'output' %>
+                                " id="output">
+                                <%= render '/process/execute_download' %>
+                            </div><!-- tab -->
+
+                            <% if @show_share %>
+                                <div role="tabpanel" class="tab-pane 
+                                    <%= 'active' if @active_page == 'share' %>
+                                    " id="share">
+                                    <%= render '/process/execute_share' %>
+                                </div><!-- tab -->
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

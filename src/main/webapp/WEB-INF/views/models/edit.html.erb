@@ -1,0 +1,98 @@
+
+<% content_for(:body_attributes) do %>
+    data-no-turbolink="true"
+<% end %>
+<br/>
+<br/>
+<!-- 表单 -->
+<div class="container">
+    <div class = "row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="row">
+                <h3>
+                    <%= @workflow_information.name %>
+                </h3>
+                <h4>
+                    <small><%= @workflow_information.introduction %></small> 
+                </h4>
+                <hr/>
+            </div>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col-md-offset-2 col-md-8">
+            <ul class="nav nav-justified step step-square"  >
+                <li role="presentation" 
+                class="<%= 'active' if @active_page == 'info' %>"
+                >
+                <a href="#information" aria-controls="information" role="tab" data-toggle="tab">Basic Information</a>
+                </li>
+                <li role="presentation" 
+                class="<%= 'active' if @active_page == 'diagram' %>"
+                >
+                <a href="#diagram" aria-controls="diagram" role="tab" data-toggle="tab">Flow diagram</a>
+                </li>
+                <li role="presentation"
+                class="<%= 'active' if @active_page == 'jurisdiction' %>"
+                >
+                <a href="#jurisdiction" aria-controls="input" role="tab" data-toggle="tab">Authorization</a>
+                </li>
+                <li role="presentation"
+                class="<%= 'active' if @active_page == 'version' %>"
+                >
+                <a href="#version" aria-controls="version" role="tab" data-toggle="tab">Version</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class = "row">
+        <br/>
+        <br/>
+        <!-- Nav tabs -->
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane 
+                <%= 'active' if @active_page == 'info' %>
+                " id="information">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class = "row">
+                        <%= render '/workflow_informations/edit_info' %>
+                    </div>
+                </div>
+            </div><!-- tab -->
+            <div role="tabpanel" class="tab-pane
+                <%= 'active' if @active_page == 'diagram' %>
+                " id="diagram">
+                <div class="col-md-12">
+                    <div class = "row">
+                        <%= render '/workflow_informations/edit_diagram' %>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane
+                <%= 'active' if @active_page == 'version' %>
+                " id="version">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class = "row">
+                        <%= render '/workflow_informations/edit_version' %>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane
+                <%= 'active' if @active_page == 'jurisdiction' %>
+                " id="jurisdiction">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class = "row">
+                        <%= render '/workflow_informations/edit_jurisdiction' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    </div>
+</div> <!-- /container -->
+
+

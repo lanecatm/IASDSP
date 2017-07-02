@@ -1,0 +1,85 @@
+
+<!--
+<div class="col-md-12">
+    <% @page.task_performances.each do |task_performance|%>
+        <div class="panel panel-default">
+            <div class="panel-heading"><%= task_performance.name %></div>
+            <div class="panel-body">
+                <%= raw(task_performance.description) %>
+            </div>
+        </div>
+    <% end %>
+
+    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5> Add new performance </h5>
+        </div>
+        <div class="panel-body">
+            <% @task_performance = TaskPerformance.new %>
+            <%= simple_form_for @task_performance, :url => task_create_performance_path(@page.id), :method => :post do |f|%>
+                <%= f.hidden_field :wiki_page_id, value: @page.id %>
+                <%= f.input :name, as: :string %>
+                <%= f.input :description, input_html: { :rows => 15, class: 'tinymce' } %>
+                <%= tinymce %>
+                <%= f.button :submit, "Submit" %>
+            <% end %>
+
+
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+</div>
+-->
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>Compare running times between models </h5>
+        </div>
+        <div class="panel-body">
+            <img class="img-thumbnail" src="/assets/Compare_running_time_of_models.png" alt="history">
+        </div>
+    </div>
+    <hr/>
+</div>
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>
+                Performance
+            </h5>
+        </div>
+        <div class="panel-body">
+            <% @page.task_performances.each do |task_performance|%>
+                <h5><%= task_performance.name %></h5>
+                <hr/>
+                <%= raw(task_performance.description) %>
+            <% end %>
+        </div>
+    </div>
+    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5> Add new performance record </h5>
+        </div>
+        <div class="panel-body">
+            <% @task_performance = TaskPerformance.new %>
+            <%= simple_form_for @task_performance, :url => task_create_performance_path(@page.id), :method => :post do |f|%>
+                <%= f.hidden_field :wiki_page_id, value: @page.id %>
+                <%= f.input :name, as: :string %>
+                <%= f.input :description, input_html: { :rows => 15, class: 'tinymce' } %>
+                <%= tinymce %>
+                <%= f.button :submit, "Submit" %>
+            <% end %>
+
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+</div>
+
