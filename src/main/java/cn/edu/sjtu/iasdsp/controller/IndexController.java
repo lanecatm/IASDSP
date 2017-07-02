@@ -24,6 +24,6 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Locale locale, Model model) {
 		logger.info("Welcome index! The client locale is {}.", locale);
-		return "home/_index";
+		return "layouts/application";
 	}
 }

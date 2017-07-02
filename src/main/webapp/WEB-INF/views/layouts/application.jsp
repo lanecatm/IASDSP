@@ -44,16 +44,17 @@
     <s:url value="/resources/javascript/star-rating.min.js" var="starRatingJs" />
 
 
-<script src="${bootstrapJs}"></script>
-<script src="${applicationJs}"></script>
-<script src="${ieEmulationModesWarningJs}"></script>
-<script src="${ie10ViewportBugWorkaroundJs}"></script>
-<script src="${juhewebJs}"></script>
-<script src="${starRatingJs}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="${bootstrapJs}"></script>
+	<script src="${applicationJs}"></script>
+	<script src="${ieEmulationModesWarningJs}"></script>
+	<script src="${ie10ViewportBugWorkaroundJs}"></script>
+	<script src="${juhewebJs}"></script>
+	<script src="${starRatingJs}"></script>
 
 
-	<link rel="Shortcut Icon" href="assets/LOGO_2_s.png"/>
+    <s:url value="/resources/image/LOGO_2_s.png" var="logoSmall" />
+	<link rel="Shortcut Icon" href=${logoSmall}/>
 </head>
 <body>
-<%-- <%@ include file="toolbar.jsp"%> --%>
+<%@ include file="toolbar.jsp"%>
