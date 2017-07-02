@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
-	<%@ include file="../layouts/application.jsp"%>
+<%@ include file="../layouts/application.jsp"%>
 <!-- Header -->
 <a name="about"></a>
 <div class="intro-header">
@@ -17,6 +17,7 @@
 						<div class="col-lg-offset-3 col-lg-6">
 							<hr />
 
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/home/index.jsp
 							<sf:form  method="post" >
 								<sf:select path="search_for" items="${selectionList}" />
 								<sf:input path="search_content"  />
@@ -29,6 +30,12 @@
 							
 					
 							
+=======
+
+
+
+
+>>>>>>> 7df1641ab423a2d651f72bb8085d03fe9efea9fd:src/main/webapp/WEB-INF/views/home/index.jsp
 
 						</div>
 					</div>
@@ -92,6 +99,6 @@
 </div>
 <!-- /.content-section-b -->
 
-	<%@ include file="../layouts/footer.jsp"%>
+<%@ include file="../layouts/footer.jsp"%>
 
 
