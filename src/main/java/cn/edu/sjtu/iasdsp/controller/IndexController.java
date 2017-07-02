@@ -1,15 +1,13 @@
 package cn.edu.sjtu.iasdsp.controller;
 
-import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.edu.sjtu.iasdsp.model.Users;
+import cn.edu.sjtu.iasdsp.dto.SearchDto;
 
 /**
  * @author xfhuang
@@ -24,12 +22,12 @@ public class IndexController {
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Locale locale, Model model) {
-		logger.info("Welcome index! The client locale is {}.", locale);
+	public String index(@ModelAttribute("searchDto") SearchDto searchDto) {
+		logger.info("Welcome index!.");
 
 		return "home/index";
 
 	}
 	
 }
-}
+

@@ -1,4 +1,6 @@
 package cn.edu.sjtu.iasdsp.dto;
+
+import java.util.List;
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn
@@ -7,5 +9,27 @@ package cn.edu.sjtu.iasdsp.dto;
 * Introduction
 */
 public class SearchDto {
+	
+	private String searchFor;
+	private String searchContent;
+
+	public String getSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
+
+	public String getSearchFor() {
+		return searchFor;
+	}
+
+	public void setSearchFor(String searchFor) {
+		this.searchFor = searchFor;
+	}
+	
+
+	
 
 }

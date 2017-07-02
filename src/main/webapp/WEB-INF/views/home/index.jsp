@@ -17,25 +17,25 @@
 						<div class="col-lg-offset-3 col-lg-6">
 							<hr />
 
-<<<<<<< HEAD:src/main/webapp/WEB-INF/views/home/index.jsp
-							<sf:form  method="post" >
-								<sf:select path="search_for" items="${selectionList}" />
-								<sf:input path="search_content"  />
-								<div class="input-group">
+							
+							<sf:form  method="POST" modelAttribute="searchDto" cssClass="form-inline" >
+								<sf:select path="searchFor" cssClass="form-control" cssStyle="width: 20%">
+								<sf:option value="0" label="application"  cssClass="form-control"/>
+								<sf:option value="1" label="model"  cssClass="form-control"/>
+								</sf:select>
+								<div class="input-group" style="width: 79%">
+									<sf:input path="searchContent" cssClass="form-control"/>
+								
 									<div class="input-group-btn">
 										<input class="btn btn-primary btn-block" type="submit" value="Submit" />
 									</div>
+								<!-- /btn-group -->
 								</div>
+								
 							</sf:form> 
 							
 					
-							
-=======
-
-
-
-
->>>>>>> 7df1641ab423a2d651f72bb8085d03fe9efea9fd:src/main/webapp/WEB-INF/views/home/index.jsp
+						
 
 						</div>
 					</div>
