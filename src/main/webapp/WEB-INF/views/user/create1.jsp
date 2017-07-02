@@ -11,7 +11,8 @@
 <body>
 <!-- 自动把表单中的值添加到user中 -->
 <!-- 没有写action，提交会给/create -->
-<sf:form method="post" modelAttribute="user">
+<h1>Create 1</h1>
+<sf:form method="post" modelAttribute="user" action="create1">
     Username: <sf:input path="userName"/><sf:errors path="userName"/>    <br/>
     Password: <sf:password path="encryptedPassword"/><sf:errors path="encryptedPassword"/><br/>
     Nickname: <sf:input path="phoneNumber"/><sf:errors path="phoneNumber"/>  <br/>

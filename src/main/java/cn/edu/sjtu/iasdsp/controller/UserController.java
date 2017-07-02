@@ -11,12 +11,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.sjtu.iasdsp.model.NodeCategories;
 import cn.edu.sjtu.iasdsp.model.Users;
@@ -65,18 +68,22 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Users user) {
-		users.put(user.getUserName(), user);
-		// 客户端跳转
-		return "redirect:/user/list";
-	}
+	public String create(@Validated Users user,BindingResult backResult) {
+			System.out.println(backResult);
+			if (backResult.hasErrors()){
+				return "/user/create1";
+			}
+			users.put(user.getUserName(), user);
+			// 客户端跳转
+			return "redirect:/user/list";
+			//return "redirect:/user/create1";
+		}
 
 	/**
 	 * 例子: JSR303 form表单提交值 Sample: JSR303 Form submit
 	 */
 	@RequestMapping(value = "/create1", method = RequestMethod.GET)
-	public String create1(Model model) {
-		model.addAttribute("user", new Users());
+	public String create1(@ModelAttribute("user") Users user) {
 		// model.addAttribute("user", new Users());
 		// 服务器端跳转
 		try {
@@ -93,14 +100,27 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "user/create";
+		return "user/create1";
 	}
 
 	@RequestMapping(value = "/create1", method = RequestMethod.POST)
-	public String create1(Users user) {
+	//验证model权限
+	//一定要紧跟Validated写
+	public String create1(@ModelAttribute("user") @Validated Users user,BindingResult backResult) {
+		System.out.println(backResult);
+		if (backResult.hasErrors()){
+			return "/user/create1";
+		}
 		users.put(user.getUserName(), user);
 		// 客户端跳转
 		return "redirect:/user/list";
+		//return "redirect:/user/create1";
+	}
+	
+	@RequestMapping(value="/{userName}", method=RequestMethod.GET)
+	public String show(@PathVariable String userName, Model model){
+		model.addAttribute(users.get(userName));
+		return "user/show";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

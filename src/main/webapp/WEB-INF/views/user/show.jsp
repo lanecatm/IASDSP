@@ -11,13 +11,11 @@
 <body>
 <!-- 自动把表单中的值添加到user中 -->
 <!-- 没有写action，提交会给/create -->
-<sf:form method="post" modelAttribute="user">
-    Username: <sf:input path="userName"/><sf:errors path="userName"/>    <br/>
-    Password: <sf:password path="encryptedPassword"/><sf:errors path="encryptedPassword"/><br/>
-    Nickname: <sf:input path="phoneNumber"/><sf:errors path="phoneNumber"/>  <br/>
-    Email:    <sf:input path="email"/><sf:errors path="email"/>        <br/>
-    <input type="submit" value="Add user"/>
+<h1>Show</h1>
+    Username: ${user.username} 
+    Password: 
+    Nickname: 
+    Email:    
 
-</sf:form>
 </body>
 </html>

@@ -69,6 +69,13 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.0</version>
 		</dependency>
+		<!-- 模型权限验证？ -->
+		<!-- Hibernate Validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.1.Final</version>
+		</dependency>
 
 
 		<dependency>
