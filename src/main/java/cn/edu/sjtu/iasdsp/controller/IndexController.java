@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Locale locale, Model model) {
 		logger.info("Welcome index! The client locale is {}.", locale);
-		return "layouts/application";
+		return "home/_index";
 	}
 }

@@ -12,7 +12,7 @@
 		<!-- 设置为close使Spring容器关闭同时数据源能够正常关闭，以免造成连接泄露 -->
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/isdsp_dev" />
-		<property name="username" value="root" />
+		<property name="username" value="isdsp" />
 		<property name="password" value="12345678" />
 		<property name="defaultReadOnly" value="false" />
 		<!-- 设置为只读状态，配置读写分离时，读库可以设置为true 在连接池创建后，会初始化并维护一定数量的数据库安连接，当请求过多时，数据库会动态增加连接数， 

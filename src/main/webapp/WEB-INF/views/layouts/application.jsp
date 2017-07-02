@@ -14,9 +14,6 @@
 <meta name="author" content="">
 
 <!-- TODO 导入css和js -->
-<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
 <link rel="Shortcut Icon" href="assets/LOGO_2_s.png">
 </head>
 <body>
-	<%@ include file="toolbar.jsp"%>
