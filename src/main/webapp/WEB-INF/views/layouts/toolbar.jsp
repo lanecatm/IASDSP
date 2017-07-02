@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 
+<br/>
+<br/>
  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div id="navbar" class="navbar-collapse collapse">

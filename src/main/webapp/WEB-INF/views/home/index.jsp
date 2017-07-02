@@ -9,35 +9,28 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="intro-message">
-					<img src="./assets/LOGO_2_w.png" class="center-block" alt="image"
+				    
+					<s:url value="/resources/image/LOGO_2_w.png" var="logoLarge" />
+					<img src="${logoLarge}" class="center-block" alt="image"
 						style="width: 450px; height: 125px;">
-					<h3>Intelligent Analytic Service Development and Sharing
-						Platform</h3>
+					<h3>Intelligent Analytic Service Development and Sharing Platform</h3>
 					<div class="row">
 						<div class="col-lg-offset-3 col-lg-6">
 							<hr />
-
-
 							
-							<sf:form  method="POST" modelAttribute="searchDto" cssClass="form-inline" >
+							<sf:form  method="post" modelAttribute="searchDto" cssClass="form-inline" >
 								<sf:select path="searchFor" cssClass="form-control" cssStyle="width: 20%">
 								<sf:option value="0" label="application"  cssClass="form-control"/>
 								<sf:option value="1" label="model"  cssClass="form-control"/>
 								</sf:select>
 								<div class="input-group" style="width: 79%">
 									<sf:input path="searchContent" cssClass="form-control"/>
-								
 									<div class="input-group-btn">
 										<input class="btn btn-primary btn-block" type="submit" value="Submit" />
 									</div>
 								<!-- /btn-group -->
 								</div>
-								
 							</sf:form> 
-							
-					
-						
-
 
 						</div>
 					</div>
@@ -64,11 +57,14 @@
 				<h2 class="section-heading">What is the platform?</h2>
 				<p class="lead">This is a platform to help you analysis the data
 					set, and share your model to your partner.</p>
+
+
 				<a class="btn btn-default" href="./Example1.htm" role="button">Start
-					now »</a>
+					now >></a>
 			</div>
 			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
-				<img class="img-responsive" src="/assets/Workflow.jpg" alt="">
+				<s:url value="/resources/image/Workflow.jpg" var="workflowImg" />
+				<img class="img-responsive" src="${workflowImg}" alt="">
 			</div>
 		</div>
 
@@ -87,11 +83,11 @@
 				<h2 class="section-heading">Turtorial</h2>
 				<p class="lead">Here you can learn how to use the platform.</p>
 				<a class="btn btn-default" href="./Example1.htm" role="button">Learn
-					More »</a>
+					More >></a>
 			</div>
 			<div class="col-lg-5 col-sm-pull-6  col-sm-6">
-				<img class="img-responsive"
-					src="assets/business-man-writing-data-analysis.jpg" alt="">
+				<s:url value="/resources/image/business-man-writing-data-analysis.jpg" var="businessImg" />
+				<img class="img-responsive" src="${businessImg}" alt="">
 			</div>
 		</div>
 
