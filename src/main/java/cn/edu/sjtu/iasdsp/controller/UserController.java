@@ -43,8 +43,8 @@ public class UserController {
 
 	private Map<String, Users> users = new HashMap<String, Users>();
 
-	@Resource(type=SessionFactory.class)
-    private SessionFactory sessionFactory;
+//	@Resource(type=SessionFactory.class)
+//    private SessionFactory sessionFactory;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
