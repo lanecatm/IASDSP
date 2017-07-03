@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- 设置为close使Spring容器关闭同时数据源能够正常关闭，以免造成连接泄露 -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/isdsp_dev" />
+		<property name="username" value="isdsp" />
+		<property name="password" value="12345678" />
+		<property name="defaultReadOnly" value="false" />
+		<!-- 设置为只读状态，配置读写分离时，读库可以设置为true 在连接池创建后，会初始化并维护一定数量的数据库安连接，当请求过多时，数据库会动态增加连接数， 
+			当请求过少时，连接池会减少连接数至一个最小空闲值 -->
+		<property name="initialSize" value="5" />
+		<!-- 在启动连接池初始创建的数据库连接，默认为0 -->
+		<property name="maxActive" value="15" />
+		<!-- 设置数据库同一时间的最大活跃连接默认为8，负数表示不闲置 -->
+		<property name="maxIdle" value="10" />
+		<!-- 在连接池空闲时的最大连接数，超过的会被释放，默认为8，负数表示不闲置 -->
+		<property name="minIdle" value="2" />
+		<!-- 空闲时的最小连接数，低于这个数量会创建新连接，默认为0 -->
+		<property name="maxWait" value="10000" />
+		<!-- 连接被用完时等待归还的最大等待时间，单位毫秒，超出时间抛异常，默认为无限等待 -->
+	</bean>
+	<!-- 配置我们的回话工厂 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- MySQL的方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				<!-- 必要时在数据库新建所有表格 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 配置current session的上下文环境，方便我们调用sessionFactory获取当前线程统一个session对象 -->
+				<prop key="current_session_context_class">thread</prop>
+				<!-- 用更漂亮的格式显示sql语句 -->
+				<!-- <prop key="hibernate.format_sql">true</prop> -->
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>cn/edu/sjtu/iasdsp/model/NodeCategories.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeInformations.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WikiRelationships.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeFunctions.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/EdgeAttributes.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/HomelandTopics.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowprocessecarule.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowComments.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processflowobjects.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WikiAndWorkflowInformations.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Systemschema.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processapplication.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowapplication.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/SchemaMigrations.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowCategories.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowTags.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowflowobjects.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processprocessecarule.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/ProcessInformations.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/TestAlgorithms.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/HomelandReplies.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processactivityinputmapping.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowflowobjectcontrol.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowactivityinputmapping.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeOptionValues.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/ProcessResults.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Systemxmldocument.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/TaskPerformances.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowflow.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowPrivileges.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowInformationAndTags.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/UserPictures.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/PersonInformations.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processcondition.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowcondition.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processactivityinformation.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowevent.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processrepeatedinformation.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processinherentvariable.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Caseinformation.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/ArffTypes.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Systemapplicationinformation.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowactivityinvokingapplication.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/UploadFiles.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processflowobjectcontrol.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowactivityinformation.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processactivityinvokingapplication.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/DownloadFiles.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/TaskCategories.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowobject.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeTypes.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Users.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processinformation.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/SharedProcessPrivileges.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processobject.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/TaskCategoryAndWikis.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processcontrolflowcondition.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeCategories.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/ProcessFiles.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WorkflowInformations.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Packageinformation.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processflow.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowinherentvariable.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Javaclassmethod.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeOptions.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processevent.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeOptionChoices.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WikiPages.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/DepartmentInformations.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/Separators.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Processlogs.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/NodeOptionTypes.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/WikiPageVersions.hbm.xml</value>
+				<value>cn/edu/sjtu/iasdsp/model/Workflowcontrolflowcondition.hbm.xml
+				</value>
+				<value>cn/edu/sjtu/iasdsp/model/HomelandNodes.hbm.xml</value>
+
+
+			</list>
+		</property>
+	</bean>
+</beans>

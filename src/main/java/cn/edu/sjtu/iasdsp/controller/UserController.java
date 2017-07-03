@@ -86,20 +86,20 @@ public class UserController {
 	public String create1(@ModelAttribute("user") Users user) {
 		// model.addAttribute("user", new Users());
 		// 服务器端跳转
-		try {
-			 Session session = sessionFactory.openSession();//
-			 //从会话工厂获取一个session
-			 Transaction transaction = session.beginTransaction();// 开启一个新的事务
-			 NodeCategories nodeCategory = new NodeCategories();
-			 nodeCategory.setName("test spring hibernate");
-			 nodeCategory.setCreatedAt(new Date());
-			 nodeCategory.setUpdatedAt(new Date());
-			 session.save(nodeCategory);
-			 // 提交事务
-			 transaction.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			 Session session = sessionFactory.openSession();//
+//			 //从会话工厂获取一个session
+//			 Transaction transaction = session.beginTransaction();// 开启一个新的事务
+//			 NodeCategories nodeCategory = new NodeCategories();
+//			 nodeCategory.setName("test spring hibernate");
+//			 nodeCategory.setCreatedAt(new Date());
+//			 nodeCategory.setUpdatedAt(new Date());
+//			 session.save(nodeCategory);
+//			 // 提交事务
+//			 transaction.commit();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return "user/create1";
 	}
 

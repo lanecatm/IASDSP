@@ -14,14 +14,11 @@
 			<h4>Reference</h4>
 		</div>
 		<div class="panel-body">
-			<c:set var="i" value="1" />
 			<c:forEach items="${showApplicationDto.referenceList}"
-				var="reference">
+				var="reference" varStatus="status">
 				<p>
-					[${i}]
 					<c:out value="${reference.key}" />
 				</p>
-				<c:set var="i" value="${i} + 1" />
 			</c:forEach>
 		</div>
 	</div>
@@ -32,7 +29,12 @@
 			<h4>Related pages</h4>
 		</div>
 		<div class="panel-body">
-
+			<h5>
+				<c:forEach items="${showApplicationDto.relatedPageList}"
+					var="relatedPage">
+					<span class="label label-default">${relatedPage}</span>
+				</c:forEach>
+			</h5>
 		</div>
 	</div>
 </div>
