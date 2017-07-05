@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowcontrolflowcondition;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowcontrolflowcondition;
 
 /**
  * Home object for domain model class Workflowcontrolflowcondition.
- * @see cn.edu.sjtu.iasdsp.model.Workflowcontrolflowcondition
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowcontrolflowcondition
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowcontrolflowconditionHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowcontrolflowcondition transientInstance) {
+	public void persist(EngineWorkflowcontrolflowcondition transientInstance) {
 		log.debug("persisting Workflowcontrolflowcondition instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowcontrolflowconditionHome {
 		}
 	}
 
-	public void remove(Workflowcontrolflowcondition persistentInstance) {
+	public void remove(EngineWorkflowcontrolflowcondition persistentInstance) {
 		log.debug("removing Workflowcontrolflowcondition instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowcontrolflowconditionHome {
 		}
 	}
 
-	public Workflowcontrolflowcondition merge(Workflowcontrolflowcondition detachedInstance) {
+	public EngineWorkflowcontrolflowcondition merge(EngineWorkflowcontrolflowcondition detachedInstance) {
 		log.debug("merging Workflowcontrolflowcondition instance");
 		try {
-			Workflowcontrolflowcondition result = entityManager.merge(detachedInstance);
+			EngineWorkflowcontrolflowcondition result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowcontrolflowconditionHome {
 		}
 	}
 
-	public Workflowcontrolflowcondition findById(Integer id) {
+	public EngineWorkflowcontrolflowcondition findById(Integer id) {
 		log.debug("getting Workflowcontrolflowcondition instance with id: " + id);
 		try {
-			Workflowcontrolflowcondition instance = entityManager.find(Workflowcontrolflowcondition.class, id);
+			EngineWorkflowcontrolflowcondition instance = entityManager.find(EngineWorkflowcontrolflowcondition.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Caseinformation;
+import cn.edu.sjtu.iasdsp.model.EngineCaseinformation;
 
 /**
  * Home object for domain model class Caseinformation.
- * @see cn.edu.sjtu.iasdsp.model.Caseinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineCaseinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class CaseinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Caseinformation transientInstance) {
+	public void persist(EngineCaseinformation transientInstance) {
 		log.debug("persisting Caseinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class CaseinformationHome {
 		}
 	}
 
-	public void remove(Caseinformation persistentInstance) {
+	public void remove(EngineCaseinformation persistentInstance) {
 		log.debug("removing Caseinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class CaseinformationHome {
 		}
 	}
 
-	public Caseinformation merge(Caseinformation detachedInstance) {
+	public EngineCaseinformation merge(EngineCaseinformation detachedInstance) {
 		log.debug("merging Caseinformation instance");
 		try {
-			Caseinformation result = entityManager.merge(detachedInstance);
+			EngineCaseinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class CaseinformationHome {
 		}
 	}
 
-	public Caseinformation findById(Integer id) {
+	public EngineCaseinformation findById(Integer id) {
 		log.debug("getting Caseinformation instance with id: " + id);
 		try {
-			Caseinformation instance = entityManager.find(Caseinformation.class, id);
+			EngineCaseinformation instance = entityManager.find(EngineCaseinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowflowobjects;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowflowobjects;
 
 /**
  * Home object for domain model class Workflowflowobjects.
- * @see cn.edu.sjtu.iasdsp.model.Workflowflowobjects
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowflowobjects
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowflowobjectsHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowflowobjects transientInstance) {
+	public void persist(EngineWorkflowflowobjects transientInstance) {
 		log.debug("persisting Workflowflowobjects instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowflowobjectsHome {
 		}
 	}
 
-	public void remove(Workflowflowobjects persistentInstance) {
+	public void remove(EngineWorkflowflowobjects persistentInstance) {
 		log.debug("removing Workflowflowobjects instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowflowobjectsHome {
 		}
 	}
 
-	public Workflowflowobjects merge(Workflowflowobjects detachedInstance) {
+	public EngineWorkflowflowobjects merge(EngineWorkflowflowobjects detachedInstance) {
 		log.debug("merging Workflowflowobjects instance");
 		try {
-			Workflowflowobjects result = entityManager.merge(detachedInstance);
+			EngineWorkflowflowobjects result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowflowobjectsHome {
 		}
 	}
 
-	public Workflowflowobjects findById(Integer id) {
+	public EngineWorkflowflowobjects findById(Integer id) {
 		log.debug("getting Workflowflowobjects instance with id: " + id);
 		try {
-			Workflowflowobjects instance = entityManager.find(Workflowflowobjects.class, id);
+			EngineWorkflowflowobjects instance = entityManager.find(EngineWorkflowflowobjects.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

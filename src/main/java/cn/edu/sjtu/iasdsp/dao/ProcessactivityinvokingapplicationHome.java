@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processactivityinvokingapplication;
+import cn.edu.sjtu.iasdsp.model.EngineProcessactivityinvokingapplication;
 
 /**
  * Home object for domain model class Processactivityinvokingapplication.
- * @see cn.edu.sjtu.iasdsp.model.Processactivityinvokingapplication
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessactivityinvokingapplication
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessactivityinvokingapplicationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processactivityinvokingapplication transientInstance) {
+	public void persist(EngineProcessactivityinvokingapplication transientInstance) {
 		log.debug("persisting Processactivityinvokingapplication instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessactivityinvokingapplicationHome {
 		}
 	}
 
-	public void remove(Processactivityinvokingapplication persistentInstance) {
+	public void remove(EngineProcessactivityinvokingapplication persistentInstance) {
 		log.debug("removing Processactivityinvokingapplication instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessactivityinvokingapplicationHome {
 		}
 	}
 
-	public Processactivityinvokingapplication merge(Processactivityinvokingapplication detachedInstance) {
+	public EngineProcessactivityinvokingapplication merge(EngineProcessactivityinvokingapplication detachedInstance) {
 		log.debug("merging Processactivityinvokingapplication instance");
 		try {
-			Processactivityinvokingapplication result = entityManager.merge(detachedInstance);
+			EngineProcessactivityinvokingapplication result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessactivityinvokingapplicationHome {
 		}
 	}
 
-	public Processactivityinvokingapplication findById(Integer id) {
+	public EngineProcessactivityinvokingapplication findById(Integer id) {
 		log.debug("getting Processactivityinvokingapplication instance with id: " + id);
 		try {
-			Processactivityinvokingapplication instance = entityManager.find(Processactivityinvokingapplication.class,
+			EngineProcessactivityinvokingapplication instance = entityManager.find(EngineProcessactivityinvokingapplication.class,
 					id);
 			log.debug("get successful");
 			return instance;

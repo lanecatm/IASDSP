@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowinherentvariable;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowinherentvariable;
 
 /**
  * Home object for domain model class Workflowinherentvariable.
- * @see cn.edu.sjtu.iasdsp.model.Workflowinherentvariable
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowinherentvariable
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowinherentvariableHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowinherentvariable transientInstance) {
+	public void persist(EngineWorkflowinherentvariable transientInstance) {
 		log.debug("persisting Workflowinherentvariable instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowinherentvariableHome {
 		}
 	}
 
-	public void remove(Workflowinherentvariable persistentInstance) {
+	public void remove(EngineWorkflowinherentvariable persistentInstance) {
 		log.debug("removing Workflowinherentvariable instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowinherentvariableHome {
 		}
 	}
 
-	public Workflowinherentvariable merge(Workflowinherentvariable detachedInstance) {
+	public EngineWorkflowinherentvariable merge(EngineWorkflowinherentvariable detachedInstance) {
 		log.debug("merging Workflowinherentvariable instance");
 		try {
-			Workflowinherentvariable result = entityManager.merge(detachedInstance);
+			EngineWorkflowinherentvariable result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowinherentvariableHome {
 		}
 	}
 
-	public Workflowinherentvariable findById(Integer id) {
+	public EngineWorkflowinherentvariable findById(Integer id) {
 		log.debug("getting Workflowinherentvariable instance with id: " + id);
 		try {
-			Workflowinherentvariable instance = entityManager.find(Workflowinherentvariable.class, id);
+			EngineWorkflowinherentvariable instance = entityManager.find(EngineWorkflowinherentvariable.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

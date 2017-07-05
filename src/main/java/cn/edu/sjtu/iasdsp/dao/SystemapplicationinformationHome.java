@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Systemapplicationinformation;
+import cn.edu.sjtu.iasdsp.model.EngineSystemapplicationinformation;
 
 /**
  * Home object for domain model class Systemapplicationinformation.
- * @see cn.edu.sjtu.iasdsp.model.Systemapplicationinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineSystemapplicationinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class SystemapplicationinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Systemapplicationinformation transientInstance) {
+	public void persist(EngineSystemapplicationinformation transientInstance) {
 		log.debug("persisting Systemapplicationinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class SystemapplicationinformationHome {
 		}
 	}
 
-	public void remove(Systemapplicationinformation persistentInstance) {
+	public void remove(EngineSystemapplicationinformation persistentInstance) {
 		log.debug("removing Systemapplicationinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class SystemapplicationinformationHome {
 		}
 	}
 
-	public Systemapplicationinformation merge(Systemapplicationinformation detachedInstance) {
+	public EngineSystemapplicationinformation merge(EngineSystemapplicationinformation detachedInstance) {
 		log.debug("merging Systemapplicationinformation instance");
 		try {
-			Systemapplicationinformation result = entityManager.merge(detachedInstance);
+			EngineSystemapplicationinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class SystemapplicationinformationHome {
 		}
 	}
 
-	public Systemapplicationinformation findById(Integer id) {
+	public EngineSystemapplicationinformation findById(Integer id) {
 		log.debug("getting Systemapplicationinformation instance with id: " + id);
 		try {
-			Systemapplicationinformation instance = entityManager.find(Systemapplicationinformation.class, id);
+			EngineSystemapplicationinformation instance = entityManager.find(EngineSystemapplicationinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

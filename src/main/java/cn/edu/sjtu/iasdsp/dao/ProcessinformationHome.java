@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processinformation;
+import cn.edu.sjtu.iasdsp.model.EngineProcessinformation;
 
 /**
  * Home object for domain model class Processinformation.
- * @see cn.edu.sjtu.iasdsp.model.Processinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processinformation transientInstance) {
+	public void persist(EngineProcessinformation transientInstance) {
 		log.debug("persisting Processinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessinformationHome {
 		}
 	}
 
-	public void remove(Processinformation persistentInstance) {
+	public void remove(EngineProcessinformation persistentInstance) {
 		log.debug("removing Processinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessinformationHome {
 		}
 	}
 
-	public Processinformation merge(Processinformation detachedInstance) {
+	public EngineProcessinformation merge(EngineProcessinformation detachedInstance) {
 		log.debug("merging Processinformation instance");
 		try {
-			Processinformation result = entityManager.merge(detachedInstance);
+			EngineProcessinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessinformationHome {
 		}
 	}
 
-	public Processinformation findById(Integer id) {
+	public EngineProcessinformation findById(Integer id) {
 		log.debug("getting Processinformation instance with id: " + id);
 		try {
-			Processinformation instance = entityManager.find(Processinformation.class, id);
+			EngineProcessinformation instance = entityManager.find(EngineProcessinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

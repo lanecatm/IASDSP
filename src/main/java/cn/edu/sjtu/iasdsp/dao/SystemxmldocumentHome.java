@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Systemxmldocument;
+import cn.edu.sjtu.iasdsp.model.EngineSystemxmldocument;
 
 /**
  * Home object for domain model class Systemxmldocument.
- * @see cn.edu.sjtu.iasdsp.model.Systemxmldocument
+ * @see cn.edu.sjtu.iasdsp.model.EngineSystemxmldocument
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class SystemxmldocumentHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Systemxmldocument transientInstance) {
+	public void persist(EngineSystemxmldocument transientInstance) {
 		log.debug("persisting Systemxmldocument instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class SystemxmldocumentHome {
 		}
 	}
 
-	public void remove(Systemxmldocument persistentInstance) {
+	public void remove(EngineSystemxmldocument persistentInstance) {
 		log.debug("removing Systemxmldocument instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class SystemxmldocumentHome {
 		}
 	}
 
-	public Systemxmldocument merge(Systemxmldocument detachedInstance) {
+	public EngineSystemxmldocument merge(EngineSystemxmldocument detachedInstance) {
 		log.debug("merging Systemxmldocument instance");
 		try {
-			Systemxmldocument result = entityManager.merge(detachedInstance);
+			EngineSystemxmldocument result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class SystemxmldocumentHome {
 		}
 	}
 
-	public Systemxmldocument findById(Integer id) {
+	public EngineSystemxmldocument findById(Integer id) {
 		log.debug("getting Systemxmldocument instance with id: " + id);
 		try {
-			Systemxmldocument instance = entityManager.find(Systemxmldocument.class, id);
+			EngineSystemxmldocument instance = entityManager.find(EngineSystemxmldocument.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

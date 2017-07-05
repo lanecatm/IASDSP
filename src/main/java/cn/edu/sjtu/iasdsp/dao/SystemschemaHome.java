@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Systemschema;
+import cn.edu.sjtu.iasdsp.model.EngineSystemschema;
 
 /**
  * Home object for domain model class Systemschema.
- * @see cn.edu.sjtu.iasdsp.model.Systemschema
+ * @see cn.edu.sjtu.iasdsp.model.EngineSystemschema
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class SystemschemaHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Systemschema transientInstance) {
+	public void persist(EngineSystemschema transientInstance) {
 		log.debug("persisting Systemschema instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class SystemschemaHome {
 		}
 	}
 
-	public void remove(Systemschema persistentInstance) {
+	public void remove(EngineSystemschema persistentInstance) {
 		log.debug("removing Systemschema instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class SystemschemaHome {
 		}
 	}
 
-	public Systemschema merge(Systemschema detachedInstance) {
+	public EngineSystemschema merge(EngineSystemschema detachedInstance) {
 		log.debug("merging Systemschema instance");
 		try {
-			Systemschema result = entityManager.merge(detachedInstance);
+			EngineSystemschema result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class SystemschemaHome {
 		}
 	}
 
-	public Systemschema findById(Integer id) {
+	public EngineSystemschema findById(Integer id) {
 		log.debug("getting Systemschema instance with id: " + id);
 		try {
-			Systemschema instance = entityManager.find(Systemschema.class, id);
+			EngineSystemschema instance = entityManager.find(EngineSystemschema.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

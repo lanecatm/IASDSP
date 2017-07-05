@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowcondition;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowcondition;
 
 /**
  * Home object for domain model class Workflowcondition.
- * @see cn.edu.sjtu.iasdsp.model.Workflowcondition
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowcondition
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowconditionHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowcondition transientInstance) {
+	public void persist(EngineWorkflowcondition transientInstance) {
 		log.debug("persisting Workflowcondition instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowconditionHome {
 		}
 	}
 
-	public void remove(Workflowcondition persistentInstance) {
+	public void remove(EngineWorkflowcondition persistentInstance) {
 		log.debug("removing Workflowcondition instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowconditionHome {
 		}
 	}
 
-	public Workflowcondition merge(Workflowcondition detachedInstance) {
+	public EngineWorkflowcondition merge(EngineWorkflowcondition detachedInstance) {
 		log.debug("merging Workflowcondition instance");
 		try {
-			Workflowcondition result = entityManager.merge(detachedInstance);
+			EngineWorkflowcondition result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowconditionHome {
 		}
 	}
 
-	public Workflowcondition findById(Integer id) {
+	public EngineWorkflowcondition findById(Integer id) {
 		log.debug("getting Workflowcondition instance with id: " + id);
 		try {
-			Workflowcondition instance = entityManager.find(Workflowcondition.class, id);
+			EngineWorkflowcondition instance = entityManager.find(EngineWorkflowcondition.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

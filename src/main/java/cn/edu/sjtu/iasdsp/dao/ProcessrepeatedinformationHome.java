@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processrepeatedinformation;
+import cn.edu.sjtu.iasdsp.model.EngineProcessrepeatedinformation;
 
 /**
  * Home object for domain model class Processrepeatedinformation.
- * @see cn.edu.sjtu.iasdsp.model.Processrepeatedinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessrepeatedinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessrepeatedinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processrepeatedinformation transientInstance) {
+	public void persist(EngineProcessrepeatedinformation transientInstance) {
 		log.debug("persisting Processrepeatedinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessrepeatedinformationHome {
 		}
 	}
 
-	public void remove(Processrepeatedinformation persistentInstance) {
+	public void remove(EngineProcessrepeatedinformation persistentInstance) {
 		log.debug("removing Processrepeatedinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessrepeatedinformationHome {
 		}
 	}
 
-	public Processrepeatedinformation merge(Processrepeatedinformation detachedInstance) {
+	public EngineProcessrepeatedinformation merge(EngineProcessrepeatedinformation detachedInstance) {
 		log.debug("merging Processrepeatedinformation instance");
 		try {
-			Processrepeatedinformation result = entityManager.merge(detachedInstance);
+			EngineProcessrepeatedinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessrepeatedinformationHome {
 		}
 	}
 
-	public Processrepeatedinformation findById(Integer id) {
+	public EngineProcessrepeatedinformation findById(Integer id) {
 		log.debug("getting Processrepeatedinformation instance with id: " + id);
 		try {
-			Processrepeatedinformation instance = entityManager.find(Processrepeatedinformation.class, id);
+			EngineProcessrepeatedinformation instance = entityManager.find(EngineProcessrepeatedinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

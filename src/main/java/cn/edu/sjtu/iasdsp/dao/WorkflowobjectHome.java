@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowobject;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowobject;
 
 /**
  * Home object for domain model class Workflowobject.
- * @see cn.edu.sjtu.iasdsp.model.Workflowobject
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowobject
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowobjectHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowobject transientInstance) {
+	public void persist(EngineWorkflowobject transientInstance) {
 		log.debug("persisting Workflowobject instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowobjectHome {
 		}
 	}
 
-	public void remove(Workflowobject persistentInstance) {
+	public void remove(EngineWorkflowobject persistentInstance) {
 		log.debug("removing Workflowobject instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowobjectHome {
 		}
 	}
 
-	public Workflowobject merge(Workflowobject detachedInstance) {
+	public EngineWorkflowobject merge(EngineWorkflowobject detachedInstance) {
 		log.debug("merging Workflowobject instance");
 		try {
-			Workflowobject result = entityManager.merge(detachedInstance);
+			EngineWorkflowobject result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowobjectHome {
 		}
 	}
 
-	public Workflowobject findById(Integer id) {
+	public EngineWorkflowobject findById(Integer id) {
 		log.debug("getting Workflowobject instance with id: " + id);
 		try {
-			Workflowobject instance = entityManager.find(Workflowobject.class, id);
+			EngineWorkflowobject instance = entityManager.find(EngineWorkflowobject.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -43,6 +43,7 @@ public class TestHibernate {
 		}
 	}
 
+	@Test
 	public void test1() {
 		try {
 			// 使用此方法获取并初始化我们的spring容器，注意pring-datasource.xml必须存放在类路径的根目录下。
@@ -65,7 +66,6 @@ public class TestHibernate {
 			transaction = session.beginTransaction();// 开启一个新的事务
 			session.delete(workflowInformation);
 			transaction.commit();
-
 			
 		} catch (Exception e) {
 			e.printStackTrace();

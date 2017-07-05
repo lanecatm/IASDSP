@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowactivityinputmapping;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinputmapping;
 
 /**
  * Home object for domain model class Workflowactivityinputmapping.
- * @see cn.edu.sjtu.iasdsp.model.Workflowactivityinputmapping
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinputmapping
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowactivityinputmappingHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowactivityinputmapping transientInstance) {
+	public void persist(EngineWorkflowactivityinputmapping transientInstance) {
 		log.debug("persisting Workflowactivityinputmapping instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowactivityinputmappingHome {
 		}
 	}
 
-	public void remove(Workflowactivityinputmapping persistentInstance) {
+	public void remove(EngineWorkflowactivityinputmapping persistentInstance) {
 		log.debug("removing Workflowactivityinputmapping instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowactivityinputmappingHome {
 		}
 	}
 
-	public Workflowactivityinputmapping merge(Workflowactivityinputmapping detachedInstance) {
+	public EngineWorkflowactivityinputmapping merge(EngineWorkflowactivityinputmapping detachedInstance) {
 		log.debug("merging Workflowactivityinputmapping instance");
 		try {
-			Workflowactivityinputmapping result = entityManager.merge(detachedInstance);
+			EngineWorkflowactivityinputmapping result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowactivityinputmappingHome {
 		}
 	}
 
-	public Workflowactivityinputmapping findById(Integer id) {
+	public EngineWorkflowactivityinputmapping findById(Integer id) {
 		log.debug("getting Workflowactivityinputmapping instance with id: " + id);
 		try {
-			Workflowactivityinputmapping instance = entityManager.find(Workflowactivityinputmapping.class, id);
+			EngineWorkflowactivityinputmapping instance = entityManager.find(EngineWorkflowactivityinputmapping.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

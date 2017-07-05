@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processinherentvariable;
+import cn.edu.sjtu.iasdsp.model.EngineProcessinherentvariable;
 
 /**
  * Home object for domain model class Processinherentvariable.
- * @see cn.edu.sjtu.iasdsp.model.Processinherentvariable
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessinherentvariable
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessinherentvariableHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processinherentvariable transientInstance) {
+	public void persist(EngineProcessinherentvariable transientInstance) {
 		log.debug("persisting Processinherentvariable instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessinherentvariableHome {
 		}
 	}
 
-	public void remove(Processinherentvariable persistentInstance) {
+	public void remove(EngineProcessinherentvariable persistentInstance) {
 		log.debug("removing Processinherentvariable instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessinherentvariableHome {
 		}
 	}
 
-	public Processinherentvariable merge(Processinherentvariable detachedInstance) {
+	public EngineProcessinherentvariable merge(EngineProcessinherentvariable detachedInstance) {
 		log.debug("merging Processinherentvariable instance");
 		try {
-			Processinherentvariable result = entityManager.merge(detachedInstance);
+			EngineProcessinherentvariable result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessinherentvariableHome {
 		}
 	}
 
-	public Processinherentvariable findById(Integer id) {
+	public EngineProcessinherentvariable findById(Integer id) {
 		log.debug("getting Processinherentvariable instance with id: " + id);
 		try {
-			Processinherentvariable instance = entityManager.find(Processinherentvariable.class, id);
+			EngineProcessinherentvariable instance = entityManager.find(EngineProcessinherentvariable.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.SchemaMigrations;
+import cn.edu.sjtu.iasdsp.model.EngineSchemaMigrations;
 
 /**
  * Home object for domain model class SchemaMigrations.
- * @see cn.edu.sjtu.iasdsp.model.SchemaMigrations
+ * @see cn.edu.sjtu.iasdsp.model.EngineSchemaMigrations
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class SchemaMigrationsHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(SchemaMigrations transientInstance) {
+	public void persist(EngineSchemaMigrations transientInstance) {
 		log.debug("persisting SchemaMigrations instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class SchemaMigrationsHome {
 		}
 	}
 
-	public void remove(SchemaMigrations persistentInstance) {
+	public void remove(EngineSchemaMigrations persistentInstance) {
 		log.debug("removing SchemaMigrations instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class SchemaMigrationsHome {
 		}
 	}
 
-	public SchemaMigrations merge(SchemaMigrations detachedInstance) {
+	public EngineSchemaMigrations merge(EngineSchemaMigrations detachedInstance) {
 		log.debug("merging SchemaMigrations instance");
 		try {
-			SchemaMigrations result = entityManager.merge(detachedInstance);
+			EngineSchemaMigrations result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class SchemaMigrationsHome {
 		}
 	}
 
-	public SchemaMigrations findById(String id) {
+	public EngineSchemaMigrations findById(String id) {
 		log.debug("getting SchemaMigrations instance with id: " + id);
 		try {
-			SchemaMigrations instance = entityManager.find(SchemaMigrations.class, id);
+			EngineSchemaMigrations instance = entityManager.find(EngineSchemaMigrations.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

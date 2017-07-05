@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowflowobjectcontrol;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowflowobjectcontrol;
 
 /**
  * Home object for domain model class Workflowflowobjectcontrol.
- * @see cn.edu.sjtu.iasdsp.model.Workflowflowobjectcontrol
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowflowobjectcontrol
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowflowobjectcontrolHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowflowobjectcontrol transientInstance) {
+	public void persist(EngineWorkflowflowobjectcontrol transientInstance) {
 		log.debug("persisting Workflowflowobjectcontrol instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowflowobjectcontrolHome {
 		}
 	}
 
-	public void remove(Workflowflowobjectcontrol persistentInstance) {
+	public void remove(EngineWorkflowflowobjectcontrol persistentInstance) {
 		log.debug("removing Workflowflowobjectcontrol instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowflowobjectcontrolHome {
 		}
 	}
 
-	public Workflowflowobjectcontrol merge(Workflowflowobjectcontrol detachedInstance) {
+	public EngineWorkflowflowobjectcontrol merge(EngineWorkflowflowobjectcontrol detachedInstance) {
 		log.debug("merging Workflowflowobjectcontrol instance");
 		try {
-			Workflowflowobjectcontrol result = entityManager.merge(detachedInstance);
+			EngineWorkflowflowobjectcontrol result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowflowobjectcontrolHome {
 		}
 	}
 
-	public Workflowflowobjectcontrol findById(Integer id) {
+	public EngineWorkflowflowobjectcontrol findById(Integer id) {
 		log.debug("getting Workflowflowobjectcontrol instance with id: " + id);
 		try {
-			Workflowflowobjectcontrol instance = entityManager.find(Workflowflowobjectcontrol.class, id);
+			EngineWorkflowflowobjectcontrol instance = entityManager.find(EngineWorkflowflowobjectcontrol.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

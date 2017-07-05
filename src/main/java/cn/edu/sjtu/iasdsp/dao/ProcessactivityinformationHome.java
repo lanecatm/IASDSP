@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processactivityinformation;
+import cn.edu.sjtu.iasdsp.model.EngineProcessactivityinformation;
 
 /**
  * Home object for domain model class Processactivityinformation.
- * @see cn.edu.sjtu.iasdsp.model.Processactivityinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessactivityinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessactivityinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processactivityinformation transientInstance) {
+	public void persist(EngineProcessactivityinformation transientInstance) {
 		log.debug("persisting Processactivityinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessactivityinformationHome {
 		}
 	}
 
-	public void remove(Processactivityinformation persistentInstance) {
+	public void remove(EngineProcessactivityinformation persistentInstance) {
 		log.debug("removing Processactivityinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessactivityinformationHome {
 		}
 	}
 
-	public Processactivityinformation merge(Processactivityinformation detachedInstance) {
+	public EngineProcessactivityinformation merge(EngineProcessactivityinformation detachedInstance) {
 		log.debug("merging Processactivityinformation instance");
 		try {
-			Processactivityinformation result = entityManager.merge(detachedInstance);
+			EngineProcessactivityinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessactivityinformationHome {
 		}
 	}
 
-	public Processactivityinformation findById(Integer id) {
+	public EngineProcessactivityinformation findById(Integer id) {
 		log.debug("getting Processactivityinformation instance with id: " + id);
 		try {
-			Processactivityinformation instance = entityManager.find(Processactivityinformation.class, id);
+			EngineProcessactivityinformation instance = entityManager.find(EngineProcessactivityinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

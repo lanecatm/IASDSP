@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowactivityinformation;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinformation;
 
 /**
  * Home object for domain model class Workflowactivityinformation.
- * @see cn.edu.sjtu.iasdsp.model.Workflowactivityinformation
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowactivityinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowactivityinformation transientInstance) {
+	public void persist(EngineWorkflowactivityinformation transientInstance) {
 		log.debug("persisting Workflowactivityinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowactivityinformationHome {
 		}
 	}
 
-	public void remove(Workflowactivityinformation persistentInstance) {
+	public void remove(EngineWorkflowactivityinformation persistentInstance) {
 		log.debug("removing Workflowactivityinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowactivityinformationHome {
 		}
 	}
 
-	public Workflowactivityinformation merge(Workflowactivityinformation detachedInstance) {
+	public EngineWorkflowactivityinformation merge(EngineWorkflowactivityinformation detachedInstance) {
 		log.debug("merging Workflowactivityinformation instance");
 		try {
-			Workflowactivityinformation result = entityManager.merge(detachedInstance);
+			EngineWorkflowactivityinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowactivityinformationHome {
 		}
 	}
 
-	public Workflowactivityinformation findById(Integer id) {
+	public EngineWorkflowactivityinformation findById(Integer id) {
 		log.debug("getting Workflowactivityinformation instance with id: " + id);
 		try {
-			Workflowactivityinformation instance = entityManager.find(Workflowactivityinformation.class, id);
+			EngineWorkflowactivityinformation instance = entityManager.find(EngineWorkflowactivityinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

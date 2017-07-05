@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processprocessecarule;
+import cn.edu.sjtu.iasdsp.model.EngineProcessprocessecarule;
 
 /**
  * Home object for domain model class Processprocessecarule.
- * @see cn.edu.sjtu.iasdsp.model.Processprocessecarule
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessprocessecarule
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessprocessecaruleHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processprocessecarule transientInstance) {
+	public void persist(EngineProcessprocessecarule transientInstance) {
 		log.debug("persisting Processprocessecarule instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessprocessecaruleHome {
 		}
 	}
 
-	public void remove(Processprocessecarule persistentInstance) {
+	public void remove(EngineProcessprocessecarule persistentInstance) {
 		log.debug("removing Processprocessecarule instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessprocessecaruleHome {
 		}
 	}
 
-	public Processprocessecarule merge(Processprocessecarule detachedInstance) {
+	public EngineProcessprocessecarule merge(EngineProcessprocessecarule detachedInstance) {
 		log.debug("merging Processprocessecarule instance");
 		try {
-			Processprocessecarule result = entityManager.merge(detachedInstance);
+			EngineProcessprocessecarule result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessprocessecaruleHome {
 		}
 	}
 
-	public Processprocessecarule findById(Integer id) {
+	public EngineProcessprocessecarule findById(Integer id) {
 		log.debug("getting Processprocessecarule instance with id: " + id);
 		try {
-			Processprocessecarule instance = entityManager.find(Processprocessecarule.class, id);
+			EngineProcessprocessecarule instance = entityManager.find(EngineProcessprocessecarule.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

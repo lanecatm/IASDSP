@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowflow;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowflow;
 
 /**
  * Home object for domain model class Workflowflow.
- * @see cn.edu.sjtu.iasdsp.model.Workflowflow
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowflow
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowflowHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowflow transientInstance) {
+	public void persist(EngineWorkflowflow transientInstance) {
 		log.debug("persisting Workflowflow instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowflowHome {
 		}
 	}
 
-	public void remove(Workflowflow persistentInstance) {
+	public void remove(EngineWorkflowflow persistentInstance) {
 		log.debug("removing Workflowflow instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowflowHome {
 		}
 	}
 
-	public Workflowflow merge(Workflowflow detachedInstance) {
+	public EngineWorkflowflow merge(EngineWorkflowflow detachedInstance) {
 		log.debug("merging Workflowflow instance");
 		try {
-			Workflowflow result = entityManager.merge(detachedInstance);
+			EngineWorkflowflow result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowflowHome {
 		}
 	}
 
-	public Workflowflow findById(Integer id) {
+	public EngineWorkflowflow findById(Integer id) {
 		log.debug("getting Workflowflow instance with id: " + id);
 		try {
-			Workflowflow instance = entityManager.find(Workflowflow.class, id);
+			EngineWorkflowflow instance = entityManager.find(EngineWorkflowflow.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

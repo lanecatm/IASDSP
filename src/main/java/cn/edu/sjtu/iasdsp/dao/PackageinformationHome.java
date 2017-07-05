@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Packageinformation;
+import cn.edu.sjtu.iasdsp.model.EnginePackageinformation;
 
 /**
  * Home object for domain model class Packageinformation.
- * @see cn.edu.sjtu.iasdsp.model.Packageinformation
+ * @see cn.edu.sjtu.iasdsp.model.EnginePackageinformation
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class PackageinformationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Packageinformation transientInstance) {
+	public void persist(EnginePackageinformation transientInstance) {
 		log.debug("persisting Packageinformation instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class PackageinformationHome {
 		}
 	}
 
-	public void remove(Packageinformation persistentInstance) {
+	public void remove(EnginePackageinformation persistentInstance) {
 		log.debug("removing Packageinformation instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class PackageinformationHome {
 		}
 	}
 
-	public Packageinformation merge(Packageinformation detachedInstance) {
+	public EnginePackageinformation merge(EnginePackageinformation detachedInstance) {
 		log.debug("merging Packageinformation instance");
 		try {
-			Packageinformation result = entityManager.merge(detachedInstance);
+			EnginePackageinformation result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class PackageinformationHome {
 		}
 	}
 
-	public Packageinformation findById(Integer id) {
+	public EnginePackageinformation findById(Integer id) {
 		log.debug("getting Packageinformation instance with id: " + id);
 		try {
-			Packageinformation instance = entityManager.find(Packageinformation.class, id);
+			EnginePackageinformation instance = entityManager.find(EnginePackageinformation.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

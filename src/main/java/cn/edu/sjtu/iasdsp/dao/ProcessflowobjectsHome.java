@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processflowobject;
+import cn.edu.sjtu.iasdsp.model.EngineProcessflowobject;
 
 /**
  * Home object for domain model class Processflowobjects.
- * @see cn.edu.sjtu.iasdsp.model.Processflowobject
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessflowobject
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessflowobjectsHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processflowobject transientInstance) {
+	public void persist(EngineProcessflowobject transientInstance) {
 		log.debug("persisting Processflowobjects instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessflowobjectsHome {
 		}
 	}
 
-	public void remove(Processflowobject persistentInstance) {
+	public void remove(EngineProcessflowobject persistentInstance) {
 		log.debug("removing Processflowobjects instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessflowobjectsHome {
 		}
 	}
 
-	public Processflowobject merge(Processflowobject detachedInstance) {
+	public EngineProcessflowobject merge(EngineProcessflowobject detachedInstance) {
 		log.debug("merging Processflowobjects instance");
 		try {
-			Processflowobject result = entityManager.merge(detachedInstance);
+			EngineProcessflowobject result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessflowobjectsHome {
 		}
 	}
 
-	public Processflowobject findById(Integer id) {
+	public EngineProcessflowobject findById(Integer id) {
 		log.debug("getting Processflowobjects instance with id: " + id);
 		try {
-			Processflowobject instance = entityManager.find(Processflowobject.class, id);
+			EngineProcessflowobject instance = entityManager.find(EngineProcessflowobject.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

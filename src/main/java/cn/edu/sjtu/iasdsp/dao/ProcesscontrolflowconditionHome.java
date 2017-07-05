@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processcontrolflowcondition;
+import cn.edu.sjtu.iasdsp.model.EngineProcesscontrolflowcondition;
 
 /**
  * Home object for domain model class Processcontrolflowcondition.
- * @see cn.edu.sjtu.iasdsp.model.Processcontrolflowcondition
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcesscontrolflowcondition
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcesscontrolflowconditionHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processcontrolflowcondition transientInstance) {
+	public void persist(EngineProcesscontrolflowcondition transientInstance) {
 		log.debug("persisting Processcontrolflowcondition instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcesscontrolflowconditionHome {
 		}
 	}
 
-	public void remove(Processcontrolflowcondition persistentInstance) {
+	public void remove(EngineProcesscontrolflowcondition persistentInstance) {
 		log.debug("removing Processcontrolflowcondition instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcesscontrolflowconditionHome {
 		}
 	}
 
-	public Processcontrolflowcondition merge(Processcontrolflowcondition detachedInstance) {
+	public EngineProcesscontrolflowcondition merge(EngineProcesscontrolflowcondition detachedInstance) {
 		log.debug("merging Processcontrolflowcondition instance");
 		try {
-			Processcontrolflowcondition result = entityManager.merge(detachedInstance);
+			EngineProcesscontrolflowcondition result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcesscontrolflowconditionHome {
 		}
 	}
 
-	public Processcontrolflowcondition findById(Integer id) {
+	public EngineProcesscontrolflowcondition findById(Integer id) {
 		log.debug("getting Processcontrolflowcondition instance with id: " + id);
 		try {
-			Processcontrolflowcondition instance = entityManager.find(Processcontrolflowcondition.class, id);
+			EngineProcesscontrolflowcondition instance = entityManager.find(EngineProcesscontrolflowcondition.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

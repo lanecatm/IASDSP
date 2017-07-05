@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processlogs;
+import cn.edu.sjtu.iasdsp.model.EngineProcesslogs;
 
 /**
  * Home object for domain model class Processlogs.
- * @see cn.edu.sjtu.iasdsp.model.Processlogs
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcesslogs
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcesslogsHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processlogs transientInstance) {
+	public void persist(EngineProcesslogs transientInstance) {
 		log.debug("persisting Processlogs instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcesslogsHome {
 		}
 	}
 
-	public void remove(Processlogs persistentInstance) {
+	public void remove(EngineProcesslogs persistentInstance) {
 		log.debug("removing Processlogs instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcesslogsHome {
 		}
 	}
 
-	public Processlogs merge(Processlogs detachedInstance) {
+	public EngineProcesslogs merge(EngineProcesslogs detachedInstance) {
 		log.debug("merging Processlogs instance");
 		try {
-			Processlogs result = entityManager.merge(detachedInstance);
+			EngineProcesslogs result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcesslogsHome {
 		}
 	}
 
-	public Processlogs findById(Integer id) {
+	public EngineProcesslogs findById(Integer id) {
 		log.debug("getting Processlogs instance with id: " + id);
 		try {
-			Processlogs instance = entityManager.find(Processlogs.class, id);
+			EngineProcesslogs instance = entityManager.find(EngineProcesslogs.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowactivityinvokingapplication;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinvokingapplication;
 
 /**
  * Home object for domain model class Workflowactivityinvokingapplication.
- * @see cn.edu.sjtu.iasdsp.model.Workflowactivityinvokingapplication
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowactivityinvokingapplication
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkflowactivityinvokingapplicationHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowactivityinvokingapplication transientInstance) {
+	public void persist(EngineWorkflowactivityinvokingapplication transientInstance) {
 		log.debug("persisting Workflowactivityinvokingapplication instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkflowactivityinvokingapplicationHome {
 		}
 	}
 
-	public void remove(Workflowactivityinvokingapplication persistentInstance) {
+	public void remove(EngineWorkflowactivityinvokingapplication persistentInstance) {
 		log.debug("removing Workflowactivityinvokingapplication instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkflowactivityinvokingapplicationHome {
 		}
 	}
 
-	public Workflowactivityinvokingapplication merge(Workflowactivityinvokingapplication detachedInstance) {
+	public EngineWorkflowactivityinvokingapplication merge(EngineWorkflowactivityinvokingapplication detachedInstance) {
 		log.debug("merging Workflowactivityinvokingapplication instance");
 		try {
-			Workflowactivityinvokingapplication result = entityManager.merge(detachedInstance);
+			EngineWorkflowactivityinvokingapplication result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkflowactivityinvokingapplicationHome {
 		}
 	}
 
-	public Workflowactivityinvokingapplication findById(Integer id) {
+	public EngineWorkflowactivityinvokingapplication findById(Integer id) {
 		log.debug("getting Workflowactivityinvokingapplication instance with id: " + id);
 		try {
-			Workflowactivityinvokingapplication instance = entityManager.find(Workflowactivityinvokingapplication.class,
+			EngineWorkflowactivityinvokingapplication instance = entityManager.find(EngineWorkflowactivityinvokingapplication.class,
 					id);
 			log.debug("get successful");
 			return instance;

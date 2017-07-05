@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Workflowevent;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowevent;
 
 /**
  * Home object for domain model class Workflowevent.
- * @see cn.edu.sjtu.iasdsp.model.Workflowevent
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowevent
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class WorkfloweventHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Workflowevent transientInstance) {
+	public void persist(EngineWorkflowevent transientInstance) {
 		log.debug("persisting Workflowevent instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class WorkfloweventHome {
 		}
 	}
 
-	public void remove(Workflowevent persistentInstance) {
+	public void remove(EngineWorkflowevent persistentInstance) {
 		log.debug("removing Workflowevent instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class WorkfloweventHome {
 		}
 	}
 
-	public Workflowevent merge(Workflowevent detachedInstance) {
+	public EngineWorkflowevent merge(EngineWorkflowevent detachedInstance) {
 		log.debug("merging Workflowevent instance");
 		try {
-			Workflowevent result = entityManager.merge(detachedInstance);
+			EngineWorkflowevent result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class WorkfloweventHome {
 		}
 	}
 
-	public Workflowevent findById(Integer id) {
+	public EngineWorkflowevent findById(Integer id) {
 		log.debug("getting Workflowevent instance with id: " + id);
 		try {
-			Workflowevent instance = entityManager.find(Workflowevent.class, id);
+			EngineWorkflowevent instance = entityManager.find(EngineWorkflowevent.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

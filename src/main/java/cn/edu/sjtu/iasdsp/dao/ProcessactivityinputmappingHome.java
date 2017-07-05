@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processactivityinputmapping;
+import cn.edu.sjtu.iasdsp.model.EngineProcessactivityinputmapping;
 
 /**
  * Home object for domain model class Processactivityinputmapping.
- * @see cn.edu.sjtu.iasdsp.model.Processactivityinputmapping
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessactivityinputmapping
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessactivityinputmappingHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processactivityinputmapping transientInstance) {
+	public void persist(EngineProcessactivityinputmapping transientInstance) {
 		log.debug("persisting Processactivityinputmapping instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessactivityinputmappingHome {
 		}
 	}
 
-	public void remove(Processactivityinputmapping persistentInstance) {
+	public void remove(EngineProcessactivityinputmapping persistentInstance) {
 		log.debug("removing Processactivityinputmapping instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessactivityinputmappingHome {
 		}
 	}
 
-	public Processactivityinputmapping merge(Processactivityinputmapping detachedInstance) {
+	public EngineProcessactivityinputmapping merge(EngineProcessactivityinputmapping detachedInstance) {
 		log.debug("merging Processactivityinputmapping instance");
 		try {
-			Processactivityinputmapping result = entityManager.merge(detachedInstance);
+			EngineProcessactivityinputmapping result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessactivityinputmappingHome {
 		}
 	}
 
-	public Processactivityinputmapping findById(Integer id) {
+	public EngineProcessactivityinputmapping findById(Integer id) {
 		log.debug("getting Processactivityinputmapping instance with id: " + id);
 		try {
-			Processactivityinputmapping instance = entityManager.find(Processactivityinputmapping.class, id);
+			EngineProcessactivityinputmapping instance = entityManager.find(EngineProcessactivityinputmapping.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

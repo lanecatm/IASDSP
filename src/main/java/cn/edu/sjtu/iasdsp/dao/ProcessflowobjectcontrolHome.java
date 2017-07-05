@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.sjtu.iasdsp.model.Processflowobjectcontrol;
+import cn.edu.sjtu.iasdsp.model.EngineProcessflowobjectcontrol;
 
 /**
  * Home object for domain model class Processflowobjectcontrol.
- * @see cn.edu.sjtu.iasdsp.model.Processflowobjectcontrol
+ * @see cn.edu.sjtu.iasdsp.model.EngineProcessflowobjectcontrol
  * @author Hibernate Tools
  */
 @Stateless
@@ -22,7 +22,7 @@ public class ProcessflowobjectcontrolHome {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(Processflowobjectcontrol transientInstance) {
+	public void persist(EngineProcessflowobjectcontrol transientInstance) {
 		log.debug("persisting Processflowobjectcontrol instance");
 		try {
 			entityManager.persist(transientInstance);
@@ -33,7 +33,7 @@ public class ProcessflowobjectcontrolHome {
 		}
 	}
 
-	public void remove(Processflowobjectcontrol persistentInstance) {
+	public void remove(EngineProcessflowobjectcontrol persistentInstance) {
 		log.debug("removing Processflowobjectcontrol instance");
 		try {
 			entityManager.remove(persistentInstance);
@@ -44,10 +44,10 @@ public class ProcessflowobjectcontrolHome {
 		}
 	}
 
-	public Processflowobjectcontrol merge(Processflowobjectcontrol detachedInstance) {
+	public EngineProcessflowobjectcontrol merge(EngineProcessflowobjectcontrol detachedInstance) {
 		log.debug("merging Processflowobjectcontrol instance");
 		try {
-			Processflowobjectcontrol result = entityManager.merge(detachedInstance);
+			EngineProcessflowobjectcontrol result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,10 +56,10 @@ public class ProcessflowobjectcontrolHome {
 		}
 	}
 
-	public Processflowobjectcontrol findById(Integer id) {
+	public EngineProcessflowobjectcontrol findById(Integer id) {
 		log.debug("getting Processflowobjectcontrol instance with id: " + id);
 		try {
-			Processflowobjectcontrol instance = entityManager.find(Processflowobjectcontrol.class, id);
+			EngineProcessflowobjectcontrol instance = entityManager.find(EngineProcessflowobjectcontrol.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {
