@@ -18,7 +18,7 @@ import com.sun.xml.internal.ws.api.model.wsdl.editable.EditableWSDLInput;
 
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
-import cn.edu.sjtu.iasdsp.model.WorkflowInformations;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /**
  * @author xfhuang
@@ -49,7 +49,7 @@ public class AnalyticsApplicationController {
 
 		relatedPageList.add("Stock PRediction");
 
-		List<WorkflowInformations> workflowInformations = new ArrayList<WorkflowInformations>();
+		List<WorkflowInformation> workflowInformations = new ArrayList<WorkflowInformation>();
 
 		ShowApplicationDto showApplicationDto = new ShowApplicationDto("CPU Prediction", new Date(), "xfhuang",
 				introduction, referenceList, relatedPageList);

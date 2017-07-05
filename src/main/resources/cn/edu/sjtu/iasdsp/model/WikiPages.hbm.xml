@@ -1,83 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property"
-	default-cascade="none" default-lazy="true">
-	<class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false"
-		mutable="true" name="cn.edu.sjtu.iasdsp.model.WikiPages"
-		optimistic-lock="version" polymorphism="implicit"
-		select-before-update="false" table="wiki_pages">
-		<id name="id" type="java.lang.Integer">
-			<column name="id" />
-			<generator class="identity" />
-		</id>
-		<many-to-one class="cn.edu.sjtu.iasdsp.model.Users"
-			embed-xml="true" fetch="select" insert="true" name="creator"
-			not-found="exception" optimistic-lock="true" unique="false" update="true">
-			<column name="creator_id" />
-		</many-to-one>
-        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users"
-            embed-xml="true" fetch="select" insert="true" name="updator"
-            not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="updator_id" />
+<!-- Generated 2017-7-5 19:38:01 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.WikiPages" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="wiki_pages">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users" embed-xml="true" fetch="select" insert="true" name="usersByUpdatorId" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="updator_id"/>
         </many-to-one>
-
-
-		<property generated="never" lazy="false" name="path"
-			optimistic-lock="true" type="string" unique="false">
-			<column name="path" unique="true" />
-		</property>
-		<property generated="never" lazy="false" name="title"
-			optimistic-lock="true" type="string" unique="false">
-			<column name="title" />
-		</property>
-		<property generated="never" lazy="false" name="content"
-			optimistic-lock="true" type="string" unique="false">
-			<column name="content" />
-		</property>
-		<property generated="never" lazy="false" name="createdAt"
-			optimistic-lock="true" type="timestamp" unique="false">
-			<column length="19" name="created_at" />
-		</property>
-		<property generated="never" lazy="false" name="updatedAt"
-			optimistic-lock="true" type="timestamp" unique="false">
-			<column length="19" name="updated_at" />
-		</property>
-		<set embed-xml="true" fetch="select" inverse="true" lazy="true"
-			mutable="true" name="wikiAndWorkflowInformations" optimistic-lock="true"
-			sort="unsorted" table="wiki_and_workflow_informations">
-			<key on-delete="noaction">
-				<column name="wiki_page_id" />
-			</key>
-			<one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations"
-				embed-xml="true" not-found="exception" />
-		</set>
-		<set embed-xml="true" fetch="select" inverse="true" lazy="true"
-			mutable="true" name="taskPerformances" optimistic-lock="true" sort="unsorted"
-			table="task_performances">
-			<key on-delete="noaction">
-				<column name="wiki_page_id" />
-			</key>
-			<one-to-many class="cn.edu.sjtu.iasdsp.model.TaskPerformances"
-				embed-xml="true" not-found="exception" />
-		</set>
-		<set embed-xml="true" fetch="select" inverse="true" lazy="true"
-			mutable="true" name="wikiRelationships" optimistic-lock="true"
-			sort="unsorted" table="wiki_relationships">
-			<key on-delete="noaction">
-				<column name="wiki_page_id" />
-			</key>
-			<one-to-many class="cn.edu.sjtu.iasdsp.model.WikiRelationships"
-				embed-xml="true" not-found="exception" />
-		</set>
-
-		<set embed-xml="true" fetch="select" inverse="true" lazy="true"
-			mutable="true" name="wikiReferences" optimistic-lock="true" sort="unsorted"
-			table="wiki_references">
-			<key on-delete="noaction">
-				<column name="wiki_page_id" />
-			</key>
-			<one-to-many class="cn.edu.sjtu.iasdsp.model.WikiReferences"
-				embed-xml="true" not-found="exception" />
-		</set>
-	</class>
+        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users" embed-xml="true" fetch="select" insert="true" name="usersByCreatorId" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="creator_id"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="path" optimistic-lock="true" type="string" unique="false">
+            <column name="path" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="title" optimistic-lock="true" type="string" unique="false">
+            <column name="title"/>
+        </property>
+        <property generated="never" lazy="false" name="content" optimistic-lock="true" type="string" unique="false">
+            <column name="content"/>
+        </property>
+        <property generated="never" lazy="false" name="createdAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="created_at"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="updated_at"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="taskPerformanceses" optimistic-lock="true" sort="unsorted" table="task_performances">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.TaskPerformances" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiAndWorkflowInformationses" optimistic-lock="true" sort="unsorted" table="wiki_and_workflow_informations">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiReferenceses" optimistic-lock="true" sort="unsorted" table="wiki_references">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiReferences" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiAndWorkflowInformationses_1" optimistic-lock="true" sort="unsorted" table="wiki_and_workflow_informations">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="taskPerformanceses_1" optimistic-lock="true" sort="unsorted" table="task_performances">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.TaskPerformances" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiRelationshipses" optimistic-lock="true" sort="unsorted" table="wiki_relationships">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiRelationships" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiRelationshipses_1" optimistic-lock="true" sort="unsorted" table="wiki_relationships">
+            <key on-delete="noaction">
+                <column name="wiki_page_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiRelationships" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
 </hibernate-mapping>

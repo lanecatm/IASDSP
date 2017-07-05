@@ -12,11 +12,11 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.edu.sjtu.iasdsp.model.NodeCategories;
-import cn.edu.sjtu.iasdsp.model.Users;
-import cn.edu.sjtu.iasdsp.model.WikiPages;
-import cn.edu.sjtu.iasdsp.model.WikiReferences;
-import cn.edu.sjtu.iasdsp.model.WorkflowInformations;
+import cn.edu.sjtu.iasdsp.model.NodeCategory;
+import cn.edu.sjtu.iasdsp.model.User;
+import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.WikiReference;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 public class TestHibernate {
 
@@ -30,7 +30,7 @@ public class TestHibernate {
 			// 下面开始我们的数据库操作
 			Session session = sessionFactory.openSession();// 从会话工厂获取一个session
 			Transaction transaction = session.beginTransaction();// 开启一个新的事务
-			NodeCategories nodeCategory = new NodeCategories();
+			NodeCategory nodeCategory = new NodeCategory();
 			nodeCategory.setName("test spring hibernate");
 			nodeCategory.setCreatedAt(new Date());
 			nodeCategory.setUpdatedAt(new Date());
@@ -52,9 +52,9 @@ public class TestHibernate {
 			// 下面开始我们的数据库操作
 			Session session = sessionFactory.openSession();// 从会话工厂获取一个session
 			Transaction transaction = session.beginTransaction();// 开启一个新的事务
-			WorkflowInformations workflowInformation = new WorkflowInformations(new Date(), new Date());
+			WorkflowInformation workflowInformation = new WorkflowInformation(new Date(), new Date());
 
-			Users user = session.load(Users.class, 1);
+			User user = session.load(User.class, 1);
 			workflowInformation.setAuthor(user);
 			session.save(workflowInformation);
 			// 提交事务
@@ -77,7 +77,7 @@ public class TestHibernate {
 	public void test_wiki_pages() {
 		// 测试WikiPages WikiReferences WikiRelationships
 		int testWikiPageId = -1;
-		WikiPages wikiPage = null;
+		WikiPage wikiPage = null;
 
 		SessionFactory sessionFactory = null;
 		try {
@@ -90,15 +90,15 @@ public class TestHibernate {
 
 			Transaction transaction = session.beginTransaction();// 开启一个新的事务
 
-			Users creator = session.load(Users.class, 1);
-			Users updator = session.load(Users.class, 1);
+			User creator = session.load(User.class, 1);
+			User updator = session.load(User.class, 1);
 			String path = "test_path18";
 			String title = "test title";
 			String content = "test content";
 
-			wikiPage = new WikiPages(creator, updator, path, title, content, new Date(), new Date());
+			wikiPage = new WikiPage(creator, updator, path, title, content, new Date(), new Date());
 			session.save(wikiPage);
-			WikiReferences wikiReference = new WikiReferences("wiki reference context", "wiki reference url",
+			WikiReference wikiReference = new WikiReference("wiki reference context", "wiki reference url",
 					new Date(), new Date());
 			wikiReference.setWikiPages(wikiPage);
 			session.save(wikiReference);
@@ -118,9 +118,9 @@ public class TestHibernate {
 		try{
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			WikiPages wikiPageNew = session.load(WikiPages.class, wikiPage.getId());
+			WikiPage wikiPageNew = session.load(WikiPage.class, wikiPage.getId());
 			System.out.println(wikiPageNew.getWikiReferences());
-			for (WikiReferences wikiReferenceTmp : (Set<WikiReferences>) wikiPageNew.getWikiReferences()) {
+			for (WikiReference wikiReferenceTmp : (Set<WikiReference>) wikiPageNew.getWikiReferences()) {
 				session.delete(wikiReferenceTmp);
 			}
 			session.delete(wikiPageNew);

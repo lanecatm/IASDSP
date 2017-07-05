@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-5 19:38:01 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.NodeTypes" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="node_types">
         <id name="id" type="java.lang.Integer">
@@ -15,13 +15,25 @@
         <property generated="never" lazy="false" name="updatedAt" optimistic-lock="true" type="timestamp" unique="false">
             <column length="19" name="updated_at" not-null="true"/>
         </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeCategorieses" optimistic-lock="true" sort="unsorted" table="node_categories">
+            <key on-delete="noaction">
+                <column name="node_type_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.NodeCategories" embed-xml="true" not-found="exception"/>
+        </set>
         <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeFunctionses" optimistic-lock="true" sort="unsorted" table="node_functions">
             <key on-delete="noaction">
                 <column name="node_type_id"/>
             </key>
             <one-to-many class="cn.edu.sjtu.iasdsp.model.NodeFunctions" embed-xml="true" not-found="exception"/>
         </set>
-        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeCategorieses" optimistic-lock="true" sort="unsorted" table="node_categories">
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeFunctionses_1" optimistic-lock="true" sort="unsorted" table="node_functions">
+            <key on-delete="noaction">
+                <column name="node_type_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.NodeFunctions" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeCategorieses_1" optimistic-lock="true" sort="unsorted" table="node_categories">
             <key on-delete="noaction">
                 <column name="node_type_id"/>
             </key>

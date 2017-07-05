@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.sjtu.iasdsp.model.WorkflowInformations;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /** 
 * @author xfhuang 
@@ -20,13 +20,13 @@ public class ShowApplicationDto {
 	private String introduction;
 	private Map<String, String> referenceList;
 	private List<String> relatedPageList;
-	private List<WorkflowInformations> workflowInformationList;
+	private List<WorkflowInformation> workflowInformationList;
 	
 
 
 	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
 			Map<String, String> referenceList, List<String> relatedPageList,
-			List<WorkflowInformations> workflowInformationList) {
+			List<WorkflowInformation> workflowInformationList) {
 		super();
 		this.title = title;
 		this.time = time;
@@ -84,10 +84,10 @@ public class ShowApplicationDto {
 	public void setRelatedPageList(List<String> relatedPageList) {
 		this.relatedPageList = relatedPageList;
 	}
-	public List<WorkflowInformations> getWorkflowInformationList() {
+	public List<WorkflowInformation> getWorkflowInformationList() {
 		return workflowInformationList;
 	}
-	public void setWorkflowInformationList(List<WorkflowInformations> workflowInformationList) {
+	public void setWorkflowInformationList(List<WorkflowInformation> workflowInformationList) {
 		this.workflowInformationList = workflowInformationList;
 	}
 	

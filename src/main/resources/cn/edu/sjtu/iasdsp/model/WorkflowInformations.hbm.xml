@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 2017-6-26 3:55:41 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-5 19:38:01 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="isdsp_dev" dynamic-insert="false" dynamic-update="false" mutable="true" name="cn.edu.sjtu.iasdsp.model.WorkflowInformations" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="workflow_informations">
         <id name="id" type="java.lang.Integer">
             <column name="id"/>
             <generator class="identity"/>
         </id>
+        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users" embed-xml="true" fetch="select" insert="true" name="users" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="author_id"/>
+        </many-to-one>
         <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
             <column name="name"/>
         </property>
@@ -24,14 +27,6 @@
         <property generated="never" lazy="false" name="tagId" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="tag_id"/>
         </property>
-        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users" embed-xml="true" fetch="select" insert="true" name="author" not-found="exception" optimistic-lock="true" unique="false" update="true">
-            <column name="author_id"/>
-        </many-to-one>
-        <!--  
-        <property generated="never" lazy="false" name="authorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
-            <column name="author_id"/>
-        </property>
-        -->
         <property generated="never" lazy="false" name="lastEditorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="last_editor_id"/>
         </property>
@@ -78,6 +73,18 @@
             <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations" embed-xml="true" not-found="exception"/>
         </set>
         <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeInformationses" optimistic-lock="true" sort="unsorted" table="node_informations">
+            <key on-delete="noaction">
+                <column name="workflow_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.NodeInformations" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="wikiAndWorkflowInformationses_1" optimistic-lock="true" sort="unsorted" table="wiki_and_workflow_informations">
+            <key on-delete="noaction">
+                <column name="workflow_information_id"/>
+            </key>
+            <one-to-many class="cn.edu.sjtu.iasdsp.model.WikiAndWorkflowInformations" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="nodeInformationses_1" optimistic-lock="true" sort="unsorted" table="node_informations">
             <key on-delete="noaction">
                 <column name="workflow_information_id"/>
             </key>

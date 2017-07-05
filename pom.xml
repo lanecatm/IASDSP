@@ -77,6 +77,14 @@
 			<version>5.4.1.Final</version>
 		</dependency>
 
+		<!-- 生成ejb -->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>mysql</groupId>
