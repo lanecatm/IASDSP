@@ -24,9 +24,14 @@
         <property generated="never" lazy="false" name="tagId" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="tag_id"/>
         </property>
+        <many-to-one class="cn.edu.sjtu.iasdsp.model.Users" embed-xml="true" fetch="select" insert="true" name="author" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="author_id"/>
+        </many-to-one>
+        <!--  
         <property generated="never" lazy="false" name="authorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="author_id"/>
         </property>
+        -->
         <property generated="never" lazy="false" name="lastEditorId" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="last_editor_id"/>
         </property>

@@ -17,7 +17,7 @@ public class WorkflowInformations implements java.io.Serializable {
 	private String versionName;
 	private Integer categoryId;
 	private Integer tagId;
-	private Integer authorId;
+	private Users author;
 	private Integer lastEditorId;
 	private Integer status;
 	private Date createtime;
@@ -43,7 +43,7 @@ public class WorkflowInformations implements java.io.Serializable {
 	}
 
 	public WorkflowInformations(String name, String introduction, String detialDescription, String versionName,
-			Integer categoryId, Integer tagId, Integer authorId, Integer lastEditorId, Integer status, Date createtime,
+			Integer categoryId, Integer tagId, Users author, Integer lastEditorId, Integer status, Date createtime,
 			Date validFrom, Date validTo, Boolean persistent, Integer priority, Integer mostPossibleDuration,
 			Integer minimalDuration, Integer maximalDuration, Date createdAt, Date updatedAt, String xml,
 			Set wikiAndWorkflowInformationses, Set nodeInformationses) {
@@ -53,7 +53,7 @@ public class WorkflowInformations implements java.io.Serializable {
 		this.versionName = versionName;
 		this.categoryId = categoryId;
 		this.tagId = tagId;
-		this.authorId = authorId;
+		this.author = author;
 		this.lastEditorId = lastEditorId;
 		this.status = status;
 		this.createtime = createtime;
@@ -69,6 +69,14 @@ public class WorkflowInformations implements java.io.Serializable {
 		this.xml = xml;
 		this.wikiAndWorkflowInformationses = wikiAndWorkflowInformationses;
 		this.nodeInformationses = nodeInformationses;
+	}
+
+	public Users getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Users author) {
+		this.author = author;
 	}
 
 	public Integer getId() {
@@ -127,13 +135,6 @@ public class WorkflowInformations implements java.io.Serializable {
 		this.tagId = tagId;
 	}
 
-	public Integer getAuthorId() {
-		return this.authorId;
-	}
-
-	public void setAuthorId(Integer authorId) {
-		this.authorId = authorId;
-	}
 
 	public Integer getLastEditorId() {
 		return this.lastEditorId;

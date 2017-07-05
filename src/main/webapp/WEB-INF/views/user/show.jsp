@@ -13,9 +13,9 @@
 <!-- 没有写action，提交会给/create -->
 <h1>Show</h1>
     Username: ${user.username} 
-    Password: 
-    Nickname: 
-    Email:    
+    Password: ${user.} 
+    Nickname: ${user.} 
+    Email:    ${user.email} 
 
 </body>
 </html>

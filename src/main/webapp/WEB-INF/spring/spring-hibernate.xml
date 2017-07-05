@@ -145,6 +145,7 @@
 				<value>cn/edu/sjtu/iasdsp/model/Workflowcontrolflowcondition.hbm.xml
 				</value>
 				<value>cn/edu/sjtu/iasdsp/model/HomelandNodes.hbm.xml</value>
+                <value>cn/edu/sjtu/iasdsp/model/WikiReferences.hbm.xml</value>
 
 
 			</list>

@@ -11,120 +11,133 @@ import java.util.Set;
 public class WikiPages implements java.io.Serializable {
 
 	private Integer id;
-	private Integer creatorId;
-	private Integer updatorId;
+	private Users creator;
+	private Users updator;
 	private String path;
 	private String title;
 	private String content;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set wikiAndWorkflowInformationses = new HashSet(0);
-	private Set taskPerformanceses = new HashSet(0);
-	private Set wikiRelationshipses = new HashSet(0);
-
+	private Set wikiAndWorkflowInformations = new HashSet(0);
+	private Set taskPerformances = new HashSet(0);
+	private Set wikiRelationships = new HashSet(0);
+	private Set wikiReferences = new HashSet(0);
+	
 	public WikiPages() {
 	}
+	
+	
+	public WikiPages(Date createdAt, Date updatedAt) {
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
-	public WikiPages(Integer creatorId, Integer updatorId, String path, String title, String content, Date createdAt,
-			Date updatedAt, Set wikiAndWorkflowInformationses, Set taskPerformanceses, Set wikiRelationshipses) {
-		this.creatorId = creatorId;
-		this.updatorId = updatorId;
+
+	public WikiPages(Users creator, Users updator, String path, String title, String content, Date createdAt,
+			Date updatedAt) {
+		super();
+		this.creator = creator;
+		this.updator = updator;
 		this.path = path;
 		this.title = title;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.wikiAndWorkflowInformationses = wikiAndWorkflowInformationses;
-		this.taskPerformanceses = taskPerformanceses;
-		this.wikiRelationshipses = wikiRelationshipses;
 	}
 
+
+	public WikiPages(Users creator, Users updator, String path, String title, String content,
+			Date createdAt, Date updatedAt, Set wikiAndWorkflowInformations, Set taskPerformances,
+			Set wikiRelationships, Set wikiReferences) {
+
+		this.creator = creator;
+		this.updator = updator;
+		this.path = path;
+		this.title = title;
+		this.content = content;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.wikiAndWorkflowInformations = wikiAndWorkflowInformations;
+		this.taskPerformances = taskPerformances;
+		this.wikiRelationships = wikiRelationships;
+		this.wikiReferences = wikiReferences;
+	}
+	
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Integer getCreatorId() {
-		return this.creatorId;
+	public Users getCreator() {
+		return creator;
 	}
-
-	public void setCreatorId(Integer creatorId) {
-		this.creatorId = creatorId;
+	public void setCreator(Users creator) {
+		this.creator = creator;
 	}
-
-	public Integer getUpdatorId() {
-		return this.updatorId;
+	public Users getUpdator() {
+		return updator;
 	}
-
-	public void setUpdatorId(Integer updatorId) {
-		this.updatorId = updatorId;
+	public void setUpdator(Users updator) {
+		this.updator = updator;
 	}
-
 	public String getPath() {
-		return this.path;
+		return path;
 	}
-
 	public void setPath(String path) {
 		this.path = path;
 	}
-
 	public String getTitle() {
-		return this.title;
+		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public String getContent() {
-		return this.content;
+		return content;
 	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 	public Date getCreatedAt() {
-		return this.createdAt;
+		return createdAt;
 	}
-
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
 	public Date getUpdatedAt() {
-		return this.updatedAt;
+		return updatedAt;
 	}
-
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public Set getWikiAndWorkflowInformationses() {
-		return this.wikiAndWorkflowInformationses;
+	public Set getWikiAndWorkflowInformations() {
+		return wikiAndWorkflowInformations;
 	}
-
-	public void setWikiAndWorkflowInformationses(Set wikiAndWorkflowInformationses) {
-		this.wikiAndWorkflowInformationses = wikiAndWorkflowInformationses;
+	public void setWikiAndWorkflowInformations(Set wikiAndWorkflowInformations) {
+		this.wikiAndWorkflowInformations = wikiAndWorkflowInformations;
 	}
-
-	public Set getTaskPerformanceses() {
-		return this.taskPerformanceses;
+	public Set getTaskPerformances() {
+		return taskPerformances;
 	}
-
-	public void setTaskPerformanceses(Set taskPerformanceses) {
-		this.taskPerformanceses = taskPerformanceses;
+	public void setTaskPerformances(Set taskPerformances) {
+		this.taskPerformances = taskPerformances;
 	}
-
-	public Set getWikiRelationshipses() {
-		return this.wikiRelationshipses;
+	public Set getWikiRelationships() {
+		return wikiRelationships;
 	}
-
-	public void setWikiRelationshipses(Set wikiRelationshipses) {
-		this.wikiRelationshipses = wikiRelationshipses;
+	public void setWikiRelationships(Set wikiRelationships) {
+		this.wikiRelationships = wikiRelationships;
 	}
+	
+	public Set getWikiReferences() {
+		return wikiReferences;
+	}
+	public void setWikiReferences(Set wikiReferences) {
+		this.wikiReferences = wikiReferences;
+	}
+	
+
+	
 
 }

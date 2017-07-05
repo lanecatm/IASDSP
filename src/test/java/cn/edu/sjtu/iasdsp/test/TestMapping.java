@@ -20,11 +20,11 @@ public class TestMapping {
 			nodeCategory.setName("test");
 			nodeCategory.setCreatedAt(new Date());
 			nodeCategory.setUpdatedAt(new Date());
-			
+
 			session.save(nodeCategory);
-			
+
 			NodeCategories nodeCategory1 = session.get(NodeCategories.class, 11);
-			if (nodeCategory1==null){
+			if (nodeCategory1 == null) {
 				System.out.println("null");
 			}
 
@@ -37,7 +37,11 @@ public class TestMapping {
 				session.getTransaction().rollback();
 			}
 		} finally {
-			HiberlateUtil.closeSession(session);
+			try {
+				HiberlateUtil.closeSession(session);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -1,14 +1,8 @@
 package cn.edu.sjtu.iasdsp.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.edu.sjtu.iasdsp.model.NodeCategories;
 import cn.edu.sjtu.iasdsp.model.Users;
 
 /** 
@@ -53,7 +45,7 @@ public class UserController {
 		users.put("user3", new Users("user3@sjtu.edu.cn", "password3", "user3", 1));
 		users.put("user4", new Users("user4@sjtu.edu.cn", "password4", "user4", 1));
 		model.addAttribute("users", users);
-		return "user/list";
+		return "user/show";
 
 	}
 
@@ -84,22 +76,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/create1", method = RequestMethod.GET)
 	public String create1(@ModelAttribute("user") Users user) {
-		// model.addAttribute("user", new Users());
-		// 服务器端跳转
-//		try {
-//			 Session session = sessionFactory.openSession();//
-//			 //从会话工厂获取一个session
-//			 Transaction transaction = session.beginTransaction();// 开启一个新的事务
-//			 NodeCategories nodeCategory = new NodeCategories();
-//			 nodeCategory.setName("test spring hibernate");
-//			 nodeCategory.setCreatedAt(new Date());
-//			 nodeCategory.setUpdatedAt(new Date());
-//			 session.save(nodeCategory);
-//			 // 提交事务
-//			 transaction.commit();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+
 		return "user/create1";
 	}
 
