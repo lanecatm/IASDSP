@@ -1,30 +1,29 @@
 package cn.edu.sjtu.iasdsp.dao;
 // Generated 2017-7-5 20:36:17 by Hibernate Tools 5.2.3.Final
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
-import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.EngineWorkflowflow;
 
 /**
- * Home object for domain model class WikiPages.
- * @see cn.edu.sjtu.iasdsp.model.WikiPage
+ * Home object for domain model class Workflowflow.
+ * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowflow
  * @author Hibernate Tools
  */
-@Component
-public class WikiPagesHome {
+@Stateless
+public class EngineWorkflowflowHome {
 
-	private static final Log log = LogFactory.getLog(WikiPagesHome.class);
+	private static final Log log = LogFactory.getLog(EngineWorkflowflowHome.class);
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(WikiPage transientInstance) {
-		log.debug("persisting WikiPages instance");
+	public void persist(EngineWorkflowflow transientInstance) {
+		log.debug("persisting Workflowflow instance");
 		try {
 			entityManager.persist(transientInstance);
 			log.debug("persist successful");
@@ -34,8 +33,8 @@ public class WikiPagesHome {
 		}
 	}
 
-	public void remove(WikiPage persistentInstance) {
-		log.debug("removing WikiPages instance");
+	public void remove(EngineWorkflowflow persistentInstance) {
+		log.debug("removing Workflowflow instance");
 		try {
 			entityManager.remove(persistentInstance);
 			log.debug("remove successful");
@@ -45,10 +44,10 @@ public class WikiPagesHome {
 		}
 	}
 
-	public WikiPage merge(WikiPage detachedInstance) {
-		log.debug("merging WikiPages instance");
+	public EngineWorkflowflow merge(EngineWorkflowflow detachedInstance) {
+		log.debug("merging Workflowflow instance");
 		try {
-			WikiPage result = entityManager.merge(detachedInstance);
+			EngineWorkflowflow result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -57,10 +56,10 @@ public class WikiPagesHome {
 		}
 	}
 
-	public WikiPage findById(Integer id) {
-		log.debug("getting WikiPages instance with id: " + id);
+	public EngineWorkflowflow findById(Integer id) {
+		log.debug("getting Workflowflow instance with id: " + id);
 		try {
-			WikiPage instance = entityManager.find(WikiPage.class, id);
+			EngineWorkflowflow instance = entityManager.find(EngineWorkflowflow.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

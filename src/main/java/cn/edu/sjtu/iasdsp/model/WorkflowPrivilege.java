@@ -4,9 +4,12 @@ package cn.edu.sjtu.iasdsp.model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +22,7 @@ import javax.persistence.TemporalType;
 public class WorkflowPrivilege implements java.io.Serializable {
 
 	private Integer id;
-	private Integer workflowInformationId;
+	private WorkflowInformation workflowInformation;
 	private Integer editDepartmentId;
 	private Integer executeDepartmentId;
 	private Integer deleteDepartmentId;
@@ -34,15 +37,7 @@ public class WorkflowPrivilege implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public WorkflowPrivilege(Integer workflowInformationId, Integer editDepartmentId, Integer executeDepartmentId,
-			Integer deleteDepartmentId, Date createdAt, Date updatedAt) {
-		this.workflowInformationId = workflowInformationId;
-		this.editDepartmentId = editDepartmentId;
-		this.executeDepartmentId = executeDepartmentId;
-		this.deleteDepartmentId = deleteDepartmentId;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-	}
+
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -56,13 +51,15 @@ public class WorkflowPrivilege implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "workflow_information_id")
-	public Integer getWorkflowInformationId() {
-		return this.workflowInformationId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "workflow_information_id")
+	public WorkflowInformation getWorkflowInformation() {
+		return workflowInformation;
 	}
 
-	public void setWorkflowInformationId(Integer workflowInformationId) {
-		this.workflowInformationId = workflowInformationId;
+	public void setWorkflowInformation(WorkflowInformation workflowInformation) {
+		this.workflowInformation = workflowInformation;
 	}
 
 	@Column(name = "edit_department_id")

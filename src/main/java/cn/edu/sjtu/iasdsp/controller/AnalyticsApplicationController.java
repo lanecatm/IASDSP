@@ -51,8 +51,8 @@ public class AnalyticsApplicationController {
 
 		List<WorkflowInformation> workflowInformations = new ArrayList<WorkflowInformation>();
 
-		ShowApplicationDto showApplicationDto = new ShowApplicationDto("CPU Prediction", new Date(), "xfhuang",
-				introduction, referenceList, relatedPageList);
+		//ShowApplicationDto showApplicationDto = new ShowApplicationDto("CPU Prediction", new Date(), "xfhuang",
+		//		introduction, referenceList, relatedPageList);
 		return showApplicationDto;
 	}
 
@@ -70,11 +70,17 @@ public class AnalyticsApplicationController {
 
 		return "application/edit";
 	}
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
+		model.addAttribute("showApplicationDto", showApplicationDto);
+		model.addAttribute("editApplicationDto", new EditApplicationDto());
 
+		return "application/edit";
+	}
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(EditApplicationDto editApplicationDto) {
-		showApplicationDto.setIntroduction(editApplicationDto.getIntroduction());
-		showApplicationDto.setReferenceList(editApplicationDto.getReferenceList());
+		//showApplicationDto.setIntroduction(editApplicationDto.getIntroduction());
+		//showApplicationDto.setReferenceList(editApplicationDto.getReferenceList());
 		return "redirect:/application/show";
 	}
 

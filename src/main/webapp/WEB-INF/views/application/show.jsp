@@ -60,7 +60,7 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane " id="model">
-						<%-- <%@ include file="show_model.jsp"%> --%>
+						<%@ include file="show_model.jsp"%>
                     </div>
                     <div role="tabpanel" class="tab-pane " id="forum">
 						<%-- <%@ include file="show_forum.jsp"%> --%>

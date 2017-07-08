@@ -76,7 +76,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.4.1.Final</version>
 		</dependency>
-
+		<!-- 自动生成的dao -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
 		<!-- 生成ejb -->
 		<dependency>
 			<groupId>javax.ejb</groupId>

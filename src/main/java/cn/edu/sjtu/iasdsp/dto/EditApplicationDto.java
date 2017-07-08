@@ -3,6 +3,8 @@ package cn.edu.sjtu.iasdsp.dto;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.sjtu.iasdsp.model.WikiReference;
+
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn
@@ -11,37 +13,49 @@ import java.util.Map;
 * Introduction
 */
 public class EditApplicationDto {
-	String introduction;
-	Map<String, String> referenceList;
+	String title;
+	String content;
+	private List<WikiReference> referenceList;
 	List<String> relatedPageList;
 	
 	
 	public EditApplicationDto() {
-		super();
 	}
-	public EditApplicationDto(String introduction, Map<String, String> referenceList, List<String> relatedPageList) {
-		super();
-		this.introduction = introduction;
-		this.referenceList = referenceList;
-		this.relatedPageList = relatedPageList;
+
+
+	public String getTitle() {
+		return title;
 	}
-	public String getIntroduction() {
-		return introduction;
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public void setIntroduction(String introduction) {
-		this.introduction = introduction;
+
+
+	public String getContent() {
+		return content;
 	}
-	public Map<String, String> getReferenceList() {
-		return referenceList;
+
+
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public void setReferenceList(Map<String, String> referenceList) {
-		this.referenceList = referenceList;
-	}
+
+
 	public List<String> getRelatedPageList() {
 		return relatedPageList;
 	}
 	public void setRelatedPageList(List<String> relatedPageList) {
 		this.relatedPageList = relatedPageList;
+	}
+
+	public List<WikiReference> getReferenceList() {
+		return referenceList;
+	}
+
+	public void setReferenceList(List<WikiReference> referenceList) {
+		this.referenceList = referenceList;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.sjtu.iasdsp.model.WikiReference;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /** 
@@ -14,18 +15,23 @@ import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 * Introduction
 */
 public class ShowApplicationDto {
+	
+	
 	private String title;
 	private Date time;
 	private String authorName;
 	private String introduction;
-	private Map<String, String> referenceList;
+	private List<WikiReference> referenceList;
 	private List<String> relatedPageList;
 	private List<WorkflowInformation> workflowInformationList;
 	
 
 
+	public ShowApplicationDto() {
+	}
+
 	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Map<String, String> referenceList, List<String> relatedPageList,
+			List<WikiReference> referenceList, List<String> relatedPageList,
 			List<WorkflowInformation> workflowInformationList) {
 		super();
 		this.title = title;
@@ -38,7 +44,7 @@ public class ShowApplicationDto {
 	}
 	
 	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Map<String, String> referenceList, List<String> relatedPageList) {
+			List<WikiReference> referenceList, List<String> relatedPageList) {
 		super();
 		this.title = title;
 		this.time = time;
@@ -72,10 +78,10 @@ public class ShowApplicationDto {
 		this.introduction = introduction;
 	}
 	
-	public Map<String, String> getReferenceList() {
+	public List<WikiReference> getReferenceList() {
 		return referenceList;
 	}
-	public void setReferenceList(Map<String, String> referenceList) {
+	public void setReferenceList(List<WikiReference> referenceList) {
 		this.referenceList = referenceList;
 	}
 	public List<String> getRelatedPageList() {

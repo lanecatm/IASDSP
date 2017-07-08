@@ -1,30 +1,29 @@
 package cn.edu.sjtu.iasdsp.dao;
 // Generated 2017-7-5 20:36:17 by Hibernate Tools 5.2.3.Final
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
-import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.EngineSystemxmldocument;
 
 /**
- * Home object for domain model class WikiPages.
- * @see cn.edu.sjtu.iasdsp.model.WikiPage
+ * Home object for domain model class Systemxmldocument.
+ * @see cn.edu.sjtu.iasdsp.model.EngineSystemxmldocument
  * @author Hibernate Tools
  */
-@Component
-public class WikiPagesHome {
+@Stateless
+public class EngineSystemxmldocumentHome {
 
-	private static final Log log = LogFactory.getLog(WikiPagesHome.class);
+	private static final Log log = LogFactory.getLog(EngineSystemxmldocumentHome.class);
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public void persist(WikiPage transientInstance) {
-		log.debug("persisting WikiPages instance");
+	public void persist(EngineSystemxmldocument transientInstance) {
+		log.debug("persisting Systemxmldocument instance");
 		try {
 			entityManager.persist(transientInstance);
 			log.debug("persist successful");
@@ -34,8 +33,8 @@ public class WikiPagesHome {
 		}
 	}
 
-	public void remove(WikiPage persistentInstance) {
-		log.debug("removing WikiPages instance");
+	public void remove(EngineSystemxmldocument persistentInstance) {
+		log.debug("removing Systemxmldocument instance");
 		try {
 			entityManager.remove(persistentInstance);
 			log.debug("remove successful");
@@ -45,10 +44,10 @@ public class WikiPagesHome {
 		}
 	}
 
-	public WikiPage merge(WikiPage detachedInstance) {
-		log.debug("merging WikiPages instance");
+	public EngineSystemxmldocument merge(EngineSystemxmldocument detachedInstance) {
+		log.debug("merging Systemxmldocument instance");
 		try {
-			WikiPage result = entityManager.merge(detachedInstance);
+			EngineSystemxmldocument result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -57,10 +56,10 @@ public class WikiPagesHome {
 		}
 	}
 
-	public WikiPage findById(Integer id) {
-		log.debug("getting WikiPages instance with id: " + id);
+	public EngineSystemxmldocument findById(Integer id) {
+		log.debug("getting Systemxmldocument instance with id: " + id);
 		try {
-			WikiPage instance = entityManager.find(WikiPage.class, id);
+			EngineSystemxmldocument instance = entityManager.find(EngineSystemxmldocument.class, id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

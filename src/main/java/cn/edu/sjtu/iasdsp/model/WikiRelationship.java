@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class WikiRelationship implements java.io.Serializable {
 
 	private Integer id;
-	private WikiPage wikiPages;
+	private WikiPage wikiPage;
 	private Integer relatedWikiPageId;
 	private Date createdAt;
 	private Date updatedAt;
@@ -36,7 +36,7 @@ public class WikiRelationship implements java.io.Serializable {
 	}
 
 	public WikiRelationship(WikiPage wikiPages, Integer relatedWikiPageId, Date createdAt, Date updatedAt) {
-		this.wikiPages = wikiPages;
+		this.wikiPage = wikiPages;
 		this.relatedWikiPageId = relatedWikiPageId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -56,12 +56,12 @@ public class WikiRelationship implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "wiki_page_id")
-	public WikiPage getWikiPages() {
-		return this.wikiPages;
+	public WikiPage getWikiPage() {
+		return this.wikiPage;
 	}
 
-	public void setWikiPages(WikiPage wikiPages) {
-		this.wikiPages = wikiPages;
+	public void setWikiPage(WikiPage wikiPage) {
+		this.wikiPage = wikiPage;
 	}
 
 	@Column(name = "related_wiki_page_id")

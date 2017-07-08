@@ -78,6 +78,7 @@ public class TestHibernate {
 		// 测试WikiPages WikiReferences WikiRelationships
 		int testWikiPageId = -1;
 		WikiPage wikiPage = null;
+		Transaction transaction = null;
 
 		SessionFactory sessionFactory = null;
 		try {
@@ -88,19 +89,22 @@ public class TestHibernate {
 			// 下面开始我们的数据库操作
 			Session session = sessionFactory.openSession();// 从会话工厂获取一个session
 
-			Transaction transaction = session.beginTransaction();// 开启一个新的事务
+			transaction = session.beginTransaction();// 开启一个新的事务
 
 			User creator = session.load(User.class, 1);
 			User updator = session.load(User.class, 1);
-			String path = "test_path18";
+			String path = "test_path19xxx";
 			String title = "test title";
 			String content = "test content";
 
+			WorkflowInformation workflowInformation = new WorkflowInformation(new Date(), new Date());
+			session.save(workflowInformation);
 			wikiPage = new WikiPage(creator, updator, path, title, content, new Date(), new Date());
+			wikiPage.getWorkflowInformations().add(workflowInformation);
 			session.save(wikiPage);
 			WikiReference wikiReference = new WikiReference("wiki reference context", "wiki reference url",
 					new Date(), new Date());
-			wikiReference.setWikiPages(wikiPage);
+			wikiReference.setWikiPage(wikiPage);
 			session.save(wikiReference);
 			// wikiPage.getWikiReferences().add(wikiReference);
 
@@ -109,15 +113,20 @@ public class TestHibernate {
 			// 提交事务
 			transaction.commit();
 			session.close();
+		
 		} catch (Exception e) {
 			e.printStackTrace();
+			if(transaction != null){
+				transaction.rollback();
+			}
+		
 			fail();
 		}
 			
 			
 		try{
 			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			WikiPage wikiPageNew = session.load(WikiPage.class, wikiPage.getId());
 			System.out.println(wikiPageNew.getWikiReferences());
 			for (WikiReference wikiReferenceTmp : (Set<WikiReference>) wikiPageNew.getWikiReferences()) {
@@ -128,6 +137,9 @@ public class TestHibernate {
 			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			if(transaction != null){
+				transaction.rollback();
+			}
 			fail();
 		}
 		
