@@ -5,10 +5,10 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.edu.sjtu.iasdsp.dao.WikiPagesHome;
+import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
@@ -22,12 +22,14 @@ import cn.edu.sjtu.iasdsp.model.WikiRelationship;
 * @version 
 * Introduction
 */
-@Component
+
+@Service
 public class AnalyticsApplicationService {
 	
 	private static final Log log = LogFactory.getLog(AnalyticsApplicationService.class);
+
 	@Autowired
-	private WikiPagesHome wikiPagesHome;
+	private WikiPageHome wikiPageHome;
 	
 	@Transactional
 	public EditApplicationDto create(){
@@ -49,23 +51,20 @@ public class AnalyticsApplicationService {
 	}
 	
 	@Transactional
-	public void create(WikiPage wikiPage){
-		wikiPagesHome.persist(wikiPage);
-		//wikiPage.setContent("hello");
-		//wikiPage = wikiPagesHome.merge(wikiPage);
-
-	}
-	
-	@Transactional
-	public void remove(WikiPage wikiPage){
-		wikiPage = wikiPagesHome.merge(wikiPage);
-		wikiPagesHome.remove(wikiPage);
-	}
-	
-	public ShowApplicationDto show(){
-		ShowApplicationDto showApplicationParams = new ShowApplicationDto();
-		
-		return showApplicationParams;
+	public ShowApplicationDto show(String wikiPath){
+		WikiPage wikiPage = wikiPageHome.findById(33);
+		String userName = wikiPage.getUserByCreatorId() == null ? "Author" : wikiPage.getUserByCreatorId().getUserName();
+		ShowApplicationDto showApplicationDto = new ShowApplicationDto(
+				wikiPage.getTitle(),
+				wikiPage.getCreatedAt(),
+				userName,
+				wikiPage.getContent(),
+				wikiPage.getWikiReferences(),
+				wikiPage.getWikiRelationships(),
+				wikiPage.getWorkflowInformations()
+				);
+		//ShowApplicationDto showApplicationParams = new ShowApplicationDto();
+		return showApplicationDto;
 		
 	}
 	
@@ -80,5 +79,26 @@ public class AnalyticsApplicationService {
 	public void delete(){
 		
 	}
+	
+	@Transactional
+	public void create(WikiPage wikiPage){
+		wikiPageHome.persist(wikiPage);
+		//wikiPage.setContent("hello");
+		//wikiPage = wikiPagesHome.merge(wikiPage);
 
+	}
+	
+//	@Transactional
+//	public ShowApplicationDto find(String wikiPath){
+//		WikiPage wikiPage = wikiPageHome.findByWikiPath(wikiPath);
+//		ShowApplicationDto showApplicationDto = new ShowApplicationDto();
+//		return showApplicationDto;
+//	}
+	
+	@Transactional
+	public void remove(WikiPage wikiPage){
+		wikiPage = wikiPageHome.merge(wikiPage);
+		wikiPageHome.delete(wikiPage);
+	}
+	
 }

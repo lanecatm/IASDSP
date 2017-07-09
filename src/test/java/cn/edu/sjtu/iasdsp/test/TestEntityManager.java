@@ -1,13 +1,13 @@
 package cn.edu.sjtu.iasdsp.test;
 
+import static org.junit.Assert.fail;
+
 import java.util.Date;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
-import cn.edu.sjtu.iasdsp.dao.WikiPagesHome;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
 
@@ -19,13 +19,14 @@ import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
  */
 public class TestEntityManager {
 
+
 	@Test
 	public void test() {
 		try {
 			WikiPage wikipage = new WikiPage(new Date(), new Date());
 			wikipage.setTitle("test auto");
 			wikipage.setPath("test_auto");
-			ApplicationContext ac = new ClassPathXmlApplicationContext("jpa.xml");
+			ApplicationContext ac = new ClassPathXmlApplicationContext("spring-hibernate.xml");
 
 			AnalyticsApplicationService analyticsApplicationService = ac.getBean(AnalyticsApplicationService.class);
 			System.out.println(analyticsApplicationService);
@@ -35,8 +36,13 @@ public class TestEntityManager {
 			analyticsApplicationService.remove(wikipage);
 			analyticsApplicationService.remove(wikipage);
 			
+			//WikiPageHome wikiPageHome = ac.getBean(WikiPageHome.class);
+			//wikiPageHome.findById(1);
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			fail();
 		}
 
 	}

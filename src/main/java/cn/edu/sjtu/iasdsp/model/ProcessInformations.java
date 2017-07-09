@@ -38,13 +38,13 @@ public class ProcessInformations implements java.io.Serializable {
 	private String processType;
 	private Integer processId;
 	private Set<DownloadFile> downloadFileses = new HashSet<DownloadFile>(0);
-	private Set<ProcessResults> processResultses = new HashSet<ProcessResults>(0);
+	private Set<ProcessResult> processResultses = new HashSet<ProcessResult>(0);
 	private Set<ProcessFiles> processFileses = new HashSet<ProcessFiles>(0);
 	private Set<UploadFiles> uploadFileses = new HashSet<UploadFiles>(0);
 	private Set<ProcessFiles> processFileses_1 = new HashSet<ProcessFiles>(0);
 	private Set<DownloadFile> downloadFileses_1 = new HashSet<DownloadFile>(0);
 	private Set<UploadFiles> uploadFileses_1 = new HashSet<UploadFiles>(0);
-	private Set<ProcessResults> processResultses_1 = new HashSet<ProcessResults>(0);
+	private Set<ProcessResult> processResultses_1 = new HashSet<ProcessResult>(0);
 
 	public ProcessInformations() {
 	}
@@ -57,9 +57,9 @@ public class ProcessInformations implements java.io.Serializable {
 	public ProcessInformations(Integer workflowInformationId, String name, String description, Integer createrId,
 			Integer userId, Boolean isShared, Integer parentCaseId, Boolean persistent, String state, Integer caseType,
 			Date createdAt, Date updatedAt, String processType, Integer processId, Set<DownloadFile> downloadFileses,
-			Set<ProcessResults> processResultses, Set<ProcessFiles> processFileses, Set<UploadFiles> uploadFileses,
+			Set<ProcessResult> processResultses, Set<ProcessFiles> processFileses, Set<UploadFiles> uploadFileses,
 			Set<ProcessFiles> processFileses_1, Set<DownloadFile> downloadFileses_1, Set<UploadFiles> uploadFileses_1,
-			Set<ProcessResults> processResultses_1) {
+			Set<ProcessResult> processResultses_1) {
 		this.workflowInformationId = workflowInformationId;
 		this.name = name;
 		this.description = description;
@@ -234,11 +234,11 @@ public class ProcessInformations implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "processInformations")
-	public Set<ProcessResults> getProcessResultses() {
+	public Set<ProcessResult> getProcessResultses() {
 		return this.processResultses;
 	}
 
-	public void setProcessResultses(Set<ProcessResults> processResultses) {
+	public void setProcessResultses(Set<ProcessResult> processResultses) {
 		this.processResultses = processResultses;
 	}
 
@@ -288,11 +288,11 @@ public class ProcessInformations implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "processInformations")
-	public Set<ProcessResults> getProcessResultses_1() {
+	public Set<ProcessResult> getProcessResultses_1() {
 		return this.processResultses_1;
 	}
 
-	public void setProcessResultses_1(Set<ProcessResults> processResultses_1) {
+	public void setProcessResultses_1(Set<ProcessResult> processResultses_1) {
 		this.processResultses_1 = processResultses_1;
 	}
 

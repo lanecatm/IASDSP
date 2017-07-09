@@ -17,7 +17,7 @@
 	<!-- 用annotation 的方式导入 -->
 	
 	<context:annotation-config />
-	<context:component-scan base-package="cn.edu.sjtu.iasdsp"/>
+	<context:component-scan base-package="cn.edu.sjtu.iasdsp.Aop"/>
 
 	<!-- 打开基于annotation的aop代理 -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>

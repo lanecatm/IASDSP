@@ -1,7 +1,7 @@
 package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 
@@ -15,8 +15,8 @@ import cn.edu.sjtu.iasdsp.model.WikiReference;
 public class EditApplicationDto {
 	String title;
 	String content;
-	private List<WikiReference> referenceList;
-	List<String> relatedPageList;
+	Set<WikiReference> referenceList;
+	Set<String> relatedPageList;
 	
 	
 	public EditApplicationDto() {
@@ -43,18 +43,18 @@ public class EditApplicationDto {
 	}
 
 
-	public List<String> getRelatedPageList() {
+	public Set<String> getRelatedPageList() {
 		return relatedPageList;
 	}
-	public void setRelatedPageList(List<String> relatedPageList) {
+	public void setRelatedPageList(Set<String> relatedPageList) {
 		this.relatedPageList = relatedPageList;
 	}
 
-	public List<WikiReference> getReferenceList() {
+	public Set<WikiReference> getReferenceList() {
 		return referenceList;
 	}
 
-	public void setReferenceList(List<WikiReference> referenceList) {
+	public void setReferenceList(Set<WikiReference> referenceList) {
 		this.referenceList = referenceList;
 	}
 	

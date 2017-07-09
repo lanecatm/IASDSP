@@ -1,31 +1,43 @@
 package cn.edu.sjtu.iasdsp.dao;
-// Generated 2017-7-5 20:36:17 by Hibernate Tools 5.2.3.Final
+// Generated 2017-7-9 2:25:32 by Hibernate Tools 5.2.3.Final
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import static org.hibernate.criterion.Example.create;
+
+import java.util.List;
+
+import javax.naming.InitialContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.LockMode;
+import org.hibernate.SessionFactory;
 
 import cn.edu.sjtu.iasdsp.model.EngineWorkflowapplication;
 
 /**
- * Home object for domain model class Workflowapplication.
- * @see cn.edu.sjtu.iasdsp.model.EngineWorkflowapplication
+ * Home object for domain model class EngineWorkflowapplication.
+ * @see cn.edu.sjtu.iasdsp.dao.EngineWorkflowapplication
  * @author Hibernate Tools
  */
-@Stateless
 public class EngineWorkflowapplicationHome {
 
 	private static final Log log = LogFactory.getLog(EngineWorkflowapplicationHome.class);
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	private final SessionFactory sessionFactory = getSessionFactory();
+
+	protected SessionFactory getSessionFactory() {
+		try {
+			return (SessionFactory) new InitialContext().lookup("SessionFactory");
+		} catch (Exception e) {
+			log.error("Could not locate SessionFactory in JNDI", e);
+			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
+		}
+	}
 
 	public void persist(EngineWorkflowapplication transientInstance) {
-		log.debug("persisting Workflowapplication instance");
+		log.debug("persisting EngineWorkflowapplication instance");
 		try {
-			entityManager.persist(transientInstance);
+			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -33,21 +45,44 @@ public class EngineWorkflowapplicationHome {
 		}
 	}
 
-	public void remove(EngineWorkflowapplication persistentInstance) {
-		log.debug("removing Workflowapplication instance");
+	public void attachDirty(EngineWorkflowapplication instance) {
+		log.debug("attaching dirty EngineWorkflowapplication instance");
 		try {
-			entityManager.remove(persistentInstance);
-			log.debug("remove successful");
+			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			log.debug("attach successful");
 		} catch (RuntimeException re) {
-			log.error("remove failed", re);
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
+
+	public void attachClean(EngineWorkflowapplication instance) {
+		log.debug("attaching clean EngineWorkflowapplication instance");
+		try {
+			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			log.debug("attach successful");
+		} catch (RuntimeException re) {
+			log.error("attach failed", re);
+			throw re;
+		}
+	}
+
+	public void delete(EngineWorkflowapplication persistentInstance) {
+		log.debug("deleting EngineWorkflowapplication instance");
+		try {
+			sessionFactory.getCurrentSession().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
 			throw re;
 		}
 	}
 
 	public EngineWorkflowapplication merge(EngineWorkflowapplication detachedInstance) {
-		log.debug("merging Workflowapplication instance");
+		log.debug("merging EngineWorkflowapplication instance");
 		try {
-			EngineWorkflowapplication result = entityManager.merge(detachedInstance);
+			EngineWorkflowapplication result = (EngineWorkflowapplication) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -56,14 +91,32 @@ public class EngineWorkflowapplicationHome {
 		}
 	}
 
-	public EngineWorkflowapplication findById(Integer id) {
-		log.debug("getting Workflowapplication instance with id: " + id);
+	public EngineWorkflowapplication findById(java.lang.Integer id) {
+		log.debug("getting EngineWorkflowapplication instance with id: " + id);
 		try {
-			EngineWorkflowapplication instance = entityManager.find(EngineWorkflowapplication.class, id);
-			log.debug("get successful");
+			EngineWorkflowapplication instance = (EngineWorkflowapplication) sessionFactory.getCurrentSession()
+					.get("cn.edu.sjtu.iasdsp.dao.EngineWorkflowapplication", id);
+			if (instance == null) {
+				log.debug("get successful, no instance found");
+			} else {
+				log.debug("get successful, instance found");
+			}
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
+			throw re;
+		}
+	}
+
+	public List<EngineWorkflowapplication> findByExample(EngineWorkflowapplication instance) {
+		log.debug("finding EngineWorkflowapplication instance by example");
+		try {
+			List<EngineWorkflowapplication> results = (List<EngineWorkflowapplication>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.dao.EngineWorkflowapplication").add(create(instance)).list();
+			log.debug("find by example successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("find by example failed", re);
 			throw re;
 		}
 	}
