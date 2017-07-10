@@ -1,6 +1,5 @@
 package cn.edu.sjtu.iasdsp.dto;
 
-import java.util.List;
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn
