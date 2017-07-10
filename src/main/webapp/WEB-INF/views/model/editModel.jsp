@@ -8,10 +8,10 @@
         <div class="col-md-offset-2 col-md-8">
             <div class="row">
                 <h3>
-                    information name
+                    ${showModelDto.title}
                 </h3>
                 <h4>
-                    <small>Introduction</small> 
+                    <small>${showModelDto.introduction}</small> 
                 </h4>
                 <hr/>
             </div>

@@ -82,7 +82,7 @@
 						<%@ include file="showModelInfo.jsp"%>
                     </div>
                     <div role="tabpanel" class="tab-pane " id="version">
-					    	<%@ include file="showModelApplication.jsp"%>
+					    	<%@ include file="showModelVersion.jsp"%>
                     </div>
                       <div role="tabpanel" class="tab-pane " id="case">
 							<%@ include file="showModelApplication.jsp"%>
@@ -127,3 +127,6 @@
 
 </br></br></br></br></br></br></br></br></br>
 <%@ include file="../layouts/footer.jsp"%>
+
+<s:url value="/resources/javascript/showModelDiagram.js" var="showModelDiagramJs" />
+<script src="${showModelDiagramJs}"></script>

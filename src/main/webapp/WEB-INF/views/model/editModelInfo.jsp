@@ -6,13 +6,13 @@
 		<div class=" col-md-12">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>${showModelDto.getTitle() }</h1>
+					<h1>${showModelDto.title}</h1>
 				</div>
 				<!--  
 				<div class="col-md-6">
 					<h4>
-						<small>Revised on ${showApplicationDto.getTime() } by
-							${showApplicationDto.getAuthorName()}</small>
+						<small>Revised on ${showModelDto.creationTime } by
+							${showModelDto.author}</small>
 					</h4>
 				</div>
 				<div class="col-md-6">
@@ -54,8 +54,8 @@
 							<div class="form-group">
 								<div class="col-md-12">
 								
-								<input type="text"  data-role="tagsinput" value="sjtu,machine learning,cpu">
-								
+								<input type="text"  data-role="tagsinput" value="add your tag">
+								<span class="label label-default">tag1</span>  <span class="label label-default">tag2</span>
 							
 								</div>
 							</div>
@@ -85,8 +85,8 @@
 						<div class="panel-body">
 							<div class="form-group">
 								<div class="col-md-12">
-									<sf:textarea path="modelInformation"
-										value="${showModelDto.getModelInformation()}"
+									<sf:textarea path="introduction"
+										value="${showModelDto.introduction}"
 										cssClass="form-control" rows="15" />
 								</div>
 							</div>
