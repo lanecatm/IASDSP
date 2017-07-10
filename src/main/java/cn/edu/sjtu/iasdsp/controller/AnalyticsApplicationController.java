@@ -1,13 +1,11 @@
 package cn.edu.sjtu.iasdsp.controller;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,7 +29,7 @@ public class AnalyticsApplicationController {
 	private AnalyticsApplicationService analyticsApplicationService;
 
 	@RequestMapping(value = "/{wikiPath}/show", method = RequestMethod.GET)
-	public String show(Model model, String wikiPath) {
+	public String show(Model model, @PathVariable("wikiPath") String wikiPath) {
 		logger.debug("Into AnalyticsApplicationController show function where wikiPath = " + wikiPath);
 		ShowApplicationDto showApplicationDto = analyticsApplicationService.show(wikiPath);
 		model.addAttribute("showApplicationDto", showApplicationDto);
@@ -39,7 +37,7 @@ public class AnalyticsApplicationController {
 	}
 
 	@RequestMapping(value = "/{wikiPath}/edit", method = RequestMethod.GET)
-	public String edit(Model model, String wikiPath) {
+	public String edit(Model model, @PathVariable("wikiPath") String wikiPath) {
 		logger.debug("Into AnalyticsApplicationController edit function where wikiPath = " + wikiPath);
 		EditApplicationDto editApplicationDto = analyticsApplicationService.edit(wikiPath);
 		model.addAttribute("showApplicationDto", editApplicationDto.getShowApplicationDto());

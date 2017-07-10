@@ -116,7 +116,7 @@ public class WikiPageHome {
 		log.debug("finding WikiPage instance by example");
 		try {
 			List<WikiPage> results = (List<WikiPage>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WikiPage").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WikiPage").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

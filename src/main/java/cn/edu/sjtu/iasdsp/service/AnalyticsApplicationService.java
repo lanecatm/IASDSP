@@ -1,6 +1,7 @@
 package cn.edu.sjtu.iasdsp.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,7 +27,7 @@ import cn.edu.sjtu.iasdsp.model.WikiReference;
 @Service
 public class AnalyticsApplicationService {
 
-	private static final Log log = LogFactory.getLog(AnalyticsApplicationService.class);
+	private static final Log logger = LogFactory.getLog(AnalyticsApplicationService.class);
 
 	@Autowired
 	private WikiPageHome wikiPageHome;
@@ -35,14 +36,14 @@ public class AnalyticsApplicationService {
 
 	@Transactional
 	public EditApplicationDto create() {
-		log.debug("Create EditApplicationDto for show");
+		logger.debug("Create EditApplicationDto for show");
 		EditApplicationDto editApplicationDto = new EditApplicationDto();
 		return editApplicationDto;
 	}
 
 	@Transactional
 	public ShowApplicationDto create(EditApplicationDto editApplicationDto) {
-		log.debug("Create EditApplicationDto");
+		logger.debug("Create EditApplicationDto");
 		// 创建WikiPage
 		WikiPage wikiPage = new WikiPage(new Date(), new Date());
 		WikiReference wikiReference = new WikiReference();
@@ -53,13 +54,13 @@ public class AnalyticsApplicationService {
 	}
 
 	public ShowApplicationDto show(String wikiPath) {
-		log.debug("Into AnalyticsApplicationService Show Function");
+		logger.debug("Into AnalyticsApplicationService Show Function");
 		return find(wikiPath);
 
 	}
 
 	public EditApplicationDto edit(String wikiPath) {
-		log.debug("Into AnalyticsApplicationService edit Function");
+		logger.debug("Into AnalyticsApplicationService edit Function");
 		ShowApplicationDto showApplicationDto = find(wikiPath);
 		EditApplicationDto editApplicationDto = new EditApplicationDto(showApplicationDto.getTitle(),
 				showApplicationDto.getIntroduction(), showApplicationDto.getReferenceList(),
@@ -68,12 +69,13 @@ public class AnalyticsApplicationService {
 	}
 
 	public void update(EditApplicationDto editApplicationDto) {
-		log.debug("Into AnalyticsApplicationService update Function");
+		logger.debug("Into AnalyticsApplicationService update Function");
 		// TODO 获取当前用户
 		User user = userHome.findById(1);
-		String path = editApplicationDto.getTitle().toLowerCase().replace(' ', '_');
+		String path = changeTitleIntoPath(editApplicationDto.getTitle());
 		WikiPage wikiPage = new WikiPage(user, user, path, editApplicationDto.getTitle(),
 				editApplicationDto.getIntroduction(), new Date(), new Date());
+		create(wikiPage);
 
 	}
 
@@ -91,14 +93,25 @@ public class AnalyticsApplicationService {
 
 	@Transactional
 	private ShowApplicationDto find(String wikiPath) {
-		WikiPage wikiPage = wikiPageHome.findById(33);
-		String userName = wikiPage.getUserByCreatorId() == null ? "Author"
-				: wikiPage.getUserByCreatorId().getUserName();
-		ShowApplicationDto showApplicationDto = new ShowApplicationDto(wikiPage.getTitle(), wikiPage.getCreatedAt(),
-				userName, wikiPage.getContent(), wikiPage.getWikiReferences(), wikiPage.getWorkflowInformations(),
-				wikiPage.getRelatedWikiPages());
-		// ShowApplicationDto showApplicationParams = new ShowApplicationDto();
-		return showApplicationDto;
+		logger.info("ShowApplicationDto find by wikiPath " + wikiPath);
+		WikiPage wikiPageExample = new WikiPage();
+		wikiPageExample.setPath(wikiPath);
+		List<WikiPage> wikiPageList = wikiPageHome.findByExample(wikiPageExample);
+		logger.info("ShowApplicationDto find wikiPageList size " + wikiPageList.size());
+
+		if (wikiPageList.size() == 0) {
+			return new ShowApplicationDto();
+		} else {
+			WikiPage wikiPage = wikiPageList.get(0);
+			String userName = wikiPage.getUserByCreatorId() == null ? "Author"
+					: wikiPage.getUserByCreatorId().getUserName();
+			ShowApplicationDto showApplicationDto = new ShowApplicationDto(wikiPage.getTitle(), wikiPage.getCreatedAt(),
+					userName, wikiPage.getContent(), wikiPage.getWikiReferences(), wikiPage.getWorkflowInformations(),
+					wikiPage.getRelatedWikiPages());
+			// ShowApplicationDto showApplicationParams = new
+			// ShowApplicationDto();
+			return showApplicationDto;
+		}
 	}
 
 	@Transactional
@@ -106,13 +119,13 @@ public class AnalyticsApplicationService {
 		wikiPage = wikiPageHome.merge(wikiPage);
 		wikiPageHome.delete(wikiPage);
 	}
-	
-	
-	
-	private String changeTitleIntoPath(String title){
-		String path = title.toLowerCase();
+
+	private String changeTitleIntoPath(String title) {
+		logger.debug("generate path from title " + title);
+		String path = title.toLowerCase().replaceAll("[^a-zA-Z\\s]", "_");
+		logger.debug("to " + path);
 		return path;
-		
+
 	}
 
 }
