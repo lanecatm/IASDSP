@@ -11,9 +11,8 @@
 		<div class="message intro">
 			<div class="note">
 
-				Please click on the button to charge de diagram: <br>
-				<a id="js-create-diagram" value="This is the value" href>Diagram
-					test 1</a>
+				Click here to charge the diagram from the back end: <br>
+				<a id="js-create-diagram" value="This is the value" href>Charge the Diagram</a>
 			</div>
 		</div>
 
@@ -28,7 +27,7 @@
 			</div>
 		</div>
 
-		<div class="canvas" id="js-canvas"></div>
+		<div class="canvas" id="js-canvas" style="width:100%; height:100%"></div>
 		<div id="js-properties-panel"></div>
 	</div>
 
@@ -39,80 +38,44 @@
 				value='<?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="Process_1" isExecutable="false">
-    <bpmn2:startEvent id="StartEvent_1" name="test">
-      <bpmn2:outgoing>SequenceFlow_1ydx6qe</bpmn2:outgoing>
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>SequenceFlow_1tq2x30</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:task id="Task_1pow0d0" name="test">
-      <bpmn2:incoming>SequenceFlow_1ydx6qe</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_07lepbh</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_1rx193y</bpmn2:outgoing>
-      <bpmn2:dataOutputAssociation id="DataOutputAssociation_0i8a1aa">
-        <bpmn2:targetRef>DataStoreReference_0p5xrb9</bpmn2:targetRef>
-      </bpmn2:dataOutputAssociation>
+    <bpmn2:task id="Task_1u17ayy" name="Test">
+      <bpmn2:incoming>SequenceFlow_1tq2x30</bpmn2:incoming>
     </bpmn2:task>
-    <bpmn2:sequenceFlow id="SequenceFlow_1ydx6qe" sourceRef="StartEvent_1" targetRef="Task_1pow0d0" />
-    <bpmn2:task id="Task_15hq1i4" name="test">
-      <bpmn2:incoming>SequenceFlow_07lepbh</bpmn2:incoming>
-    </bpmn2:task>
-    <bpmn2:sequenceFlow id="SequenceFlow_07lepbh" sourceRef="Task_1pow0d0" targetRef="Task_15hq1i4" />
-    <bpmn2:task id="Task_123wh3y" name="test">
-      <bpmn2:incoming>SequenceFlow_1rx193y</bpmn2:incoming>
-    </bpmn2:task>
-    <bpmn2:dataStoreReference id="DataStoreReference_0p5xrb9" />
-    <bpmn2:sequenceFlow id="SequenceFlow_1rx193y" sourceRef="Task_1pow0d0" targetRef="Task_123wh3y" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1tq2x30" sourceRef="StartEvent_1" targetRef="Task_1u17ayy" />
+    <bpmn2:dataObjectReference id="DataObjectReference_1imdteb" name="test" dataObjectRef="DataObject_1vmxh4t" />
+    <bpmn2:dataObject id="DataObject_1vmxh4t" />
+    <bpmn2:dataStoreReference id="DataStoreReference_0w9cfdt" name="test" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="333" y="426" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="341" y="462" width="20" height="12" />
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="412" y="240" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1pow0d0_di" bpmnElement="Task_1pow0d0">
-        <dc:Bounds x="429" y="404" width="100" height="80" />
+      <bpmndi:BPMNShape id="Task_1u17ayy_di" bpmnElement="Task_1u17ayy">
+        <dc:Bounds x="268" y="218" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1ydx6qe_di" bpmnElement="SequenceFlow_1ydx6qe">
-        <di:waypoint xsi:type="dc:Point" x="369" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="429" y="444" />
+      <bpmndi:BPMNEdge id="SequenceFlow_1tq2x30_di" bpmnElement="SequenceFlow_1tq2x30">
+        <di:waypoint xsi:type="dc:Point" x="412" y="258" />
+        <di:waypoint xsi:type="dc:Point" x="368" y="258" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="399" y="423" width="0" height="12" />
+          <dc:Bounds x="390" y="237" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_15hq1i4_di" bpmnElement="Task_15hq1i4">
-        <dc:Bounds x="949" y="404" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_07lepbh_di" bpmnElement="SequenceFlow_07lepbh">
-        <di:waypoint xsi:type="dc:Point" x="529" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="751" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="751" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="949" y="444" />
+      <bpmndi:BPMNShape id="DataObjectReference_1imdteb_di" bpmnElement="DataObjectReference_1imdteb">
+        <dc:Bounds x="300" y="337" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="766" y="438" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_123wh3y_di" bpmnElement="Task_123wh3y">
-        <dc:Bounds x="832" y="274" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_0p5xrb9_di" bpmnElement="DataStoreReference_0p5xrb9">
-        <dc:Bounds x="705" y="510" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="730" y="564" width="0" height="12" />
+          <dc:Bounds x="308" y="391" width="20" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0i8a1aa_di" bpmnElement="DataOutputAssociation_0i8a1aa">
-        <di:waypoint xsi:type="dc:Point" x="529" y="465" />
-        <di:waypoint xsi:type="dc:Point" x="705" y="541" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1rx193y_di" bpmnElement="SequenceFlow_1rx193y">
-        <di:waypoint xsi:type="dc:Point" x="529" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="613" y="444" />
-        <di:waypoint xsi:type="dc:Point" x="613" y="314" />
-        <di:waypoint xsi:type="dc:Point" x="832" y="314" />
+      <bpmndi:BPMNShape id="DataStoreReference_0w9cfdt_di" bpmnElement="DataStoreReference_0w9cfdt">
+        <dc:Bounds x="392" y="337" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="628" y="373" width="0" height="12" />
+          <dc:Bounds x="407" y="391" width="20" height="12" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>'>

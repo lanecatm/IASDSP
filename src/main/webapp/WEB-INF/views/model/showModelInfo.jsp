@@ -19,7 +19,7 @@
     <tr>
         <th>Model introduction</th>
         <td>
-        ${showModelDto.introduction}
+      	   ${showModelDto.introduction}
         </td>
     </tr>
     <tr>
@@ -34,6 +34,7 @@
         <th>Tag</th>
         <td>
             <span class="label label-default">tags</span>
+            
         </td>
     </tr>
 
