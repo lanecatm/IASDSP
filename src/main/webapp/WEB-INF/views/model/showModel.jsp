@@ -35,12 +35,12 @@
                                 </li>
                                   <li role="presentation" >
 									<a href="#case" aria-controls="case" role="tab" data-toggle="tab">
-										<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Running Case
+										<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Running Case
 									</a>
                                 </li>
                                  <li role="presentation" >
 									<a href="#execution" aria-controls="execution" role="tab" data-toggle="tab">
-										<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Execution History
+										<span class="glyphicon glyphicon-time" aria-hidden="true"></span> Execution History
 									</a>
                                 </li>
                               
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-md-6">
                     <h4>
-                        <small>Revised on ${showModelDto.getTime()} by ${showModelmDto.getAuthorName()}</small>
+                        <small>Revised on ${showModelDto.getCreationTime()} by ${showModelDto.author}</small>
                     </h4>
                 </div>
                 <div class="col-md-6">
@@ -79,7 +79,7 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane " id="information">
-						<%-- <%@ include file="show_model.jsp"%> --%>
+						<%@ include file="showModelInfo.jsp"%>
                     </div>
                     <div role="tabpanel" class="tab-pane " id="version">
 					    	<%@ include file="showModelApplication.jsp"%>
@@ -94,7 +94,7 @@
             </div>
   
         </div>
-            <div class="col-md-2">
+          <div class="col-md-2">
             <div class = "row">
                 <div class="col-md-12">&nbsp;</div>
                 <div class="col-md-12">
@@ -109,9 +109,18 @@
 							<img src="${userImg}" alt="" style="width: 40px; height: 40px;">
                         </div>
                     </div>
+                       <div class="panel panel-default">
+                        <div class="panel-heading">Tag</div>
+                        <div class="panel-body">
+                            CPU prediction
+                           	Machine Learning
+                           	SJTU
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        
     </div>
 </div> <!-- /container -->
 

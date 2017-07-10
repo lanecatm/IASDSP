@@ -55,11 +55,25 @@ public class ModelController {
 	
 	private ShowModelDto initShowModelDto() {
 		
-		String title = "My Title";
-		String author = "Theo Monfort";
-	//	String[][] application = new String[10][10];
-		String modelInformation = "This is the f the best model ever which is the best model ever which is the best ";
+		//Basic information
+		String title = "Clustering by Kmeans";
+		String introduction = "This is a model clustering data by Kmeans algorithm";
+		String category = "Clustering";
 		
+		//Authorization
+		String author = "Theo";
+		String lastEditor = "Theo";
+		String editUserGroup = "Departement 1";
+		String deleteUserGroup = "Departement 1";
+		String executeUserGroup = "All";
+		
+		//Version
+		
+		String versionName = "V 0.0.2";
+		Date creationTime = new Date();
+		Date updateTime = new Date();
+		
+		//application
 		Map<String, String> application = new HashMap<String, String>();
 		application.put("VERSION 3 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc","1");
 		application.put("VERSION 2 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc", "2");
@@ -67,7 +81,7 @@ public class ModelController {
 		
 		
 		
-		ShowModelDto showModelDto = new ShowModelDto(title, author, new Date(),application,modelInformation);
+		ShowModelDto showModelDto = new ShowModelDto(title, introduction, category, author, lastEditor, editUserGroup, deleteUserGroup, executeUserGroup, versionName, creationTime, updateTime, application);
 
 		return showModelDto;
 		
