@@ -48,7 +48,10 @@ public class WikiPage implements java.io.Serializable {
 	// private Set<XWikiAndWorkflowInformation> xWikiAndWorkflowInformations =
 	// new HashSet<XWikiAndWorkflowInformation>(0);
 	private Set<WikiReference> wikiReferences = new HashSet<WikiReference>(0);
-	private Set<WikiRelationship> wikiRelationships = new HashSet<WikiRelationship>(0);
+	private Set<WikiPage> relatedWikiPages = new HashSet<WikiPage>(0);
+	//private Set<WikiPage> relatedByWikiPages = new HashSet<WikiPage>(0);
+
+	//private Set<WikiRelationship> wikiRelationships = new HashSet<WikiRelationship>(0);
 
 	private Set<WorkflowPerformance> workflowPerformances = new HashSet<WorkflowPerformance>(0);
 
@@ -70,7 +73,7 @@ public class WikiPage implements java.io.Serializable {
 	}
 
 	public WikiPage(User userByUpdatorId, User userByCreatorId, String path, String title, String content,
-			Date createdAt, Date updatedAt, Set<WikiReference> wikiReferences, Set<WikiRelationship> wikiRelationship,
+			Date createdAt, Date updatedAt, Set<WikiReference> wikiReferences, 
 			WikiCategory wikiCategory) {
 		this.userByUpdatorId = userByUpdatorId;
 		this.userByCreatorId = userByCreatorId;
@@ -82,7 +85,7 @@ public class WikiPage implements java.io.Serializable {
 		// this.taskPerformances = taskPerformances;
 		// this.xWikiAndWorkflowInformations = xWikiAndWorkflowInformations;
 		this.wikiReferences = wikiReferences;
-		this.wikiRelationships = wikiRelationship;
+		
 		this.wikiCategory = wikiCategory;
 	}
 
@@ -192,15 +195,39 @@ public class WikiPage implements java.io.Serializable {
 		this.wikiReferences = wikiReferences;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "wikiPage")
-	@Cascade(CascadeType.DELETE)
-	public Set<WikiRelationship> getWikiRelationships() {
-		return this.wikiRelationships;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "wikiPage")
+//	@Cascade(CascadeType.DELETE)
+//	public Set<WikiRelationship> getWikiRelationships() {
+//		return this.wikiRelationships;
+//	}
+//
+//	public void setWikiRelationships(Set<WikiRelationship> wikiRelationship) {
+//		this.wikiRelationships = wikiRelationship;
+//	}
+//	
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "wiki_page_and_related_wiki_page", joinColumns = {
+			@JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(referencedColumnName = "id") })	
+	public Set<WikiPage> getRelatedWikiPages() {
+		return relatedWikiPages;
 	}
 
-	public void setWikiRelationships(Set<WikiRelationship> wikiRelationship) {
-		this.wikiRelationships = wikiRelationship;
+	public void setRelatedWikiPages(Set<WikiPage> relatedWikiPages) {
+		this.relatedWikiPages = relatedWikiPages;
 	}
+	
+//	
+//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "relatedWikiPages")
+//	public Set<WikiPage> getRelatedByWikiPages() {
+//		return relatedByWikiPages;
+//	}
+//
+//	public void setRelatedByWikiPages(Set<WikiPage> relatedByWikiPages) {
+//		this.relatedByWikiPages = relatedByWikiPages;
+//	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "wikiPages")
 	public Set<WorkflowInformation> getWorkflowInformations() {

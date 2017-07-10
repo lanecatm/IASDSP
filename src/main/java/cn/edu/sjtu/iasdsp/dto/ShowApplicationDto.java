@@ -3,8 +3,8 @@ package cn.edu.sjtu.iasdsp.dto;
 import java.util.Date;
 import java.util.Set;
 
+import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
-import cn.edu.sjtu.iasdsp.model.WikiRelationship;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /** 
@@ -22,8 +22,8 @@ public class ShowApplicationDto {
 	private String authorName;
 	private String introduction;
 	private Set<WikiReference> referenceList;
-	private Set<WikiRelationship> relatedPageList;
 	private Set<WorkflowInformation> workflowInformationList;
+	private Set<WikiPage> relatedWikiPageList;
 	
 
 
@@ -31,27 +31,27 @@ public class ShowApplicationDto {
 	}
 
 	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Set<WikiReference> referenceList, Set<WikiRelationship> relatedPageList,
-			Set<WorkflowInformation> workflowInformationList) {
+			Set<WikiReference> referenceList, 
+			Set<WorkflowInformation> workflowInformationList, Set<WikiPage> relatedWikiPageList) {
 		super();
 		this.title = title;
 		this.time = time;
 		this.authorName = authorName;
 		this.introduction = introduction;
 		this.referenceList = referenceList;
-		this.relatedPageList = relatedPageList;
 		this.workflowInformationList = workflowInformationList;
+		this.relatedWikiPageList = relatedWikiPageList;
 	}
 	
 	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Set<WikiReference> referenceList, Set<WikiRelationship> relatedPageList) {
+			Set<WikiReference> referenceList, Set<WikiPage> relatedWikiPageList) {
 		super();
 		this.title = title;
 		this.time = time;
 		this.authorName = authorName;
 		this.introduction = introduction;
 		this.referenceList = referenceList;
-		this.relatedPageList = relatedPageList;
+		this.relatedWikiPageList = relatedWikiPageList;
 	}
 	public String getTitle() {
 		return title;
@@ -84,18 +84,21 @@ public class ShowApplicationDto {
 	public void setReferenceList(Set<WikiReference> referenceList) {
 		this.referenceList = referenceList;
 	}
-	public Set<WikiRelationship> getRelatedPageList() {
-		return relatedPageList;
-	}
-	public void setRelatedPageList(Set<WikiRelationship> relatedPageList) {
-		this.relatedPageList = relatedPageList;
-	}
+	
 	public Set<WorkflowInformation> getWorkflowInformationList() {
 		return workflowInformationList;
 	}
 	public void setWorkflowInformationList(Set<WorkflowInformation> workflowInformationList) {
 		this.workflowInformationList = workflowInformationList;
 	}
-	
+
+	public Set<WikiPage> getRelatedWikiPageList() {
+		return relatedWikiPageList;
+	}
+
+	public void setRelatedWikiPageList(Set<WikiPage> relatedWikiPageList) {
+		this.relatedWikiPageList = relatedWikiPageList;
+	}
+
 
 }

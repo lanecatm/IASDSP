@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.DownloadFile;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.DownloadFile;
  * @see cn.edu.sjtu.iasdsp.dao.DownloadFile
  * @author Hibernate Tools
  */
+@Repository
 public class DownloadFileHome {
 
 	private static final Log log = LogFactory.getLog(DownloadFileHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +98,7 @@ public class DownloadFileHome {
 		log.debug("getting DownloadFile instance with id: " + id);
 		try {
 			DownloadFile instance = (DownloadFile) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.DownloadFile", id);
+					.get("cn.edu.sjtu.iasdsp.model.DownloadFile", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +115,7 @@ public class DownloadFileHome {
 		log.debug("finding DownloadFile instance by example");
 		try {
 			List<DownloadFile> results = (List<DownloadFile>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.DownloadFile").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.DownloadFile").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

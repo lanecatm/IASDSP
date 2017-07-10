@@ -11,6 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.iasdsp.model.User;
 
@@ -19,15 +22,19 @@ import cn.edu.sjtu.iasdsp.model.User;
  * @see cn.edu.sjtu.iasdsp.dao.User
  * @author Hibernate Tools
  */
+@Repository
 public class UserHome {
 
 	private static final Log log = LogFactory.getLog(UserHome.class);
+	
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
+
 
 	protected SessionFactory getSessionFactory() {
 		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
+			return (SessionFactory) new InitialContext().lookup("java:/hibernate/SessionFactory");
 		} catch (Exception e) {
 			log.error("Could not locate SessionFactory in JNDI", e);
 			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
@@ -89,11 +96,11 @@ public class UserHome {
 			throw re;
 		}
 	}
-
+	
 	public User findById(java.lang.Integer id) {
 		log.debug("getting User instance with id: " + id);
 		try {
-			User instance = (User) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.dao.User", id);
+			User instance = (User) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.model.User", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -105,12 +112,12 @@ public class UserHome {
 			throw re;
 		}
 	}
-
+	
 	public List<User> findByExample(User instance) {
 		log.debug("finding User instance by example");
 		try {
 			List<User> results = (List<User>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.User").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.User").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

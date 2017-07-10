@@ -33,9 +33,7 @@
 						<div class="panel-body">
 							<div class="form-group">
 								<div class="col-md-12">
-									<sf:textarea path="introduction"
-										value="${showApplicationDto.introduction }"
-										cssClass="form-control" rows="20" />
+									<sf:textarea path="introduction" cssClass="form-control" rows="20"/>
 								</div>
 							</div>
 						</div>
@@ -61,15 +59,15 @@
 								<div class="form-group">
 									<label class="col-md-12">Url</label>
 									<div class="col-md-12">
-										<sf:input path="referenceList['${ reference.key}']"
-											value="${reference.value}" cssClass="form-control" />
+										<%-- <sf:input path="referenceList['${ reference.key}']"
+											value="${reference.value}" cssClass="form-control" /> --%>
 									</div>
 								</div>
 								<hr />
 							</c:forEach>
 
-								<input type="submit" name="add" class="btn btn-danger btn-block"
-									value="Add" />
+							<input type="submit" name="add" class="btn btn-danger btn-block"
+								value="Add" />
 						</div>
 					</div>
 					<div class="panel panel-default">
@@ -78,9 +76,9 @@
 						</div>
 						<div class="panel-body">
 							<h5>
-								<c:forEach items="${showApplicationDto.relatedPageList}"
+								<c:forEach items="${showApplicationDto.relatedWikiPageList}"
 									var="relatedPage">
-									<span class="label label-default">${relatedPage}</span>
+									<span class="label label-default">${relatedPage.title}</span>
 								</c:forEach>
 							</h5>
 						</div>

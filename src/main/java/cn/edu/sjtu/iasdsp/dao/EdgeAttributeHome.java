@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.EdgeAttribute;
 
@@ -23,7 +25,9 @@ public class EdgeAttributeHome {
 
 	private static final Log log = LogFactory.getLog(EdgeAttributeHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
+
 
 	protected SessionFactory getSessionFactory() {
 		try {

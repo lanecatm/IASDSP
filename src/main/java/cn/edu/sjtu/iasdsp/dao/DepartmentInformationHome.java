@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
  * @see cn.edu.sjtu.iasdsp.dao.DepartmentInformation
  * @author Hibernate Tools
  */
+@Repository
 public class DepartmentInformationHome {
 
 	private static final Log log = LogFactory.getLog(DepartmentInformationHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -95,7 +99,7 @@ public class DepartmentInformationHome {
 		log.debug("getting DepartmentInformation instance with id: " + id);
 		try {
 			DepartmentInformation instance = (DepartmentInformation) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.DepartmentInformation", id);
+					.get("cn.edu.sjtu.iasdsp.model.DepartmentInformation", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -112,7 +116,7 @@ public class DepartmentInformationHome {
 		log.debug("finding DepartmentInformation instance by example");
 		try {
 			List<DepartmentInformation> results = (List<DepartmentInformation>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.DepartmentInformation").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.DepartmentInformation").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

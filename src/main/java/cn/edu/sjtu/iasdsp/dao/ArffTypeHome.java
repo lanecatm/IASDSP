@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.ArffType;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.ArffType;
  * @see cn.edu.sjtu.iasdsp.dao.ArffType
  * @author Hibernate Tools
  */
+@Repository
 public class ArffTypeHome {
 
 	private static final Log log = LogFactory.getLog(ArffTypeHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -93,7 +97,7 @@ public class ArffTypeHome {
 	public ArffType findById(java.lang.Integer id) {
 		log.debug("getting ArffType instance with id: " + id);
 		try {
-			ArffType instance = (ArffType) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.dao.ArffType",
+			ArffType instance = (ArffType) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.model.ArffType",
 					id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -111,7 +115,7 @@ public class ArffTypeHome {
 		log.debug("finding ArffType instance by example");
 		try {
 			List<ArffType> results = (List<ArffType>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.ArffType").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.ArffType").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

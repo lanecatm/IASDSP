@@ -1,8 +1,8 @@
 package cn.edu.sjtu.iasdsp.dto;
 
-import java.util.List;
 import java.util.Set;
 
+import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 
 /** 
@@ -14,12 +14,24 @@ import cn.edu.sjtu.iasdsp.model.WikiReference;
 */
 public class EditApplicationDto {
 	String title;
-	String content;
+	String introduction;
 	Set<WikiReference> referenceList;
-	Set<String> relatedPageList;
+	Set<WikiPage> relatedPageIdList;
+	ShowApplicationDto showApplicationDto;
 	
 	
 	public EditApplicationDto() {
+	}
+
+
+	public EditApplicationDto(String title, String introduction, Set<WikiReference> referenceList,
+			Set<WikiPage> relatedPageIdList, ShowApplicationDto showApplicationDto) {
+		super();
+		this.title = title;
+		this.introduction = introduction;
+		this.referenceList = referenceList;
+		this.relatedPageIdList = relatedPageIdList;
+		this.showApplicationDto = showApplicationDto;
 	}
 
 
@@ -33,22 +45,26 @@ public class EditApplicationDto {
 	}
 
 
-	public String getContent() {
-		return content;
+	public String getIntroduction() {
+		return introduction;
 	}
 
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setIntroduction(String content) {
+		this.introduction = content;
 	}
 
 
-	public Set<String> getRelatedPageList() {
-		return relatedPageList;
+
+	public Set<WikiPage> getRelatedPageIdList() {
+		return relatedPageIdList;
 	}
-	public void setRelatedPageList(Set<String> relatedPageList) {
-		this.relatedPageList = relatedPageList;
+
+
+	public void setRelatedPageIdList(Set<WikiPage> relatedPageIdList) {
+		this.relatedPageIdList = relatedPageIdList;
 	}
+
 
 	public Set<WikiReference> getReferenceList() {
 		return referenceList;
@@ -56,6 +72,16 @@ public class EditApplicationDto {
 
 	public void setReferenceList(Set<WikiReference> referenceList) {
 		this.referenceList = referenceList;
+	}
+
+
+	public ShowApplicationDto getShowApplicationDto() {
+		return showApplicationDto;
+	}
+
+
+	public void setShowApplicationDto(ShowApplicationDto showApplicationDto) {
+		this.showApplicationDto = showApplicationDto;
 	}
 	
 	

@@ -30,9 +30,9 @@
 		</div>
 		<div class="panel-body">
 			<h5>
-				<c:forEach items="${showApplicationDto.relatedPageList}"
+				<c:forEach items="${showApplicationDto.relatedWikiPageList}"
 					var="relatedPage">
-					<span class="label label-default">${relatedPage}</span>
+					<span class="label label-default">${relatedPage.title}</span>
 				</c:forEach>
 			</h5>
 		</div>

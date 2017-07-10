@@ -2,7 +2,7 @@
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4></h4>
+				<h4>${showApplicationDto.workflowInformationList }</h4>
 			</div>
 			<div class="panel-body">
 				<h4>

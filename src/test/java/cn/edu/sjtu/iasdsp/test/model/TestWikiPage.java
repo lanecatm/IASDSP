@@ -1,9 +1,9 @@
 package cn.edu.sjtu.iasdsp.test.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +15,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
-import cn.edu.sjtu.iasdsp.model.WikiRelationship;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /**
@@ -35,7 +34,7 @@ public class TestWikiPage {
 		ApplicationContext ac = null;
 		SessionFactory sessionFactory = null;
 		int wikiReferenceId = -1;
-		int wikiRelationId = -1;
+		int relatedWikiPageId = -1;
 		int workflowInformationId = -1;
 		try {
 			// 使用此方法获取并初始化我们的spring容器，注意pring-datasource.xml必须存放在类路径的根目录下。
@@ -55,7 +54,7 @@ public class TestWikiPage {
 
 			User creator = session.load(User.class, 1);
 			User updator = session.load(User.class, 1);
-			String path = "test_path20";
+			String path = "test_path21";
 			String title = "test title";
 			String content = "test content";
 
@@ -73,12 +72,19 @@ public class TestWikiPage {
 			session.save(wikiReference);
 			wikiReferenceId = wikiReference.getId();
 
-			WikiRelationship wikiRelationship = new WikiRelationship(new Date(), new Date());
-			wikiRelationship.setWikiPage(wikiPage);
-			session.save(wikiRelationship);
-			wikiRelationId = wikiRelationship.getId();
-
+			//WikiRelationship wikiRelationship = new WikiRelationship(new Date(), new Date());
+			//wikiRelationship.setWikiPage(wikiPage);
+			//session.save(wikiRelationship);
+			//wikiRelationId = wikiRelationship.getId();
+			
+			WikiPage wikiPage1 = new WikiPage(creator, updator, path + "related", title+ "related", content, new Date(), new Date());
+			wikiPage1.getRelatedWikiPages().add(wikiPage);
+			session.save(wikiPage1);
+			relatedWikiPageId = wikiPage1.getId();
+			
+			wikiPage.getRelatedWikiPages().add(wikiPage1);
 			session.save(wikiPage);
+
 
 			// 提交事务
 			transaction.commit();
@@ -96,8 +102,15 @@ public class TestWikiPage {
 		try {
 			Session session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
+			
 			WikiPage wikiPageNew = session.load(WikiPage.class, wikiPage.getId());
+			assertEquals(wikiPageNew.getRelatedWikiPages().size(), 1);
 			session.delete(wikiPageNew);
+			WikiPage wikiPageRelated = session.load(WikiPage.class, relatedWikiPageId);
+			assertEquals(wikiPageRelated.getRelatedWikiPages().size(), 1);
+
+			session.delete(wikiPageRelated);
+			
 			WorkflowInformation workflowInformationNew = 
 					session.load(WorkflowInformation.class, workflowInformationId);
 			session.delete(workflowInformationNew);
@@ -114,13 +127,13 @@ public class TestWikiPage {
 		try {
 			Session session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
-			WikiRelationship wikiRelationship = session.load(WikiRelationship.class, wikiRelationId);
-			try {
-				System.out.println(wikiRelationship.getCreatedAt());
-				fail();
-			} catch (Exception e) {
-
-			}
+//			WikiRelationship wikiRelationship = session.load(WikiRelationship.class, wikiRelationId);
+//			try {
+//				System.out.println(wikiRelationship.getCreatedAt());
+//				fail();
+//			} catch (Exception e) {
+//
+//			}
 			WikiReference wikiReference = session.load(WikiReference.class, wikiReferenceId);
 			try {
 				System.out.println(wikiReference.getCreatedAt());

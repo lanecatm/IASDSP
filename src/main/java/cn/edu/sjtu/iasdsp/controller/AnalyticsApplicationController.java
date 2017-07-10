@@ -29,26 +29,25 @@ public class AnalyticsApplicationController {
 	
 	@Autowired
 	private AnalyticsApplicationService analyticsApplicationService;
-	
-	
-	
-	
 
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String show(Model model) {
-		String wikiPath = "cpu_content";
+	@RequestMapping(value = "/{wikiPath}/show", method = RequestMethod.GET)
+	public String show(Model model, String wikiPath) {
+		logger.debug("Into AnalyticsApplicationController show function where wikiPath = " + wikiPath);
 		ShowApplicationDto showApplicationDto = analyticsApplicationService.show(wikiPath);
 		model.addAttribute("showApplicationDto", showApplicationDto);
 		return "application/show";
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit(Model model) {
-		//model.addAttribute("showApplicationDto", showApplicationDto);
-		model.addAttribute("editApplicationDto", new EditApplicationDto());
+	@RequestMapping(value = "/{wikiPath}/edit", method = RequestMethod.GET)
+	public String edit(Model model, String wikiPath) {
+		logger.debug("Into AnalyticsApplicationController edit function where wikiPath = " + wikiPath);
+		EditApplicationDto editApplicationDto = analyticsApplicationService.edit(wikiPath);
+		model.addAttribute("showApplicationDto", editApplicationDto.getShowApplicationDto());
+		model.addAttribute("editApplicationDto", editApplicationDto);
 
 		return "application/edit";
 	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		//model.addAttribute("showApplicationDto", showApplicationDto);
@@ -58,8 +57,7 @@ public class AnalyticsApplicationController {
 	}
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(EditApplicationDto editApplicationDto) {
-		//showApplicationDto.setIntroduction(editApplicationDto.getIntroduction());
-		//showApplicationDto.setReferenceList(editApplicationDto.getReferenceList());
+		analyticsApplicationService.update(editApplicationDto);
 		return "redirect:/application/show";
 	}
 
