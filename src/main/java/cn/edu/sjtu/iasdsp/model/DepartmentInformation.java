@@ -2,11 +2,15 @@ package cn.edu.sjtu.iasdsp.model;
 // Generated 2017-7-5 20:36:16 by Hibernate Tools 5.2.3.Final
 
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,6 +32,9 @@ public class DepartmentInformation implements java.io.Serializable {
 	private String duty;
 	private Date createdAt;
 	private Date updatedAt;
+	private Set<WorkflowPrivilege> editWorkflowInformations;
+	private Set<WorkflowPrivilege> deleteWorkflowInformations;
+	private Set<WorkflowPrivilege> executeWorkflowInformations;
 
 	public DepartmentInformation() {
 	}
@@ -144,5 +151,36 @@ public class DepartmentInformation implements java.io.Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "editDepartment")
+	public Set<WorkflowPrivilege> getEditWorkflowInformations() {
+		return editWorkflowInformations;
+	}
+
+	public void setEditWorkflowInformations(Set<WorkflowPrivilege> editWorkflowInformations) {
+		this.editWorkflowInformations = editWorkflowInformations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "deleteDepartment")
+	public Set<WorkflowPrivilege> getDeleteWorkflowInformations() {
+		return deleteWorkflowInformations;
+	}
+
+	public void setDeleteWorkflowInformations(Set<WorkflowPrivilege> deleteWorkflowInformations) {
+		this.deleteWorkflowInformations = deleteWorkflowInformations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "executeDepartment")
+	public Set<WorkflowPrivilege> getExecuteWorkflowInformations() {
+		return executeWorkflowInformations;
+	}
+
+	public void setExecuteWorkflowInformations(Set<WorkflowPrivilege> executeWorkflowInformations) {
+		this.executeWorkflowInformations = executeWorkflowInformations;
+	}
+	
+	
+	
 
 }

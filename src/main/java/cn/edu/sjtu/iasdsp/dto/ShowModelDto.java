@@ -3,6 +3,8 @@ package cn.edu.sjtu.iasdsp.dto;
 import java.util.Date;
 import java.util.Map;
 
+import cn.edu.sjtu.iasdsp.model.User;
+
 public class ShowModelDto {
 	
 	//Basic information
@@ -11,8 +13,8 @@ public class ShowModelDto {
 	private String category;
 	
 	//Authorization
-	private String author;
-	private String lastEditor;
+	private User author;
+	private User lastEditor;
 	private String editUserGroup;
 	private String deleteUserGroup;
 	private String exectuteUserGroup;
@@ -20,6 +22,7 @@ public class ShowModelDto {
 	//Version
 	
 	private String versionName;
+	private String versionDescription;
 	private Date creationTime;
 	private Date updateTime;
 	
@@ -27,9 +30,9 @@ public class ShowModelDto {
 	private Map<String, String> application;
 	
 
-	public ShowModelDto(String title, String introduction, String category, String author, String lastEditor,
+	public ShowModelDto(String title, String introduction, String category, User author, User lastEditor,
 			String editUserGroup, String deleteUserGroup, String exectuteUserGroup, String versionName,
-			Date creationTime, Date updateTime, Map<String, String> application) {
+			String versionDescription, Date creationTime, Date updateTime, Map<String, String> application) {
 		super();
 		this.title = title;
 		this.introduction = introduction;
@@ -40,9 +43,22 @@ public class ShowModelDto {
 		this.deleteUserGroup = deleteUserGroup;
 		this.exectuteUserGroup = exectuteUserGroup;
 		this.versionName = versionName;
+		this.versionDescription = versionDescription;
 		this.creationTime = creationTime;
 		this.updateTime = updateTime;
 		this.application = application;
+	}
+	
+	public ShowModelDto() {
+
+	}
+
+	public String getVersionDescription() {
+		return versionDescription;
+	}
+
+	public void setVersionDescription(String versionDescription) {
+		this.versionDescription = versionDescription;
 	}
 
 	public String getTitle() {
@@ -69,20 +85,20 @@ public class ShowModelDto {
 		this.category = category;
 	}
 
-	public String getAuthor() {
+	public User getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAuthor(User user) {
+		this.author = user;
 	}
 
-	public String getLastEditor() {
+	public User getLastEditor() {
 		return lastEditor;
 	}
 
-	public void setLastEditor(String lastEditor) {
-		this.lastEditor = lastEditor;
+	public void setLastEditor(User user) {
+		this.lastEditor = user;
 	}
 
 	public String getEditUserGroup() {

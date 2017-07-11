@@ -105,7 +105,7 @@ public class AnalyticsApplicationService {
 
 	}
 
-
+	@Transactional
 	private WikiPage find(String wikiPath) {
 		logger.info("ShowApplicationDto find by wikiPath " + wikiPath);
 		WikiPage wikiPageExample = new WikiPage();
