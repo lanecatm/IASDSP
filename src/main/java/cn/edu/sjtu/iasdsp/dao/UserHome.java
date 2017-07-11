@@ -23,6 +23,7 @@ import cn.edu.sjtu.iasdsp.model.User;
  * @author Hibernate Tools
  */
 @Repository
+@Transactional
 public class UserHome {
 
 	private static final Log log = LogFactory.getLog(UserHome.class);

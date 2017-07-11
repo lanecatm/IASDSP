@@ -58,6 +58,17 @@ public class User implements java.io.Serializable {
 		this.signInCount = signInCount;
 	}
 
+	public User(String email, String encryptedPassword, String userName, int signInCount, Date createdAt,
+			Date updatedAt) {
+		super();
+		this.email = email;
+		this.encryptedPassword = encryptedPassword;
+		this.userName = userName;
+		this.signInCount = signInCount;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
 	public User(String email, String encryptedPassword, String userName, String personName, String gender,
 			Date birthday, String phoneNumber, String resetPasswordToken, Date resetPasswordSentAt,
 			Date rememberCreatedAt, int signInCount, Date currentSignInAt, Date lastSignInAt, String currentSignInIp,

@@ -12,7 +12,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 
@@ -22,7 +23,8 @@ import cn.edu.sjtu.iasdsp.model.WikiPage;
  * @author Hibernate Tools
  *
  */
-@Component
+@Repository
+@Transactional
 public class WikiPageHome {
 
 	private static final Log log = LogFactory.getLog(WikiPageHome.class);
@@ -49,12 +51,27 @@ public class WikiPageHome {
 			throw re;
 		}
 	}
+	
+
+	public void save(WikiPage transientInstance) {
+		log.debug("saving WikiPage instance");
+		try {
+			sessionFactory.getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
 
 	public void attachDirty(WikiPage instance) {
-		log.debug("attaching dirty WikiPage instance");
+		log.info("attaching dirty WikiPage instance");
 		try {
+			//log.debug("wikiPage introduction:" + instance.getContent());
+
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
-			log.debug("attach successful");
+			
+			log.info("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
 			throw re;

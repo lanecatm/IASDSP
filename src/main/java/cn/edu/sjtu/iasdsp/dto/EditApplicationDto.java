@@ -18,6 +18,7 @@ public class EditApplicationDto {
 	Set<WikiReference> referenceList;
 	Set<WikiPage> relatedPageIdList;
 	ShowApplicationDto showApplicationDto;
+	int wikiPageId;
 	
 	
 	public EditApplicationDto() {
@@ -32,6 +33,16 @@ public class EditApplicationDto {
 		this.referenceList = referenceList;
 		this.relatedPageIdList = relatedPageIdList;
 		this.showApplicationDto = showApplicationDto;
+	}
+
+
+	public int getWikiPageId() {
+		return wikiPageId;
+	}
+
+
+	public void setWikiPageId(int wikiPageId) {
+		this.wikiPageId = wikiPageId;
 	}
 
 
