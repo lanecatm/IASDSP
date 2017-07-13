@@ -247,4 +247,12 @@ public class WikiPage implements java.io.Serializable {
 		this.workflowPerformances = workflowPerformances;
 	}
 
+	public String toString() {
+		return "WikiPage [id=" + id + ", userByCreatorId=" + userByCreatorId + ", userByUpdatorId=" + userByUpdatorId
+				+ ", path=" + path + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + ", workflowInformations=" + workflowInformations + ", wikiReferences="
+				+ wikiReferences + ", relatedWikiPages=" + relatedWikiPages + ", workflowPerformances="
+				+ workflowPerformances + ", wikiCategory=" + wikiCategory + "]";
+	}
+
 }

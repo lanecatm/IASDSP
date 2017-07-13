@@ -21,6 +21,7 @@ public class ShowApplicationDto {
 	private Date time;
 	private String authorName;
 	private String introduction;
+	private String path;
 	private Set<WikiReference> referenceList;
 	private Set<WorkflowInformation> workflowInformationList;
 	private Set<WikiPage> relatedWikiPageList;
@@ -30,29 +31,21 @@ public class ShowApplicationDto {
 	public ShowApplicationDto() {
 	}
 
-	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Set<WikiReference> referenceList, 
-			Set<WorkflowInformation> workflowInformationList, Set<WikiPage> relatedWikiPageList) {
-		super();
+
+	public ShowApplicationDto(String title, Date time, String authorName, String introduction, String path,
+			Set<WikiReference> referenceList, Set<WorkflowInformation> workflowInformationList,
+			Set<WikiPage> relatedWikiPageList) {
 		this.title = title;
 		this.time = time;
 		this.authorName = authorName;
 		this.introduction = introduction;
+		this.path = path;
 		this.referenceList = referenceList;
 		this.workflowInformationList = workflowInformationList;
 		this.relatedWikiPageList = relatedWikiPageList;
 	}
-	
-	public ShowApplicationDto(String title, Date time, String authorName, String introduction,
-			Set<WikiReference> referenceList, Set<WikiPage> relatedWikiPageList) {
-		super();
-		this.title = title;
-		this.time = time;
-		this.authorName = authorName;
-		this.introduction = introduction;
-		this.referenceList = referenceList;
-		this.relatedWikiPageList = relatedWikiPageList;
-	}
+
+
 	public String getTitle() {
 		return title;
 	}
@@ -99,6 +92,23 @@ public class ShowApplicationDto {
 	public void setRelatedWikiPageList(Set<WikiPage> relatedWikiPageList) {
 		this.relatedWikiPageList = relatedWikiPageList;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String toString() {
+		return "ShowApplicationDto [title=" + title + ", time=" + time + ", authorName=" + authorName
+				+ ", introduction=" + introduction + ", path=" + path + ", referenceList=" + referenceList
+				+ ", workflowInformationList=" + workflowInformationList + ", relatedWikiPageList="
+				+ relatedWikiPageList + "]";
+	}
+
+	
 
 
 }

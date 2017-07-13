@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.WikiReference;
  * @see cn.edu.sjtu.iasdsp.dao.WikiReference
  * @author Hibernate Tools
  */
+@Repository
 public class WikiReferenceHome {
 
 	private static final Log log = LogFactory.getLog(WikiReferenceHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +98,7 @@ public class WikiReferenceHome {
 		log.debug("getting WikiReference instance with id: " + id);
 		try {
 			WikiReference instance = (WikiReference) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.WikiReference", id);
+					.get("cn.edu.sjtu.iasdsp.model.WikiReference", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +115,7 @@ public class WikiReferenceHome {
 		log.debug("finding WikiReference instance by example");
 		try {
 			List<WikiReference> results = (List<WikiReference>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WikiReference").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WikiReference").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

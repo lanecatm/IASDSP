@@ -24,40 +24,75 @@ import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
 @Controller
 @RequestMapping("/application")
 public class AnalyticsApplicationController {
-	private static final Logger logger = LoggerFactory.getLogger(AnalyticsApplicationController.class);
+	private static final Logger log = LoggerFactory.getLogger(AnalyticsApplicationController.class);
 	
 	@Autowired
 	private AnalyticsApplicationService analyticsApplicationService;
 
 	@RequestMapping(value = "/{wikiPath}/show", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("wikiPath") String wikiPath) {
-		logger.debug("Into AnalyticsApplicationController show function where wikiPath = " + wikiPath);
-		ShowApplicationDto showApplicationDto = analyticsApplicationService.show(wikiPath);
-		model.addAttribute("showApplicationDto", showApplicationDto);
-		return "application/show";
+		log.debug("Into show function where wikiPath = " + wikiPath);
+		try {
+			ShowApplicationDto showApplicationDto = analyticsApplicationService.show(wikiPath);
+			model.addAttribute("showApplicationDto", showApplicationDto);
+			log.debug("Show Succ where showApplicationDto = " + showApplicationDto);
+			return "application/show";
+		} catch (Exception e) {
+			return "application/error";
+		}
 	}
 
 	@RequestMapping(value = "/{wikiPath}/edit", method = RequestMethod.GET)
 	public String edit(Model model, @PathVariable("wikiPath") String wikiPath) {
-		logger.debug("Into AnalyticsApplicationController edit function where wikiPath = " + wikiPath);
-		EditApplicationDto editApplicationDto = analyticsApplicationService.edit(wikiPath);
-		model.addAttribute("showApplicationDto", editApplicationDto.getShowApplicationDto());
-		model.addAttribute("editApplicationDto", editApplicationDto);
+		log.debug("Into edit function where wikiPath = " + wikiPath);
+		try {
+			EditApplicationDto editApplicationDto = analyticsApplicationService.edit(wikiPath);
+			model.addAttribute("editApplicationDto", editApplicationDto);
+			log.debug("Edit Succ where editApplicationDto = " + editApplicationDto);
+			return "application/edit";
+		} catch (Exception e) {
+			return "application/error";
 
-		return "application/edit";
+		}
 	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String create(Model model) {
-		//model.addAttribute("showApplicationDto", showApplicationDto);
-		model.addAttribute("editApplicationDto", new EditApplicationDto());
-
-		return "application/edit";
-	}
+	
 	@RequestMapping(value = "/{wikiPath}/update", method = RequestMethod.POST)
 	public String update(EditApplicationDto editApplicationDto, @PathVariable("wikiPath") String wikiPath) {
-		analyticsApplicationService.update(editApplicationDto);
-		return "redirect:/application/{wikiPath}/show";
+		log.debug("Into update function where wikiPath = " + wikiPath + ", editApplicationDto = " + editApplicationDto);
+		try {
+			analyticsApplicationService.update(editApplicationDto);
+			log.debug("Update Succ"); 
+			return "redirect:/application/{wikiPath}/show";
+		} catch (Exception e) {
+			return "application/error";
+		}
 	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
+		log.debug("Into create function");
+		try {
+			EditApplicationDto editApplicationDto = analyticsApplicationService.create();
+			model.addAttribute("editApplicationDto", editApplicationDto);
+			log.debug("Create Succ where editApplicationDto = " + editApplicationDto);
+			return "application/create";
+		} catch (Exception e) {
+			return "application/error";
+		}
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String create(Model model, EditApplicationDto editApplicationDto) {
+		log.debug("Into create function where editApplicationDto = " + editApplicationDto);
+		try {
+			ShowApplicationDto showApplicationDto = analyticsApplicationService.save(editApplicationDto);
+			log.debug("Create Succ where showApplicationDto = " + showApplicationDto);
+			return "redirect:/application/" + showApplicationDto.getPath() + "/show";
+		} catch (Exception e) {
+			return "application/error";
+		}
+	}
+	
+
 
 }
