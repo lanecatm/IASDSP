@@ -8,9 +8,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,17 +22,21 @@ import cn.edu.sjtu.iasdsp.dto.EditModelDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelVersionDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
+import cn.edu.sjtu.iasdsp.service.ModelService;
 
 @Controller
 @RequestMapping("/model")
 public class ModelController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ModelController.class);
-	private ShowModelDto showModelDto = initShowModelDto();
-	private EditModelDto editModelDto = initEditModelDto();
-	private EditModelVersionDto editModelVersionDto = initEditModelVersionDto();
+	//private ShowModelDto showModelDto = initShowModelDto();
+//	private EditModelDto editModelDto = initEditModelDto();
+	//private EditModelVersionDto editModelVersionDto = initEditModelVersionDto();
 	
-	private EditModelVersionDto initEditModelVersionDto(){
+	@Autowired
+	private ModelService modelService;
+	
+	/*private EditModelVersionDto initEditModelVersionDto(){
 		
 		EditModelVersionDto editModelVersionDto = new EditModelVersionDto("onch onche","onch onche");
 		
@@ -85,7 +91,7 @@ public class ModelController {
 
 		return showModelDto;
 		
-	}
+	}*/
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String index(@ModelAttribute("createDto") CreateModelDto createDto) {
@@ -95,14 +101,15 @@ public class ModelController {
 
 	}
 	
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String show(Model model) {
-
+	@RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
+	public String show(Model model, @PathVariable("id") String id) {
+		logger.info(id);
+		ShowModelDto showModelDto = modelService.show(Integer.parseInt(id));
 		model.addAttribute("showModelDto", showModelDto);
 		return "model/showModel";
 	}
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Model model) {
 		model.addAttribute("showModelDto", showModelDto);
 		model.addAttribute("editModelDto", editModelDto);
@@ -110,7 +117,7 @@ public class ModelController {
 
 		return "model/editModel";
 	}
-	
+	*/
 	
 
 

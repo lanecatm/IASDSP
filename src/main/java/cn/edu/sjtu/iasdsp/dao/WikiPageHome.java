@@ -24,7 +24,6 @@ import cn.edu.sjtu.iasdsp.model.WikiPage;
  *
  */
 @Repository
-@Transactional
 public class WikiPageHome {
 
 	private static final Log log = LogFactory.getLog(WikiPageHome.class);

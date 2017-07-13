@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WorkflowCategory;
 
@@ -19,11 +21,14 @@ import cn.edu.sjtu.iasdsp.model.WorkflowCategory;
  * @see cn.edu.sjtu.iasdsp.dao.WorkflowCategory
  * @author Hibernate Tools
  */
+
+@Repository
 public class WorkflowCategoryHome {
 
 	private static final Log log = LogFactory.getLog(WorkflowCategoryHome.class);
-
-	private final SessionFactory sessionFactory = getSessionFactory();
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +99,7 @@ public class WorkflowCategoryHome {
 		log.debug("getting WorkflowCategory instance with id: " + id);
 		try {
 			WorkflowCategory instance = (WorkflowCategory) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.WorkflowCategory", id);
+					.get("cn.edu.sjtu.iasdsp.model.WorkflowCategory", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +116,7 @@ public class WorkflowCategoryHome {
 		log.debug("finding WorkflowCategory instance by example");
 		try {
 			List<WorkflowCategory> results = (List<WorkflowCategory>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WorkflowCategory").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowCategory").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

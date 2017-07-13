@@ -23,9 +23,9 @@ public class WorkflowPrivilege implements java.io.Serializable {
 
 	private Integer id;
 	private WorkflowInformation workflowInformation;
-	private Integer editDepartmentId;
-	private Integer executeDepartmentId;
-	private Integer deleteDepartmentId;
+	private DepartmentInformation editDepartment;
+	private DepartmentInformation executeDepartment;
+	private DepartmentInformation deleteDepartment;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -62,38 +62,44 @@ public class WorkflowPrivilege implements java.io.Serializable {
 		this.workflowInformation = workflowInformation;
 	}
 
-	@Column(name = "edit_department_id")
-	public Integer getEditDepartmentId() {
-		return this.editDepartmentId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "edit_department_id")
+	public DepartmentInformation getEditDepartment() {
+		return editDepartment;
 	}
 
-	public void setEditDepartmentId(Integer editDepartmentId) {
-		this.editDepartmentId = editDepartmentId;
+	public void setEditDepartment(DepartmentInformation editDepartment) {
+		this.editDepartment = editDepartment;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "execute_department_id")
+	public DepartmentInformation getExecuteDepartment() {
+		return executeDepartment;
 	}
 
-	@Column(name = "execute_department_id")
-	public Integer getExecuteDepartmentId() {
-		return this.executeDepartmentId;
+	public void setExecuteDepartment(DepartmentInformation executeDepartment) {
+		this.executeDepartment = executeDepartment;
 	}
 
-	public void setExecuteDepartmentId(Integer executeDepartmentId) {
-		this.executeDepartmentId = executeDepartmentId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "delete_department_id")
+	public DepartmentInformation getDeleteDepartment() {
+		return deleteDepartment;
 	}
 
-	@Column(name = "delete_department_id")
-	public Integer getDeleteDepartmentId() {
-		return this.deleteDepartmentId;
+	public void setDeleteDepartment(DepartmentInformation deleteDepartment) {
+		this.deleteDepartment = deleteDepartment;
 	}
 
-	public void setDeleteDepartmentId(Integer deleteDepartmentId) {
-		this.deleteDepartmentId = deleteDepartmentId;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
+
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
