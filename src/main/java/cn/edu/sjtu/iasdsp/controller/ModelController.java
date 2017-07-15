@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
@@ -29,75 +30,35 @@ import cn.edu.sjtu.iasdsp.service.ModelService;
 public class ModelController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ModelController.class);
-	//private ShowModelDto showModelDto = initShowModelDto();
-//	private EditModelDto editModelDto = initEditModelDto();
-	//private EditModelVersionDto editModelVersionDto = initEditModelVersionDto();
+
 	
 	@Autowired
 	private ModelService modelService;
 	
-	/*private EditModelVersionDto initEditModelVersionDto(){
-		
-		EditModelVersionDto editModelVersionDto = new EditModelVersionDto("onch onche","onch onche");
-		
-		return editModelVersionDto;
-	}
-	
-	private EditModelDto initEditModelDto() {
-		
-		String name = "Theo";
-		String introduction = "mon introduction";
-		
-		Map<String, String> application = new HashMap<String, String>();
-		application.put("VERSION 3 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc","1");
-		application.put("VERSION 2 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc", "2");
-		application.put("Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc","3");
-		
-		EditModelDto editModelDto = new EditModelDto(name, introduction, application);
-
-		return editModelDto;
-		
-	}
-	
-	private ShowModelDto initShowModelDto() {
-		
-		//Basic information
-		String title = "Clustering by Kmeans";
-		String introduction = "This is a model clustering data by Kmeans algorithm";
-		String category = "Clustering";
-		
-		//Authorization
-		String author = "Theo";
-		String lastEditor = "Theo";
-		String editUserGroup = "Departement 1";
-		String deleteUserGroup = "Departement 1";
-		String executeUserGroup = "All";
-		
-		//Version
-		
-		String versionName = "V 0.0.2";
-		Date creationTime = new Date();
-		Date updateTime = new Date();
-		
-		//application
-		Map<String, String> application = new HashMap<String, String>();
-		application.put("VERSION 3 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc","1");
-		application.put("VERSION 2 Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc", "2");
-		application.put("Here we are going to put the difference running cases with the DATE/AUTHOR/NAME etc","3");
-		
-		
-		
-		ShowModelDto showModelDto = new ShowModelDto(title, introduction, category, author, lastEditor, editUserGroup, deleteUserGroup, executeUserGroup, versionName, creationTime, updateTime, application);
-
-		return showModelDto;
-		
-	}*/
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String index(@ModelAttribute("createDto") CreateModelDto createDto) {
 		logger.info("Welcome index!.");
 
 		return "model/create";
+
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String index2(@ModelAttribute("createDto") CreateModelDto createDto) {
+		logger.info("Welcome index!.");
+		
+		try {
+			int id = modelService.save(createDto);
+			logger.debug("Create Successful where createModelDto = " + createDto);
+			
+			
+			return "redirect:/model/" + id + "/edit?active_page=info";
+			
+		} catch (Exception e) {
+			return "application/error";
+		}
+				
 
 	}
 	
@@ -109,15 +70,30 @@ public class ModelController {
 		return "model/showModel";
 	}
 	
-/*	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit(Model model) {
-		model.addAttribute("showModelDto", showModelDto);
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	public String edit(Model model, @PathVariable("id") String id , @RequestParam("active_page") String activePage) {
+		logger.info(id);
+		EditModelDto editModelDto = modelService.edit(Integer.parseInt(id));
+		editModelDto.setActivePage(activePage);
 		model.addAttribute("editModelDto", editModelDto);
-		model.addAttribute("editModelVersionDto", editModelVersionDto);
-
 		return "model/editModel";
 	}
-	*/
+	
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+	public String editInfo(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
+		logger.info(id);
+		
+		try {
+			modelService.update(editModelDto, Integer.parseInt(id));
+			model.addAttribute("editModelDto", editModelDto);
+			return "redirect:/model/" + id + "/edit?active_page=diagram";
+		} catch (NumberFormatException e) {
+			
+			return "application/error";
+			
+		}
+	}
+	
 	
 
 

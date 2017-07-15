@@ -75,6 +75,15 @@ public class WorkflowInformation implements java.io.Serializable {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+	
+
+
+	public WorkflowInformation(String name, String introduction, Date createdAt, Date updatedAt) {
+		this.name = name;
+		this.introduction = introduction;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
