@@ -16,7 +16,7 @@
 			<div class="row">
 				<hr />
 				<sf:form method="post" modelAttribute="editApplicationDto"
-					cssClass="form-horizontal" role="form" action="update">
+					cssClass="form-horizontal" role="form" action="save">
 					<sf:hidden path="wikiPageId" />
 					<div class="panel panel-default">
 						<div class="panel-heading">

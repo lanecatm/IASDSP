@@ -39,6 +39,7 @@ public class AnalyticsApplicationService {
 	@Autowired
 	private WikiReferenceHome wikiReferenceHome;
 
+	@Transactional
 	public EditApplicationDto create() {
 		logger.debug("Into create service");
 		EditApplicationDto editApplicationDto = new EditApplicationDto();
@@ -47,16 +48,72 @@ public class AnalyticsApplicationService {
 		return editApplicationDto;
 	}
 
+	// return whether have same name page or not
 	@Transactional
-	public ShowApplicationDto save(EditApplicationDto editApplicationDto) {
+	public String save(EditApplicationDto editApplicationDto) throws Exception {
 		logger.debug("Into save service, param:" + editApplicationDto);
-		// 创建WikiPage
-		WikiPage wikiPage = new WikiPage(new Date(), new Date());
-		WikiReference wikiReference = new WikiReference();
+		try {
+			// 创建WikiPage
+			if (editApplicationDto.getTitle() == null || editApplicationDto.getTitle().equals("")) {
+				logger.debug("Save service, cannot create wikiPage because of title:" + editApplicationDto.getTitle());
+				return null;
+			}
+			String path = changeTitleIntoPath(editApplicationDto.getTitle());
+			WikiPage wikiPage = new WikiPage();
+			wikiPage.setPath(path);
+			List<WikiPage> wikiPageList = wikiPageHome.findByExample(wikiPage);
+			if (wikiPageList.size() != 0) {
+				logger.debug("Save service, cannot create wikiPage because of path exist, editApplicationDto:"
+						+ editApplicationDto + " find wikiPageList:" + wikiPageList);
+				return null;
+			}
+			logger.debug("Save service, set param");
+			wikiPage.setTitle(editApplicationDto.getTitle());
+			wikiPage.setContent(editApplicationDto.getIntroduction());
+			wikiPage.setCreatedAt(new Date());
+			wikiPage.setUpdatedAt(new Date());
 
-		ShowApplicationDto returnShowApplicationDto = new ShowApplicationDto();
+			// TODO 获取当前用户
+			User user = userHome.findById(1);
+			wikiPage.setUserByCreatorId(user);
+			wikiPage.setUserByUpdatorId(user);
 
-		return returnShowApplicationDto;
+			// TODO 增加wikiCategory
+			// wikiPage.setWikiCategory(wikiCategory);
+			logger.debug("Save service, add related wikiPage:" + editApplicationDto.getRelatedWikiPageList());
+			for (WikiPage relatedWikiPage : editApplicationDto.getRelatedWikiPageList()) {
+				if (relatedWikiPage.getId() != null) {
+					WikiPage addWikiPage = wikiPageHome.findById(relatedWikiPage.getId());
+					if (addWikiPage != null) {
+						wikiPage.getRelatedWikiPages().add(addWikiPage);
+						logger.debug("Save service, add related wikiPage:" + addWikiPage);
+					} else {
+						logger.error("Save service, cannot find related wikiPage:" + relatedWikiPage);
+					}
+				}
+			}
+			logger.debug("Save service, persist wikiPage");
+			wikiPageHome.persist(wikiPage);
+			logger.debug("Save service, persist wikiPage succ");
+			
+			logger.debug("Save service, add reference:" + editApplicationDto.getReferenceList());
+			for (WikiReference reference : editApplicationDto.getReferenceList()) {
+				if (reference.getId() != null) {
+					reference.setId(null);
+					reference.setUpdatedAt(new Date());
+					reference.setCreatedAt(new Date());
+					reference.setWikiPage(wikiPage);
+					wikiReferenceHome.persist(reference);
+				}
+			}
+			
+			logger.debug("Save service succ");
+			return path;
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug("Save service failed");
+			throw e;
+		}
 	}
 
 	@Transactional
@@ -257,7 +314,7 @@ public class AnalyticsApplicationService {
 	// 在创建新的wikiPage时使用
 	private String changeTitleIntoPath(String title) {
 		logger.info("generate path from title " + title);
-		String path = title.replaceAll("[^a-zA-Z\\s]", "_");
+		String path = title.replaceAll("[^a-zA-Z0-9]", "_");
 		logger.info("to " + path);
 		return path;
 

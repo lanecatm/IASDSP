@@ -82,12 +82,16 @@ public class AnalyticsApplicationController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Model model, EditApplicationDto editApplicationDto) {
+	public String save(Model model, EditApplicationDto editApplicationDto) {
 		log.debug("Into create function where editApplicationDto = " + editApplicationDto);
 		try {
-			ShowApplicationDto showApplicationDto = analyticsApplicationService.save(editApplicationDto);
-			log.debug("Create Succ where showApplicationDto = " + showApplicationDto);
-			return "redirect:/application/" + showApplicationDto.getPath() + "/show";
+			String path = analyticsApplicationService.save(editApplicationDto);
+			if (path != null){
+				return "redirect:/application/" + path + "/show";
+			}
+			else{
+				return "redirect:/application/create";
+			}
 		} catch (Exception e) {
 			return "application/error";
 		}
