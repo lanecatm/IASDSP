@@ -2,6 +2,7 @@ package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.User;
 
@@ -10,6 +11,7 @@ public class ShowModelDto {
 	//Basic information
 	private String title;
 	private String introduction;
+	private String detailedInformation;
 	private String category;
 	
 	//Authorization
@@ -26,32 +28,49 @@ public class ShowModelDto {
 	private Date creationTime;
 	private Date updateTime;
 	
-	//application
-	private Map<String, String> application;
+	//application test
+	//private Map<String, String> application;
+	private Set<String> application;
 	
 
-	public ShowModelDto(String title, String introduction, String category, User author, User lastEditor,
-			String editUserGroup, String deleteUserGroup, String exectuteUserGroup, String versionName,
-			String versionDescription, Date creationTime, Date updateTime, Map<String, String> application) {
-		super();
-		this.title = title;
-		this.introduction = introduction;
-		this.category = category;
-		this.author = author;
-		this.lastEditor = lastEditor;
-		this.editUserGroup = editUserGroup;
-		this.deleteUserGroup = deleteUserGroup;
-		this.exectuteUserGroup = exectuteUserGroup;
-		this.versionName = versionName;
-		this.versionDescription = versionDescription;
-		this.creationTime = creationTime;
-		this.updateTime = updateTime;
+	//diagram
+	private String xml;
+	
+
+	public ShowModelDto() {
+		
+	//	application.add("Mon application");
+	//	application.add("Mon applicatifon");
+
+	}
+	
+	public String getXml() {
+		return xml;
+	}
+
+
+	public void setXml(String xml) {
+		this.xml = xml;
+	}
+	
+	public Set<String> getApplication() {
+		return application;
+	}
+
+	public void setApplication(Set<String> application) {
 		this.application = application;
 	}
-	
-	public ShowModelDto() {
 
+
+	public String getDetailedInformation() {
+		return detailedInformation;
 	}
+
+	public void setDetailedInformation(String detailedInformation) {
+		this.detailedInformation = detailedInformation;
+	}
+
+
 
 	public String getVersionDescription() {
 		return versionDescription;
@@ -148,20 +167,6 @@ public class ShowModelDto {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public Map<String, String> getApplication() {
-		return application;
-	}
-
-	public void setApplication(Map<String, String> application) {
-		this.application = application;
-	}
-	
-	
-
-
-
-
 
 
 	

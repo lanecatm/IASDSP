@@ -8,6 +8,10 @@ public class CreateModelDto {
 	private String name;
 	private String introduction;
 	
+	public CreateModelDto() {
+
+	}
+	
 	public CreateModelDto(String name, String introduction) {
 		super();
 		this.name = name;

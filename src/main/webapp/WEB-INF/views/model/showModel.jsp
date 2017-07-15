@@ -16,7 +16,12 @@
                     <div class="box-body">
                         <div class="tab-custom">
                             <ul class="nav nav-tabs nav-bordered" data-spy="affix" role="tablist">
-                                <li role="presentation" class=" active ">
+                             <li role="presentation" class=" active ">
+									<a href="#intro" aria-controls="intro" role="tab" data-toggle="tab">
+										<span class=" glyphicon glyphicon-book" aria-hidden="true"></span> Introduction
+									</a>
+                                </li>
+                                <li role="presentation" >
 									<a href="#diagram" aria-controls="diagram" role="tab" data-toggle="tab">
 										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Diagram
 									</a>
@@ -35,7 +40,7 @@
                                 </li>
                                   <li role="presentation" >
 									<a href="#case" aria-controls="case" role="tab" data-toggle="tab">
-										<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Running Case
+										<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Application
 									</a>
                                 </li>
                                  <li role="presentation" >
@@ -74,20 +79,22 @@
              <div class = "row">
                 <!-- Nav tabs -->
                 <div class="tab-content">
-                   <div role="tabpanel" class="tab-pane active " id="diagram">
-							<%@ include file="showModelDiagram.jsp"%>
+               		 <div role="tabpanel" class="tab-pane active " id="intro">
+							<%@ include file="showModelIntro.jsp"%>
                     </div>
-
-                    <div role="tabpanel" class="tab-pane " id="information">
+                    <div role="tabpanel" class="tab-pane" id="information">
 						<%@ include file="showModelInfo.jsp"%>
                     </div>
-                    <div role="tabpanel" class="tab-pane " id="version">
+                          <div role="tabpanel" class="tab-pane" id="diagram">
+							<%@ include file="showModelDiagram.jsp"%>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="version">
 					    	<%@ include file="showModelVersion.jsp"%>
                     </div>
-                      <div role="tabpanel" class="tab-pane " id="case">
+                      <div role="tabpanel" class="tab-pane" id="case">
 							<%@ include file="showModelApplication.jsp"%>
                     </div>
-                      <div role="tabpanel" class="tab-pane " id="execution">
+                      <div role="tabpanel" class="tab-pane" id="execution">
 						<%-- <%@ include file="show_forum.jsp"%> --%>
                     </div>
                 </div>
