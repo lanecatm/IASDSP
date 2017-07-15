@@ -112,4 +112,9 @@ public class WikiReference implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public String toString() {
+		return "WikiReference [id=" + id + ", content=" + content + ", url=" + url
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}
+
 }

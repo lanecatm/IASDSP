@@ -49,7 +49,7 @@ public class WikiPage implements java.io.Serializable {
 	// new HashSet<XWikiAndWorkflowInformation>(0);
 	private Set<WikiReference> wikiReferences = new HashSet<WikiReference>(0);
 	private Set<WikiPage> relatedWikiPages = new HashSet<WikiPage>(0);
-	//private Set<WikiPage> relatedByWikiPages = new HashSet<WikiPage>(0);
+	private Set<WikiPage> relatedByWikiPages = new HashSet<WikiPage>(0);
 
 	//private Set<WikiRelationship> wikiRelationships = new HashSet<WikiRelationship>(0);
 
@@ -219,15 +219,15 @@ public class WikiPage implements java.io.Serializable {
 		this.relatedWikiPages = relatedWikiPages;
 	}
 	
-//	
-//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "relatedWikiPages")
-//	public Set<WikiPage> getRelatedByWikiPages() {
-//		return relatedByWikiPages;
-//	}
-//
-//	public void setRelatedByWikiPages(Set<WikiPage> relatedByWikiPages) {
-//		this.relatedByWikiPages = relatedByWikiPages;
-//	}
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "relatedWikiPages")
+	public Set<WikiPage> getRelatedByWikiPages() {
+		return relatedByWikiPages;
+	}
+
+	public void setRelatedByWikiPages(Set<WikiPage> relatedByWikiPages) {
+		this.relatedByWikiPages = relatedByWikiPages;
+	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "wikiPages")
 	public Set<WorkflowInformation> getWorkflowInformations() {
@@ -248,11 +248,9 @@ public class WikiPage implements java.io.Serializable {
 	}
 
 	public String toString() {
-		return "WikiPage [id=" + id + ", userByCreatorId=" + userByCreatorId + ", userByUpdatorId=" + userByUpdatorId
+		return "WikiPage [id=" + id
 				+ ", path=" + path + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + ", workflowInformations=" + workflowInformations + ", wikiReferences="
-				+ wikiReferences + ", relatedWikiPages=" + relatedWikiPages + ", workflowPerformances="
-				+ workflowPerformances + ", wikiCategory=" + wikiCategory + "]";
+				+ ", updatedAt=" + updatedAt + ", wikiCategory=" + wikiCategory + "]";
 	}
 
 }

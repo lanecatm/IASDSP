@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8">
 			<div class="row">
-				<h1>Edit ${editApplicationDto.getTitle()}</h1>
+				<h1>Create new analytics application</h1>
 			</div>
 
 			<div class="row">
@@ -20,10 +20,17 @@
 					<sf:hidden path="wikiPageId" />
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4>Introduction</h4>
+							<h4>Basic Information</h4>
 						</div>
 						<div class="panel-body">
 							<div class="form-group">
+								<label class="col-md-12">Title</label>
+								<div class="col-md-12">
+									<sf:input path="title" cssClass="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-12">Introduction</label>
 								<div class="col-md-12">
 									<sf:textarea path="introduction" cssClass="form-control"
 										rows="20" />
@@ -159,50 +166,50 @@
 
 <script>
 
- 	var room = document.getElementById('listSize').innerHTML - 1;
- 	var wiki_page_num = document.getElementById('tagSize').innerHTML - 1;
-	function reference_fields() {
+    var room = document.getElementById('listSize').innerHTML - 1;
+    var wiki_page_num = document.getElementById('tagSize').innerHTML - 1;
+    function reference_fields() {
 
-		room++;
-		var objTo = document.getElementById('reference_fields')
-		var divtest = document.createElement("div");
-		divtest.setAttribute("class", "removeclass" + room);
-		var rdiv = 'removeclass' + room;
-		divtest.innerHTML = '	<div class="form-group">'
-				+ '         <label class="col-md-2 control-label">[' + (room+1) + ']</label>'
-				+ '	        <div class="col-md-4">'
-				+ '             <input type="hidden" id="referenceList' + room + '.id" name="referenceList[' + room + '].id" value="-1">'
-				+ '             <input type="text" class="form-control" id="referenceList' + room + '.content"'
-	            + '                name="referenceList[' + room + '].content" value="" placeholder="Content"/>'
-				+ '         </div>'
-				+ '	        <div class="col-md-4">'
+        room++;
+        var objTo = document.getElementById('reference_fields')
+        var divtest = document.createElement("div");
+        divtest.setAttribute("class", "removeclass" + room);
+        var rdiv = 'removeclass' + room;
+        divtest.innerHTML = '   <div class="form-group">'
+                + '         <label class="col-md-2 control-label">[' + (room+1) + ']</label>'
+                + '         <div class="col-md-4">'
+                + '             <input type="hidden" id="referenceList' + room + '.id" name="referenceList[' + room + '].id" value="-1">'
+                + '             <input type="text" class="form-control" id="referenceList' + room + '.content"'
+                + '                name="referenceList[' + room + '].content" value="" placeholder="Content"/>'
+                + '         </div>'
+                + '         <div class="col-md-4">'
                 + '             <input type="text" class="form-control" id="referenceList' + room + '.url"'
                 + '                name="referenceList[' + room + '].url" value="" placeholder="Url"/>'
-				+ '	        </div>'
-				+ '	        <div class="col-md-2">'
-				+ '             <button class="btn btn-danger" type="button" onclick="remove_reference_fields('+ room +');">'
-				+ '                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'
-				+ '             </button>'
-				+ '         </div>' 
-				+ '    </div>'
-				+ '    <hr/>';
+                + '         </div>'
+                + '         <div class="col-md-2">'
+                + '             <button class="btn btn-danger" type="button" onclick="remove_reference_fields('+ room +');">'
+                + '                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'
+                + '             </button>'
+                + '         </div>' 
+                + '    </div>'
+                + '    <hr/>';
 
 
-		objTo.appendChild(divtest)
-	}
-	function remove_reference_fields(rid) {
-		$('.removeclass' + rid).remove();
-	} 
-	function add_wiki_page(){
-		wiki_page_num++;
-		var selectWikiPageObj = document.getElementById("select_wiki_page");
-		var addTo = document.getElementById("wiki_page_tags");
-		
-		var divAdd = document.createElement("div");
-		divAdd.setAttribute("class", "form-group tag" + wiki_page_num);
-		for(i=0;i<selectWikiPageObj.length;i++){
-			   if(selectWikiPageObj[i].selected==true){
-				   divAdd.innerHTML = '<label class="col-md-2 control-label">['+ (wiki_page_num + 1) + ']</label>'
+        objTo.appendChild(divtest)
+    }
+    function remove_reference_fields(rid) {
+        $('.removeclass' + rid).remove();
+    } 
+    function add_wiki_page(){
+        wiki_page_num++;
+        var selectWikiPageObj = document.getElementById("select_wiki_page");
+        var addTo = document.getElementById("wiki_page_tags");
+        
+        var divAdd = document.createElement("div");
+        divAdd.setAttribute("class", "form-group tag" + wiki_page_num);
+        for(i=0;i<selectWikiPageObj.length;i++){
+               if(selectWikiPageObj[i].selected==true){
+                   divAdd.innerHTML = '<label class="col-md-2 control-label">['+ (wiki_page_num + 1) + ']</label>'
                                     + '<div class="col-md-8">'
                                     + '    <input type="hidden" id="relatedWikiPageList' + wiki_page_num + '.id" name="relatedWikiPageList[' + wiki_page_num + '].id" value="'+selectWikiPageObj[i].value+'"/>'
                                     + '    <a class="btn btn-default btn-block ">' + selectWikiPageObj[i].innerText + '</a>'
@@ -213,13 +220,13 @@
                                     + '        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'
                                     + '    </button>'
                                     + '</div>'
-				   addTo.appendChild(divAdd);   
-				   break;
-			   }
-		}
-	}
-	function remove_wiki_page_tags(rid) {
+                   addTo.appendChild(divAdd);   
+                   break;
+               }
+        }
+    }
+    function remove_wiki_page_tags(rid) {
         $('.tag' + rid).remove();
     } 
-	
+    
 </script>

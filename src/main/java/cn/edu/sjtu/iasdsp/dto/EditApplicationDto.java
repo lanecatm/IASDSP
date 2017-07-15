@@ -1,8 +1,9 @@
 package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.WikiPage;
@@ -19,7 +20,8 @@ public class EditApplicationDto {
 	String title;
 	String introduction;
 	List<WikiReference> referenceList = new ArrayList<WikiReference>(0);
-	List<WikiPage> relatedPageIdList = new ArrayList<WikiPage>(0);
+	List<WikiPage> relatedWikiPageList = new ArrayList<WikiPage>(0);
+	Map<Integer, String> allWikiPageList = new HashMap<Integer, String>(0);
 
 	public EditApplicationDto() {
 	}
@@ -30,7 +32,7 @@ public class EditApplicationDto {
 		this.title = title;
 		this.introduction = introduction;
 		this.referenceList = new ArrayList<WikiReference>(referenceList);
-		this.relatedPageIdList = new ArrayList<WikiPage>(relatedPageIdList);
+		this.relatedWikiPageList = new ArrayList<WikiPage>(relatedPageIdList);
 	}
 
 	public int getWikiPageId() {
@@ -59,7 +61,7 @@ public class EditApplicationDto {
 
 
 	public void setRelatedPageIdList(Set<WikiPage> relatedPageIdList) {
-		this.relatedPageIdList = new ArrayList<WikiPage>(relatedPageIdList);
+		this.relatedWikiPageList = new ArrayList<WikiPage>(relatedPageIdList);
 	}
 
 	public void setReferenceList(Set<WikiReference> referenceList) {
@@ -75,17 +77,27 @@ public class EditApplicationDto {
 		this.referenceList = referenceList;
 	}
 
-	public List<WikiPage> getRelatedPageIdList() {
-		return relatedPageIdList;
+	public List<WikiPage> getRelatedWikiPageList() {
+		return relatedWikiPageList;
 	}
 
-	public void setRelatedPageIdList(List<WikiPage> relatedPageIdList) {
-		this.relatedPageIdList = relatedPageIdList;
+	public void setRelatedWikiPageList(List<WikiPage> relatedPageIdList) {
+		this.relatedWikiPageList = relatedPageIdList;
+	}
+
+
+
+	public Map<Integer, String> getAllWikiPageList() {
+		return allWikiPageList;
+	}
+
+	public void setAllWikiPageList(Map<Integer, String> allWikiPageList) {
+		this.allWikiPageList = allWikiPageList;
 	}
 
 	public String toString() {
 		return "EditApplicationDto [title=" + title + ", introduction=" + introduction + ", referenceList="
-				+ referenceList + ", relatedPageIdList=" + relatedPageIdList + ", wikiPageId=" + wikiPageId + "]";
+				+ referenceList + ", relatedPageIdList=" + relatedWikiPageList + ", wikiPageId=" + wikiPageId + "]";
 	}
 
 }
