@@ -3,9 +3,11 @@ package cn.edu.sjtu.iasdsp.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -54,7 +56,7 @@ public class ModelService {
 	private DepartmentInformationHome departmentInformationHome;
 
 	@Autowired
-	private WorkflowPrivilegeHome workFlowPrivilegeHome;
+	private WorkflowPrivilegeHome workflowPrivilegeHome;
 
 	@Autowired
 	private WikiPageHome wikiPageHome;
@@ -73,26 +75,18 @@ public class ModelService {
 		return workflowInformation.getId();
 	}
 
-	// @Transactional
-	// public CreateModelDto create(int id) {
-	// logger.debug("Into ModelService Edit function");
-	//
-	// CreateModelDto createModelDto = new CreateModelDto();
-	//
-	// WorkflowInformation workflowInformation =
-	// workflowInformationHome.findById(id);
-	// WorkflowPrivilege workflowPrivilege =
-	// workflowInformation.getWorkflowPrivilege();
-	//
-	// return createModelDto;
-	// }
+
 
 	@Transactional
 	public ShowModelDto show(int id) {
 		logger.debug("Into ModelService show function");
+		
+		WorkflowPrivilege workflowPrivilege2 = new WorkflowPrivilege(new Date(), new Date());
 
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
-		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege();
+		//maybe it is null so you have to check
+		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege() == null ? workflowPrivilege2
+				: workflowInformation.getWorkflowPrivilege();
 
 		ShowModelDto showModelDto = new ShowModelDto();
 		showModelDto.setIntroduction(workflowInformation.getIntroduction());
@@ -130,24 +124,81 @@ public class ModelService {
 		List<WikiPage> allApplicationList = wikiPageHome.findByExample(new WikiPage());
 		List<DepartmentInformation> allDepartementList = departmentInformationHome
 				.findByExample(new DepartmentInformation());
+		
+		
+		WorkflowPrivilege workflowPrivilege2 = new WorkflowPrivilege(new Date(), new Date());
+		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege() == null ? workflowPrivilege2
+				: workflowInformation.getWorkflowPrivilege();
 
+		
+		// read the tags in the database
+		List<WorkflowTag> tagList = new ArrayList<WorkflowTag>(workflowInformation.getWorkflowTags());
+		int numberOldTag = tagList.size();
+		String tagsInput = new String();
+		for (int i = 0; i < numberOldTag; i++) {
+			 tagsInput = tagsInput + tagList.get(i).getName() + ",";
+		}
+		editModelDto.setTagsinput(tagsInput);
+		
+	
+		
 		editModelDto.setIntroduction(workflowInformation.getIntroduction());
 		editModelDto.setDetailedInformation(workflowInformation.getDetailDescription());
 		editModelDto.setTitle(workflowInformation.getName());
 		editModelDto.setAuthor(workflowInformation.getAuthor());
 		editModelDto.setCreationTime(workflowInformation.getCreatedAt());
 		editModelDto.setUpdateTime(workflowInformation.getUpdatedAt());
+		
+		
+		//Category
 		for (WorkflowCategory workflowCategory : allWorkflowCategories) {
 			logger.debug("getCategoryList" + editModelDto.getCategoryList());
 			logger.debug("workflowCategory" + workflowCategory.getId());
 			editModelDto.getCategoryList().put(workflowCategory.getId(), workflowCategory.getName());
 		}
+		
+		WorkflowCategory workflowCategory = workflowInformation.getWorkflowCategory() == null
+				? new WorkflowCategory("Prediction", new Date(), new Date())
+				: workflowInformation.getWorkflowCategory();
+		
+		String category = workflowCategory.getName();
+		editModelDto.setCategory(category);		
+		logger.debug("The category of this model is" + editModelDto.getCategory());
+		
+		
+		// application
+		// all application
 		for (WikiPage wikiPage : allApplicationList) {
 			editModelDto.getAllApplicationList().put(wikiPage.getId(), wikiPage.getTitle());
 		}
+		//selected application
+		List<WikiPage> oldApplicationWikiList = new ArrayList<WikiPage>(workflowInformation.getWikiPages());		
+		editModelDto.setRelatedWikiPageList(oldApplicationWikiList);
+		logger.debug("oldApplicationWikiList" + oldApplicationWikiList);
+		
+		// Authorization
+		// All authorization
 		for (DepartmentInformation departmentInformation : allDepartementList) {
 			editModelDto.getDepartementList().put(departmentInformation.getId(), departmentInformation.getName());
 		}
+		//Selected authorization
+		String editDepartment = workflowPrivilege.getEditDepartment() == null ? "1"
+				: workflowPrivilege.getEditDepartment().getId().toString();
+		editModelDto.setEditUserGroupId(editDepartment);
+		String executeDepartment = workflowPrivilege.getExecuteDepartment() == null ? "1"
+				: workflowPrivilege.getExecuteDepartment().getId().toString();
+		editModelDto.setEditUserGroupId(executeDepartment);
+		String deleteDepartment = workflowPrivilege.getDeleteDepartment() == null ? "1"
+				: workflowPrivilege.getDeleteDepartment().getId().toString();
+		editModelDto.setEditUserGroupId(editDepartment);
+		editModelDto.setExecuteUserGroupId(executeDepartment);
+		editModelDto.setDeleteUserGroupId(deleteDepartment);
+
+		
+	//	editModelDto.setExecuteUserGroupId(workflowPrivilege.getExecuteDepartment().getId().toString());
+	//	editModelDto.setDeleteUserGroupId(workflowPrivilege.getDeleteDepartment().getId().toString());
+		
+		logger.debug("finish edit, return:" + editModelDto);
 
 		return editModelDto;
 	}
@@ -164,7 +215,62 @@ public class ModelService {
 		WorkflowCategory workflowCategory = workFlowCategoryHome.findById(categoryId);
 
 		workflowInformation.setWorkflowCategory(workflowCategory);
+		
+//Write the application in the data base	
+		
+		// Get the new applications
+		List<WikiPage>  newApplicationWikiList = editModelDto.getRelatedWikiPageList();
+		// Get the old application
+		List<WikiPage> oldApplicationWikiList = new ArrayList<WikiPage>(workflowInformation.getWikiPages());
+		
+		
+		//Put the new application in an array
+		int numberNewAppli = newApplicationWikiList.size();
+		String[] newApplicationList = new String[numberNewAppli];
+		for (int i = 0; i < numberNewAppli; i++) {
+			
+			
+			newApplicationList[i] = newApplicationWikiList.get(i).getId()== null ? "delete"
+					: newApplicationWikiList.get(i).getId().toString();
+		}	
+		
+		//Put the old application in an array
+		int numberOldAppli = oldApplicationWikiList.size();
+		String[] oldApplicationList = new String[numberOldAppli];
+		for (int i = 0; i < numberOldAppli; i++) {
+			oldApplicationList[i] = oldApplicationWikiList.get(i).getId().toString();
+		}	
+		
+		logger.debug("delete old tags, old tag list:" + "fadfa" + ", new tag list:" + "adfa");
+		// suppress the element that have been removed
+		Set<String> hashSetNewApp = new HashSet<String>(Arrays.asList(newApplicationList));
+		for (int i = numberOldAppli - 1; i >= 0; --i) {
+			if (!hashSetNewApp.contains(oldApplicationList[i])) {
+				logger.debug("delete old tag" + oldApplicationList[i]);
+				// suppress the element because it is not in the new list
+				oldApplicationWikiList .remove(i);
+			}
+		}
+		
+		logger.debug("delete old tags, old tag list:" + "fadfa" + ", new tag list:" + "adfa");
+		// suppress the element that have been removed
+		Set<String> hashSetOldApp = new HashSet<String>(Arrays.asList(oldApplicationList));
+		for (int i = 0; i < numberNewAppli; i++) {
+			if (!hashSetOldApp.contains(newApplicationList[i])) {
+				
+				// add the element because it is only in the new list
+		
+				WikiPage findPage = wikiPageHome.findById(Integer.parseInt(newApplicationList[i]));
+				logger.debug("find new Page in database " + newApplicationList[i]);
+				oldApplicationWikiList.add(findPage);
+			
+			}
+		}
+		workflowInformation.setWikiPages(new HashSet<WikiPage>(oldApplicationWikiList));
 
+		
+		// Set<String> hashSetOldElem = new HashSet<String>(Arrays.asList(newTagNameList));
+		
 		// Get an array of String of the New Tags
 		String tag = editModelDto.getTagsinput();
 		StringTokenizer tokenizer = new StringTokenizer(tag, ",");
@@ -175,7 +281,6 @@ public class ModelService {
 		}
 
 		// Get an array of strings the Old Tags
-
 		List<WorkflowTag> oldTagList = new ArrayList<WorkflowTag>(workflowInformation.getWorkflowTags());
 		int numberOldTag = oldTagList.size();
 		String[] oldTagNameList = new String[numberOldTag];
@@ -226,7 +331,8 @@ public class ModelService {
 		logger.debug("uodate succ, output:" + editModelDto);
 		return editModelDto;
 	}
-
+	
+	@Transactional
 	public EditModelDto updateVersion(EditModelDto editModelDto, int id) {
 		logger.debug("Into ModelService Edit function");
 
@@ -236,14 +342,38 @@ public class ModelService {
 
 		return editModelDto;
 	}
-
+	
+	@Transactional
 	public EditModelDto updateAuthorization(EditModelDto editModelDto, int id) {
-		logger.debug("Into ModelService Edit function");
+		logger.debug("Into ModelService Update Authorization");
+		
 
+
+		logger.debug("Try to get the privilege");
+		
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
-		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege();
+		WorkflowPrivilege workflowPrivilege = 
+				workflowInformation.getWorkflowPrivilege() == null ?
+				new WorkflowPrivilege(new Date(), new Date())
+				: workflowInformation.getWorkflowPrivilege();
+		
+		logger.debug("The privilege :" + workflowPrivilege);
+		
+		
+		String debug = editModelDto.getDeleteUserGroupId();
+		logger.debug("Id of the delete departement :" + debug);
+		
+		workflowPrivilege.setDeleteDepartment(departmentInformationHome.findById(Integer.parseInt(editModelDto.getDeleteUserGroupId())));
+		workflowPrivilege.setExecuteDepartment(departmentInformationHome.findById(Integer.parseInt(editModelDto.getExecuteUserGroupId())));
+		workflowPrivilege.setEditDepartment(departmentInformationHome.findById(Integer.parseInt(editModelDto.getEditUserGroupId())));
+		workflowPrivilege.setWorkflowInformation(workflowInformation);
+		workflowPrivilegeHome.persist(workflowPrivilege);
+		logger.debug("workflowPrivilege after persist :" + workflowPrivilege);
 
-		// workflowPrivilege.setDeleteDepartment(editModelDto.getDeleteUserGroup());
+		logger.debug("The departement:" + departmentInformationHome.findById(Integer.parseInt(editModelDto.getEditUserGroupId())));
+		
+		//workflowInformation.setWorkflowPrivilege(workflowPrivilege);
+		workflowInformationHome.attachDirty(workflowInformation);
 
 		return editModelDto;
 	}

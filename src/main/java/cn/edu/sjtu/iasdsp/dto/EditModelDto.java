@@ -1,11 +1,14 @@
 package cn.edu.sjtu.iasdsp.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.User;
+import cn.edu.sjtu.iasdsp.model.WikiPage;
 
 public class EditModelDto {
 	
@@ -18,7 +21,8 @@ public class EditModelDto {
 	
 	private Map<Integer,String> categoryList = new HashMap<Integer,String>(0);
 	private Map<Integer,String> allApplicationList = new HashMap<Integer,String>(0);
-	private Map<Integer,String> choosenApplicationList = new HashMap<Integer,String>(0);
+	//private Map<Integer,String> choosenApplicationList = new HashMap<Integer,String>(0);
+	private List<WikiPage> relatedWikiPageList = new ArrayList<WikiPage>(0);
 
 	
 	//Authorization
@@ -26,8 +30,11 @@ public class EditModelDto {
 	private User lastEditor;
 	
 	private String editUserGroup;
-	
 	private String deleteUserGroup;
+	
+	private String deleteUserGroupId;
+	private String editUserGroupId;
+	private String executeUserGroupId;
 	private Map<Integer,String> departementList = new HashMap<Integer,String>(0);
 	
 	private String exectuteUserGroup;
@@ -56,6 +63,68 @@ public class EditModelDto {
 	public EditModelDto() {
 		
 
+	}
+	
+
+
+
+
+	public String getEditUserGroupId() {
+		return editUserGroupId;
+	}
+
+
+
+
+
+	public void setEditUserGroupId(String editUserGroupId) {
+		this.editUserGroupId = editUserGroupId;
+	}
+
+
+
+
+
+	public String getExecuteUserGroupId() {
+		return executeUserGroupId;
+	}
+
+
+
+
+
+	public void setExecuteUserGroupId(String executeUserGroupId) {
+		this.executeUserGroupId = executeUserGroupId;
+	}
+
+
+
+
+
+	public String getDeleteUserGroupId() {
+		return deleteUserGroupId;
+	}
+
+
+
+
+
+	public void setDeleteUserGroupId(String deleteUserGroupId) {
+		this.deleteUserGroupId = deleteUserGroupId;
+	}
+
+
+
+
+
+	public List<WikiPage> getRelatedWikiPageList() {
+		return relatedWikiPageList;
+	}
+
+
+
+	public void setRelatedWikiPageList(List<WikiPage> relatedWikiPageList) {
+		this.relatedWikiPageList = relatedWikiPageList;
 	}
 
 
@@ -94,17 +163,6 @@ public class EditModelDto {
 		this.allApplicationList = allApplicationList;
 	}
 
-
-
-	public Map<Integer, String> getChoosenApplicationList() {
-		return choosenApplicationList;
-	}
-
-
-
-	public void setChoosenApplicationList(Map<Integer, String> choosenApplicationList) {
-		this.choosenApplicationList = choosenApplicationList;
-	}
 
 
 
@@ -278,7 +336,27 @@ public class EditModelDto {
 	public void setActivePage(String activePage) {
 		this.activePage = activePage;
 	}
-	
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "EditModelDto [title=" + title + ", introduction=" + introduction + ", detailedInformation="
+				+ detailedInformation + ", category=" + category + ", categoryList=" + categoryList
+				+ ", allApplicationList=" + allApplicationList + ", relatedWikiPageList=" + relatedWikiPageList
+				+ ", author=" + author + ", lastEditor=" + lastEditor + ", editUserGroup=" + editUserGroup
+				+ ", deleteUserGroup=" + deleteUserGroup + ", deleteUserGroupId=" + deleteUserGroupId
+				+ ", editUserGroupId=" + editUserGroupId + ", executeUserGroupId=" + executeUserGroupId
+				+ ", departementList=" + departementList + ", exectuteUserGroup=" + exectuteUserGroup + ", activePage="
+				+ activePage + ", versionName=" + versionName + ", versionDescription=" + versionDescription
+				+ ", creationTime=" + creationTime + ", updateTime=" + updateTime + ", application=" + application
+				+ ", xml=" + xml + ", tagsinput=" + tagsinput + "]";
+	}
+
+
+
 
 
 }

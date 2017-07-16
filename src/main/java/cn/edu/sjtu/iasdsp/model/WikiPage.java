@@ -252,5 +252,7 @@ public class WikiPage implements java.io.Serializable {
 				+ ", path=" + path + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", wikiCategory=" + wikiCategory + "]";
 	}
+	
+
 
 }
