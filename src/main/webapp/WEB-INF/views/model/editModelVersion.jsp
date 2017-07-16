@@ -2,13 +2,13 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 
-	  <sf:form  method="POST" modelAttribute="editModelVersionDto" cssClass="form-inline"  >
+	  <sf:form  method="POST" modelAttribute="editModelDto" role="form" action="updateVersion"  cssClass="form-inline"  >
                     <div class="form-group">
                         <label class="col-md-12 ">Version name</label>
                         </br>
                         </br>
                         <div class="col-md-12">
-                         	<sf:input path="name" cssClass = "form-control" cssStyle = "width : 300%"/>
+                         	<sf:input path="versionName" cssClass = "form-control" cssStyle = "width : 300%"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -16,7 +16,7 @@
                         <label class="col-md-12">Version Description<small class="text-muted">(optional)</small></label>
                         <div class="col-md-12">
                         </br>
-                           	<sf:textarea path="introduction" cssClass = "form-control" cssStyle = "width : 140%"/>
+                           	<sf:textarea path="versionDescription" cssClass = "form-control" cssStyle = "width : 140%"/>
                         </div>
                     </div>              
                     <hr/>              

@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WorkflowPrivilege;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.WorkflowPrivilege;
  * @see cn.edu.sjtu.iasdsp.dao.WorkflowPrivilege
  * @author Hibernate Tools
  */
+@Repository
 public class WorkflowPrivilegeHome {
 
 	private static final Log log = LogFactory.getLog(WorkflowPrivilegeHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory ;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +98,7 @@ public class WorkflowPrivilegeHome {
 		log.debug("getting WorkflowPrivilege instance with id: " + id);
 		try {
 			WorkflowPrivilege instance = (WorkflowPrivilege) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.WorkflowPrivilege", id);
+					.get("cn.edu.sjtu.iasdsp.model.WorkflowPrivilege", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +115,7 @@ public class WorkflowPrivilegeHome {
 		log.debug("finding WorkflowPrivilege instance by example");
 		try {
 			List<WorkflowPrivilege> results = (List<WorkflowPrivilege>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WorkflowPrivilege").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowPrivilege").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

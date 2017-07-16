@@ -1,8 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
+<div class="row">
+	<div class=" col-md-12">
+	
+		<div class="row">
 
-	  <sf:form  method="POST" modelAttribute="editModelVersionDto" cssClass="form-inline"  >
+	  <sf:form  method="POST" modelAttribute="editModelDto" cssClass="form-horizontal" role="form" action="updateVersion"  >
 	  
 	  		<div class="panel panel-default">
 						<div class="panel-heading">
@@ -11,12 +15,13 @@
 						<div class="panel-body">
 							<div class="form-group">
 								<div class="col-md-12">
+						
 								
-					
-								<select class="form-control" style="width:300%" name="search_request[search_for]" id="search_request_search_for">
-								<option value="model">All</option>
-								<option value="use_case">Xiaofu</option>
-								<option value="use_case">Theo</option></select>								
+								<select id="deleteUserGroup" name="deleteUserGroup" class="form-control">
+									<c:forEach items="${editModelDto.departementList}" var="departmentList">
+										<option value="${departmentList.key }">${departmentList.value}</option>
+									</c:forEach>
+								</select>							
 							
 								</div>
 							</div>
@@ -31,10 +36,11 @@
 								<div class="col-md-12">
 								
 					
-								<select class="form-control" style="width:300%" name="search_request[search_for]" id="search_request_search_for">
-								<option value="model">All</option>
-								<option value="use_case">Xiaofu</option>
-								<option value="use_case">Theo</option></select>
+							<select id="deleteUserGroup" name="deleteUserGroup" class="form-control">
+									<c:forEach items="${editModelDto.departementList}" var="departmentList">
+										<option value="${departmentList.key }">${departmentList.value}</option>
+									</c:forEach>
+								</select>	
 								
 							
 								</div>
@@ -50,16 +56,39 @@
 								<div class="col-md-12">
 								
 					
-								<select class="form-control" style="width:300%" name="search_request[search_for]" id="search_request_search_for">
-								<option value="model">All</option>
-								<option value="use_case">Theo</option>
-								<option value="use_case">Xiaofu</option></select>
+								<select id="deleteUserGroup" name="deleteUserGroup" class="form-control">
+									<c:forEach items="${editModelDto.departementList}" var="departmentList">
+										<option value="${departmentList.key }">${departmentList.value}</option>
+									</c:forEach>
+								</select>	
 							
 								</div>
 							</div>
 						</div>
+						
+						
 					</div>
-	  
+					
+					
+			  <div class="form-group">
+					<div class="col-md-offset-6 col-md-3">
+						<input type="submit" name="cancel" value="Cancel"
+							class="btn btn-default btn-block" />
+					</div>
+					<div class="col-md-3">
+						<input type="submit" name="save" class="btn btn-primary btn-block"
+							value="Save page" />
+					</div>
+				</div>
+				
+				
+				
 	  
            
       </sf:form> 
+      	</div>
+      	
+						</div>
+						
+						
+					</div>

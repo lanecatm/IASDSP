@@ -81,7 +81,7 @@ public class AnalyticsApplicationController {
 		}
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Model model, EditApplicationDto editApplicationDto) {
 		log.debug("Into create function where editApplicationDto = " + editApplicationDto);
 		try {

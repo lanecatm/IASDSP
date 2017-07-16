@@ -67,10 +67,7 @@
 							<div class="col-md-12">
 
 								<input id="tagsinput" name="tagsinput" type="text"
-									data-role="tagsinput" value="add your tag"> <span
-									class="label label-default">tag1</span> <span
-									class="label label-default">tag2</span>
-
+									data-role="tagsinput" value="add your tag"> 
 							</div>
 						</div>
 					</div>
@@ -82,7 +79,18 @@
 					</div>
 					<div class="panel-body">
 						<div class="form-group">
-							<div class="col-md-12">application</div>
+							<div class="col-md-12">
+							
+							<select id="category" name="xml" class="form-control">
+									<c:forEach items="${editModelDto.allApplicationList}" var="appli">
+										<option value="${appli.key }">${appli.value}</option>
+
+									</c:forEach>
+
+								</select>
+							
+							
+							</div>
 						</div>
 					</div>
 				</div>

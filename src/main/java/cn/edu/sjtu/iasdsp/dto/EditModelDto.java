@@ -19,13 +19,19 @@ public class EditModelDto {
 	private Map<Integer,String> categoryList = new HashMap<Integer,String>(0);
 	private Map<Integer,String> allApplicationList = new HashMap<Integer,String>(0);
 	private Map<Integer,String> choosenApplicationList = new HashMap<Integer,String>(0);
+
 	
 	//Authorization
 	private User author;
 	private User lastEditor;
+	
 	private String editUserGroup;
+	
 	private String deleteUserGroup;
+	private Map<Integer,String> departementList = new HashMap<Integer,String>(0);
+	
 	private String exectuteUserGroup;
+	
 	private String activePage;
 	
 	//Version
@@ -52,7 +58,19 @@ public class EditModelDto {
 
 	}
 
-	
+
+
+	public Map<Integer, String> getDepartementList() {
+		return departementList;
+	}
+
+
+
+	public void setDepartementList(Map<Integer, String> departementList) {
+		this.departementList = departementList;
+	}
+
+
 
 	public Map<Integer, String> getCategoryList() {
 		return categoryList;

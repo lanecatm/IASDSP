@@ -43,6 +43,12 @@ public class WorkflowCategory implements java.io.Serializable {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+	
+	public WorkflowCategory(String name, Date createdAt, Date updatedAt) {
+		this.name = name;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
