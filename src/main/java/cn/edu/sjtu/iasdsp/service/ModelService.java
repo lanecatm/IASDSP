@@ -226,12 +226,22 @@ public class ModelService {
 		
 		//Put the new application in an array
 		int numberNewAppli = newApplicationWikiList.size();
-		String[] newApplicationList = new String[numberNewAppli];
+		List<String> newApplicationList2 = new ArrayList<String>();
 		for (int i = 0; i < numberNewAppli; i++) {
 			
 			
-			newApplicationList[i] = newApplicationWikiList.get(i).getId()== null ? "delete"
+			String element = newApplicationWikiList.get(i).getId()== null ? "delete"
 					: newApplicationWikiList.get(i).getId().toString();
+			
+			if(!element.equals("delete"))
+			newApplicationList2.add(element);
+		}	
+		numberNewAppli = newApplicationList2.size();
+		String[] newApplicationList = new String[numberNewAppli];
+		for (int i = 0; i < numberNewAppli; i++) {
+			
+			newApplicationList[i] = newApplicationList2.get(i);
+		
 		}	
 		
 		//Put the old application in an array
