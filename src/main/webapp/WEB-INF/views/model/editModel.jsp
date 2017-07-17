@@ -142,7 +142,7 @@
 				
 			<div class="col-md-offset-3 col-md-6">
 				<div class="row">
-					<%@ include file="editModelAuthorization.jsp"%>
+					<%@ include file="editModelVersion.jsp"%>
 				</div>
 			</div>
 		</div>

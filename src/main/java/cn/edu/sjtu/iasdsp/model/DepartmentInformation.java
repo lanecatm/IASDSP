@@ -179,6 +179,11 @@ public class DepartmentInformation implements java.io.Serializable {
 	public void setExecuteWorkflowInformations(Set<WorkflowPrivilege> executeWorkflowInformations) {
 		this.executeWorkflowInformations = executeWorkflowInformations;
 	}
+
+
+	public String toString() {
+		return "DepartmentInformation [id=" + id + ", name=" + name + "]";
+	}
 	
 	
 	

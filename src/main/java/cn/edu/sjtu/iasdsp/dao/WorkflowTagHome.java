@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WorkflowTag;
 
@@ -19,11 +21,14 @@ import cn.edu.sjtu.iasdsp.model.WorkflowTag;
  * @see cn.edu.sjtu.iasdsp.dao.WorkflowTag
  * @author Hibernate Tools
  */
+
+@Repository
 public class WorkflowTagHome {
 
 	private static final Log log = LogFactory.getLog(WorkflowTagHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +99,7 @@ public class WorkflowTagHome {
 		log.debug("getting WorkflowTag instance with id: " + id);
 		try {
 			WorkflowTag instance = (WorkflowTag) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.WorkflowTag", id);
+					.get("cn.edu.sjtu.iasdsp.model.WorkflowTag", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +116,7 @@ public class WorkflowTagHome {
 		log.debug("finding WorkflowTag instance by example");
 		try {
 			List<WorkflowTag> results = (List<WorkflowTag>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WorkflowTag").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowTag").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

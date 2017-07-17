@@ -79,7 +79,7 @@ public class ModelController {
 		return "model/editModel";
 	}
 	
-	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
 	public String editInfo(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
 		logger.info(id);
 		
@@ -87,6 +87,36 @@ public class ModelController {
 			modelService.update(editModelDto, Integer.parseInt(id));
 			model.addAttribute("editModelDto", editModelDto);
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
+		} catch (NumberFormatException e) {
+			
+			return "application/error";
+			
+		}
+	}
+	
+	@RequestMapping(value = "/{id}/updateVersion", method = RequestMethod.POST)
+	public String editVersion(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
+		logger.info(id);
+		
+		try {
+			modelService.updateVersion(editModelDto, Integer.parseInt(id));
+			model.addAttribute("editModelDto", editModelDto);
+			return "redirect:/model/" + id + "/edit?active_page=diagram";
+		} catch (NumberFormatException e) {
+			
+			return "application/error";
+			
+		}
+	}
+	
+	@RequestMapping(value = "/{id}/updateAuthorization", method = RequestMethod.POST)
+	public String editAuthorization(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
+		logger.info(id);
+		
+		try {
+			modelService.updateAuthorization(editModelDto, Integer.parseInt(id));
+			model.addAttribute("editModelDto", editModelDto);
+			return "redirect:/model/" + id + "/edit?active_page=version";
 		} catch (NumberFormatException e) {
 			
 			return "application/error";

@@ -115,4 +115,13 @@ public class WorkflowPrivilege implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	@Override
+	public String toString() {
+		return "WorkflowPrivilege [id=" + id + ", workflowInformation=" + workflowInformation + ", editDepartment="
+				+ editDepartment + ", executeDepartment=" + executeDepartment + ", deleteDepartment=" + deleteDepartment
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	}
+	
+	
+
 }
