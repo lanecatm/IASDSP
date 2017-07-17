@@ -41,7 +41,7 @@
 					<p>
 						<c:forEach items="${showApplicationDto.relatedWikiPageList}"
 							var="relatedPage">
-							<span class="label label-default" style="display:inline-block;  " >${relatedPage.title}</span>
+							<span class="label label-default" style="display:inline-block;" >${relatedPage.title}</span>
 						</c:forEach>
 					</p>
 				</div>

@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 
@@ -17,8 +21,11 @@ import cn.edu.sjtu.iasdsp.model.WikiReference;
  */
 public class EditApplicationDto {
 	int wikiPageId;
+	
 	String title;
+	
 	String introduction;
+	
 	List<WikiReference> referenceList = new ArrayList<WikiReference>(0);
 	List<WikiPage> relatedWikiPageList = new ArrayList<WikiPage>(0);
 	Map<Integer, String> allWikiPageList = new HashMap<Integer, String>(0);

@@ -86,5 +86,4 @@
             </div><!--/.navbar-collapse -->
         </div>
         </nav>
-
-	<br/>
+<br/>

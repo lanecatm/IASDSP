@@ -1,0 +1,34 @@
+/*
+ * Start Bootstrap - Heroic Features (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+.hero-spacer {
+    margin-top: 50px;
+}
+
+.hero-feature {
+    margin-bottom: 30px;
+}
+
+.hero-bar-blue{
+	background-color:#2e8bcc;
+}
+.hero-bar-black{
+    background-color:#34495e;
+}
+.hero-bar-text{
+	color:#fff;
+}
+
+.hero-thumbnail{
+	background-color: #f8f8f8;
+	border: #f8f8f8;
+}
+.hero-content{
+	height: 120px;
+}
+.hero-title{
+    height: 80px;
+}

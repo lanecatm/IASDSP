@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
 
 /**
@@ -81,9 +84,10 @@ public class AnalyticsApplicationController {
 		}
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String save(Model model, EditApplicationDto editApplicationDto) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(@Validated EditApplicationDto editApplicationDto, BindingResult backResult) {
 		log.debug("Into create function where editApplicationDto = " + editApplicationDto);
+		log.debug("BindingResult:" + backResult);
 		try {
 			String path = analyticsApplicationService.save(editApplicationDto);
 			if (path != null){

@@ -1,5 +1,7 @@
 package cn.edu.sjtu.iasdsp.dto;
 
+import cn.edu.sjtu.iasdsp.common.SearchForType;
+
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn
@@ -9,8 +11,9 @@ package cn.edu.sjtu.iasdsp.dto;
 */
 public class SearchDto {
 	
-	private String searchFor;
+	private SearchForType searchFor;
 	private String searchContent;
+	
 
 	public String getSearchContent() {
 		return searchContent;
@@ -20,11 +23,11 @@ public class SearchDto {
 		this.searchContent = searchContent;
 	}
 
-	public String getSearchFor() {
+	public SearchForType getSearchFor() {
 		return searchFor;
 	}
 
-	public void setSearchFor(String searchFor) {
+	public void setSearchFor(SearchForType searchFor) {
 		this.searchFor = searchFor;
 	}
 	

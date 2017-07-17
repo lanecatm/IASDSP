@@ -140,4 +140,18 @@ public class WikiPageHome {
 			throw re;
 		}
 	}
+	
+
+	public List<WikiPage> findByExampleEnableLike(WikiPage instance) {
+		log.debug("finding WikiPage instance by example as like");
+		try {
+			List<WikiPage> results = (List<WikiPage>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WikiPage").add(create(instance).enableLike()).list();
+			log.debug("find by example as like successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("find by example as like failed", re);
+			throw re;
+		}
+	}
 }

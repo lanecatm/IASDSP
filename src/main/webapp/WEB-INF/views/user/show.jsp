@@ -13,8 +13,8 @@
 <!-- 没有写action，提交会给/create -->
 <h1>Show</h1>
     Username: ${user.username} 
-    Password: ${user.} 
-    Nickname: ${user.} 
+    Password: 
+    Nickname:
     Email:    ${user.email} 
 
 </body>

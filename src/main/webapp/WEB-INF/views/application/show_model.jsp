@@ -1,54 +1,106 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+
 <div class="col-md-12">
-	<div class="panel-group" id="accordion">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4>${showApplicationDto.workflowInformationList }</h4>
+	<c:forEach items="${showApplicationDto.workflowInformationList}"
+		var="workflowInformation" varStatus="status">
+		<div class="panel-group" id="accordion">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>${workflowInformation.name }</h4>
+
+
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">${workflowInformation.introduction}</div>
+					</div>
+					<br />
+					<div class="collapse" id="collapseModel${status.index}">
+						<div class="row">
+							<div class="col-md-12">
+							<h5>How to use this model</h5>
+								<div class="well">
+									${workflowInformation.detailDescription }
+								</div>
+							</div>
+						</div>
+						<div class="row">
+                            <div class="col-md-12">
+								<h5>Performance</h5>
+								<div class="well">
+								    ${workflowInformation.detailDescription }
+								</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+								<h5>Running cases</h5>
+								<table class="table table-bordered">
+								    <th>
+										<td>Running case name</td>
+										<td>Description</td>
+										<td>Star</td>
+										<td>Execution times</td>
+										<td>Action</td>
+								    </th>
+								    <tr>
+										<td>1</td>
+                                        <td>Running case 1</td>
+                                        <td>xxxxxxxxxx</td>
+                                        <td>2</td>
+                                        <td>12</td>
+                                        <td><a class="btn btn-sm btn-success"> Execute </a> </td>
+								    </tr>
+								</table>
+                            </div>
+                        </div>
+                        <br/>
+					</div>
+					<div class="row">
+						<div class="col-md-6 ">
+							<div class="btn-group btn-group-justified btn-group-sm"
+								role="group" aria-label="...">
+								<a class="btn btn-sm btn-success"> Execute </a> 
+								<a class="btn btn-sm btn-primary"> Edit performance </a> 
+								<a
+									class="btn btn-sm  btn-default"> More detail </a>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 ">
+							<h4>
+								<small> Star<span> <span
+										class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
+										class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
+										class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
+										class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+										<span class="glyphicon glyphicon-star-empty"
+										aria-hidden="true"></span>
+								</span> &nbsp; &nbsp; Author Admin &nbsp; &nbsp; Execute time 20
+								</small>
+							</h4>
+						</div>
+						<div class="col-md-2 text-right ">
+							<h4>
+								<small> 
+								    <a role="button" data-toggle="collapse" href="#collapseModel${status.index}" aria-expanded="false" aria-controls="collapseModel${status.index}">
+								        <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+										More 
+								    </a>
+								</small>
+							</h4>
+						</div>
+
+					</div>
+					<div class="row"></div>
+				</div>
+
 			</div>
-			<div class="panel-body">
-				<h4>
-					Introduction
-				</h4>
-				<hr />
-				<p>
-				    A time series is a series of data points indexed (or listed
-					or graphed) in time order. Most commonly, a time series is a
-					sequence taken at successive equally spaced points in time. Thus
-					it is a sequence of discrete-time data.
-				</p>
-
-				<p>
-				    Time series analysis comprises methods for analyzing time
-					series data in order to extract meaningful statistics and other
-					characteristics of the data. Time series forecasting is the use of
-					a model to predict future values based on previously observed
-					values. While regression analysis is often employed in such a way
-					as to test theories that the current values of one or more
-					independent time series affect the current value of another time
-					series, this type of analysis of time series is not called "time
-					series analysis", which focuses on comparing values of a single
-					time series or multiple dependent time series at different points
-					in time.
-				</p>
-				<p>
-				    Here we use time series to predict CPU workload in cloud
-					computing, we can find that it is an easy way to process the CPU
-					time series data which have a natural temporal ordering.
-				</p>
-				<br />
-			</div>
-			<br />
-
-
-			<h4>
-				<small> </small> &nbsp; Running case
-			</h4>
-			<hr />
-			<br />
-
-			<h4></h4>
-			<hr />
 		</div>
-	</div>
+	</c:forEach>
 </div>
 
 <br />

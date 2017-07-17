@@ -24,6 +24,7 @@
 	<s:url value="/resources/stylesheet/star-rating.min.css" var="starRatingCss" />
     <s:url value="/resources/stylesheet/theme-peter-river.css" var="themePeterRiverCss" />
     <s:url value="/resources/stylesheet/vendor.css" var="vendorCss" />
+    <s:url value="/resources/stylesheet/heroic-features.css" var="heroicFeaturesCss" />
 
     <link rel="stylesheet" media="all" href="${animateCss}"/>
     <link rel="stylesheet" media="all" href="${appCss}"/>
@@ -35,7 +36,10 @@
     <link rel="stylesheet" media="all" href="${starRatingCss}"/>
     <link rel="stylesheet" media="all" href="${themePeterRiverCss}"/>
     <link rel="stylesheet" media="all" href="${vendorCss}"/>
-
+	<link rel="stylesheet" media="all" href="${bootstrapCss}"/>
+	<link rel="stylesheet" media="all" href="${heroicFeaturesCss}"/>
+     
+ 
     <s:url value="/resources/javascript/bootstrap.min.js" var="bootstrapJs" />
     <s:url value="/resources/javascript/application.js" var="applicationJs" />
     <s:url value="/resources/javascript/ie-emulation-modes-warning.js" var="ieEmulationModesWarningJs" />
