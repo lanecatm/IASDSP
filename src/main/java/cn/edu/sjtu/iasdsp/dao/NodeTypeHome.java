@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.NodeType;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.NodeType;
  * @see cn.edu.sjtu.iasdsp.dao.NodeType
  * @author Hibernate Tools
  */
+@Repository
 public class NodeTypeHome {
 
 	private static final Log log = LogFactory.getLog(NodeTypeHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -93,7 +97,7 @@ public class NodeTypeHome {
 	public NodeType findById(java.lang.Integer id) {
 		log.debug("getting NodeType instance with id: " + id);
 		try {
-			NodeType instance = (NodeType) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.dao.NodeType",
+			NodeType instance = (NodeType) sessionFactory.getCurrentSession().get("cn.edu.sjtu.iasdsp.model.NodeType",
 					id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -111,7 +115,7 @@ public class NodeTypeHome {
 		log.debug("finding NodeType instance by example");
 		try {
 			List<NodeType> results = (List<NodeType>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.NodeType").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.NodeType").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

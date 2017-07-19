@@ -25,16 +25,15 @@ import javax.persistence.TemporalType;
 public class NodeFunction implements java.io.Serializable {
 
 	private Integer id;
-	private NodeCategory nodeCategories;
-	private NodeType nodeTypes;
+	private NodeCategory nodeCategory;
+	private NodeType nodeType;
 	private String name;
 	private String description;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeInformation> nodeInformationses = new HashSet<NodeInformation>(0);
-	private Set<NodeOption> nodeOptionses = new HashSet<NodeOption>(0);
-	private Set<NodeInformation> nodeInformationses_1 = new HashSet<NodeInformation>(0);
-	private Set<NodeOption> nodeOptionses_1 = new HashSet<NodeOption>(0);
+	private Set<NodeInformation> nodeInformations = new HashSet<NodeInformation>(0);
+	private Set<NodeOption> nodeOptions = new HashSet<NodeOption>(0);
+
 
 	public NodeFunction() {
 	}
@@ -45,18 +44,16 @@ public class NodeFunction implements java.io.Serializable {
 	}
 
 	public NodeFunction(NodeCategory nodeCategories, NodeType nodeTypes, String name, String description,
-			Date createdAt, Date updatedAt, Set<NodeInformation> nodeInformationses, Set<NodeOption> nodeOptionses,
-			Set<NodeInformation> nodeInformationses_1, Set<NodeOption> nodeOptionses_1) {
-		this.nodeCategories = nodeCategories;
-		this.nodeTypes = nodeTypes;
+			Date createdAt, Date updatedAt, Set<NodeInformation> nodeInformationses, Set<NodeOption> nodeOptionses) {
+		this.nodeCategory = nodeCategories;
+		this.nodeType = nodeTypes;
 		this.name = name;
 		this.description = description;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeInformationses = nodeInformationses;
-		this.nodeOptionses = nodeOptionses;
-		this.nodeInformationses_1 = nodeInformationses_1;
-		this.nodeOptionses_1 = nodeOptionses_1;
+		this.nodeInformations = nodeInformationses;
+		this.nodeOptions = nodeOptionses;
+		
 	}
 
 	@Id
@@ -73,22 +70,22 @@ public class NodeFunction implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_category_id")
-	public NodeCategory getNodeCategories() {
-		return this.nodeCategories;
+	public NodeCategory getNodeCategory() {
+		return this.nodeCategory;
 	}
 
-	public void setNodeCategories(NodeCategory nodeCategories) {
-		this.nodeCategories = nodeCategories;
+	public void setNodeCategory(NodeCategory nodeCategories) {
+		this.nodeCategory = nodeCategories;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_type_id")
-	public NodeType getNodeTypes() {
-		return this.nodeTypes;
+	public NodeType getNodeType() {
+		return this.nodeType;
 	}
 
-	public void setNodeTypes(NodeType nodeTypes) {
-		this.nodeTypes = nodeTypes;
+	public void setNodeType(NodeType nodeTypes) {
+		this.nodeType = nodeTypes;
 	}
 
 	@Column(name = "name", length = 65535)
@@ -129,40 +126,24 @@ public class NodeFunction implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunctions")
-	public Set<NodeInformation> getNodeInformationses() {
-		return this.nodeInformationses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunction")
+	public Set<NodeInformation> getNodeInformations() {
+		return this.nodeInformations;
 	}
 
-	public void setNodeInformationses(Set<NodeInformation> nodeInformationses) {
-		this.nodeInformationses = nodeInformationses;
+	public void setNodeInformations(Set<NodeInformation> nodeInformationses) {
+		this.nodeInformations = nodeInformationses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunctions")
-	public Set<NodeOption> getNodeOptionses() {
-		return this.nodeOptionses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunction")
+	public Set<NodeOption> getNodeOptions() {
+		return this.nodeOptions;
 	}
 
-	public void setNodeOptionses(Set<NodeOption> nodeOptionses) {
-		this.nodeOptionses = nodeOptionses;
+	public void setNodeOptions(Set<NodeOption> nodeOptionses) {
+		this.nodeOptions = nodeOptionses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunctions")
-	public Set<NodeInformation> getNodeInformationses_1() {
-		return this.nodeInformationses_1;
-	}
 
-	public void setNodeInformationses_1(Set<NodeInformation> nodeInformationses_1) {
-		this.nodeInformationses_1 = nodeInformationses_1;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunctions")
-	public Set<NodeOption> getNodeOptionses_1() {
-		return this.nodeOptionses_1;
-	}
-
-	public void setNodeOptionses_1(Set<NodeOption> nodeOptionses_1) {
-		this.nodeOptionses_1 = nodeOptionses_1;
-	}
 
 }

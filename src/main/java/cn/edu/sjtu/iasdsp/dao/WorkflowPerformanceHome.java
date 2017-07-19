@@ -11,6 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 
@@ -19,11 +22,13 @@ import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
  * @see cn.edu.sjtu.iasdsp.dao.WorkflowPerformance
  * @author Hibernate Tools
  */
+@Repository
 public class WorkflowPerformanceHome {
 
 	private static final Log log = LogFactory.getLog(WorkflowPerformanceHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private  SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -95,7 +100,7 @@ public class WorkflowPerformanceHome {
 		log.debug("getting WorkflowPerformance instance with id: " + id);
 		try {
 			WorkflowPerformance instance = (WorkflowPerformance) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.WorkflowPerformance", id);
+					.get("cn.edu.sjtu.iasdsp.model.WorkflowPerformance", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -112,11 +117,27 @@ public class WorkflowPerformanceHome {
 		log.debug("finding WorkflowPerformance instance by example");
 		try {
 			List<WorkflowPerformance> results = (List<WorkflowPerformance>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.WorkflowPerformance").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowPerformance").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+	
+	public List<WorkflowPerformance> findByWikiPageIdAndWorkflowInformationId(int wikiPageId, int workflowInformationId ) {
+		log.debug("finding WorkflowPerformance instance by WikiPageId:" + wikiPageId + " And WorkflowInformationId:" + workflowInformationId);
+		try {
+			List<WorkflowPerformance> results = (List<WorkflowPerformance>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowPerformance")
+					.createAlias("cn.edu.sjtu.iasdsp.model.WorkflowInformation", "workflowInformation").add(Restrictions.eq("workflowInformation.id",workflowInformationId ))
+					.createAlias("cn.edu.sjtu.iasdsp.model.WikiPage", "wikiPage").add(Restrictions.eq("wikiPage.id",wikiPageId ))
+					.list();
+			log.debug("find by WikiPageId And WorkflowInformationId successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("find by WikiPageId And WorkflowInformationId failed", re);
 			throw re;
 		}
 	}

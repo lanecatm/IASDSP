@@ -25,13 +25,12 @@ import javax.persistence.TemporalType;
 public class NodeInformation implements java.io.Serializable {
 
 	private Integer id;
-	private NodeFunction nodeFunctions;
-	private WorkflowInformation workflowInformations;
+	private NodeFunction nodeFunction;
+	private WorkflowInformation workflowInformation;
 	private String name;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeOptionValue> nodeOptionValueses = new HashSet<NodeOptionValue>(0);
-	private Set<NodeOptionValue> nodeOptionValueses_1 = new HashSet<NodeOptionValue>(0);
+	private Set<NodeOptionValue> nodeOptionValues = new HashSet<NodeOptionValue>(0);
 
 	public NodeInformation() {
 	}
@@ -42,15 +41,13 @@ public class NodeInformation implements java.io.Serializable {
 	}
 
 	public NodeInformation(NodeFunction nodeFunctions, WorkflowInformation workflowInformations, String name,
-			Date createdAt, Date updatedAt, Set<NodeOptionValue> nodeOptionValueses,
-			Set<NodeOptionValue> nodeOptionValueses_1) {
-		this.nodeFunctions = nodeFunctions;
-		this.workflowInformations = workflowInformations;
+			Date createdAt, Date updatedAt, Set<NodeOptionValue> nodeOptionValueses) {
+		this.nodeFunction = nodeFunctions;
+		this.workflowInformation = workflowInformations;
 		this.name = name;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeOptionValueses = nodeOptionValueses;
-		this.nodeOptionValueses_1 = nodeOptionValueses_1;
+		this.nodeOptionValues = nodeOptionValueses;
 	}
 
 	@Id
@@ -67,22 +64,22 @@ public class NodeInformation implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_function_id")
-	public NodeFunction getNodeFunctions() {
-		return this.nodeFunctions;
+	public NodeFunction getNodeFunction() {
+		return this.nodeFunction;
 	}
 
-	public void setNodeFunctions(NodeFunction nodeFunctions) {
-		this.nodeFunctions = nodeFunctions;
+	public void setNodeFunction(NodeFunction nodeFunctions) {
+		this.nodeFunction = nodeFunctions;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "workflow_information_id")
-	public WorkflowInformation getWorkflowInformations() {
-		return this.workflowInformations;
+	public WorkflowInformation getWorkflowInformation() {
+		return this.workflowInformation;
 	}
 
-	public void setWorkflowInformations(WorkflowInformation workflowInformations) {
-		this.workflowInformations = workflowInformations;
+	public void setWorkflowInformation(WorkflowInformation workflowInformations) {
+		this.workflowInformation = workflowInformations;
 	}
 
 	@Column(name = "name", length = 65535)
@@ -114,22 +111,15 @@ public class NodeInformation implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeInformations")
-	public Set<NodeOptionValue> getNodeOptionValueses() {
-		return this.nodeOptionValueses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeInformation")
+	public Set<NodeOptionValue> getNodeOptionValues() {
+		return this.nodeOptionValues;
 	}
 
-	public void setNodeOptionValueses(Set<NodeOptionValue> nodeOptionValueses) {
-		this.nodeOptionValueses = nodeOptionValueses;
+	public void setNodeOptionValues(Set<NodeOptionValue> nodeOptionValueses) {
+		this.nodeOptionValues = nodeOptionValueses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeInformations")
-	public Set<NodeOptionValue> getNodeOptionValueses_1() {
-		return this.nodeOptionValueses_1;
-	}
-
-	public void setNodeOptionValueses_1(Set<NodeOptionValue> nodeOptionValueses_1) {
-		this.nodeOptionValueses_1 = nodeOptionValueses_1;
-	}
+	
 
 }

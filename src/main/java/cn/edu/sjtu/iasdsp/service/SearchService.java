@@ -18,7 +18,7 @@ import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 * @email lanecatm@sjtu.edu.cn
 * @date 2017年7月2日 下午6:29:56
 * @version 
-* Introduction
+* @Introduction 处理所有的搜索事务
 */
 @Service
 public class SearchService {
@@ -37,7 +37,6 @@ public class SearchService {
 		searchApplicationResultDto.setWikiPageList(wikiPageHome.findByExample(new WikiPage()));
 		logger.debug("Finish searchAllApplication succ, return:" + searchApplicationResultDto);
 		return searchApplicationResultDto;
-		
 	}
 	
 	@Transactional
@@ -47,19 +46,30 @@ public class SearchService {
 		searchModelResultDto.setWorkflowInformationList(workflowInformationHome.findByExample(new WorkflowInformation()));
 		logger.debug("Finish searchAllModel succ, return:" + searchModelResultDto);
 		return searchModelResultDto;
-		
 	}
 	
 	@Transactional
 	public SearchApplicationResultDto searchApplication(String searchContent){
-		logger.debug("Into searchApplication, param searchContent");
+		logger.debug("Into searchApplication, param:" +  searchContent);
 		SearchApplicationResultDto searchApplicationResultDto = new SearchApplicationResultDto();
-		WikiPage example = new WikiPage();
-		example.setTitle("%" + searchContent + "%");
-		searchApplicationResultDto.setWikiPageList(wikiPageHome.findByExampleEnableLike(example));
+		WikiPage wikiPage= new WikiPage();
+		wikiPage.setTitle("%" + searchContent + "%");
+		searchApplicationResultDto.setWikiPageList(wikiPageHome.findByExampleEnableLike(wikiPage));
 
 		logger.debug("Finish searchApplication succ, return:" + searchApplicationResultDto);
 		return searchApplicationResultDto;
 	}
+	
+	@Transactional
+	public SearchModelResultDto searchModel(String searchContent){
+		logger.debug("Into searchModel, param:" +  searchContent);
+		SearchModelResultDto searchModelResultDto = new SearchModelResultDto();
+		WorkflowInformation workflowInformation = new WorkflowInformation();
+		workflowInformation.setName("%" + searchContent + "%");
+		searchModelResultDto.setWorkflowInformationList(workflowInformationHome.findByExampleEnableLike(workflowInformation));
+		logger.debug("Finish searchModel succ, return:" + searchModelResultDto);
+		return searchModelResultDto;
+	}
+	
 
 }

@@ -59,12 +59,11 @@
 											<div class="col-md-2">
 												<button class="btn btn-danger" type="button"
 													onclick="remove_reference_fields(${status.index});">
-													<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+													&nbsp;<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>&nbsp;
 												</button>
 											</div>
 										</div>
 										<!-- form-group -->
-										<hr />
 									</div>
 									<!-- removeclass -->
 								</c:forEach>
@@ -101,17 +100,16 @@
 										<div class="col-md-2">
 											<button class="btn btn-danger" type="button"
 												onclick="remove_wiki_page_tags(${status.index});">
-												<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+												&nbsp;<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>&nbsp;
 											</button>
 										</div>
 									</div>
-									<hr />
 								</c:forEach>
 							</div>
 
 							<!-- wiki_page_tags -->
 							<div class="form-group">
-								<div class="col-md-offset-2 col-md-6">
+								<div class="col-md-offset-2 col-md-8">
 									<select id="select_wiki_page" class="form-control">
 										<c:forEach items="${editApplicationDto.allWikiPageList}"
 											var="wikiPage" varStatus="status">
@@ -120,10 +118,9 @@
 									</select>
 								</div>
 								<div class="col-md-2">
-									<button class="btn btn-success btn-block" type="button"
+									<button class="btn btn-success" type="button"
 										onclick="add_wiki_page();">
-										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-										Add
+										&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
 									</button>
 								</div>
 							</div>
@@ -181,11 +178,11 @@
 				+ '	        </div>'
 				+ '	        <div class="col-md-2">'
 				+ '             <button class="btn btn-danger" type="button" onclick="remove_reference_fields('+ room +');">'
-				+ '                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'
+				+ '                 &nbsp;<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>&nbsp;'
 				+ '             </button>'
 				+ '         </div>' 
 				+ '    </div>'
-				+ '    <hr/>';
+				+ '    ';
 
 
 		objTo.appendChild(divtest)
@@ -210,7 +207,7 @@
                                     + '<div class="col-md-2">'
                                     + '    <button class="btn btn-danger" type="button"'
                                     + '      onclick="remove_wiki_page_tags('+ wiki_page_num + ');">'
-                                    + '        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'
+                                    + '        &nbsp;<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>&nbsp;'
                                     + '    </button>'
                                     + '</div>'
 				   addTo.appendChild(divAdd);   

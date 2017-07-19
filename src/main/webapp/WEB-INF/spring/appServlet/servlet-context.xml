@@ -30,15 +30,6 @@
 	<context:component-scan base-package="cn.edu.sjtu.iasdsp.controller" />
 
 
-	<beans:bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<beans:property name="converters">
-			<beans:set>
-				<beans:bean class="cn.edu.sjtu.iasdsp.common.StringToSearchForType" />
-
-			</beans:set>
-		</beans:property>
-	</beans:bean>
-
+	
 
 </beans:beans>

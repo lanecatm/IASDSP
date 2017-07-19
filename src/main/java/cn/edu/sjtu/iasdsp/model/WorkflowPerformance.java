@@ -24,6 +24,7 @@ public class WorkflowPerformance implements java.io.Serializable {
 	private Integer id;
 	private WikiPage wikiPage;
 	private WorkflowInformation workflowInformation;
+	private String content;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -46,6 +47,17 @@ public class WorkflowPerformance implements java.io.Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	@Column(name = "content")
+	public String getContent() {
+		return this.content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "wiki_page_id")
@@ -85,6 +97,12 @@ public class WorkflowPerformance implements java.io.Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	@Override
+	public String toString() {
+		return "WorkflowPerformance [id=" + id + ", content=" + content + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ "]";
 	}
 
 }

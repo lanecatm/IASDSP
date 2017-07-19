@@ -40,15 +40,22 @@
         <div class="col-md-8">
             <div class = "row">
                 <div class="col-md-12">
-                    <h1>${showApplicationDto.getTitle() }</h1>
+                    <h2>${showApplicationDto.getTitle() }</h2>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <h4>
                         <small>Revised on ${showApplicationDto.getTime() } by ${showApplicationDto.getAuthorName()}</small>
                     </h4>
                 </div>
-                <div class="col-md-6">
-                    <!-- 一排小按钮 -->
+                <div class="col-md-4">
+                    <div class="btn-group btn-group-justified  btn-group-sm"
+                        role="group" aria-label="...">
+                        <a type="button" class="btn btn-primary btn-sm"
+                            href="<c:url value="./edit"/>"> Edit </a>
+                        <!-- TODO change delete method -->
+                        <a type="button" class="btn btn-danger btn-sm"
+                            href="<c:url value="./delete"/>"> Delete </a>
+                    </div>
                 </div>
             </div>
             <hr/>

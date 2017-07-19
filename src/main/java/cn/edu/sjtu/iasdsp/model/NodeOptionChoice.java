@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class NodeOptionChoice implements java.io.Serializable {
 
 	private Integer id;
-	private NodeOption nodeOptions;
+	private NodeOption nodeOption;
 	private String name;
 	private String value;
 	private Date createdAt;
@@ -37,7 +37,7 @@ public class NodeOptionChoice implements java.io.Serializable {
 	}
 
 	public NodeOptionChoice(NodeOption nodeOptions, String name, String value, Date createdAt, Date updatedAt) {
-		this.nodeOptions = nodeOptions;
+		this.nodeOption = nodeOptions;
 		this.name = name;
 		this.value = value;
 		this.createdAt = createdAt;
@@ -58,12 +58,12 @@ public class NodeOptionChoice implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_option_id")
-	public NodeOption getNodeOptions() {
-		return this.nodeOptions;
+	public NodeOption getNodeOption() {
+		return this.nodeOption;
 	}
 
-	public void setNodeOptions(NodeOption nodeOptions) {
-		this.nodeOptions = nodeOptions;
+	public void setNodeOption(NodeOption nodeOptions) {
+		this.nodeOption = nodeOptions;
 	}
 
 	@Column(name = "name", length = 65535)

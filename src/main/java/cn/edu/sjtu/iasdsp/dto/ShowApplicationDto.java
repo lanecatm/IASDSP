@@ -1,6 +1,8 @@
 package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.WikiPage;
@@ -17,6 +19,7 @@ import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 public class ShowApplicationDto {
 	
 	
+	private Integer wikiPageId;
 	private String title;
 	private Date time;
 	private String authorName;
@@ -25,6 +28,7 @@ public class ShowApplicationDto {
 	private Set<WikiReference> referenceList;
 	private Set<WorkflowInformation> workflowInformationList;
 	private Set<WikiPage> relatedWikiPageList;
+	private Map<Integer, String> performanceMap = new HashMap<Integer, String>();
 	
 
 
@@ -32,9 +36,10 @@ public class ShowApplicationDto {
 	}
 
 
-	public ShowApplicationDto(String title, Date time, String authorName, String introduction, String path,
+	public ShowApplicationDto(Integer wikiPageId, String title, Date time, String authorName, String introduction, String path,
 			Set<WikiReference> referenceList, Set<WorkflowInformation> workflowInformationList,
 			Set<WikiPage> relatedWikiPageList) {
+		this.wikiPageId = wikiPageId;
 		this.title = title;
 		this.time = time;
 		this.authorName = authorName;
@@ -43,6 +48,28 @@ public class ShowApplicationDto {
 		this.referenceList = referenceList;
 		this.workflowInformationList = workflowInformationList;
 		this.relatedWikiPageList = relatedWikiPageList;
+	}
+
+	
+	
+
+	public Map<Integer, String> getPerformanceMap() {
+		return performanceMap;
+	}
+
+
+	public void setPerformanceMap(Map<Integer, String> performanceMap) {
+		this.performanceMap = performanceMap;
+	}
+
+
+	public Integer getWikiPageId() {
+		return wikiPageId;
+	}
+
+
+	public void setWikiPageId(Integer wikiPageId) {
+		this.wikiPageId = wikiPageId;
 	}
 
 

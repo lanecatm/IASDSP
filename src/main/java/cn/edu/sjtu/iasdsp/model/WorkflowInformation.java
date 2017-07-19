@@ -287,7 +287,7 @@ public class WorkflowInformation implements java.io.Serializable {
 		this.xml = xml;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformations")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
 	@Cascade(CascadeType.DELETE)
 	public Set<NodeInformation> getNodeInformations() {
 		return this.nodeInformations;

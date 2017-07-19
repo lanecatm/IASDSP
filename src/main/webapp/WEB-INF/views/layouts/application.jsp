@@ -26,6 +26,7 @@
     <s:url value="/resources/stylesheet/vendor.css" var="vendorCss" />
     <s:url value="/resources/stylesheet/heroic-features.css" var="heroicFeaturesCss" />
 
+	<link rel="stylesheet" media="all" href="${bootstrapCss}"/>
     <link rel="stylesheet" media="all" href="${animateCss}"/>
     <link rel="stylesheet" media="all" href="${appCss}"/>
     <link rel="stylesheet" media="all" href="${bsIsFunCss}"/>
@@ -36,7 +37,6 @@
     <link rel="stylesheet" media="all" href="${starRatingCss}"/>
     <link rel="stylesheet" media="all" href="${themePeterRiverCss}"/>
     <link rel="stylesheet" media="all" href="${vendorCss}"/>
-	<link rel="stylesheet" media="all" href="${bootstrapCss}"/>
 	<link rel="stylesheet" media="all" href="${heroicFeaturesCss}"/>
      
  

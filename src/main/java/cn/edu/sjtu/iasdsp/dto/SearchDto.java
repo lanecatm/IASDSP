@@ -11,25 +11,23 @@ import cn.edu.sjtu.iasdsp.common.SearchForType;
 */
 public class SearchDto {
 	
-	private SearchForType searchFor;
+	private String searchFor;
 	private String searchContent;
 	
-
+	public String getSearchFor() {
+		return searchFor;
+	}
+	public void setSearchFor(String searchFor) {
+		this.searchFor = searchFor;
+	}
 	public String getSearchContent() {
 		return searchContent;
 	}
-
 	public void setSearchContent(String searchContent) {
 		this.searchContent = searchContent;
 	}
+	
 
-	public SearchForType getSearchFor() {
-		return searchFor;
-	}
-
-	public void setSearchFor(SearchForType searchFor) {
-		this.searchFor = searchFor;
-	}
 	
 
 	

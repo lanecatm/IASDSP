@@ -25,8 +25,8 @@ import javax.persistence.TemporalType;
 public class NodeOption implements java.io.Serializable {
 
 	private Integer id;
-	private NodeFunction nodeFunctions;
-	private NodeOptionType nodeOptionTypes;
+	private NodeFunction nodeFunction;
+	private NodeOptionType nodeOptionType;
 	private Integer nodeIndex;
 	private String name;
 	private String label;
@@ -34,11 +34,9 @@ public class NodeOption implements java.io.Serializable {
 	private String defaultValue;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeOptionChoice> nodeOptionChoiceses = new HashSet<NodeOptionChoice>(0);
-	private Set<NodeOptionValue> nodeOptionValueses = new HashSet<NodeOptionValue>(0);
-	private Set<NodeOptionValue> nodeOptionValueses_1 = new HashSet<NodeOptionValue>(0);
-	private Set<NodeOptionChoice> nodeOptionChoiceses_1 = new HashSet<NodeOptionChoice>(0);
-
+	private Set<NodeOptionChoice> nodeOptionChoices = new HashSet<NodeOptionChoice>(0);
+	private Set<NodeOptionValue> nodeOptionValues = new HashSet<NodeOptionValue>(0);
+	
 	public NodeOption() {
 	}
 
@@ -49,10 +47,9 @@ public class NodeOption implements java.io.Serializable {
 
 	public NodeOption(NodeFunction nodeFunctions, NodeOptionType nodeOptionTypes, Integer nodeIndex, String name,
 			String label, String description, String defaultValue, Date createdAt, Date updatedAt,
-			Set<NodeOptionChoice> nodeOptionChoiceses, Set<NodeOptionValue> nodeOptionValueses,
-			Set<NodeOptionValue> nodeOptionValueses_1, Set<NodeOptionChoice> nodeOptionChoiceses_1) {
-		this.nodeFunctions = nodeFunctions;
-		this.nodeOptionTypes = nodeOptionTypes;
+			Set<NodeOptionChoice> nodeOptionChoiceses, Set<NodeOptionValue> nodeOptionValueses) {
+		this.nodeFunction = nodeFunctions;
+		this.nodeOptionType = nodeOptionTypes;
 		this.nodeIndex = nodeIndex;
 		this.name = name;
 		this.label = label;
@@ -60,10 +57,9 @@ public class NodeOption implements java.io.Serializable {
 		this.defaultValue = defaultValue;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeOptionChoiceses = nodeOptionChoiceses;
-		this.nodeOptionValueses = nodeOptionValueses;
-		this.nodeOptionValueses_1 = nodeOptionValueses_1;
-		this.nodeOptionChoiceses_1 = nodeOptionChoiceses_1;
+		this.nodeOptionChoices = nodeOptionChoiceses;
+		this.nodeOptionValues = nodeOptionValueses;
+		
 	}
 
 	@Id
@@ -80,22 +76,22 @@ public class NodeOption implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_function_id")
-	public NodeFunction getNodeFunctions() {
-		return this.nodeFunctions;
+	public NodeFunction getNodeFunction() {
+		return this.nodeFunction;
 	}
 
-	public void setNodeFunctions(NodeFunction nodeFunctions) {
-		this.nodeFunctions = nodeFunctions;
+	public void setNodeFunction(NodeFunction nodeFunctions) {
+		this.nodeFunction = nodeFunctions;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_option_type_id")
-	public NodeOptionType getNodeOptionTypes() {
-		return this.nodeOptionTypes;
+	public NodeOptionType getNodeOptionType() {
+		return this.nodeOptionType;
 	}
 
-	public void setNodeOptionTypes(NodeOptionType nodeOptionTypes) {
-		this.nodeOptionTypes = nodeOptionTypes;
+	public void setNodeOptionType(NodeOptionType nodeOptionTypes) {
+		this.nodeOptionType = nodeOptionTypes;
 	}
 
 	@Column(name = "node_index")
@@ -163,40 +159,23 @@ public class NodeOption implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptions")
-	public Set<NodeOptionChoice> getNodeOptionChoiceses() {
-		return this.nodeOptionChoiceses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOption")
+	public Set<NodeOptionChoice> getNodeOptionChoices() {
+		return this.nodeOptionChoices;
 	}
 
-	public void setNodeOptionChoiceses(Set<NodeOptionChoice> nodeOptionChoiceses) {
-		this.nodeOptionChoiceses = nodeOptionChoiceses;
+	public void setNodeOptionChoices(Set<NodeOptionChoice> nodeOptionChoiceses) {
+		this.nodeOptionChoices = nodeOptionChoiceses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptions")
-	public Set<NodeOptionValue> getNodeOptionValueses() {
-		return this.nodeOptionValueses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOption")
+	public Set<NodeOptionValue> getNodeOptionValues() {
+		return this.nodeOptionValues;
 	}
 
-	public void setNodeOptionValueses(Set<NodeOptionValue> nodeOptionValueses) {
-		this.nodeOptionValueses = nodeOptionValueses;
+	public void setNodeOptionValues(Set<NodeOptionValue> nodeOptionValueses) {
+		this.nodeOptionValues = nodeOptionValueses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptions")
-	public Set<NodeOptionValue> getNodeOptionValueses_1() {
-		return this.nodeOptionValueses_1;
-	}
-
-	public void setNodeOptionValueses_1(Set<NodeOptionValue> nodeOptionValueses_1) {
-		this.nodeOptionValueses_1 = nodeOptionValueses_1;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptions")
-	public Set<NodeOptionChoice> getNodeOptionChoiceses_1() {
-		return this.nodeOptionChoiceses_1;
-	}
-
-	public void setNodeOptionChoiceses_1(Set<NodeOptionChoice> nodeOptionChoiceses_1) {
-		this.nodeOptionChoiceses_1 = nodeOptionChoiceses_1;
-	}
-
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,11 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dao.WikiReferenceHome;
+import cn.edu.sjtu.iasdsp.dao.WorkflowInformationHome;
+import cn.edu.sjtu.iasdsp.dao.WorkflowPerformanceHome;
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
+import cn.edu.sjtu.iasdsp.dto.EditPerformanceDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
+import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 
 /**
  * @author xfhuang
@@ -38,6 +44,10 @@ public class AnalyticsApplicationService {
 	private UserHome userHome;
 	@Autowired
 	private WikiReferenceHome wikiReferenceHome;
+	@Autowired
+	private WorkflowInformationHome workflowInformationHome;
+	@Autowired
+	private WorkflowPerformanceHome workflowPerformanceHome;
 
 	@Transactional
 	public EditApplicationDto create() {
@@ -95,7 +105,7 @@ public class AnalyticsApplicationService {
 			logger.debug("Save service, persist wikiPage");
 			wikiPageHome.persist(wikiPage);
 			logger.debug("Save service, persist wikiPage succ");
-			
+
 			logger.debug("Save service, add reference:" + editApplicationDto.getReferenceList());
 			for (WikiReference reference : editApplicationDto.getReferenceList()) {
 				if (reference.getId() != null) {
@@ -106,7 +116,7 @@ public class AnalyticsApplicationService {
 					wikiReferenceHome.persist(reference);
 				}
 			}
-			
+
 			logger.debug("Save service succ");
 			return path;
 		} catch (Exception e) {
@@ -157,10 +167,66 @@ public class AnalyticsApplicationService {
 
 	}
 
-	public void delete() {
+	@Transactional
+	public boolean delete(String wikiPath) {
+		logger.debug("Into delete service, param:" + wikiPath);
+		WikiPage wikiPage = find(wikiPath);
 
+		if (wikiPage == null) {
+			return false;
+		} else {
+			Set<WikiPage> needToRemoveWikiPageList = wikiPage.getRelatedByWikiPages();
+			for (WikiPage relatedByWikiPage : needToRemoveWikiPageList) {
+				relatedByWikiPage.getRelatedWikiPages().remove(wikiPage);
+				wikiPageHome.attachDirty(relatedByWikiPage);
+			}
+			wikiPageHome.delete(wikiPage);
+			return true;
+		}
 	}
 
+	@Transactional
+	public EditPerformanceDto editPerformance(EditPerformanceDto editPerformanceDto) {
+		logger.debug("Into editPerformance service, param:" + editPerformanceDto);
+
+		WorkflowInformation workflowInformation = workflowInformationHome
+				.findById(editPerformanceDto.getWorkflowInformationId());
+		WikiPage wikiPage = wikiPageHome.findById(editPerformanceDto.getWikiPageId());
+		if (workflowInformation == null) {
+			logger.error("can not find workflow information:" + editPerformanceDto.getWorkflowInformationId());
+			throw (new NullPointerException(
+					"can not find workflow information:" + editPerformanceDto.getWorkflowInformationId()));
+		}
+		if (wikiPage == null) {
+			logger.error("can not find wikiPage:" + editPerformanceDto.getWikiPageId());
+			throw (new NullPointerException("can not find wikiPage:" + editPerformanceDto.getWikiPageId()));
+		}
+
+		List<WorkflowPerformance> workflowPerformanceList = workflowPerformanceHome
+				.findByWikiPageIdAndWorkflowInformationId(wikiPage.getId(), workflowInformation.getId());
+		WorkflowPerformance workflowPerformance = null;
+		if (workflowPerformanceList.size() > 0) {
+			workflowPerformance = workflowPerformanceList.get(0);
+			logger.debug("use origin workflowPerformance, id:" + workflowPerformance.getId());
+			workflowPerformance.setUpdatedAt(new Date());
+			workflowPerformance.setContent(editPerformanceDto.getPerformance());
+			workflowPerformanceHome.attachDirty(workflowPerformance);
+		} else {
+			logger.debug("create new workflowPerformance");
+			workflowPerformance = new WorkflowPerformance();
+			workflowPerformance.setUpdatedAt(new Date());
+			workflowPerformance.setCreatedAt(new Date());
+			workflowPerformance.setContent(editPerformanceDto.getPerformance());
+			workflowPerformance.setWikiPage(wikiPage);
+			workflowPerformance.setWorkflowInformation(workflowInformation);
+			logger.debug("Try to Persist Performance, " + workflowPerformance);
+			workflowPerformanceHome.persist(workflowPerformance);
+		}
+		logger.debug("EditPerformance succ, " + workflowPerformance);
+		return editPerformanceDto;
+	}
+
+	@Transactional
 	public void create(WikiPage wikiPage) {
 		wikiPageHome.persist(wikiPage);
 		// wikiPage.setContent("hello");
@@ -284,10 +350,18 @@ public class AnalyticsApplicationService {
 		}
 		String userName = wikiPage.getUserByCreatorId() == null ? "Author"
 				: wikiPage.getUserByCreatorId().getUserName();
-		ShowApplicationDto showApplicationDto = new ShowApplicationDto(wikiPage.getTitle(), wikiPage.getCreatedAt(),
-				userName, wikiPage.getContent(), wikiPage.getPath(), wikiPage.getWikiReferences(),
-				wikiPage.getWorkflowInformations(), wikiPage.getRelatedWikiPages());
-
+		ShowApplicationDto showApplicationDto = new ShowApplicationDto(wikiPage.getId(), wikiPage.getTitle(),
+				wikiPage.getCreatedAt(), userName, wikiPage.getContent(), wikiPage.getPath(),
+				wikiPage.getWikiReferences(), wikiPage.getWorkflowInformations(), wikiPage.getRelatedWikiPages());
+		for (WorkflowPerformance workflowPerformance : wikiPage.getWorkflowPerformances()) {
+			if (workflowPerformance.getWorkflowInformation() == null) {
+				logger.error("Can not find workflowPerformance belongs to which workflowinformation, "
+						+ workflowPerformance);
+				continue;
+			}
+			showApplicationDto.getPerformanceMap().put(workflowPerformance.getWorkflowInformation().getId(),
+					workflowPerformance.getContent());
+		}
 		return showApplicationDto;
 	}
 

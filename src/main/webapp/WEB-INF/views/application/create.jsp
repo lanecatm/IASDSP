@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8">
 			<div class="row">
-				<h1>Create new analytics application</h1>
+				<h2>Create new analytics application</h2>
 			</div>
 
 			<div class="row">

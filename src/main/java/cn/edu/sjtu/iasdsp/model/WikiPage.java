@@ -249,7 +249,7 @@ public class WikiPage implements java.io.Serializable {
 
 	public String toString() {
 		return "WikiPage [id=" + id
-				+ ", path=" + path + ", title=" + title + ", content=" + ((content.length()<10)?content : content.substring(0, 9)) + "... , createdAt=" + createdAt
+				+ ", path=" + path + ", title=" + title + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", wikiCategory=" + wikiCategory + "]";
 	}
 	

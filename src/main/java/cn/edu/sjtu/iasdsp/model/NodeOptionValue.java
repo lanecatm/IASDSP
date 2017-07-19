@@ -22,8 +22,8 @@ import javax.persistence.TemporalType;
 public class NodeOptionValue implements java.io.Serializable {
 
 	private Integer id;
-	private NodeInformation nodeInformations;
-	private NodeOption nodeOptions;
+	private NodeInformation nodeInformation;
+	private NodeOption nodeOption;
 	private String value;
 	private Date createdAt;
 	private Date updatedAt;
@@ -38,8 +38,8 @@ public class NodeOptionValue implements java.io.Serializable {
 
 	public NodeOptionValue(NodeInformation nodeInformations, NodeOption nodeOptions, String value, Date createdAt,
 			Date updatedAt) {
-		this.nodeInformations = nodeInformations;
-		this.nodeOptions = nodeOptions;
+		this.nodeInformation = nodeInformations;
+		this.nodeOption = nodeOptions;
 		this.value = value;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -59,22 +59,22 @@ public class NodeOptionValue implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_information_id")
-	public NodeInformation getNodeInformations() {
-		return this.nodeInformations;
+	public NodeInformation getNodeInformation() {
+		return this.nodeInformation;
 	}
 
-	public void setNodeInformations(NodeInformation nodeInformations) {
-		this.nodeInformations = nodeInformations;
+	public void setNodeInformation(NodeInformation nodeInformations) {
+		this.nodeInformation = nodeInformations;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_option_id")
-	public NodeOption getNodeOptions() {
-		return this.nodeOptions;
+	public NodeOption getNodeOption() {
+		return this.nodeOption;
 	}
 
-	public void setNodeOptions(NodeOption nodeOptions) {
-		this.nodeOptions = nodeOptions;
+	public void setNodeOption(NodeOption nodeOptions) {
+		this.nodeOption = nodeOptions;
 	}
 
 	@Column(name = "value")

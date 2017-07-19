@@ -12,7 +12,7 @@
 			<div class="note">
 
 				Click here to charge the diagram from the back end: <br>
-				<a id="js-create-diagram" value="This is the value" href>Charge the Diagram</a>
+				<a id="js-create-diagram" value="This is the value" href ="#">Charge the Diagram</a>
 			</div>
 		</div>
 

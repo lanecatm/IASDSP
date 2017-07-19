@@ -15,6 +15,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<hibernate.version>5.2.5.Final</hibernate.version>
+		<jackson.version>2.7.5</jackson.version>
 
 	</properties>
 	<dependencies>
@@ -86,9 +87,12 @@
 		<!-- <dependency> <groupId>javax.ejb</groupId> <artifactId>ejb-api</artifactId> 
 			<version>3.0</version> <scope>provided</scope> </dependency> -->
 
-
-
-
+		<!-- 处理json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
 
 		<dependency>

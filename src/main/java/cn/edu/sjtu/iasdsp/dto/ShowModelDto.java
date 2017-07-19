@@ -1,10 +1,12 @@
 package cn.edu.sjtu.iasdsp.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.User;
+import cn.edu.sjtu.iasdsp.model.WorkflowTag;
 
 public class ShowModelDto {
 	
@@ -31,6 +33,7 @@ public class ShowModelDto {
 	//application test
 	//private Map<String, String> application;
 	private Set<String> application;
+	private List<WorkflowTag> workflowTags = new ArrayList<WorkflowTag>(0);
 	
 
 	//diagram
@@ -44,6 +47,25 @@ public class ShowModelDto {
 
 	}
 	
+	
+	
+	
+
+
+	public List<WorkflowTag> getWorkflowTags() {
+		return workflowTags;
+	}
+
+
+
+
+	public void setWorkflowTags(List<WorkflowTag> workflowTags) {
+		this.workflowTags = workflowTags;
+	}
+
+
+
+
 	public String getXml() {
 		return xml;
 	}

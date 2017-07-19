@@ -26,10 +26,9 @@ public class NodeType implements java.io.Serializable {
 	private String name;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeCategory> nodeCategorieses = new HashSet<NodeCategory>(0);
-	private Set<NodeFunction> nodeFunctionses = new HashSet<NodeFunction>(0);
-	private Set<NodeFunction> nodeFunctionses_1 = new HashSet<NodeFunction>(0);
-	private Set<NodeCategory> nodeCategorieses_1 = new HashSet<NodeCategory>(0);
+	private Set<NodeCategory> nodeCategories = new HashSet<NodeCategory>(0);
+	private Set<NodeFunction> nodeFunctions = new HashSet<NodeFunction>(0);
+	
 
 	public NodeType() {
 	}
@@ -40,15 +39,13 @@ public class NodeType implements java.io.Serializable {
 	}
 
 	public NodeType(String name, Date createdAt, Date updatedAt, Set<NodeCategory> nodeCategorieses,
-			Set<NodeFunction> nodeFunctionses, Set<NodeFunction> nodeFunctionses_1,
-			Set<NodeCategory> nodeCategorieses_1) {
+			Set<NodeFunction> nodeFunctionses) {
 		this.name = name;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeCategorieses = nodeCategorieses;
-		this.nodeFunctionses = nodeFunctionses;
-		this.nodeFunctionses_1 = nodeFunctionses_1;
-		this.nodeCategorieses_1 = nodeCategorieses_1;
+		this.nodeCategories = nodeCategorieses;
+		this.nodeFunctions = nodeFunctionses;
+		
 	}
 
 	@Id
@@ -92,40 +89,23 @@ public class NodeType implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeTypes")
-	public Set<NodeCategory> getNodeCategorieses() {
-		return this.nodeCategorieses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeType")
+	public Set<NodeCategory> getNodeCategories() {
+		return this.nodeCategories;
 	}
 
-	public void setNodeCategorieses(Set<NodeCategory> nodeCategorieses) {
-		this.nodeCategorieses = nodeCategorieses;
+	public void setNodeCategories(Set<NodeCategory> nodeCategorieses) {
+		this.nodeCategories = nodeCategorieses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeTypes")
-	public Set<NodeFunction> getNodeFunctionses() {
-		return this.nodeFunctionses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeType")
+	public Set<NodeFunction> getNodeFunctions() {
+		return this.nodeFunctions;
 	}
 
-	public void setNodeFunctionses(Set<NodeFunction> nodeFunctionses) {
-		this.nodeFunctionses = nodeFunctionses;
+	public void setNodeFunctions(Set<NodeFunction> nodeFunctionses) {
+		this.nodeFunctions = nodeFunctionses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeTypes")
-	public Set<NodeFunction> getNodeFunctionses_1() {
-		return this.nodeFunctionses_1;
-	}
-
-	public void setNodeFunctionses_1(Set<NodeFunction> nodeFunctionses_1) {
-		this.nodeFunctionses_1 = nodeFunctionses_1;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeTypes")
-	public Set<NodeCategory> getNodeCategorieses_1() {
-		return this.nodeCategorieses_1;
-	}
-
-	public void setNodeCategorieses_1(Set<NodeCategory> nodeCategorieses_1) {
-		this.nodeCategorieses_1 = nodeCategorieses_1;
-	}
 
 }

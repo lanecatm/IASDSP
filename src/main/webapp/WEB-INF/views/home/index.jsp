@@ -19,7 +19,7 @@
 							<hr />
 
 							<sf:form method="post" modelAttribute="searchDto"
-								cssClass="form-inline" action="search/application">
+								cssClass="form-inline" action="search/all">
 								<sf:select path="searchFor" cssClass="form-control"
 									cssStyle="width: 20%">
 									<sf:option value="Application" label="Application"

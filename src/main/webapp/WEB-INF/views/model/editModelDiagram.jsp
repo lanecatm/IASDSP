@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="canvas" id="js-canvas"></div>
+    <div class="canvas" id="js-canvas" style="width:100%; height:100%"></div>
     <div id="js-properties-panel"></div>
   </div>
    </div>

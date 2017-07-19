@@ -14,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 
 /**
@@ -121,6 +122,19 @@ public class WorkflowInformationHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+	
+	public List<WorkflowInformation> findByExampleEnableLike(WorkflowInformation instance) {
+		log.debug("finding WorkflowInformation instance by example as like");
+		try {
+			List<WorkflowInformation> results = (List<WorkflowInformation>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowInformation").add(create(instance).enableLike()).list();
+			log.debug("find by example as like successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("find by example as like failed", re);
 			throw re;
 		}
 	}

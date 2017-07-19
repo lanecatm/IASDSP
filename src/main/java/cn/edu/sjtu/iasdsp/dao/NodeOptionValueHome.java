@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.NodeOptionValue;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.NodeOptionValue;
  * @see cn.edu.sjtu.iasdsp.dao.NodeOptionValue
  * @author Hibernate Tools
  */
+@Repository
 public class NodeOptionValueHome {
 
 	private static final Log log = LogFactory.getLog(NodeOptionValueHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +98,7 @@ public class NodeOptionValueHome {
 		log.debug("getting NodeOptionValue instance with id: " + id);
 		try {
 			NodeOptionValue instance = (NodeOptionValue) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.NodeOptionValue", id);
+					.get("cn.edu.sjtu.iasdsp.model.NodeOptionValue", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +115,7 @@ public class NodeOptionValueHome {
 		log.debug("finding NodeOptionValue instance by example");
 		try {
 			List<NodeOptionValue> results = (List<NodeOptionValue>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.NodeOptionValue").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.NodeOptionValue").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

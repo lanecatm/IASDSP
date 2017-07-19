@@ -26,8 +26,8 @@ public class NodeOptionType implements java.io.Serializable {
 	private String name;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeOption> nodeOptionses = new HashSet<NodeOption>(0);
-	private Set<NodeOption> nodeOptionses_1 = new HashSet<NodeOption>(0);
+	private Set<NodeOption> nodeOptions = new HashSet<NodeOption>(0);
+	
 
 	public NodeOptionType() {
 	}
@@ -37,13 +37,13 @@ public class NodeOptionType implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public NodeOptionType(String name, Date createdAt, Date updatedAt, Set<NodeOption> nodeOptionses,
-			Set<NodeOption> nodeOptionses_1) {
+	public NodeOptionType(String name, Date createdAt, Date updatedAt, Set<NodeOption> nodeOptionses
+) {
 		this.name = name;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeOptionses = nodeOptionses;
-		this.nodeOptionses_1 = nodeOptionses_1;
+		this.nodeOptions = nodeOptionses;
+		
 	}
 
 	@Id
@@ -87,22 +87,13 @@ public class NodeOptionType implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptionTypes")
-	public Set<NodeOption> getNodeOptionses() {
-		return this.nodeOptionses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptionType")
+	public Set<NodeOption> getNodeOptions() {
+		return this.nodeOptions;
 	}
 
-	public void setNodeOptionses(Set<NodeOption> nodeOptionses) {
-		this.nodeOptionses = nodeOptionses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOptionTypes")
-	public Set<NodeOption> getNodeOptionses_1() {
-		return this.nodeOptionses_1;
-	}
-
-	public void setNodeOptionses_1(Set<NodeOption> nodeOptionses_1) {
-		this.nodeOptionses_1 = nodeOptionses_1;
+	public void setNodeOptions(Set<NodeOption> nodeOptionses) {
+		this.nodeOptions = nodeOptionses;
 	}
 
 }

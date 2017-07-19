@@ -25,13 +25,18 @@ import javax.persistence.TemporalType;
 public class NodeCategory implements java.io.Serializable {
 
 	private Integer id;
-	private NodeType nodeTypes;
+	private NodeType nodeType;
 	private String name;
 	private Date createdAt;
 	private Date updatedAt;
-	private Set<NodeFunction> nodeFunctionses = new HashSet<NodeFunction>(0);
+	private Set<NodeFunction> nodeFunctions = new HashSet<NodeFunction>(0);
 
 	public NodeCategory() {
+	}
+	
+	public NodeCategory(String name) {
+		super();
+		this.name = name;
 	}
 
 	public NodeCategory(Date createdAt, Date updatedAt) {
@@ -41,11 +46,11 @@ public class NodeCategory implements java.io.Serializable {
 
 	public NodeCategory(NodeType nodeTypes, String name, Date createdAt, Date updatedAt,
 			Set<NodeFunction> nodeFunctionses) {
-		this.nodeTypes = nodeTypes;
+		this.nodeType = nodeTypes;
 		this.name = name;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.nodeFunctionses = nodeFunctionses;
+		this.nodeFunctions = nodeFunctionses;
 	}
 
 	@Id
@@ -62,12 +67,12 @@ public class NodeCategory implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "node_type_id")
-	public NodeType getNodeTypes() {
-		return this.nodeTypes;
+	public NodeType getNodeType() {
+		return this.nodeType;
 	}
 
-	public void setNodeTypes(NodeType nodeTypes) {
-		this.nodeTypes = nodeTypes;
+	public void setNodeType(NodeType nodeTypes) {
+		this.nodeType = nodeTypes;
 	}
 
 	@Column(name = "name", length = 65535)
@@ -99,13 +104,13 @@ public class NodeCategory implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeCategories")
-	public Set<NodeFunction> getNodeFunctionses() {
-		return this.nodeFunctionses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeCategory")
+	public Set<NodeFunction> getNodeFunctions() {
+		return this.nodeFunctions;
 	}
 
-	public void setNodeFunctionses(Set<NodeFunction> nodeFunctionses) {
-		this.nodeFunctionses = nodeFunctionses;
+	public void setNodeFunctions(Set<NodeFunction> nodeFunctionses) {
+		this.nodeFunctions = nodeFunctionses;
 	}
 
 

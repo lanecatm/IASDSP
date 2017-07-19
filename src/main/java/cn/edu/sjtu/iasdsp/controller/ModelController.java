@@ -28,103 +28,117 @@ import cn.edu.sjtu.iasdsp.service.ModelService;
 @Controller
 @RequestMapping("/model")
 public class ModelController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ModelController.class);
 
-	
 	@Autowired
 	private ModelService modelService;
-	
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String index(@ModelAttribute("createDto") CreateModelDto createDto) {
-		logger.info("Welcome index!.");
-
+	public String create(@ModelAttribute("createDto") CreateModelDto createModelDto) {
+		logger.debug("Into create function" + createModelDto);
 		return "model/create";
 
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String index2(@ModelAttribute("createDto") CreateModelDto createDto) {
-		logger.info("Welcome index!.");
-		
+	public String save(@ModelAttribute("createDto") CreateModelDto createModelDto) {
+		logger.debug("Into save function" + createModelDto);
 		try {
-			int id = modelService.save(createDto);
-			logger.debug("Create Successful where createModelDto = " + createDto);
-			
-			
+			int id = modelService.save(createModelDto);
+			logger.debug("Create Successful where createModelDto:" + createModelDto + ", id:" + id);
 			return "redirect:/model/" + id + "/edit?active_page=info";
-			
 		} catch (Exception e) {
 			return "application/error";
 		}
-				
 
 	}
-	
+
 	@RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("id") String id) {
-		logger.info(id);
+		logger.debug("Into show function, id:" + id);
 		ShowModelDto showModelDto = modelService.show(Integer.parseInt(id));
 		model.addAttribute("showModelDto", showModelDto);
+		logger.debug("Show function succ, return " + showModelDto);
 		return "model/showModel";
 	}
-	
+
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public String edit(Model model, @PathVariable("id") String id , @RequestParam("active_page") String activePage) {
-		logger.info(id);
+	public String edit(Model model, @PathVariable("id") String id,
+			@RequestParam(value = "active_page", required = false) String activePage) {
+		logger.debug("Into edit function, id:" + id, "active page:" + activePage);
 		EditModelDto editModelDto = modelService.edit(Integer.parseInt(id));
 		editModelDto.setActivePage(activePage);
 		model.addAttribute("editModelDto", editModelDto);
+		logger.debug("Edit function succ, return " + editModelDto);
 		return "model/editModel";
 	}
-	
+
 	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-	public String editInfo(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
-		logger.info(id);
-		
+	public String editInfo(Model model, @PathVariable("id") String id,
+			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
+		logger.debug("Into editInfo function, id:" + id, "editModelDto:" + editModelDto);
 		try {
 			modelService.update(editModelDto, Integer.parseInt(id));
-			model.addAttribute("editModelDto", editModelDto);
+			// model.addAttribute("editModelDto", editModelDto);
+			logger.debug("EditInfo function succ");
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
-			
-			return "application/error";
-			
+			return "model/error";
 		}
 	}
-	
+
 	@RequestMapping(value = "/{id}/updateVersion", method = RequestMethod.POST)
-	public String editVersion(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
-		logger.info(id);
-		
+	public String editVersion(Model model, @PathVariable("id") String id,
+			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
+		logger.debug("Into editVersion function, id:" + id, "editModelDto:" + editModelDto);
 		try {
 			modelService.updateVersion(editModelDto, Integer.parseInt(id));
-			model.addAttribute("editModelDto", editModelDto);
+			// model.addAttribute("editModelDto", editModelDto);
+			logger.debug("editVersion function succ");
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
-			
+
 			return "application/error";
-			
+
 		}
 	}
-	
+
 	@RequestMapping(value = "/{id}/updateAuthorization", method = RequestMethod.POST)
-	public String editAuthorization(Model model, @PathVariable("id") String id, @ModelAttribute("editModelDto") EditModelDto editModelDto) {
+	public String editAuthorization(Model model, @PathVariable("id") String id,
+			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
 		logger.info(id);
-		
+
 		try {
 			modelService.updateAuthorization(editModelDto, Integer.parseInt(id));
 			model.addAttribute("editModelDto", editModelDto);
 			return "redirect:/model/" + id + "/edit?active_page=version";
 		} catch (NumberFormatException e) {
-			
+
 			return "application/error";
-			
+
 		}
 	}
-	
-	
 
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	public String delete(Model model, @PathVariable("id") String id) {
+		logger.debug("Into delete function, id:" + id);
+		try {
+			int deleteId = Integer.parseInt(id);
+			boolean isSucc = modelService.delete(deleteId);
+			if (isSucc) {
+				logger.debug("Delete model succ");
+				return "redirect:/search/model";
+			} else {
+				logger.error("Delete model not exist");
+				return "application/error";
+
+			}
+		} catch (NumberFormatException e) {
+			logger.error("Error occured in delete");
+			return "application/error";
+
+		}
+	}
 
 }
