@@ -15,6 +15,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 
 /**
@@ -130,9 +132,9 @@ public class WorkflowPerformanceHome {
 		log.debug("finding WorkflowPerformance instance by WikiPageId:" + wikiPageId + " And WorkflowInformationId:" + workflowInformationId);
 		try {
 			List<WorkflowPerformance> results = (List<WorkflowPerformance>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.model.WorkflowPerformance")
-					.createAlias("cn.edu.sjtu.iasdsp.model.WorkflowInformation", "workflowInformation").add(Restrictions.eq("workflowInformation.id",workflowInformationId ))
-					.createAlias("cn.edu.sjtu.iasdsp.model.WikiPage", "wikiPage").add(Restrictions.eq("wikiPage.id",wikiPageId ))
+					.createCriteria(WorkflowPerformance.class)
+					.createAlias("workflowInformation", "workflowInformation").add(Restrictions.eq("workflowInformation.id",workflowInformationId ))
+					.createAlias("wikiPage", "wikiPage").add(Restrictions.eq("wikiPage.id",wikiPageId ))
 					.list();
 			log.debug("find by WikiPageId And WorkflowInformationId successful, result size: " + results.size());
 			return results;
