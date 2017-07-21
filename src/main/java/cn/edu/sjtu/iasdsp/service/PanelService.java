@@ -1,6 +1,7 @@
 package cn.edu.sjtu.iasdsp.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -9,12 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.edu.sjtu.iasdsp.controller.PanelController;
+import cn.edu.sjtu.iasdsp.dao.NodeCategoryHome;
 import cn.edu.sjtu.iasdsp.dao.NodeFunctionHome;
+import cn.edu.sjtu.iasdsp.dao.WorkflowVersionHome;
+import cn.edu.sjtu.iasdsp.dto.GetVersionGraphDto;
 import cn.edu.sjtu.iasdsp.dto.PanelAlgorithmDto;
+import cn.edu.sjtu.iasdsp.dto.PanelAllAlgorithmDto;
+import cn.edu.sjtu.iasdsp.dto.UpdateVersionGraphDto;
+import cn.edu.sjtu.iasdsp.model.NodeCategory;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
 import cn.edu.sjtu.iasdsp.model.NodeOption;
 import cn.edu.sjtu.iasdsp.model.NodeOptionChoice;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 /**
  * @author xfhuang
@@ -28,6 +35,13 @@ public class PanelService {
 
 	@Autowired
 	private NodeFunctionHome nodeFunctionHome;
+	
+	@Autowired
+	private NodeCategoryHome nodeCategoryHome;
+	
+	@Autowired
+	private WorkflowVersionHome workflowVersionHome;
+
 
 	@Transactional
 	public PanelAlgorithmDto getSample(int panelId) {
@@ -50,5 +64,43 @@ public class PanelService {
 		}
 		return panelAlgorithmDto;
 	}
-
+	
+	@Transactional
+	public PanelAllAlgorithmDto getAlgorithmList() {
+		List<NodeCategory> nodeCategoryList = nodeCategoryHome.findByExample(new NodeCategory());
+		PanelAllAlgorithmDto panelAllAlgorithmDto = new PanelAllAlgorithmDto();
+		for(NodeCategory nodeCategory : nodeCategoryList){
+			PanelAllAlgorithmDto.PanelCategory panelCategory = panelAllAlgorithmDto.new PanelCategory(nodeCategory.getName(), nodeCategory.getId());
+			for(NodeFunction nodeFunction : nodeCategory.getNodeFunctions()){
+				panelCategory.addPanelAlgorithm(nodeFunction.getName(), nodeFunction.getId(), nodeFunction.getDescription());
+			}
+			panelAllAlgorithmDto.addPanelCategory(panelCategory);
+		}
+		return panelAllAlgorithmDto;
+	}
+	
+	
+	@Transactional
+	public GetVersionGraphDto getVersionGraph(int id) {
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
+		GetVersionGraphDto getVersionGraphDto = new GetVersionGraphDto();
+		if(workflowVersion != null){
+			getVersionGraphDto.setXml(workflowVersion.getXml());
+		}
+		return getVersionGraphDto;
+	}
+	
+	@Transactional
+	public void updateVersionGraph(int id, UpdateVersionGraphDto updateVersionGraphDto) {
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
+		if(workflowVersion != null){
+			workflowVersion.setXml(updateVersionGraphDto.getXml());
+			workflowVersionHome.attachDirty(workflowVersion);
+		}
+		else{
+			throw(new NullPointerException("Can not find workflow version with id:" + id));
+		}
+	}
+	
+	
 }

@@ -88,16 +88,7 @@
 	<hr/>
 	
 	
-	<!-- form-group -->
-	<div class="form-group">
-	   <label class="col-md-12 ">How to use this model</label>
-		<div class="col-md-12">
-			<sf:textarea path="detailedInformation"
-				value="${editModelDto.detailedInformation}" cssClass="form-control"
-				rows="15" />
-		</div>
-	</div>
-	<hr/>
+	
 
 	<div class="form-group">
 		<div class="col-md-offset-6 col-md-3">

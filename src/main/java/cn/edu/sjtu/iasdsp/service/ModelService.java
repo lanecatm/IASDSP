@@ -3,11 +3,8 @@ package cn.edu.sjtu.iasdsp.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.iasdsp.common.UserType;
+import cn.edu.sjtu.iasdsp.common.WorkflowStatus;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
@@ -25,19 +23,18 @@ import cn.edu.sjtu.iasdsp.dao.WorkflowCategoryHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowInformationHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowPrivilegeHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowTagHome;
+import cn.edu.sjtu.iasdsp.dao.WorkflowVersionHome;
 import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
-import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelDto;
-import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
-import cn.edu.sjtu.iasdsp.model.WikiReference;
 import cn.edu.sjtu.iasdsp.model.WorkflowCategory;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 import cn.edu.sjtu.iasdsp.model.WorkflowPrivilege;
 import cn.edu.sjtu.iasdsp.model.WorkflowTag;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 @Service
 public class ModelService {
@@ -64,6 +61,9 @@ public class ModelService {
 
 	@Autowired
 	private WorkflowTagHome workflowTagHome;
+	
+	@Autowired
+	private WorkflowVersionHome workflowVersionHome;
 
 	@Transactional
 	public Integer save(CreateModelDto createModelDto) {
@@ -108,6 +108,7 @@ public class ModelService {
 		showModelDto.setDeleteUserGroup(isNullWorkflowPrivilege || workflowPrivilege.getEditDepartment() == null
 				? "No Delete Department" : workflowPrivilege.getDeleteDepartment().getName());
 		showModelDto.setDetailedInformation(workflowInformation.getDetailDescription());
+		showModelDto.setWorkflowVersions(new ArrayList<WorkflowVersion>(workflowInformation.getWorkflowVersions()));
 
 		logger.debug("Show function succ, return:" + showModelDto);
 		return showModelDto;
@@ -145,6 +146,7 @@ public class ModelService {
 		editModelDto.setAuthor(workflowInformation.getAuthor());
 		editModelDto.setCreationTime(workflowInformation.getCreatedAt());
 		editModelDto.setUpdateTime(workflowInformation.getUpdatedAt());
+		editModelDto.setWorkflowVersions(new ArrayList<WorkflowVersion>(workflowInformation.getWorkflowVersions()));
 
 		// Category
 		for (WorkflowCategory workflowCategory : allWorkflowCategories) {
@@ -193,14 +195,27 @@ public class ModelService {
 
 		return editModelDto;
 	}
+	
+	
+	@Transactional
+	public void  updateDetail(EditModelDto editModelDto, int id) {
+		logger.debug("Into ModelService updateDetail function");
+
+		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
+		workflowInformation.setDetailDescription(editModelDto.getDetailedInformation());
+		workflowInformation.setUpdatedAt(new Date());
+		workflowInformationHome.attachDirty(workflowInformation);
+		logger.debug(" ModelService updateDetail Succ");
+
+	}
 
 	@Transactional
-	public EditModelDto update(EditModelDto editModelDto, int id) {
+	public void update(EditModelDto editModelDto, int id) {
 		logger.debug("Into ModelService update function");
 
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
 
-		workflowInformation.setDetailDescription(editModelDto.getDetailedInformation());
+		//workflowInformation.setDetailDescription(editModelDto.getDetailedInformation());
 		workflowInformation.setUpdatedAt(new Date());
 		int categoryId = Integer.parseInt(editModelDto.getCategory());
 		WorkflowCategory workflowCategory = workflowCategoryHome.findById(categoryId);
@@ -320,15 +335,29 @@ public class ModelService {
 
 		workflowInformation.setWorkflowTags(new HashSet<WorkflowTag>(oldTagList));
 		workflowInformationHome.attachDirty(workflowInformation);
-		logger.debug("uodate succ, output:" + editModelDto);
-		return editModelDto;
+		logger.debug("uodate succ:");
 	}
 
+
 	@Transactional
-	public void updateVersion(EditModelDto editModelDto, int id) {
-		logger.debug("Into updateVersion Edit function");
+	public void createVersion(EditModelDto editModelDto, int id) {
+		logger.debug("Into createVersion Edit function");
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
 
+		//TODO set admin User
+		User defaultUserInfo = userHome.findById(UserType.DEFAULT_USER_ID);
+		
+		String xml = null;
+		String url = null;
+		WorkflowVersion workflowVersion = new WorkflowVersion(
+				defaultUserInfo, defaultUserInfo, 
+				workflowInformation,
+				xml, url, 
+				editModelDto.getVersionName(), editModelDto.getVersionDescription(), 
+				WorkflowStatus.EDITING,
+				new Date(), new Date());
+		workflowVersionHome.persist(workflowVersion);
+		logger.debug("createVersion succ");
 	}
 
 	@Transactional

@@ -10,7 +10,7 @@
 				<h2>${editModelDto.title}</h2>
 				<h4>
 					<small>Revised on ${editModelDto.creationTime } by
-						${editModelDto.author}</small>
+						${editModelDto.author.userName}</small>
 				</h4>
 				<hr />
 		</div>
@@ -19,53 +19,73 @@
 		<div class="col-md-offset-3 col-md-6">
 			<ul class="nav nav-justified step step-square">
 
-				<li role="presentation" class="info"><c:choose>
-						<c:when test="${ editModelDto.activePage=='info'}">
-							<a href="#information" aria-controls="information" role="tab"
-								data-toggle="tab" class="active">Basic Information</a>
-						</c:when>
-						<c:otherwise>
-							<a href="#information" aria-controls="information" role="tab"
-								data-toggle="tab">Information</a>
-						</c:otherwise>
-					</c:choose></li>
 
 
-				<li role="presentation" class="diagram"><c:choose>
-						<c:when test="${ editModelDto.activePage=='diagram'}">
-							<a href="#diagram" aria-controls="diagram" role="tab"
-								data-toggle="tab" class="active">Flow diagram</a>
-						</c:when>
-						<c:otherwise>
-							<a href="#diagram" aria-controls="diagram" role="tab"
-								data-toggle="tab">Flow diagram</a>
-						</c:otherwise>
-					</c:choose></li>
+			<c:choose>
+            <c:when test="${ editModelDto.activePage=='info' || editModelDto.activePage==null}">
+                <li role="presentation" class="active">
+                    <a href="#information" aria-controls="information" role="tab"
+                        data-toggle="tab" >Basic Information</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li role="presentation">
+                    <a href="#information" aria-controls="information" role="tab"
+                        data-toggle="tab" >Basic Information</a>
+                </li>
+            </c:otherwise>
+            </c:choose>
+
+            <c:choose>
+            <c:when test="${ editModelDto.activePage=='detail'}">
+                <li role="presentation" class="active">
+                    <a href="#detail" aria-controls="detail" role="tab"
+                        data-toggle="tab" >Detail Information</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li role="presentation">
+                    <a href="#detail" aria-controls="detail" role="tab"
+                        data-toggle="tab" >Detail Information</a>
+                </li>
+            </c:otherwise>
+            </c:choose> 
 
 
-				<li role="presentation" class="juridiction"><c:choose>
-						<c:when test="${ editModelDto.activePage=='jurisdiction'}">
-							<a href="#jurisdiction" aria-controls="input" role="tab"
-								data-toggle="tab" class="active">Authorization</a>
-						</c:when>
-						<c:otherwise>
-							<a href="#jurisdiction" aria-controls="input" role="tab"
-								data-toggle="tab">Authorization</a>
-						</c:otherwise>
-					</c:choose></li>
+			<c:choose>
+            <c:when test="${ editModelDto.activePage=='jurisdiction'}">
+                <li role="presentation" class="active">
+                    <a href="#jurisdiction" aria-controls="jurisdiction" role="tab"
+                        data-toggle="tab" >Authorization</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li role="presentation">
+                    <a href="#jurisdiction" aria-controls="jurisdiction" role="tab"
+                        data-toggle="tab" >Authorization</a>
+                </li>
+            </c:otherwise>
+            </c:choose>	
+				
+		    <c:choose>
+            <c:when test="${ editModelDto.activePage=='diagram'}">
+                <li role="presentation" class="active">
+                    <a href="#diagram" aria-controls="diagram" role="tab"
+                        data-toggle="tab" >Flow diagram</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li role="presentation">
+                    <a href="#diagram" aria-controls="diagram" role="tab"
+                        data-toggle="tab" >Flow diagram</a>
+                </li>
+            </c:otherwise>
+            </c:choose>
 
 
 
-				<li role="presentation" class="version"><c:choose>
-						<c:when test="${ editModelDto.activePage=='version'}">
-							<a href="#version" aria-controls="version" role="tab"
-								data-toggle="tab" class="active">Version</a>
-						</c:when>
-						<c:otherwise>
-							<a href="#version" aria-controls="version" role="tab"
-								data-toggle="tab">Version</a>
-						</c:otherwise>
-					</c:choose></li>
+
+
 			</ul>
 		</div>
 	</div>
@@ -76,11 +96,11 @@
 
 		<div class="tab-content">
 		<c:choose>
-		<c:when test="${ editModelDto.activePage=='info'}">
-			<div role="tabpanel" class="tab-pane info active" id="information">
+		<c:when test="${ editModelDto.activePage=='info'|| editModelDto.activePage==null}">
+			<div role="tabpanel" class="tab-pane information active" id="information">
 		</c:when>
 		<c:otherwise>
-			<div role="tabpanel" class="tab-pane info " id="information">
+			<div role="tabpanel" class="tab-pane information " id="information">
 		</c:otherwise>
 		</c:choose>
 				<div class="col-md-offset-3 col-md-6">
@@ -116,20 +136,20 @@
 			</div>
 
 		<c:choose>
-		<c:when test="${ editModelDto.activePage=='version'}">
-			<div role="tabpanel" class="tab-pane version active" id="version">
+		<c:when test="${ editModelDto.activePage=='detail'}">
+			<div role="tabpanel" class="tab-pane detail active" id="detail">
 		</c:when>
 		<c:otherwise>
-			<div role="tabpanel" class="tab-pane version" id="version">
+			<div role="tabpanel" class="tab-pane detail" id="detail">
 		</c:otherwise>
 		</c:choose>
 				<div class="col-md-offset-3 col-md-6">
-						<%@ include file="editModelVersion.jsp"%>
+						<%@ include file="editModelDetail.jsp"%>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- /container -->
-
+<%@ include file="../layouts/footer.jsp"%>
 

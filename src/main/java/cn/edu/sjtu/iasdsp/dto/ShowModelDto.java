@@ -7,6 +7,7 @@ import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WorkflowTag;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 public class ShowModelDto {
 	
@@ -34,7 +35,7 @@ public class ShowModelDto {
 	//private Map<String, String> application;
 	private Set<String> application;
 	private List<WorkflowTag> workflowTags = new ArrayList<WorkflowTag>(0);
-	
+	private List<WorkflowVersion> workflowVersions = new ArrayList<WorkflowVersion>(0);
 
 	//diagram
 	private String xml;
@@ -46,18 +47,19 @@ public class ShowModelDto {
 	//	application.add("Mon applicatifon");
 
 	}
-	
-	
-	
-	
 
+
+	public List<WorkflowVersion> getWorkflowVersions() {
+		return workflowVersions;
+	}
+
+	public void setWorkflowVersions(List<WorkflowVersion> workflowVersions) {
+		this.workflowVersions = workflowVersions;
+	}
 
 	public List<WorkflowTag> getWorkflowTags() {
 		return workflowTags;
 	}
-
-
-
 
 	public void setWorkflowTags(List<WorkflowTag> workflowTags) {
 		this.workflowTags = workflowTags;

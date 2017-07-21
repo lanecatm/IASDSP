@@ -9,6 +9,7 @@ import java.util.Set;
 
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 public class EditModelDto {
 	
@@ -45,6 +46,7 @@ public class EditModelDto {
 	
 	private String versionName;
 	private String versionDescription;
+	private Integer copyVersionId;
 	private Date creationTime;
 	private Date updateTime;
 	
@@ -57,6 +59,7 @@ public class EditModelDto {
 	private String xml;
 	
 	private String tagsinput;
+	private List<WorkflowVersion> workflowVersions = new ArrayList<WorkflowVersion>(0);
 	
 	
 
@@ -64,189 +67,141 @@ public class EditModelDto {
 		
 
 	}
+	public List<WorkflowVersion> getWorkflowVersions() {
+		return workflowVersions;
+	}
+
+	public void setWorkflowVersions(List<WorkflowVersion> workflowVersions) {
+		this.workflowVersions = workflowVersions;
+	}
 	
+	public Integer getCopyVersionId() {
+		return copyVersionId;
+	}
 
-
-
+	public void setCopyVersionId(Integer copyVersionId) {
+		this.copyVersionId = copyVersionId;
+	}
 
 	public String getEditUserGroupId() {
 		return editUserGroupId;
 	}
 
-
-
-
-
 	public void setEditUserGroupId(String editUserGroupId) {
 		this.editUserGroupId = editUserGroupId;
 	}
-
-
-
-
 
 	public String getExecuteUserGroupId() {
 		return executeUserGroupId;
 	}
 
-
-
-
-
 	public void setExecuteUserGroupId(String executeUserGroupId) {
 		this.executeUserGroupId = executeUserGroupId;
 	}
-
-
-
-
 
 	public String getDeleteUserGroupId() {
 		return deleteUserGroupId;
 	}
 
-
-
-
-
 	public void setDeleteUserGroupId(String deleteUserGroupId) {
 		this.deleteUserGroupId = deleteUserGroupId;
 	}
-
-
-
-
 
 	public List<WikiPage> getRelatedWikiPageList() {
 		return relatedWikiPageList;
 	}
 
-
-
 	public void setRelatedWikiPageList(List<WikiPage> relatedWikiPageList) {
 		this.relatedWikiPageList = relatedWikiPageList;
 	}
-
-
 
 	public Map<Integer, String> getDepartementList() {
 		return departementList;
 	}
 
-
-
 	public void setDepartementList(Map<Integer, String> departementList) {
 		this.departementList = departementList;
 	}
-
-
 
 	public Map<Integer, String> getCategoryList() {
 		return categoryList;
 	}
 
-
-
 	public void setCategoryList(Map<Integer, String> categoryList) {
 		this.categoryList = categoryList;
 	}
-
-
 
 	public Map<Integer, String> getAllApplicationList() {
 		return allApplicationList;
 	}
 
-
-
 	public void setAllApplicationList(Map<Integer, String> allApplicationList) {
 		this.allApplicationList = allApplicationList;
 	}
-
-
-
 
 	public String getTagsinput() {
 		return tagsinput;
 	}
 
-
-
 	public void setTagsinput(String tagsinput) {
 		this.tagsinput = tagsinput;
 	}
-
-
 
 	public String getTitle() {
 		return title;
 	}
 
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 	public String getIntroduction() {
 		return introduction;
 	}
 
-
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
-
 
 	public String getDetailedInformation() {
 		return detailedInformation;
 	}
 
-
 	public void setDetailedInformation(String detailedInformation) {
 		this.detailedInformation = detailedInformation;
 	}
-
 
 	public String getCategory() {
 		return category;
 	}
 
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 
 	public User getAuthor() {
 		return author;
 	}
 
-
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-
 
 	public User getLastEditor() {
 		return lastEditor;
 	}
 
-
 	public void setLastEditor(User lastEditor) {
 		this.lastEditor = lastEditor;
 	}
-
 
 	public String getEditUserGroup() {
 		return editUserGroup;
 	}
 
-
 	public void setEditUserGroup(String editUserGroup) {
 		this.editUserGroup = editUserGroup;
 	}
-
 
 	public String getDeleteUserGroup() {
 		return deleteUserGroup;
@@ -336,11 +291,6 @@ public class EditModelDto {
 	public void setActivePage(String activePage) {
 		this.activePage = activePage;
 	}
-
-
-
-
-
 	@Override
 	public String toString() {
 		return "EditModelDto [title=" + title + ", introduction=" + introduction + ", detailedInformation="
@@ -351,9 +301,11 @@ public class EditModelDto {
 				+ ", editUserGroupId=" + editUserGroupId + ", executeUserGroupId=" + executeUserGroupId
 				+ ", departementList=" + departementList + ", exectuteUserGroup=" + exectuteUserGroup + ", activePage="
 				+ activePage + ", versionName=" + versionName + ", versionDescription=" + versionDescription
-				+ ", creationTime=" + creationTime + ", updateTime=" + updateTime + ", application=" + application
-				+ ", xml=" + xml + ", tagsinput=" + tagsinput + "]";
+				+ ", copyVersionId=" + copyVersionId + ", creationTime=" + creationTime + ", updateTime=" + updateTime
+				+ ", application=" + application + ", xml=" + xml + ", tagsinput=" + tagsinput + ", workflowVersions="
+				+ workflowVersions.size() + "]";
 	}
+
 
 
 
