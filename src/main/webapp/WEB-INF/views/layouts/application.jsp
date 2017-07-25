@@ -48,7 +48,7 @@
     <s:url value="/resources/javascript/star-rating.min.js" var="starRatingJs" />
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="http://libs.baidu.com/jquery/2.1.3/jquery.min.js"></script>
 	<script src="${bootstrapJs}"></script>
 	<script src="${applicationJs}"></script>
 	<script src="${ieEmulationModesWarningJs}"></script>

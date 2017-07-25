@@ -101,10 +101,10 @@
         <c:choose>
         <c:when test="${ editModelDto.activePage=='other'}">
             <div role="tabpanel" class="tab-pane other active"
-                id="other">
+                id="other" style="display: none">
         </c:when>
         <c:otherwise>
-            <div role="tabpanel" class="tab-pane other" id="other">
+            <div role="tabpanel" class="tab-pane other" id="other"  style="display: none">
         </c:otherwise>
         </c:choose>
                 <div class="col-md-offset-3 col-md-6">

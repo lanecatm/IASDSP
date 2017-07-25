@@ -19,26 +19,26 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "upload_files", catalog = "isdsp_dev")
-public class UploadFiles implements java.io.Serializable {
+public class UploadFile implements java.io.Serializable {
 
 	private Integer id;
-	private ProcessInformations processInformations;
+	private ProcessInformation processInformation;
 	private String name;
 	private String path;
 	private Date createdAt;
 	private Date updatedAt;
 
-	public UploadFiles() {
+	public UploadFile() {
 	}
 
-	public UploadFiles(Date createdAt, Date updatedAt) {
+	public UploadFile(Date createdAt, Date updatedAt) {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
 
-	public UploadFiles(ProcessInformations processInformations, String name, String path, Date createdAt,
+	public UploadFile(ProcessInformation processInformation, String name, String path, Date createdAt,
 			Date updatedAt) {
-		this.processInformations = processInformations;
+		this.processInformation = processInformation;
 		this.name = name;
 		this.path = path;
 		this.createdAt = createdAt;
@@ -59,12 +59,12 @@ public class UploadFiles implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "process_information_id")
-	public ProcessInformations getProcessInformations() {
-		return this.processInformations;
+	public ProcessInformation getProcessInformations() {
+		return this.processInformation;
 	}
 
-	public void setProcessInformations(ProcessInformations processInformations) {
-		this.processInformations = processInformations;
+	public void setProcessInformations(ProcessInformation processInformation) {
+		this.processInformation = processInformation;
 	}
 
 	@Column(name = "name", length = 65535)

@@ -60,6 +60,15 @@ public class WorkflowInformation implements java.io.Serializable {
 	private Date updatedAt;
 
 	private String xml;
+	
+	
+	private Integer runningTime;
+	private Integer allStar;
+	private Integer starUserNumber;
+	
+	
+	
+	
 	// private Set<XWikiAndWorkflowInformation> xWikiAndWorkflowInformations =
 	// new HashSet<XWikiAndWorkflowInformation>(
 	// 0);
@@ -68,6 +77,12 @@ public class WorkflowInformation implements java.io.Serializable {
 	private Set<WorkflowPerformance> workflowPerformances = new HashSet<WorkflowPerformance>(0);
 	private Set<WorkflowTag> workflowTags = new HashSet<WorkflowTag>(0);
 	private Set<WorkflowVersion> workflowVersions = new HashSet<WorkflowVersion>(0);
+	private Set<SharedProcessRecord> sharedProcessRecords  = new HashSet<SharedProcessRecord>(0);
+	
+	private WorkflowVersion defaultVersion;
+	
+//	private Set<ProcessStar> processStars = new HashSet<ProcessStar>(0);
+
 
 	public WorkflowInformation() {
 	}
@@ -84,6 +99,17 @@ public class WorkflowInformation implements java.io.Serializable {
 		this.introduction = introduction;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	}
+
+	public WorkflowInformation(String name, String introduction, Date createdAt, Date updatedAt, Integer runningTime,
+			Integer allStar, Integer starUserNumber) {
+		this.name = name;
+		this.introduction = introduction;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.runningTime = runningTime;
+		this.allStar = allStar;
+		this.starUserNumber = starUserNumber;
 	}
 
 	@Id
@@ -299,7 +325,6 @@ public class WorkflowInformation implements java.io.Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
-	@Cascade(CascadeType.DELETE)
 	public Set<WorkflowVersion> getWorkflowVersions() {
 		return workflowVersions;
 	}
@@ -315,8 +340,6 @@ public class WorkflowInformation implements java.io.Serializable {
 		return wikiPages;
 	}
 
-	
-
 	public void setWikiPages(Set<WikiPage> wikiPages) {
 		this.wikiPages = wikiPages;
 	}
@@ -330,6 +353,18 @@ public class WorkflowInformation implements java.io.Serializable {
 	public void setWorkflowPerformances(Set<WorkflowPerformance> workflowPerformances) {
 		this.workflowPerformances = workflowPerformances;
 	}
+	
+	
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
+	public Set<SharedProcessRecord> getSharedProcessRecords() {
+		return sharedProcessRecords;
+	}
+
+	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
+		this.sharedProcessRecords = sharedProcessRecords;
+	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
 	@Cascade(CascadeType.DELETE)
@@ -340,5 +375,64 @@ public class WorkflowInformation implements java.io.Serializable {
 	public void setWorkflowPrivilege(WorkflowPrivilege workflowPrivilege) {
 		this.workflowPrivilege = workflowPrivilege;
 	}
+	
+	
+	
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
+//	public Set<ProcessStar> getProcessStars() {
+//		return processStars;
+//	}
+//
+//	public void setProcessStars(Set<ProcessStar> processStars) {
+//		this.processStars = processStars;
+//	}
+//	
+//	
+	
+	
+	
+	@Column(name = "running_time")
+	public Integer getRunningTime() {
+		return runningTime;
+	}
+
+	public void setRunningTime(Integer runningTime) {
+		this.runningTime = runningTime;
+	}
+
+	@Column(name = "all_star")
+	public Integer getAllStar() {
+		return allStar;
+	}
+
+	public void setAllStar(Integer allStar) {
+		this.allStar = allStar;
+	}
+
+	@Column(name = "star_user_number")
+	public Integer getStarUserNumber() {
+		return starUserNumber;
+	}
+
+	public void setStarUserNumber(Integer starUserNumber) {
+		this.starUserNumber = starUserNumber;
+	}
+	
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "default_version_id")	
+	public WorkflowVersion getDefaultVersion() {
+		return defaultVersion;
+	}
+
+	public void setDefaultVersion(WorkflowVersion defaultVersion) {
+		this.defaultVersion = defaultVersion;
+	}
+	
+	
+	
+	
+	
+
 
 }

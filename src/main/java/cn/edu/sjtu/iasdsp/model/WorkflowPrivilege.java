@@ -1,15 +1,18 @@
 package cn.edu.sjtu.iasdsp.model;
 // Generated 2017-7-5 20:36:16 by Hibernate Tools 5.2.3.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,7 +55,7 @@ public class WorkflowPrivilege implements java.io.Serializable {
 	}
 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "workflow_information_id")
 	public WorkflowInformation getWorkflowInformation() {
 		return workflowInformation;

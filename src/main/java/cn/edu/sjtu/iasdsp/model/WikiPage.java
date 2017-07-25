@@ -54,6 +54,8 @@ public class WikiPage implements java.io.Serializable {
 	//private Set<WikiRelationship> wikiRelationships = new HashSet<WikiRelationship>(0);
 
 	private Set<WorkflowPerformance> workflowPerformances = new HashSet<WorkflowPerformance>(0);
+	
+	private Set<SharedProcessRecord> sharedProcessRecords = new HashSet<SharedProcessRecord>(0);
 
 	private WikiCategory wikiCategory;
 
@@ -239,12 +241,24 @@ public class WikiPage implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "wikiPage")
+	@Cascade(CascadeType.DELETE)
 	public Set<WorkflowPerformance> getWorkflowPerformances() {
 		return workflowPerformances;
 	}
 
 	public void setWorkflowPerformances(Set<WorkflowPerformance> workflowPerformances) {
 		this.workflowPerformances = workflowPerformances;
+	}
+
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "wikiPage")
+	public Set<SharedProcessRecord> getSharedProcessRecords() {
+		return sharedProcessRecords;
+	}
+
+	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
+		this.sharedProcessRecords = sharedProcessRecords;
 	}
 
 	public String toString() {

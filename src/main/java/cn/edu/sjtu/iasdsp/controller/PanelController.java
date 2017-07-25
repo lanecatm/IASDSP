@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import cn.edu.sjtu.iasdsp.dto.GetVersionGraphDto;
 import cn.edu.sjtu.iasdsp.dto.MessageDto;
@@ -55,21 +55,23 @@ public class PanelController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/get_graph", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<String> getGraph(@PathVariable("id") String id) {
+	public ResponseEntity<MessageDto> getGraph(@PathVariable("id") String id) {
 		log.debug("Into getGraph");
 		int versionId = Integer.parseInt(id);
 		GetVersionGraphDto getVersionGraphDto = panelService.getVersionGraph(versionId);
-		return ResponseEntity.accepted().body(getVersionGraphDto.getXml());
+		return ResponseEntity.accepted().body(new MessageDto(getVersionGraphDto.getXml()));
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/{id}/post_graph", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}/post_graph", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
 	//public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody UpdateVersionGraphDto updateVersionGraphDto) {
 	public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody String xml) {
 		log.debug("Into postGraph, param:" + xml);
 		int versionId = Integer.parseInt(id);
 		UpdateVersionGraphDto updateVersionGraphDto = new UpdateVersionGraphDto();
 		updateVersionGraphDto.setXml(xml);
+		log.debug("change xml:" + xml);
+
 		panelService.updateVersionGraph(versionId, updateVersionGraphDto);
 		return ResponseEntity.accepted().body(new MessageDto("succ"));
 	}

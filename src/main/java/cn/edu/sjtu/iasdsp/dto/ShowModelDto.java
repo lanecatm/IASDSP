@@ -2,10 +2,14 @@ package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
+import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowTag;
 import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
@@ -36,6 +40,9 @@ public class ShowModelDto {
 	private Set<String> application;
 	private List<WorkflowTag> workflowTags = new ArrayList<WorkflowTag>(0);
 	private List<WorkflowVersion> workflowVersions = new ArrayList<WorkflowVersion>(0);
+	
+	private List<WikiPage> wikiPages = new ArrayList<WikiPage>(0);
+	private Map<Integer, List<SharedProcessRecord>> sharedProcessRecordMap = new HashMap<Integer, List<SharedProcessRecord>>(0);
 
 	//diagram
 	private String xml;
@@ -191,6 +198,42 @@ public class ShowModelDto {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+
+
+	public List<WikiPage> getWikiPages() {
+		return wikiPages;
+	}
+
+
+	public void setWikiPages(List<WikiPage> wikiPages) {
+		this.wikiPages = wikiPages;
+	}
+
+
+	public Map<Integer, List<SharedProcessRecord>> getSharedProcessRecordMap() {
+		return sharedProcessRecordMap;
+	}
+
+
+	public void setSharedProcessRecordMap(Map<Integer, List<SharedProcessRecord>> sharedProcessRecordMap) {
+		this.sharedProcessRecordMap = sharedProcessRecordMap;
+	}
+
+	
+
+
+
+	public String toString() {
+		return "ShowModelDto [title=" + title + ", introduction=" + introduction + ", detailedInformation="
+				+ detailedInformation + ", category=" + category + ", author=" + author + ", lastEditor=" + lastEditor
+				+ ", editUserGroup=" + editUserGroup + ", deleteUserGroup=" + deleteUserGroup + ", exectuteUserGroup="
+				+ exectuteUserGroup + ", versionName=" + versionName + ", versionDescription=" + versionDescription
+				+ ", creationTime=" + creationTime + ", updateTime=" + updateTime + ", application=" + application
+				+ ", workflowTags=" + workflowTags + ", workflowVersions=" + workflowVersions + ", wikiPages="
+				+ wikiPages + ", sharedProcessRecordMap=" + sharedProcessRecordMap + ", xml=" + xml + "]";
+	}
+
+
 
 
 	

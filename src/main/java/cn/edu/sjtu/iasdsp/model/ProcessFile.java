@@ -19,27 +19,27 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "process_files", catalog = "isdsp_dev")
-public class ProcessFiles implements java.io.Serializable {
+public class ProcessFile implements java.io.Serializable {
 
 	private Integer id;
-	private ProcessInformations processInformations;
+	private ProcessInformation processInformation;
 	private String name;
 	private String path;
 	private Integer node;
 	private Date createdAt;
 	private Date updatedAt;
 
-	public ProcessFiles() {
+	public ProcessFile() {
 	}
 
-	public ProcessFiles(Date createdAt, Date updatedAt) {
+	public ProcessFile(Date createdAt, Date updatedAt) {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
 
-	public ProcessFiles(ProcessInformations processInformations, String name, String path, Integer node, Date createdAt,
+	public ProcessFile(ProcessInformation processInformation, String name, String path, Integer node, Date createdAt,
 			Date updatedAt) {
-		this.processInformations = processInformations;
+		this.processInformation = processInformation;
 		this.name = name;
 		this.path = path;
 		this.node = node;
@@ -61,12 +61,12 @@ public class ProcessFiles implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "process_information_id")
-	public ProcessInformations getProcessInformations() {
-		return this.processInformations;
+	public ProcessInformation getProcessInformations() {
+		return this.processInformation;
 	}
 
-	public void setProcessInformations(ProcessInformations processInformations) {
-		this.processInformations = processInformations;
+	public void setProcessInformations(ProcessInformation processInformation) {
+		this.processInformation = processInformation;
 	}
 
 	@Column(name = "name", length = 65535)

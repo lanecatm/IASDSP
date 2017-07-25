@@ -1,3 +1,4 @@
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
@@ -56,32 +57,95 @@
 						<div class="col-md-12">
 							<h5>Running cases</h5>
 							<table class="table table-bordered">
-								<th>
-								<td>Running case name</td>
-								<td>Description</td>
-								<td>Star</td>
-								<td>Execution times</td>
-								<td>Action</td>
-								</th>
 								<tr>
-									<td>1</td>
-									<td>Running case 1</td>
-									<td>xxxxxxxxxx</td>
-									<td>2</td>
-									<td>12</td>
-									<td><a class="btn btn-sm btn-success"> Execute </a></td>
+                                <th>Id</th>
+								<th>Name</th>
+								<th>Model version</th>
+								<th>Share group</th>
+								<th>Share input file</th>
+                                <th><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+								</th>
+                                <th><span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+								</th>
+								<th>Action</th>
 								</tr>
+								<c:forEach items="${showApplicationDto.shareRecordMap[workflowInformation.id]}"
+        var="shareRecord" varStatus="status2">
+								<tr>
+									<td>${shareRecord.id}</td>
+									<td>${shareRecord.name}</td>
+									<td>${shareRecord.workflowVersion.versionName}</td>
+									<td>${shareRecord.executeDepartment.name}</td>
+									<td>${shareRecord.isSharedSampleInput}</td>
+									<td>
+									   <c:if test="${shareRecord.starUserNumber!=0}">
+                                        <fmt:formatNumber maxFractionDigits="1" value="${shareRecord.allStar/shareRecord.starUserNumber}" /> 
+									   </c:if>
+                                    </td>
+                                    <td>
+                                        ${shareRecord.runningTime}
+                                    </td>
+									<td>
+									   <a class="btn btn-sm btn-success" 
+									       href="<c:url value="/execute?running_case=${shareRecord.id}&application=${showApplicationDto.wikiPageId}"/>">
+									        Execute 
+									   </a>
+									   <a class="btn btn-sm btn-danger" 
+									       href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.path}"/>"> 
+									       Delete </a>
+									</td>
+								</tr>
+								</c:forEach>
 							</table>
 						</div>
 					</div>
+					<div class="row">
+                        <div class="col-md-12">
+                            <h5>History versions</h5>
+                            <table class="table table-bordered">
+                                <tr>
+                                <th>Id</th>
+                                <th>Version name</th>
+                                <th>Description</th>
+                                <th><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+								</th>
+                                <th><span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+								</th>
+                                <th>Action</th>
+                                </tr>
+                               <c:forEach items="${workflowInformation.workflowVersions}"
+									var="workflowVersion" varStatus="status1">
+                                <c:if test="${workflowVersion.status == 1}">
+                                <tr>
+                                    <td>${workflowVersion.id}</td>
+                                    <td>${workflowVersion.versionName}</td>
+                                    <td>${workflowVersion.versionDescription}</td>
+                                    <td>
+									   <c:if test="${workflowVersion.starUserNumber!=0}">
+                                        <fmt:formatNumber maxFractionDigits="1" value="${workflowVersion.allStar/workflowVersion.starUserNumber}" /> 
+                                    
+										</c:if>
+                                    </td>
+                                    <td>
+                                        ${workflowInformation.runningTime}
+                                    </td>
+                                    <td><a class="btn btn-sm btn-success" href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPageId}"/>"> Execute </a></td>
+                                </tr>
+                                </c:if>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </div>
 					<br />
 				</div>
 				<div class="row">
 					<div class="col-md-4 ">
 						<div class="btn-group btn-group-justified btn-group-sm"
 							role="group" aria-label="...">
-							<a class="btn btn-sm btn-success"> Execute </a> 
-							<a class="btn btn-sm  btn-default"> More detail </a>
+							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPageId}"/>">
+							     Execute 
+							 </a> 
+							<a class="btn btn-sm  btn-default" href="<c:url value="/model/${workflowInformation.id}/show"/>"> More detail </a>
 						</div>
 					</div>
 				</div>
@@ -90,13 +154,23 @@
 				<div class="row">
 					<div class="col-md-10 ">
 						<h4>
-							<small> Star<span> <span
-									class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
-									class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
-									class="glyphicon glyphicon-star" aria-hidden="true"></span> <span
-									class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-									<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-							</span> &nbsp; &nbsp; Author Admin &nbsp; &nbsp; Execute time 20
+							<small> 
+							   <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                Star:
+							   <c:if test="${workflowInformation.starUserNumber!=0}">
+							     <fmt:formatNumber maxFractionDigits="1" value="${workflowInformation.allStar/workflowInformation.starUserNumber}" /> 
+							   </c:if>
+							   <c:if test="${workflowInformation.starUserNumber==0}">
+                                None
+                               </c:if>
+								 &nbsp; 
+							   <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+							   Execute time:
+							 ${workflowInformation.runningTime}
+							   
+							 &nbsp; 
+							 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							 Author: ${workflowInformation.author.userName} 
 							</small>
 						</h4>
 					</div>

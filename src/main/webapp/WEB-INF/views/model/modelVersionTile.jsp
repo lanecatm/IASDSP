@@ -1,4 +1,5 @@
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
@@ -27,14 +28,26 @@
 				<div class="col-md-12">
 					<div class="btn-group btn-group-justified  btn-group-sm"
 						role="group" aria-label="...">
-						<a type="button"
-							class="btn btn-success btn-sm" href="<c:url value=""/>"> Execute
-						</a> 
+						<c:if test="${workflowVersion.status == 0}">
+							<a type="button" class="btn btn-success btn-sm" id="version${status.index}PublishBtn" onClick="publishVersion(${workflowVersion.id})"> 
+							     Publish 
+							</a>
 						<a type="button" class="btn btn-info btn-sm"
 							href="<c:url value="./edit"/>"> Edit </a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="./delete"/>"> Delete </a>
+							href="<c:url value="./version/${workflowVersion.id}/delete"/>"> Delete </a>
+						</c:if> 
+						  <c:if test="${workflowVersion.status == 1}">
+                            <a type="button" disabled="disabled" class="btn btn-success btn-sm" id="version${status.index}PublishBtn" onClick="publishVersion(${workflowVersion.id})"> 
+                                 Publish 
+                            </a>
+                        <a type="button" disabled="disabled" class="btn btn-info btn-sm"
+                            href="<c:url value="./edit"/>"> Edit </a>
+                        <!-- TODO change delete method -->
+                        <a type="button" class="btn btn-danger btn-sm"
+                            href="<c:url value="./version/${workflowVersion.id}/delete"/>"> Delete </a>
+                        </c:if> 
 					</div>
 				</div>
 			</div>
@@ -42,11 +55,22 @@
 			
 			<h5>
 				<img src="${userImg}" alt="" style="width: 30px; height: 30px;"
-					class="img-circle"> <small> &nbsp;By Admin &nbsp; <span
-					class="glyphicon glyphicon-star"></span>4.6 <span
-					class="glyphicon glyphicon-play"></span>150 times
-				</small>
+                    class="img-circle"> 
+                <small> &nbsp;By ${workflowVersion.author.userName} &nbsp; 
+                    <span class="glyphicon glyphicon-star"></span> 
+                    <c:if test="${workflowVersion.starUserNumber!=0}">
+                        <fmt:formatNumber maxFractionDigits="1"
+                            value="${workflowVersion.allStar/workflowVersion.starUserNumber}" />
+                    </c:if> 
+                    <c:if test="${workflowVersion.starUserNumber==0}">
+                    None
+                    </c:if>
+                    
+                    <span class="glyphicon glyphicon-play"></span>
+                    ${workflowVersion.runningTime}
+                </small>
 			</h5>
 		</div>
 	</div>
 </div>
+

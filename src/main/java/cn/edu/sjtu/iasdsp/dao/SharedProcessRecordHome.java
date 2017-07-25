@@ -1,5 +1,5 @@
 package cn.edu.sjtu.iasdsp.dao;
-// Generated 2017-7-9 2:25:32 by Hibernate Tools 5.2.3.Final
+// Generated 2017-7-22 17:47:10 by Hibernate Tools 5.2.3.Final
 
 import static org.hibernate.criterion.Example.create;
 
@@ -11,19 +11,24 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import cn.edu.sjtu.iasdsp.model.ProcessInformations;
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 
 /**
- * Home object for domain model class ProcessInformations.
- * @see cn.edu.sjtu.iasdsp.dao.ProcessInformations
+ * Home object for domain model class SharedProcessRecord.
+ * 
+ * @see cn.edu.sjtu.iasdsp.dao.SharedProcessRecord
  * @author Hibernate Tools
  */
-public class ProcessInformationsHome {
+@Repository
+public class SharedProcessRecordHome {
 
-	private static final Log log = LogFactory.getLog(ProcessInformationsHome.class);
+	private static final Log log = LogFactory.getLog(SharedProcessRecordHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -34,8 +39,8 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public void persist(ProcessInformations transientInstance) {
-		log.debug("persisting ProcessInformations instance");
+	public void persist(SharedProcessRecord transientInstance) {
+		log.debug("persisting SharedProcessRecord instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +50,8 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public void attachDirty(ProcessInformations instance) {
-		log.debug("attaching dirty ProcessInformations instance");
+	public void attachDirty(SharedProcessRecord instance) {
+		log.debug("attaching dirty SharedProcessRecord instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +61,8 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public void attachClean(ProcessInformations instance) {
-		log.debug("attaching clean ProcessInformations instance");
+	public void attachClean(SharedProcessRecord instance) {
+		log.debug("attaching clean SharedProcessRecord instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +72,8 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public void delete(ProcessInformations persistentInstance) {
-		log.debug("deleting ProcessInformations instance");
+	public void delete(SharedProcessRecord persistentInstance) {
+		log.debug("deleting SharedProcessRecord instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +83,10 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public ProcessInformations merge(ProcessInformations detachedInstance) {
-		log.debug("merging ProcessInformations instance");
+	public SharedProcessRecord merge(SharedProcessRecord detachedInstance) {
+		log.debug("merging SharedProcessRecord instance");
 		try {
-			ProcessInformations result = (ProcessInformations) sessionFactory.getCurrentSession()
+			SharedProcessRecord result = (SharedProcessRecord) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -91,11 +96,11 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public ProcessInformations findById(java.lang.Integer id) {
-		log.debug("getting ProcessInformations instance with id: " + id);
+	public SharedProcessRecord findById(java.lang.Integer id) {
+		log.debug("getting SharedProcessRecord instance with id: " + id);
 		try {
-			ProcessInformations instance = (ProcessInformations) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.ProcessInformations", id);
+			SharedProcessRecord instance = (SharedProcessRecord) sessionFactory.getCurrentSession()
+					.get("cn.edu.sjtu.iasdsp.model.SharedProcessRecord", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +113,11 @@ public class ProcessInformationsHome {
 		}
 	}
 
-	public List<ProcessInformations> findByExample(ProcessInformations instance) {
-		log.debug("finding ProcessInformations instance by example");
+	public List<SharedProcessRecord> findByExample(SharedProcessRecord instance) {
+		log.debug("finding SharedProcessRecord instance by example");
 		try {
-			List<ProcessInformations> results = (List<ProcessInformations>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.ProcessInformations").add(create(instance)).list();
+			List<SharedProcessRecord> results = (List<SharedProcessRecord>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.SharedProcessRecord").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

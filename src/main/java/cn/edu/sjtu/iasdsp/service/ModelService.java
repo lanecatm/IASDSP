@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.common.WorkflowStatus;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
+import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
+import cn.edu.sjtu.iasdsp.dao.SharedProcessRecordHome;
 import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowCategoryHome;
@@ -28,6 +30,8 @@ import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
+import cn.edu.sjtu.iasdsp.model.ProcessInformation;
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowCategory;
@@ -64,13 +68,22 @@ public class ModelService {
 	
 	@Autowired
 	private WorkflowVersionHome workflowVersionHome;
+	
+	@Autowired
+	private SharedProcessRecordHome sharedProcessRecordHome;
 
+	@Autowired
+	private ProcessInformationHome processInformationHome;
+	
+	@Autowired 
+	private DeleteService deleteService;
+	
 	@Transactional
 	public Integer save(CreateModelDto createModelDto) {
 		logger.debug("Into save service, param:" + createModelDto);
 		// create name and introduction
 		WorkflowInformation workflowInformation = new WorkflowInformation(createModelDto.getName(),
-				createModelDto.getIntroduction(), new Date(), new Date());
+				createModelDto.getIntroduction(), new Date(), new Date(), 0, 0, 0);
 		workflowInformationHome.persist(workflowInformation);
 		logger.debug("Save service, workflowInformation:" + workflowInformation);
 		return workflowInformation.getId();
@@ -109,6 +122,24 @@ public class ModelService {
 				? "No Delete Department" : workflowPrivilege.getDeleteDepartment().getName());
 		showModelDto.setDetailedInformation(workflowInformation.getDetailDescription());
 		showModelDto.setWorkflowVersions(new ArrayList<WorkflowVersion>(workflowInformation.getWorkflowVersions()));
+		
+		
+		showModelDto.setWikiPages(new ArrayList<WikiPage>(workflowInformation.getWikiPages()));
+		
+		for(SharedProcessRecord sharedProcessRecord : workflowInformation.getSharedProcessRecords()){
+			if(sharedProcessRecord.getProcessInformation() == null){
+				logger.error("cannot find ProcessInformation of sharedProcessRecord, id" + sharedProcessRecord.getId());
+				continue;
+			}
+			int wikiPageId = sharedProcessRecord.getWikiPage().getId();
+			if(showModelDto.getSharedProcessRecordMap().containsKey(wikiPageId)){
+				showModelDto.getSharedProcessRecordMap().get(wikiPageId).add(sharedProcessRecord);
+			}
+			else{
+				showModelDto.getSharedProcessRecordMap().put(wikiPageId, new ArrayList<SharedProcessRecord>());
+				showModelDto.getSharedProcessRecordMap().get(wikiPageId).add(sharedProcessRecord);
+			}
+		}
 
 		logger.debug("Show function succ, return:" + showModelDto);
 		return showModelDto;
@@ -341,7 +372,7 @@ public class ModelService {
 
 	@Transactional
 	public void createVersion(EditModelDto editModelDto, int id) {
-		logger.debug("Into createVersion Edit function");
+		logger.debug("Into createVersion function");
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
 
 		//TODO set admin User
@@ -355,11 +386,48 @@ public class ModelService {
 				xml, url, 
 				editModelDto.getVersionName(), editModelDto.getVersionDescription(), 
 				WorkflowStatus.EDITING,
-				new Date(), new Date());
+				new Date(), new Date(),
+				0, 0, 0);
 		workflowVersionHome.persist(workflowVersion);
 		logger.debug("createVersion succ");
 	}
-
+	
+	@Transactional
+	public void publishVersion(int workflowVersionId) {
+		logger.debug("Into publishVersion function, workflowVersionId:" + workflowVersionId);
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(workflowVersionId);
+		if(workflowVersion != null){
+			logger.debug("find workflow version");
+			workflowVersion.setStatus(WorkflowStatus.PUBLISHED);
+			WorkflowInformation workflowInformation = workflowVersion.getWorkflowInformation();
+			workflowVersionHome.attachDirty(workflowVersion);
+			logger.debug("set workflow default version");
+			workflowInformation.setDefaultVersion(workflowVersion);
+			workflowInformationHome.attachDirty(workflowInformation);
+		}
+		else{
+			logger.error("can not find workflow version");
+			throw(new NullPointerException("Can not find workflow version" + workflowVersionId));
+		}
+		logger.debug("publishVersion succ");
+	}	
+	
+	
+	@Transactional
+	public void deleteVersion(int workflowVersionId) {
+		logger.debug("Into deleteVersion function, workflowVersionId:" + workflowVersionId);
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(workflowVersionId);
+		if(workflowVersion != null){
+			logger.debug("find workflow version");
+			deleteService.deleteWorkflowVersion(workflowVersion);
+		}
+		else{
+			logger.error("can not find workflow version");
+			throw(new NullPointerException("Can not find workflow version" + workflowVersionId));
+		}
+		logger.debug("deleteVersion succ");
+	}	
+	
 	@Transactional
 	public void updateAuthorization(EditModelDto editModelDto, int id) {
 		logger.debug("Into ModelService Update Authorization, param:" + editModelDto + ", id:" + id);
@@ -386,7 +454,7 @@ public class ModelService {
 		logger.debug("Into ModelService delete, id:" + id);
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
 		if(workflowInformation != null){
-			workflowInformationHome.delete(workflowInformation);
+			deleteService.deleteWorkflowInformation(workflowInformation);
 			logger.debug("Delete model succ, id:" + id );
 			return true;
 		}

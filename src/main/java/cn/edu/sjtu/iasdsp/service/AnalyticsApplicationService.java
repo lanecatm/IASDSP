@@ -20,6 +20,7 @@ import cn.edu.sjtu.iasdsp.dao.WorkflowPerformanceHome;
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.EditPerformanceDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
@@ -48,7 +49,8 @@ public class AnalyticsApplicationService {
 	private WorkflowInformationHome workflowInformationHome;
 	@Autowired
 	private WorkflowPerformanceHome workflowPerformanceHome;
-
+	@Autowired
+	private DeleteService deleteService;
 	@Transactional
 	public EditApplicationDto create() {
 		logger.debug("Into create service");
@@ -175,12 +177,7 @@ public class AnalyticsApplicationService {
 		if (wikiPage == null) {
 			return false;
 		} else {
-			Set<WikiPage> needToRemoveWikiPageList = wikiPage.getRelatedByWikiPages();
-			for (WikiPage relatedByWikiPage : needToRemoveWikiPageList) {
-				relatedByWikiPage.getRelatedWikiPages().remove(wikiPage);
-				wikiPageHome.attachDirty(relatedByWikiPage);
-			}
-			wikiPageHome.delete(wikiPage);
+			deleteService.deleteWikiPage(wikiPage);
 			return true;
 		}
 	}
@@ -361,6 +358,13 @@ public class AnalyticsApplicationService {
 			}
 			showApplicationDto.getPerformanceMap().put(workflowPerformance.getWorkflowInformation().getId(),
 					workflowPerformance.getContent());
+		}
+		for (SharedProcessRecord sharedProcessRecord : wikiPage.getSharedProcessRecords()){
+			int workflowInformationId = sharedProcessRecord.getWorkflowInformation().getId();
+			if (!showApplicationDto.getShareRecordMap().containsKey(workflowInformationId)){
+				showApplicationDto.getShareRecordMap().put(workflowInformationId, new ArrayList<SharedProcessRecord>());
+			}
+			showApplicationDto.getShareRecordMap().get(workflowInformationId).add(sharedProcessRecord);
 		}
 		return showApplicationDto;
 	}

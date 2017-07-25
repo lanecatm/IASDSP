@@ -6,24 +6,31 @@ import static org.hibernate.criterion.Example.create;
 import java.util.List;
 
 import javax.naming.InitialContext;
+import javax.persistence.Entity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import cn.edu.sjtu.iasdsp.model.ProcessFile;
+import cn.edu.sjtu.iasdsp.model.ProcessInformation;
+import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 
 /**
- * Home object for domain model class ProcessFiles.
- * @see cn.edu.sjtu.iasdsp.dao.ProcessFile
+ * Home object for domain model class ProcessInformations.
+ * @see cn.edu.sjtu.iasdsp.dao.ProcessInformation
  * @author Hibernate Tools
  */
-public class ProcessFileHome {
+@Repository
+public class ProcessInformationHome {
 
-	private static final Log log = LogFactory.getLog(ProcessFileHome.class);
+	private static final Log log = LogFactory.getLog(ProcessInformationHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -34,8 +41,8 @@ public class ProcessFileHome {
 		}
 	}
 
-	public void persist(ProcessFile transientInstance) {
-		log.debug("persisting ProcessFiles instance");
+	public void persist(ProcessInformation transientInstance) {
+		log.debug("persisting ProcessInformations instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +52,8 @@ public class ProcessFileHome {
 		}
 	}
 
-	public void attachDirty(ProcessFile instance) {
-		log.debug("attaching dirty ProcessFiles instance");
+	public void attachDirty(ProcessInformation instance) {
+		log.debug("attaching dirty ProcessInformations instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +63,8 @@ public class ProcessFileHome {
 		}
 	}
 
-	public void attachClean(ProcessFile instance) {
-		log.debug("attaching clean ProcessFiles instance");
+	public void attachClean(ProcessInformation instance) {
+		log.debug("attaching clean ProcessInformations instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +74,8 @@ public class ProcessFileHome {
 		}
 	}
 
-	public void delete(ProcessFile persistentInstance) {
-		log.debug("deleting ProcessFiles instance");
+	public void delete(ProcessInformation persistentInstance) {
+		log.debug("deleting ProcessInformations instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,10 +85,11 @@ public class ProcessFileHome {
 		}
 	}
 
-	public ProcessFile merge(ProcessFile detachedInstance) {
-		log.debug("merging ProcessFiles instance");
+	public ProcessInformation merge(ProcessInformation detachedInstance) {
+		log.debug("merging ProcessInformations instance");
 		try {
-			ProcessFile result = (ProcessFile) sessionFactory.getCurrentSession().merge(detachedInstance);
+			ProcessInformation result = (ProcessInformation) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -90,11 +98,11 @@ public class ProcessFileHome {
 		}
 	}
 
-	public ProcessFile findById(java.lang.Integer id) {
-		log.debug("getting ProcessFiles instance with id: " + id);
+	public ProcessInformation findById(java.lang.Integer id) {
+		log.debug("getting ProcessInformations instance with id: " + id);
 		try {
-			ProcessFile instance = (ProcessFile) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.ProcessFiles", id);
+			ProcessInformation instance = (ProcessInformation) sessionFactory.getCurrentSession()
+					.get("cn.edu.sjtu.iasdsp.model.ProcessInformation", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -107,16 +115,18 @@ public class ProcessFileHome {
 		}
 	}
 
-	public List<ProcessFile> findByExample(ProcessFile instance) {
-		log.debug("finding ProcessFiles instance by example");
+	public List<ProcessInformation> findByExample(ProcessInformation instance) {
+		log.debug("finding ProcessInformations instance by example");
 		try {
-			List<ProcessFile> results = (List<ProcessFile>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.ProcessFiles").add(create(instance)).list();
-			log.debug("find by example successful, result size: " + results.size());
+			List<ProcessInformation> results = (List<ProcessInformation>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.ProcessInformation")
+					.add(create(instance)).list(); log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
 			throw re;
 		}
 	}
+	
+
 }

@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class DownloadFile implements java.io.Serializable {
 
 	private Integer id;
-	private ProcessInformations processInformations;
+	private ProcessInformation processInformation;
 	private String name;
 	private String path;
 	private Date createdAt;
@@ -36,9 +36,9 @@ public class DownloadFile implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public DownloadFile(ProcessInformations processInformations, String name, String path, Date createdAt,
+	public DownloadFile(ProcessInformation processInformation, String name, String path, Date createdAt,
 			Date updatedAt) {
-		this.processInformations = processInformations;
+		this.processInformation = processInformation;
 		this.name = name;
 		this.path = path;
 		this.createdAt = createdAt;
@@ -59,12 +59,12 @@ public class DownloadFile implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "process_information_id")
-	public ProcessInformations getProcessInformations() {
-		return this.processInformations;
+	public ProcessInformation getProcessInformations() {
+		return this.processInformation;
 	}
 
-	public void setProcessInformations(ProcessInformations processInformations) {
-		this.processInformations = processInformations;
+	public void setProcessInformations(ProcessInformation processInformation) {
+		this.processInformation = processInformation;
 	}
 
 	@Column(name = "name", length = 65535)

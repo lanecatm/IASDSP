@@ -1,14 +1,10 @@
 package cn.edu.sjtu.iasdsp.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
-import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelDto;
-import cn.edu.sjtu.iasdsp.dto.EditModelVersionDto;
-import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
+import cn.edu.sjtu.iasdsp.dto.MessageDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
 import cn.edu.sjtu.iasdsp.service.ModelService;
+import cn.edu.sjtu.iasdsp.service.RefreshCountService;
 
 @Controller
 @RequestMapping("/model")
@@ -34,6 +29,10 @@ public class ModelController {
 	@Autowired
 	private ModelService modelService;
 
+	@Autowired
+	private RefreshCountService refreshCountService;
+	
+	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(@ModelAttribute("createDto") CreateModelDto createModelDto) {
 		logger.debug("Into create function" + createModelDto);
@@ -107,15 +106,50 @@ public class ModelController {
 	@RequestMapping(value = "/{id}/version/create", method = RequestMethod.POST)
 	public String createVersion(Model model, @PathVariable("id") String id,
 			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
-		logger.debug("Into editVersion function, id:" + id + "editModelDto:" + editModelDto);
+		logger.debug("Into createVersion function, id:" + id + "editModelDto:" + editModelDto);
 		try {
 			modelService.createVersion(editModelDto, Integer.parseInt(id));
-			logger.debug("editVersion function succ");
+			logger.debug("createVersion function succ");
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
-			return "application/error";
+			return "model/error";
 		}
 	}
+	
+
+	@RequestMapping(value = "/{id}/version/{versionId}/publish", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<MessageDto>  publishVersion(Model model, @PathVariable("id") String id, @PathVariable("versionId") String versionId) {
+		logger.debug("Into publishVersion function, workflow id:" + id + "versionId:" + versionId);
+		try {
+			int workflowVersionId = Integer.parseInt(versionId);
+			modelService.publishVersion(workflowVersionId);
+			logger.debug("publishVersion function succ");
+			return ResponseEntity.accepted().body(new MessageDto("Succ"));
+		} catch (NumberFormatException e) {
+			logger.debug("publishVersion function failed");
+			return ResponseEntity.badRequest().body(new MessageDto("Failed"));
+
+			
+		}
+	}
+	
+	// TODO change method to delete
+	@RequestMapping(value = "/{id}/version/{versionId}/delete", method = RequestMethod.GET)
+	public String deleteVersion(Model model, @PathVariable("id") String id, @PathVariable("versionId") String versionId) {
+		logger.debug("Into deleteVersion function, workflow id:" + id + "versionId:" + versionId);
+		try {
+			int workflowVersionId = Integer.parseInt(versionId);
+			modelService.deleteVersion(workflowVersionId);
+			logger.debug("deleteVersion function succ");
+			refreshCountService.refreshAll();
+			return "redirect:/model/" + id + "/edit?active_page=diagram";
+		} catch (NumberFormatException e) {
+			logger.debug("deleteVersion function failed");
+			return "model/error";
+
+			
+		}
+	}	
 
 
 	
@@ -142,6 +176,7 @@ public class ModelController {
 			int deleteId = Integer.parseInt(id);
 			boolean isSucc = modelService.delete(deleteId);
 			if (isSucc) {
+				refreshCountService.refreshAll();
 				logger.debug("Delete model succ");
 				return "redirect:/search/model";
 			} else {

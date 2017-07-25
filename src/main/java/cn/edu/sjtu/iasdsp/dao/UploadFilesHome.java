@@ -12,11 +12,11 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
-import cn.edu.sjtu.iasdsp.model.UploadFiles;
+import cn.edu.sjtu.iasdsp.model.UploadFile;
 
 /**
  * Home object for domain model class UploadFiles.
- * @see cn.edu.sjtu.iasdsp.dao.UploadFiles
+ * @see cn.edu.sjtu.iasdsp.dao.UploadFile
  * @author Hibernate Tools
  */
 public class UploadFilesHome {
@@ -34,7 +34,7 @@ public class UploadFilesHome {
 		}
 	}
 
-	public void persist(UploadFiles transientInstance) {
+	public void persist(UploadFile transientInstance) {
 		log.debug("persisting UploadFiles instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
@@ -45,7 +45,7 @@ public class UploadFilesHome {
 		}
 	}
 
-	public void attachDirty(UploadFiles instance) {
+	public void attachDirty(UploadFile instance) {
 		log.debug("attaching dirty UploadFiles instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
@@ -56,7 +56,7 @@ public class UploadFilesHome {
 		}
 	}
 
-	public void attachClean(UploadFiles instance) {
+	public void attachClean(UploadFile instance) {
 		log.debug("attaching clean UploadFiles instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
@@ -67,7 +67,7 @@ public class UploadFilesHome {
 		}
 	}
 
-	public void delete(UploadFiles persistentInstance) {
+	public void delete(UploadFile persistentInstance) {
 		log.debug("deleting UploadFiles instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
@@ -78,10 +78,10 @@ public class UploadFilesHome {
 		}
 	}
 
-	public UploadFiles merge(UploadFiles detachedInstance) {
+	public UploadFile merge(UploadFile detachedInstance) {
 		log.debug("merging UploadFiles instance");
 		try {
-			UploadFiles result = (UploadFiles) sessionFactory.getCurrentSession().merge(detachedInstance);
+			UploadFile result = (UploadFile) sessionFactory.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -90,10 +90,10 @@ public class UploadFilesHome {
 		}
 	}
 
-	public UploadFiles findById(java.lang.Integer id) {
+	public UploadFile findById(java.lang.Integer id) {
 		log.debug("getting UploadFiles instance with id: " + id);
 		try {
-			UploadFiles instance = (UploadFiles) sessionFactory.getCurrentSession()
+			UploadFile instance = (UploadFile) sessionFactory.getCurrentSession()
 					.get("cn.edu.sjtu.iasdsp.dao.UploadFiles", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -107,10 +107,10 @@ public class UploadFilesHome {
 		}
 	}
 
-	public List<UploadFiles> findByExample(UploadFiles instance) {
+	public List<UploadFile> findByExample(UploadFile instance) {
 		log.debug("finding UploadFiles instance by example");
 		try {
-			List<UploadFiles> results = (List<UploadFiles>) sessionFactory.getCurrentSession()
+			List<UploadFile> results = (List<UploadFile>) sessionFactory.getCurrentSession()
 					.createCriteria("cn.edu.sjtu.iasdsp.dao.UploadFiles").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;

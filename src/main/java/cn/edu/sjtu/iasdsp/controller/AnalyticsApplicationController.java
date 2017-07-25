@@ -21,6 +21,7 @@ import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
+import cn.edu.sjtu.iasdsp.service.RefreshCountService;
 
 /**
  * @author xfhuang
@@ -36,7 +37,9 @@ public class AnalyticsApplicationController {
 
 	@Autowired
 	private AnalyticsApplicationService analyticsApplicationService;
-
+	@Autowired
+	private RefreshCountService refreshCountService;
+	
 	@RequestMapping(value = "/{wikiPath}/show", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("wikiPath") String wikiPath) {
 		log.debug("Into show function where wikiPath = " + wikiPath);
@@ -120,6 +123,7 @@ public class AnalyticsApplicationController {
 			boolean isSucc = analyticsApplicationService.delete(wikiPath);
 			if (isSucc) {
 				log.debug("Delete page succ");
+				refreshCountService.refreshAll();
 				return "redirect:/search/application";
 			} else {
 				log.error("Delete page not exist");
@@ -143,5 +147,9 @@ public class AnalyticsApplicationController {
 			return new ResponseEntity<EditPerformanceDto>(editPerformanceDto, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
+
+	
 
 }

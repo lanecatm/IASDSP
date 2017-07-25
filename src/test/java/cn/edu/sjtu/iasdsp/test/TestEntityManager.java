@@ -20,7 +20,6 @@ import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
 public class TestEntityManager {
 
 
-	@Test
 	public void test() {
 		try {
 			WikiPage wikipage = new WikiPage(new Date(), new Date());

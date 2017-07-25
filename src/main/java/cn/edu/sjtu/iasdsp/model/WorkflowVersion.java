@@ -54,7 +54,20 @@ public class WorkflowVersion implements java.io.Serializable {
 
 	private Date createdAt;
 	private Date updatedAt;
+	
+	
+	
+	private Integer runningTime;
+	private Integer allStar;
+	private Integer starUserNumber;
+	
+	
+	private WorkflowInformation defaultParentWorkflowInformation;
+	
+	
+	private Set<ProcessInformation> processInformations = new HashSet<ProcessInformation>(0);
 
+	private Set<SharedProcessRecord> sharedProcessRecords = new HashSet<SharedProcessRecord>(0);
 
 	public WorkflowVersion() {
 	}
@@ -69,7 +82,9 @@ public class WorkflowVersion implements java.io.Serializable {
 
 
 	public WorkflowVersion(User author, User updator, WorkflowInformation workflowInformation, String xml, String url,
-			String versionName, String versionDescription, Integer status, Date createdAt, Date updatedAt) {
+			String versionName, String versionDescription, Integer status, Date createdAt, Date updatedAt,
+			Integer runningTime, Integer allStar, Integer starUserNumber
+			) {
 		this.author = author;
 		this.updator = updator;
 		this.workflowInformation = workflowInformation;
@@ -80,6 +95,9 @@ public class WorkflowVersion implements java.io.Serializable {
 		this.status = status;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this .runningTime = runningTime;
+		this.allStar = allStar;
+		this.starUserNumber = starUserNumber;
 	}
 
 	@Id
@@ -256,6 +274,66 @@ public class WorkflowVersion implements java.io.Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowVersion")
+	public Set<ProcessInformation> getProcessInformations() {
+		return processInformations;
+	}
+
+	public void setProcessInformations(Set<ProcessInformation> processInformations) {
+		this.processInformations = processInformations;
+	}
+	
+	
+
+	@Column(name = "running_time")
+	public Integer getRunningTime() {
+		return runningTime;
+	}
+
+	public void setRunningTime(Integer runningTime) {
+		this.runningTime = runningTime;
+	}
+
+	@Column(name = "all_star")
+	public Integer getAllStar() {
+		return allStar;
+	}
+
+	public void setAllStar(Integer allStar) {
+		this.allStar = allStar;
+	}
+
+	@Column(name = "star_user_number")
+	public Integer getStarUserNumber() {
+		return starUserNumber;
+	}
+
+	public void setStarUserNumber(Integer starUserNumber) {
+		this.starUserNumber = starUserNumber;
+	}
+
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "defaultVersion")
+	public WorkflowInformation getDefaultParentWorkflowInformation() {
+		return defaultParentWorkflowInformation;
+	}
+
+	public void setDefaultParentWorkflowInformation(WorkflowInformation defaultParentWorkflowInformation) {
+		this.defaultParentWorkflowInformation = defaultParentWorkflowInformation;
+	}
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowVersion")
+	public Set<SharedProcessRecord> getSharedProcessRecords() {
+		return sharedProcessRecords;
+	}
+
+	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
+		this.sharedProcessRecords = sharedProcessRecords;
+	}
+	
+	
 
 
 }

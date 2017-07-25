@@ -1,5 +1,5 @@
 package cn.edu.sjtu.iasdsp.dao;
-// Generated 2017-7-9 2:25:32 by Hibernate Tools 5.2.3.Final
+// Generated 2017-7-24 21:01:33 by Hibernate Tools 5.2.3.Final
 
 import static org.hibernate.criterion.Example.create;
 
@@ -11,19 +11,24 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import cn.edu.sjtu.iasdsp.model.SharedProcessPrivilege;
+import cn.edu.sjtu.iasdsp.model.ProcessStar;
 
 /**
- * Home object for domain model class SharedProcessPrivilege.
- * @see cn.edu.sjtu.iasdsp.dao.SharedProcessPrivilege
+ * Home object for domain model class ProcessStar.
+ * @see cn.edu.sjtu.iasdsp.dao.ProcessStar
  * @author Hibernate Tools
  */
-public class SharedProcessPrivilegeHome {
+@Repository
+public class ProcessStarHome {
 
-	private static final Log log = LogFactory.getLog(SharedProcessPrivilegeHome.class);
+	private static final Log log = LogFactory.getLog(ProcessStarHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -34,8 +39,8 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public void persist(SharedProcessPrivilege transientInstance) {
-		log.debug("persisting SharedProcessPrivilege instance");
+	public void persist(ProcessStar transientInstance) {
+		log.debug("persisting ProcessStar instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -45,8 +50,8 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public void attachDirty(SharedProcessPrivilege instance) {
-		log.debug("attaching dirty SharedProcessPrivilege instance");
+	public void attachDirty(ProcessStar instance) {
+		log.debug("attaching dirty ProcessStar instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -56,8 +61,8 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public void attachClean(SharedProcessPrivilege instance) {
-		log.debug("attaching clean SharedProcessPrivilege instance");
+	public void attachClean(ProcessStar instance) {
+		log.debug("attaching clean ProcessStar instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -67,8 +72,8 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public void delete(SharedProcessPrivilege persistentInstance) {
-		log.debug("deleting SharedProcessPrivilege instance");
+	public void delete(ProcessStar persistentInstance) {
+		log.debug("deleting ProcessStar instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -78,11 +83,10 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public SharedProcessPrivilege merge(SharedProcessPrivilege detachedInstance) {
-		log.debug("merging SharedProcessPrivilege instance");
+	public ProcessStar merge(ProcessStar detachedInstance) {
+		log.debug("merging ProcessStar instance");
 		try {
-			SharedProcessPrivilege result = (SharedProcessPrivilege) sessionFactory.getCurrentSession()
-					.merge(detachedInstance);
+			ProcessStar result = (ProcessStar) sessionFactory.getCurrentSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -91,11 +95,11 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public SharedProcessPrivilege findById(java.lang.Integer id) {
-		log.debug("getting SharedProcessPrivilege instance with id: " + id);
+	public ProcessStar findById(java.lang.Integer id) {
+		log.debug("getting ProcessStar instance with id: " + id);
 		try {
-			SharedProcessPrivilege instance = (SharedProcessPrivilege) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.SharedProcessPrivilege", id);
+			ProcessStar instance = (ProcessStar) sessionFactory.getCurrentSession()
+					.get("cn.edu.sjtu.iasdsp.model.ProcessStar", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,11 +112,11 @@ public class SharedProcessPrivilegeHome {
 		}
 	}
 
-	public List<SharedProcessPrivilege> findByExample(SharedProcessPrivilege instance) {
-		log.debug("finding SharedProcessPrivilege instance by example");
+	public List<ProcessStar> findByExample(ProcessStar instance) {
+		log.debug("finding ProcessStar instance by example");
 		try {
-			List<SharedProcessPrivilege> results = (List<SharedProcessPrivilege>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.SharedProcessPrivilege").add(create(instance)).list();
+			List<ProcessStar> results = (List<ProcessStar>) sessionFactory.getCurrentSession()
+					.createCriteria("cn.edu.sjtu.iasdsp.model.ProcessStar").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
@@ -120,4 +124,5 @@ public class SharedProcessPrivilegeHome {
 			throw re;
 		}
 	}
+
 }

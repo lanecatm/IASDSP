@@ -11,7 +11,7 @@
 			<img src="${workflowImg }" alt="" style="max-width: 100%; max-height: 100%;">
 		</div>
 		<div class="col-md-2 col-md-offset-10">
-			<button class="btn btn-primary btn-block">Run</button>
+			<a class="btn btn-primary btn-block" onClick="runAjax(${param.model_version}, ${param.running_case})">Run</a>
 		</div>
 	</div>
 
@@ -37,3 +37,34 @@
 	</div>
 
 </form>
+
+
+<script>
+function runAjax(workflowVersionId, sharedProcessRecordId) {
+    var data = {}
+    data["workflowVersionId"] = workflowVersionId;
+    data["sharedProcessRecordId"] = sharedProcessRecordId;
+    
+    $.ajax({
+        type : "POST",
+        contentType : "application/json",
+        url : "./execute/run",
+        data : JSON.stringify(data),
+        dataType : 'json',
+        timeout : 100000,
+        success : function(data) {
+            console.log("SUCCESS: ", data);
+            $("#processInformationId").val(data["processInformationId"]);
+            $("#other").css("display", "block");
+            
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+
+        },
+        done : function(e) {
+            console.log("DONE");
+        }
+    });
+}
+</script>

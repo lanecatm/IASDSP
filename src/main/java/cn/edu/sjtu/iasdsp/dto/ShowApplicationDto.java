@@ -2,9 +2,11 @@ package cn.edu.sjtu.iasdsp.dto;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
@@ -29,6 +31,7 @@ public class ShowApplicationDto {
 	private Set<WorkflowInformation> workflowInformationList;
 	private Set<WikiPage> relatedWikiPageList;
 	private Map<Integer, String> performanceMap = new HashMap<Integer, String>();
+	private Map<Integer, List<SharedProcessRecord>> shareRecordMap = new HashMap<Integer, List<SharedProcessRecord>>(0);
 	
 
 
@@ -127,6 +130,19 @@ public class ShowApplicationDto {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	
+	
+
+	public Map<Integer, List<SharedProcessRecord>> getShareRecordMap() {
+		return shareRecordMap;
+	}
+
+
+	public void setShareRecordMap(Map<Integer, List<SharedProcessRecord>> shareRecordMap) {
+		this.shareRecordMap = shareRecordMap;
+	}
+
 
 	public String toString() {
 		return "ShowApplicationDto [title=" + title + ", time=" + time + ", authorName=" + authorName
