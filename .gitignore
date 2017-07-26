@@ -44,3 +44,4 @@ target/
 .tern-project
 
 #ignore java
+.gitignore
