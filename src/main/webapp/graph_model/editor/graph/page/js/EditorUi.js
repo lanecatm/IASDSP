@@ -3266,8 +3266,22 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
-					new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
-						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
+					var prefix_url = "http://localhost:8080/sjtu/panel/";
+					var model_version = "1";//default value
+					if(window.urlParams.model_version!=null)
+						model_version = window.urlParams.model_version;
+					var post_url = prefix_url+model_version+"/post_graph";
+					var graphXml = this.editor.getGraphXml();
+					var str = (new XMLSerializer).serializeToString(graphXml,"text/xml");
+					var graphSvg = this.editor.graph.getSvg();
+					var svg_str = (new XMLSerializer).serializeToString(graphSvg,"text/xml");
+					var json_str={};
+					json_str["graph_xml"]=str;
+					json_str["graph_svg"]=svg_str;
+
+					ShapeFormatPanel.ajaxRequest(post_url,"POST",JSON.stringify(json_str));
+					//new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
+						//'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
 				}
 				else
 				{
