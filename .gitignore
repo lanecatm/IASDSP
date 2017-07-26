@@ -43,5 +43,3 @@ target/
 .springBeans
 .tern-project
 
-#ignore java
-.gitignore
