@@ -1457,6 +1457,106 @@ ShapeFormatPanel.prototype.addSelection = function(div,panel)
 	return div;
 }
 
+/**
+* EventUtil
+*/
+var EventUtil={
+	
+   addHandler:function(element,type,handler){ //添加事件
+      if(element.addEventListener){ 
+         element.addEventListener(type,handler,false);  //使用DOM2级方法添加事件
+      }else if(element.attachEvent){                    //使用IE方法添加事件
+         element.attachEvent("on"+type,handler);
+      }else{
+         element["on"+type]=handler;          //使用DOM0级方法添加事件
+      }
+   },  
+
+   removeHandler:function(element,type,handler){  //取消事件
+      if(element.removeEventListener){
+         element.removeEventListener(type,handler,false);
+      }else if(element.detachEvent){
+         element.detachEvent("on"+type,handler);
+      }else{
+         element["on"+type]=null;
+      }
+   },
+
+   getEvent:function(event){  //使用这个方法跨浏览器取得event对象
+      return event?event:window.event;
+   },
+	
+   getTarget:function(event){  //返回事件的实际目标
+      return event.target||event.srcElement;
+   },
+	
+   preventDefault:function(event){   //阻止事件的默认行为
+      if(event.preventDefault){
+         event.preventDefault(); 
+      }else{
+         event.returnValue=false;
+      }
+   },
+
+   stopPropagation:function(event){  //立即停止事件在DOM中的传播
+                                     //避免触发注册在document.body上面的事件处理程序
+      if(event.stopPropagation){
+         event.stopPropagation();
+      }else{
+         event.cancelBubble=true;
+      }
+   },
+		
+   getRelatedTarget:function(event){  //获取mouseover和mouseout相关元素
+      if(event.relatedTarget){
+         return event.relatedTarget;
+      }else if(event.toElement){      //兼容IE8-
+         return event.toElement;
+      }else if(event.formElement){
+         return event.formElement;
+      }else{
+         return null;
+      }
+   },
+		
+   getButton:function(event){    //获取mousedown或mouseup按下或释放的按钮是鼠标中的哪一个
+      if(document.implementation.hasFeature("MouseEvents","2.0")){
+         return event.button;
+      }else{
+         switch(event.button){   //将IE模型下的button属性映射为DOM模型下的button属性
+            case 0:
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+               return 0;  //按下的是鼠标主按钮（一般是左键）
+            case 2:
+            case 6:
+               return 2;  //按下的是中间的鼠标按钮
+            case 4:
+               return 1;  //鼠标次按钮（一般是右键）
+         }
+      }
+   },
+		
+   getWheelDelta:function(event){ //获取表示鼠标滚轮滚动方向的数值
+      if(event.wheelDelta){
+         return event.wheelDelta;
+      }else{
+         return -event.detail*40;
+      }
+   },
+		
+   getCharCode:function(event){   //以跨浏览器取得相同的字符编码，需在keypress事件中使用
+      if(typeof event.charCode=="number"){
+         return event.charCode;
+      }else{
+         return event.keyCode;
+      }
+   }
+		
+};
+
 /*
  *
  */
@@ -1518,27 +1618,28 @@ ShapeFormatPanel.prototype.addValue = function(div)
 	var input = null;
 	var update = null;
 	var btn = null;
+	var thisPanel = this;
 
-	if (ss.edges.length == 0)
-	{
-		mxUtils.write(span, mxResources.get('value',null,'Value'));
-		div.appendChild(span);
-		str = '';
-		if(ss.vertices.length > 0){
-			str = ss.vertices[0].getValue();
-		}
-		input = this.addUnitInput(div, str, 20, 44, function()
-		{
-			update.apply(this, arguments);
-		});
+// 	if (ss.edges.length == 0)
+// 	{
+// 		mxUtils.write(span, mxResources.get('value',null,'Value'));
+// 		div.appendChild(span);
+// 		str = '';
+// 		if(ss.vertices.length > 0){
+// 			str = ss.vertices[0].getValue();
+// 		}
+// 		input = this.addUnitInput(div, str, 20, 44, function()
+// 		{
+// 			update.apply(this, arguments);
+// 		});
 		
-		mxUtils.br(div);
-		div.style.paddingTop = '10px';
-	}
-	else
-	{
-		div.style.paddingTop = '8px';
-	}
+// 		mxUtils.br(div);
+// 		div.style.paddingTop = '10px';
+// 	}
+// 	else
+// 	{
+// 		div.style.paddingTop = '8px';
+// 	}
 
 	if(ss.vertices.length>0)
 	{
@@ -1547,14 +1648,16 @@ ShapeFormatPanel.prototype.addValue = function(div)
 		$.ajax({
 			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 			//url: "http://10.181.225.236:8080/test_ajax.json",
-			url: "http://localhost/javascript/examples/grapheditor/www/test_input.json",
+// 			url: "http://localhost/javascript/examples/grapheditor/www/test_input.json",
+			url: "http://localhost:8080/sjtu/panel/get_all_node",
 			dataType: "jsonp",
 			jsonpCallback:"callback",
 			type: "GET",
 			async:false,
 			processData:false,
 			success: function(msg){
-				ajax_content = msg;
+				thisPanel.addSelectAlgorithm(msg);
+// 				ajax_content = msg;
 				//var new_div = format.createPanel();
 				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
 				//div.appendChild(new_div);
@@ -1563,22 +1666,22 @@ ShapeFormatPanel.prototype.addValue = function(div)
                 alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
             }
 		});
-		if(ajax_content!=null){
-			var graphJson = this.xmlToJson(this.editorUi.editor.getGraphXml());
-			console.log(JSON.stringify(graphJson));
-			var graphData = "callback("+JSON.stringify(graphJson)+");";
+// 		if(ajax_content!=null){
+// 			var graphJson = this.xmlToJson(this.editorUi.editor.getGraphXml());
+// 			console.log(JSON.stringify(graphJson));
+// 			var graphData = "callback("+JSON.stringify(graphJson)+");";
 
-			//alert("the msg:"+ajax_content.name);
-			var new_div = this.createPanel();
-			mxUtils.write(new_div, mxResources.get('new_div',null,ajax_content.name));
-			div.appendChild(new_div);
-			for(var i=0;i<ajax_content.panelOptions.length;i++)
-			{
-				var nodePanel = ajax_content.panelOptions[i];
-				if(nodePanel.nodeOptionTypeName)
-					this.container.appendChild(this.addSelection(this.createPanel(),nodePanel));
-			}
-		}
+// 			//alert("the msg:"+ajax_content.name);
+// 			var new_div = this.createPanel();
+// 			mxUtils.write(new_div, mxResources.get('new_div',null,ajax_content.name));
+// 			div.appendChild(new_div);
+// 			for(var i=0;i<ajax_content.panelOptions.length;i++)
+// 			{
+// 				var nodePanel = ajax_content.panelOptions[i];
+// 				if(nodePanel.nodeOptionTypeName)
+// 					this.container.appendChild(this.addSelection(this.createPanel(),nodePanel));
+// 			}
+// 		}
 		/*
 		$.getJSON(
 			"http://192.168.1.110:8080/sjtu/panel/get_node/25", function(json){
@@ -1593,6 +1696,246 @@ ShapeFormatPanel.prototype.addValue = function(div)
 		*/
 	}
 	return div;
+}
+
+ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
+{
+	var thisPanel = this;
+	for(i in msg.panelCategoryList)
+	{
+		if(msg.panelCategoryList[i].categoryName == "Algorithm")
+		{
+			var algorithmList = msg.panelCategoryList[i].algorithmList;
+			var div = this.createPanel();
+			div.appendChild(this.createTitle(msg.panelCategoryList[i].categoryName));
+			var ipt = document.createElement("select");
+// 			ipt.setAttribute("type", "text");
+			ipt.setAttribute("name", msg.panelCategoryList[i].categoryName);
+// 				ipt.setAttribute("value", nodePanel.defaultValue);
+
+			// 设置位置
+			ipt.style.paddingTop = '2px';
+			ipt.style.paddingBottom = '2px';
+			ipt.style.position = 'relative';
+			ipt.style.marginLeft = '-2px';
+			ipt.style.marginLeft = '-2px';
+			ipt.style.borderWidth = '0px';
+			ipt.style.width = '180px';
+			ipt.style.height = '20px';
+			for(j in algorithmList)
+			{
+				var choice = algorithmList[j];
+				var panelOption = document.createElement("option");
+				panelOption.setAttribute('value', choice.algorithmId);
+				panelOption.setAttribute('name', choice.algorithmName);
+				panelOption.setAttribute('id', choice.algorithmName);
+				panelOption.text = choice.algorithmName;
+				ipt.appendChild(panelOption);
+			}
+			ipt.onchange = function()
+			{
+ 				var algorithmId = 0;
+ 				var tempIpt = ipt;
+				for(m in ipt.options)
+				{
+					if(ipt.options[m].selected)
+					{
+						algorithmId = ipt.options[m].value;
+						thisPanel.receiveDetailedAlgorithm(algorithmId);
+						break;
+					}
+				}
+ 				
+			};
+			div.appendChild(ipt);
+			this.container.appendChild(div);
+			// 第一次初始化显示下面的算法具体细节，可能需要改
+			// 同时接受可能也需要一个参数，表示要接收的是哪个算法
+			var algorithmId;
+// 			for(var m = 0; m < ipt.options.length; m++)
+// 			{
+// 				if(ipt.options[m].selected)
+// 				{
+// 					algorithmId = ipt.options[m].value;
+// 				}
+// 			}
+			for(m in ipt.options)
+			{
+				if(ipt.options[m].selected)
+				{
+					algorithmId = ipt.options[m].value;
+					thisPanel.receiveDetailedAlgorithm(algorithmId);
+					break;
+// 					console.log(ipt.options[m].text + ":" + m +" : " +ipt.options[m].selected);
+				}
+			}
+		}
+	}
+}
+
+
+ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId)
+{
+	var thisPanel = this;
+	var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
+	$.ajax({
+			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
+			//url: "http://10.181.225.236:8080/test_ajax.json",
+// 			url: "http://localhost/javascript/examples/grapheditor/www/test_input.json",
+// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
+			url: detailUrl,
+			dataType: "jsonp",
+			jsonpCallback:"callback",
+			type: "GET",
+			async:false,
+			processData:false,
+			success: function(msg){
+				thisPanel.addDetailedAlgorithm(msg);
+				//var new_div = format.createPanel();
+				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
+				//div.appendChild(new_div);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+            }
+		});
+}
+
+// 全局变量，每次重画之前要删除前一个
+var detailDiv = document.createElement("div");
+ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
+{
+// 	if(ajax_content!=null){
+// 			var graphJson = this.xmlToJson(this.editorUi.editor.getGraphXml());
+// 			console.log(JSON.stringify(graphJson));
+// 			var graphData = "callback("+JSON.stringify(graphJson)+");";
+
+			//alert("the msg:"+ajax_content.name);
+// 			var new_div = this.createPanel();
+// 			mxUtils.write(new_div, mxResources.get('new_div',null,ajax_content.name));
+// 			div.appendChild(new_div);
+// 		detailDiv.clear();
+// 		this.container.remove(detailDiv);
+		// 移除前面的放入新选的
+		if(this.container.contains(detailDiv))
+		{
+			this.container.removeChild(detailDiv);
+			detailDiv = document.createElement("div");
+		}
+		for(var i=0;i<msg.panelOptions.length;i++)
+		{
+			var nodePanel = msg.panelOptions[i];
+// 				if(nodePanel.nodeOptionTypeName)
+// 					this.container.appendChild(this.addSelection(this.createPanel(),nodePanel));
+			this.addNodePanel(nodePanel);
+		}
+// 		}
+}
+
+
+ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
+{
+	if(nodePanel.nodeOptionTypeName == "String")
+	{
+		var div = this.createPanel();
+		div.appendChild(this.createTitle(nodePanel.label));
+		var ipt = document.createElement("input");
+		ipt.setAttribute("type", "text");
+		ipt.setAttribute("name", nodePanel.name);
+		ipt.setAttribute("value", nodePanel.defaultValue);
+		
+		// 设置位置
+		ipt.style.paddingTop = '2px';
+		ipt.style.paddingBottom = '2px';
+		ipt.style.position = 'relative';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.borderWidth = '0px';
+		ipt.style.width = '180px';
+		ipt.style.height = '20px';
+
+		div.appendChild(ipt);
+
+		detailDiv.appendChild(div);
+// 		this.container.appendChild(div);
+// 		this.container.remove(div);
+	}
+	else if(nodePanel.nodeOptionTypeName == "Numeric")
+	{
+		var div = this.createPanel();
+		div.appendChild(this.createTitle(nodePanel.label));
+		var ipt = document.createElement("input");
+		ipt.setAttribute("type", "text");
+		ipt.setAttribute("name", nodePanel.name);
+		ipt.setAttribute("value", nodePanel.defaultValue);
+
+		// 设置位置
+		ipt.style.paddingTop = '2px';
+		ipt.style.paddingBottom = '2px';
+		ipt.style.position = 'relative';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.borderWidth = '0px';
+		ipt.style.width = '180px';
+		ipt.style.height = '20px';
+
+		EventUtil.addHandler(ipt, "keypress", function(event){
+			event = EventUtil.getEvent(event);
+			var target = EventUtil.getTarget(event);
+			var charCode = EventUtil.getCharCode(event);
+
+			if(!/\d/.test(String.fromCharCode(charCode)) && charCode > 9 &&
+				!event.ctrlKey && charCode != 46) {
+					EventUtil.preventDefault(event);
+			}
+		});
+		div.appendChild(ipt);
+		detailDiv.appendChild(div);
+// 		this.container.appendChild(div);
+	}
+	else if(nodePanel.nodeOptionTypeName == "Nominal specification")
+	{
+		var div = this.createPanel();
+		div.appendChild(this.createTitle(nodePanel.label));
+		var ipt = document.createElement("select");
+		ipt.setAttribute("type", "text");
+		ipt.setAttribute("name", nodePanel.name);
+		ipt.setAttribute("value", nodePanel.defaultValue);
+		
+		// 设置位置
+		ipt.style.paddingTop = '2px';
+		ipt.style.paddingBottom = '2px';
+		ipt.style.position = 'relative';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.marginLeft = '-2px';
+		ipt.style.borderWidth = '0px';
+		ipt.style.width = '180px';
+		ipt.style.height = '20px';
+
+		for(i in nodePanel.panelChoices)
+		{
+			var choice = nodePanel.panelChoices[i];
+			var panelOption = document.createElement("option");
+			panelOption.setAttribute('value', choice.value);
+			panelOption.setAttribute('name', choice.name);
+			panelOption.text = choice.name;
+// 			panelOption.style.position = 'absolute';
+// 			panelOption.style.left = '10px';
+// 			panelOption.style.right = '10px';
+// 			panelOption.style.color = 'rgb(112, 112, 112)';
+// 			panelOption.style.whiteSpace = 'nowrap';
+// 			panelOption.style.overflow = 'hidden';
+// 			panelOption.style.margin = '0px';
+// 			this.addArrow(panelOption);
+// 			panelOption.style.width = '192px';
+// 			panelOption.style.height = '15px';
+			ipt.appendChild(panelOption);
+		}
+		div.appendChild(ipt);
+		detailDiv.appendChild(div);
+// 		this.container.appendChild(div);
+	}
+	this.container.appendChild(detailDiv);
 }
 
 /**
