@@ -24,15 +24,15 @@
 									data-toggle="tab"> <span class=" glyphicon glyphicon-book"
 										aria-hidden="true"></span> Introduction
 								</a></li>
-								<li role="presentation"><a href="#diagram"
+								<!-- <li role="presentation"><a href="#diagram"
 									aria-controls="diagram" role="tab" data-toggle="tab"> <span
 										class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 										Diagram
-								</a></li>
+								</a></li> -->
 								<li role="presentation"><a href="#information"
 									aria-controls="information" role="tab" data-toggle="tab"> <span
 										class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
-										Information
+										Detail
 								</a></li>
 
 								<li role="presentation"><a href="#version"

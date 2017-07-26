@@ -10,11 +10,13 @@ import java.util.Set;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
+import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
 import cn.edu.sjtu.iasdsp.model.WorkflowTag;
 import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 public class ShowModelDto {
 	
+	private WorkflowInformation workflowInformation;
 	//Basic information
 	private String title;
 	private String introduction;
@@ -54,6 +56,16 @@ public class ShowModelDto {
 	//	application.add("Mon application");
 	//	application.add("Mon applicatifon");
 
+	}
+
+
+	public WorkflowInformation getWorkflowInformation() {
+		return workflowInformation;
+	}
+
+
+	public void setWorkflowInformation(WorkflowInformation workflowInformation) {
+		this.workflowInformation = workflowInformation;
 	}
 
 

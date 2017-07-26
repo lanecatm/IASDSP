@@ -135,13 +135,19 @@ public class ModelController {
 	
 	// TODO change method to delete
 	@RequestMapping(value = "/{id}/version/{versionId}/delete", method = RequestMethod.GET)
-	public String deleteVersion(Model model, @PathVariable("id") String id, @PathVariable("versionId") String versionId) {
+	public String deleteVersion(Model model, 
+			@RequestParam(value = "back_path", required = false) String backPath,
+			@PathVariable("id") String id, 
+			@PathVariable("versionId") String versionId) {
 		logger.debug("Into deleteVersion function, workflow id:" + id + "versionId:" + versionId);
 		try {
 			int workflowVersionId = Integer.parseInt(versionId);
 			modelService.deleteVersion(workflowVersionId);
 			logger.debug("deleteVersion function succ");
 			refreshCountService.refreshAll();
+			if(backPath != null && backPath.equals("my_space")){
+				return "redirect:/my_space/show";
+			}
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
 			logger.debug("deleteVersion function failed");

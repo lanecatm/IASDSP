@@ -198,6 +198,11 @@ public class ProcessService {
 			}
 		}
 	}
+	
+	@Transactional
+	public WorkflowVersion getWorkflowVersion(int id){
+		return workflowVersionHome.findById(id);
+	}
 
 	@Transactional
 	public String findBackPath(ShareExecuteDto shareExecuteDto){

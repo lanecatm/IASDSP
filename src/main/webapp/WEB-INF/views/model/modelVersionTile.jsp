@@ -6,10 +6,13 @@
 <div class="col-md-6 col-sm-12 hero-feature">
 	<div class="thumbnail "
 		style="background-color: #f8f8f8; border: #f8f8f8;">
-		<a class="hero-a" href="<c:url value="#"/>"> <img
-			src="${workflowImg }" alt="">
-		</a>
-		${ workflowVersion.svg }
+		<div style="height:100px;display: table-cell; vertical-align: middle;text-align: center;">
+        <a class="hero-a"
+            href="<c:url value="/model/${workflowInformation.id}/show"/>" style="vertical-align:middle;">
+            <img src="<c:url value="/upload/${workflowVersion.svg }"/>" alt="" style="weight:auto;vertical-align:middle;">
+        </a>
+        </div>
+		
 		<div class="caption">
 			<div class="hero-content">
 				<h4>

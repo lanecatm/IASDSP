@@ -58,7 +58,7 @@ public class ExecuteController {
 					shareExecuteDto.setDefaultApplicationId(Integer.parseInt(applicationId));
 				}
 				model.addAttribute("shareExecuteDto", shareExecuteDto);
-
+				model.addAttribute("workflowVersion", processService.getWorkflowVersion(Integer.parseInt(workflowVersionId)));
 				return "execute/show";
 			} else if (workflowInformationId != null) {
 

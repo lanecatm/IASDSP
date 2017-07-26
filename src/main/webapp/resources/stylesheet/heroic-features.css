@@ -33,5 +33,17 @@
 
 a, a:hover, a:focus {
 	text-decoration: none;
-	
+}
+
+svg {
+	vertical-align: middle;
+position: relative;
+left: 50%;
+-webkit-transform: translateX(-50%);
+-ms-transform: translateX(-50%);
+transform: translateX(-50%);
+}
+svg:not( :root ){
+    weight: auto; 
+    vertical-align: middle; 
 }
