@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.sjtu.iasdsp.dao.ClearCacheHome;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
 import cn.edu.sjtu.iasdsp.dao.SharedProcessRecordHome;
@@ -54,13 +55,15 @@ public class RefreshCountService {
 	@Autowired
 	private SharedProcessRecordHome sharedProcessRecordHome;
 
-
+	@Autowired
+	ClearCacheHome clearCacheHome;
 	
 	@Transactional
 	public void refreshAll(){
+		clearCacheHome.clear();
 		List<WorkflowInformation> workflowInformations = workflowInformationHome.findByExample(new WorkflowInformation());
 		for(WorkflowInformation workflowInformation : workflowInformations){
-			int workflowExecuteNum = workflowInformation.getWorkflowVersions().size();
+			int workflowExecuteNum = 0;
 			int workflowStarNum = 0;
 			int workflowStar = 0;
 			for (WorkflowVersion workflowVersion : workflowInformation.getWorkflowVersions()){
@@ -89,10 +92,13 @@ public class RefreshCountService {
 		
 		List<SharedProcessRecord> sharedProcessRecords = sharedProcessRecordHome.findByExample(new SharedProcessRecord());
 		for(SharedProcessRecord sharedProcessRecord : sharedProcessRecords){
+			//logger.debug("sharedProcessRecord id" + sharedProcessRecord.getId() + " origin share record times:" + sharedProcessRecord.getRunningTime());
 			int shareExecuteNum = sharedProcessRecord.getSubProcessInformations().size();
+			//logger.debug("sharedProcessRecord id" + sharedProcessRecord.getId() + " new share record times:" + shareExecuteNum);
 			int shareStarNum = 0;
 			int shareStar = 0;
 			for(ProcessInformation processInformation : sharedProcessRecord.getSubProcessInformations()){
+				//logger.debug("processInformation id" + processInformation.getId());
 				if (processInformation.getProcessStar() != null){
 					++shareStarNum;
 					shareStar += processInformation.getProcessStar().getRate();
@@ -102,6 +108,7 @@ public class RefreshCountService {
 			sharedProcessRecord.setStarUserNumber(shareStarNum);
 			sharedProcessRecord.setRunningTime(shareExecuteNum);
 			sharedProcessRecordHome.attachDirty(sharedProcessRecord);
+			//logger.debug("share process id:" + sharedProcessRecord.getId() + ", star:" + sharedProcessRecord.getAllStar());
 		}
 	}
 

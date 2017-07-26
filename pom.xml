@@ -204,6 +204,14 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+
+		<!-- hibernate 连接池 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

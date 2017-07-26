@@ -224,9 +224,10 @@ public class ProcessService {
 				shareExecuteDto.getShareInputFile(), 
 				new Date(), new Date(), 
 				0, 0, 0);
-		sharedProcessRecord.getSubProcessInformations().add(processInformation);
+		//sharedProcessRecord.getSubProcessInformations().add(processInformation);
 		sharedProcessRecordHome.persist(sharedProcessRecord);
 		processInformation.setSharedProcessRecord(sharedProcessRecord);
+		//processInformation.setParentSharedProcessRecord(sharedProcessRecord);
 		processInformationHome.persist(processInformation);
 	}
 
@@ -236,6 +237,8 @@ public class ProcessService {
 		}
 		ProcessStar processStar = new ProcessStar(processInformation, shareExecuteDto.getStar(), user, new Date(), new Date());
 		processStarHome.persist(processStar);
+		//processInformation.setProcessStar(processStar);
+		//processInformationHome.persist(processInformation);
 	}
 
 	@Transactional

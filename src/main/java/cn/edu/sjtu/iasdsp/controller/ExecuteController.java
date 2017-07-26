@@ -35,13 +35,12 @@ public class ExecuteController {
 	private static final Logger logger = LoggerFactory.getLogger(ExecuteController.class);
 	@Autowired
 	private ProcessService processService;
-	
+
 	@Autowired
 	private RefreshCountService refreshCountService;
-	
+
 	@Autowired
 	private HttpServletRequest request;
-
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String show(@RequestParam(value = "active_page", required = false) String activePage,
@@ -89,6 +88,8 @@ public class ExecuteController {
 	@RequestMapping(value = "/run", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ReturnRunModelDto> run(@RequestBody RunModelDto runModelDto) {
 		logger.debug("Into run, param:" + runModelDto);
+		Thread a = Thread.currentThread();
+		logger.debug("Into showShare, thread id:" + a.getId());
 		try {
 			ReturnRunModelDto returnRunModelDto = processService.createProcessInformation(runModelDto);
 			refreshCountService.refreshAll();
@@ -102,7 +103,10 @@ public class ExecuteController {
 
 	@RequestMapping(value = "/share", method = RequestMethod.POST)
 	public String showShare(ShareExecuteDto shareExecuteDto) {
+
 		logger.debug("Into showShare, param:" + shareExecuteDto);
+		Thread a = Thread.currentThread();
+		logger.debug("Into showShare, thread id:" + a.getId());
 		try {
 			String path;
 			if (shareExecuteDto.getHasApplication() && shareExecuteDto.getIsShare()) {
@@ -113,10 +117,9 @@ public class ExecuteController {
 				logger.debug("showShare succ only star, return:" + shareExecuteDto);
 			}
 			refreshCountService.refreshAll();
-			if(path != null){
+			if (path != null) {
 				return "redirect:/application/" + path + "/show";
-			}
-			else{
+			} else {
 				return "redirect:/search/model";
 			}
 
@@ -125,7 +128,7 @@ public class ExecuteController {
 			return "execute/error";
 		}
 	}
-	
+
 	@RequestMapping(value = "/running_case/{id}/delete", method = RequestMethod.GET)
 	public String deleteShare(@PathVariable("id") String runningCaseId,
 			@RequestParam(value = "application", required = false) String applicationName) {
@@ -137,7 +140,6 @@ public class ExecuteController {
 			refreshCountService.refreshAll();
 			return "redirect:/application/" + applicationName + "/show";
 
-			
 		} catch (Exception e) {
 			logger.error("Failed in deleteShare");
 			return "application/error";

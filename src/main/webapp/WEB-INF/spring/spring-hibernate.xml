@@ -30,11 +30,22 @@
 		<property name="maxWait" value="10000" />
 		<!-- 连接被用完时等待归还的最大等待时间，单位毫秒，超出时间抛异常，默认为无限等待 -->
 	</bean>
+	<bean id="dataSourceC3p01" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/isdsp_dev" />
+		<property name="user" value="isdsp" />
+		<property name="password" value="12345678" />
+		<!--每5小时检查所有连接池中的空闲连接。防止mysql wait_timeout（默认的为8小时） -->
+	</bean>
+
+
+
 	<!-- 配置我们的回话工厂 -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource">
-			<ref bean="dataSource" />
+			<ref bean="dataSourceC3p01" />
 		</property>
 		<property name="hibernateProperties">
 			<props>
@@ -43,9 +54,12 @@
 				<prop key="javax.persistence.validation.mode">none</prop>
 				<!-- 必要时在数据库新建所有表格 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<!-- 配置current session的上下文环境，方便我们调用sessionFactory获取当前线程统一个session对象 -->
 				<prop key="current_session_context_class">thread</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
 
 				<!-- 用更漂亮的格式显示sql语句 -->
 				<!-- <prop key="hibernate.format_sql">true</prop> -->
@@ -106,37 +120,23 @@
 
 	<!-- 打开基于annotation的aop代理 -->
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true" /> -->
-<!-- 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>--> 
-	<!--  bean id="transactionManager" class = "org.springframework.transaction.jta.JtaTransactionManager" />
-	
--->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-      <property name="sessionFactory" ref="sessionFactory" />
-    </bean>   
+	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property> 
+		</bean> -->
+	<!-- bean id="transactionManager" class = "org.springframework.transaction.jta.JtaTransactionManager" 
+		/> -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager"
-		 /> 
-		 
-<!-- 
-    定义事务管理器（声明式的事务）
-    <bean id="transactionManager"
-        class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*" propagation="REQUIRED" read-only="false" />
-        </tx:attributes>
-    </tx:advice>
-    <aop:config>
-        <aop:pointcut id="interceptorPointCuts"
-            expression="execution(*  cn.edu.sjtu.iasdsp.service.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts" />
-    </aop:config>
- -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 定义事务管理器（声明式的事务） <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"> 
+		<property name="sessionFactory" ref="sessionFactory" /> </bean> <tx:advice 
+		id="txAdvice" transaction-manager="transactionManager"> <tx:attributes> <tx:method 
+		name="*" propagation="REQUIRED" read-only="false" /> </tx:attributes> </tx:advice> 
+		<aop:config> <aop:pointcut id="interceptorPointCuts" expression="execution(* 
+		cn.edu.sjtu.iasdsp.service.*.*(..))" /> <aop:advisor advice-ref="txAdvice" 
+		pointcut-ref="interceptorPointCuts" /> </aop:config> -->
 </beans>

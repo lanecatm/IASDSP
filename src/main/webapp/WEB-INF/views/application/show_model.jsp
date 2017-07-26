@@ -70,7 +70,7 @@
 								<th>Action</th>
 								</tr>
 								<c:forEach items="${showApplicationDto.shareRecordMap[workflowInformation.id]}"
-        var="shareRecord" varStatus="status2">
+							var="shareRecord" varStatus="status2">
 								<tr>
 									<td>${shareRecord.id}</td>
 									<td>${shareRecord.name}</td>
@@ -142,7 +142,11 @@
 					<div class="col-md-4 ">
 						<div class="btn-group btn-group-justified btn-group-sm"
 							role="group" aria-label="...">
-							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPageId}"/>">
+							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPageId}"/>"
+							<c:if test="workflowInformation.defaultVersion == null">
+							disabled="disabled"
+							</c:if>
+							>
 							     Execute 
 							 </a> 
 							<a class="btn btn-sm  btn-default" href="<c:url value="/model/${workflowInformation.id}/show"/>"> More detail </a>
@@ -176,7 +180,8 @@
 					</div>
 					<div class="col-md-2 text-right">
 						<h4>
-							<small> <a role="button"
+							<small> 
+							<a role="button"
 								id="collapseModel${status.index}Button" data-toggle="collapse"
 								href="#collapseModel${status.index}" aria-expanded="false"
 								aria-controls="collapseModel${status.index}"
