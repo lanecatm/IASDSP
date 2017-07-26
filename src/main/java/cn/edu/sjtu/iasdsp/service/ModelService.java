@@ -101,6 +101,7 @@ public class ModelService {
 		User defaultUserInfo = userHome.findById(UserType.DEFAULT_USER_ID);
 		
 		ShowModelDto showModelDto = new ShowModelDto();
+		showModelDto.setWorkflowInformationId(workflowInformation.getId());
 		showModelDto.setIntroduction(workflowInformation.getIntroduction());
 		showModelDto.setTitle(workflowInformation.getName());
 		showModelDto.setAuthor(workflowInformation.getAuthor() == null ? defaultUserInfo :workflowInformation.getAuthor() );

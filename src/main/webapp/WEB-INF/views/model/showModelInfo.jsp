@@ -43,11 +43,7 @@
 		</tr>
 
 		<tr>
-			<th rowspan="3">Version</th>
-			<th>Version</th>
-			<td>${showModelDto.versionName}</td>
-		</tr>
-		<tr>
+			<th rowspan="2">Time</th>
 			<th>Create time</th>
 			<td>${showModelDto.creationTime}</td>
 		</tr>

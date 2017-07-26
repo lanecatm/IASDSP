@@ -20,6 +20,7 @@ public class ShowModelDto {
 	private String introduction;
 	private String detailedInformation;
 	private String category;
+	private Integer workflowInformationId;
 	
 	//Authorization
 	private User author;
@@ -53,6 +54,16 @@ public class ShowModelDto {
 	//	application.add("Mon application");
 	//	application.add("Mon applicatifon");
 
+	}
+
+
+	public Integer getWorkflowInformationId() {
+		return workflowInformationId;
+	}
+
+
+	public void setWorkflowInformationId(Integer workflowInformationId) {
+		this.workflowInformationId = workflowInformationId;
 	}
 
 

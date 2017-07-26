@@ -63,23 +63,28 @@
 				<div class="col-md-12">
 					<h2>${showModelDto.title}</h2>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<h4>
 						<small>Revised on ${showModelDto.creationTime } by
 							${showModelDto.author.userName}</small>
 					</h4>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="btn-group btn-group-justified  btn-group-sm"
 						role="group" aria-label="...">
-						<a type="button" class="btn btn-success btn-sm"
-							href="<c:url value=""/>"> Train </a> <a type="button"
-							class="btn btn-info btn-sm" href="<c:url value=""/>"> Execute
-						</a> <a type="button" class="btn btn-warning btn-sm"
-							href="<c:url value="./edit"/>"> Edit </a>
+<%-- 						<a type="button" class="btn btn-success btn-sm" 
+						  href="<c:url value="/execute?model=${showModelDto. }"/>"> 
+						  Execute
+						</a>  --%>
+						<a type="button" class="btn btn-primary btn-sm"
+							href="<c:url value="/model/${showModelDto.workflowInformationId}/edit"/>"> 
+							Edit 
+						</a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="./delete"/>"> Delete </a>
+							href="<c:url value="/model/${showModelDto.workflowInformationId}/delete"/>"> 
+							Delete 
+						</a>
 					</div>
 				</div>
 			</div>

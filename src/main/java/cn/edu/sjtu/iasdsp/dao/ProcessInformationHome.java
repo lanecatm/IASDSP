@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 /**
  * Home object for domain model class ProcessInformations.
@@ -127,6 +128,32 @@ public class ProcessInformationHome {
 			throw re;
 		}
 	}
-	
-
+	public List<ProcessInformation> findByWorkflowVersionId(int workflowVersionId ) {
+		log.debug("finding ProcessInformation instance by workflowVersionId:" + workflowVersionId );
+		try {
+			List<ProcessInformation> results = (List<ProcessInformation>) sessionFactory.getCurrentSession()
+					.createCriteria(ProcessInformation.class)
+					.createAlias("workflowVersion", "workflowVersion").add(Restrictions.eq("workflowVersion.id",workflowVersionId ))
+					.list();
+			log.debug("finding ProcessInformation instance by workflowVersionId successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("finding ProcessInformation instance by workflowVersionId failed", re);
+			throw re;
+		}
+	}	
+	public List<ProcessInformation> findByParentSharedProcessRecordId(int parentSharedProcessRecordId ) {
+		log.debug("finding ProcessInformation instance by parentSharedProcessRecordId:" + parentSharedProcessRecordId );
+		try {
+			List<ProcessInformation> results = (List<ProcessInformation>) sessionFactory.getCurrentSession()
+					.createCriteria(ProcessInformation.class)
+					.createAlias("parentSharedProcessRecord", "parentSharedProcessRecord").add(Restrictions.eq("parentSharedProcessRecord.id",parentSharedProcessRecordId ))
+					.list();
+			log.debug("finding ProcessInformation instance by parentSharedProcessRecordId successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("finding ProcessInformation instance by parentSharedProcessRecordId failed", re);
+			throw re;
+		}
+	}	
 }

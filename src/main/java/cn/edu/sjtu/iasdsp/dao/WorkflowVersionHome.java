@@ -6,12 +6,12 @@ import static org.hibernate.criterion.Example.create;
 import java.util.List;
 
 import javax.naming.InitialContext;
-import javax.persistence.Entity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -121,6 +121,23 @@ public class WorkflowVersionHome {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+	
+	
+		
+	public List<WorkflowVersion> findByWorkflowInformationId(int workflowInformationId ) {
+		log.debug("finding WorkflowVersion instance by workflowInformationId:" + workflowInformationId );
+		try {
+			List<WorkflowVersion> results = (List<WorkflowVersion>) sessionFactory.getCurrentSession()
+					.createCriteria(WorkflowVersion.class)
+					.createAlias("workflowInformation", "workflowInformation").add(Restrictions.eq("workflowInformation.id",workflowInformationId ))
+					.list();
+			log.debug("finding WorkflowVersion instance by workflowInformationId successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("finding WorkflowVersion instance by workflowInformationId failed", re);
 			throw re;
 		}
 	}

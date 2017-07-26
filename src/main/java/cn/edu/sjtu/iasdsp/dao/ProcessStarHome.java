@@ -12,9 +12,11 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.ProcessStar;
 
 /**
@@ -124,5 +126,23 @@ public class ProcessStarHome {
 			throw re;
 		}
 	}
+	
+	
+	public List<ProcessStar> findByprocessInformationId(int processInformationId ) {
+		log.debug("finding ProcessStar instance by processInformationId:" + processInformationId );
+		try {
+			List<ProcessStar> results = (List<ProcessStar>) sessionFactory.getCurrentSession()
+					.createCriteria(ProcessStar.class)
+					.createAlias("processInformation", "processInformation").add(Restrictions.eq("processInformation.id",processInformationId ))
+					.list();
+			log.debug("finding ProcessStar instance by processInformationId successful, result size: " + results.size());
+			return results;
+		} catch (RuntimeException re) {
+			log.error("finding ProcessStar instance by processInformationId failed", re);
+			throw re;
+		}
+	}
+	
+
 
 }

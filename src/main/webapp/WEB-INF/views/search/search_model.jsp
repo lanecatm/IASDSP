@@ -63,7 +63,7 @@
 				<c:forEach items="${searchModelResultDto.workflowInformationList}"
 					var="workflowInformation" varStatus="status">
 					<s:url value="/resources/image/user.jpg" var="userImg" />
-					<s:url value="/resources/image/Example1.png" var="workflowImg" />
+					<s:url value="/resources/image/diagramhaha.svg" var="workflowImg" />
 
 					<%@ include file="model_tile.jsp"%>
 				</c:forEach>

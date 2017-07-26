@@ -11,11 +11,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
+import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 
 /**
  * Home object for domain model class WorkflowInformation.
@@ -138,4 +140,6 @@ public class WorkflowInformationHome {
 			throw re;
 		}
 	}
+	
+
 }
