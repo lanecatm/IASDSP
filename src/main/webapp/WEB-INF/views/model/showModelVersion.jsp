@@ -23,7 +23,7 @@ function publishVersion(versionId) {
         timeout : 100000,
         success : function(data) {
             console.log("SUCCESS: ", data);
-            window.location = "./edit?active_page=diagram";
+            window.location = "./show?active_page=diagram";
         },
         error : function(e) {
             console.log("ERROR: ", e);

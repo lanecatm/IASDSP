@@ -139,15 +139,7 @@
 				<hr />
 			</div>
 
-			<div class="col-md-4">
-				<button class="btn btn-default btn-sm btn-block">Back to
-					model</button>
-			</div>
-			<div class="col-md-4">
-				<button class="btn btn-default btn-sm btn-block">Back to
-					application</button>
-			</div>
-			<div class="col-md-4">
+			<div class="col-md-offset-8 col-md-4">
 				<button class="btn btn-primary btn-sm btn-block">Save</button>
 			</div>
 		</div>

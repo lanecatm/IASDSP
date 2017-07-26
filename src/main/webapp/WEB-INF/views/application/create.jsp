@@ -142,13 +142,10 @@
 					<hr />
 
 					<div class="form-group">
-						<div class="col-md-offset-6 col-md-3">
-							<input type="submit" name="cancel" value="Cancel"
-								class="btn btn-default btn-block" />
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-offset-9 col-md-3">
+							
 							<input type="submit" name="save"
-								class="btn btn-primary btn-block" value="Save page" />
+								class="btn btn-primary btn-block" value="Create" />
 						</div>
 					</div>
 				</sf:form>

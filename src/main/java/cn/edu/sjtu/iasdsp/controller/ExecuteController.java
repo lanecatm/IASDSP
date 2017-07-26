@@ -117,10 +117,45 @@ public class ExecuteController {
 				logger.debug("showShare succ only star, return:" + shareExecuteDto);
 			}
 			refreshCountService.refreshAll();
-			if (path != null) {
-				return "redirect:/application/" + path + "/show";
-			} else {
-				return "redirect:/search/model";
+			if (shareExecuteDto.getHasApplication()) {
+				if(path != null){
+					return "redirect:/application/" + path + "/show";
+				} else {
+					return "redirect:/search/application";
+				}
+			}else{
+				if(path != null){
+					return "redirect:/model/" + path + "/show";
+				} else {
+					return "redirect:/search/model";
+				}
+			}
+
+		} catch (Exception e) {
+			logger.error("Failed in showShare");
+			return "execute/error";
+		}
+	}
+	
+	@RequestMapping(value = "/share_cancel", method = RequestMethod.GET)
+	public String shareCancel(ShareExecuteDto shareExecuteDto) {
+
+		logger.debug("Into shareCancel, param:" + shareExecuteDto);
+
+		try {
+			String path = processService.findBackPath(shareExecuteDto);
+			if (shareExecuteDto.getHasApplication()) {
+				if(path != null){
+					return "redirect:/application/" + path + "/show";
+				} else {
+					return "redirect:/search/application";
+				}
+			}else{
+				if(path != null){
+					return "redirect:/model/" + path + "/show";
+				} else {
+					return "redirect:/search/model";
+				}
 			}
 
 		} catch (Exception e) {
@@ -131,14 +166,22 @@ public class ExecuteController {
 
 	@RequestMapping(value = "/running_case/{id}/delete", method = RequestMethod.GET)
 	public String deleteShare(@PathVariable("id") String runningCaseId,
-			@RequestParam(value = "application", required = false) String applicationName) {
+			@RequestParam(value = "application", required = false) String applicationName, 
+			@RequestParam(value = "model", required = false) String modelId) {
 		logger.debug("Into deleteShare, runningCaseId:" + runningCaseId);
 		try {
 			int id = Integer.parseInt(runningCaseId);
 			processService.deleteSharedProcessRecord(id);
 
 			refreshCountService.refreshAll();
-			return "redirect:/application/" + applicationName + "/show";
+			if(applicationName != null){
+				return "redirect:/application/" + applicationName + "/show";
+			}else if(modelId!= null){
+				return "redirect:/model/" + modelId + "/show";
+			}
+			else{
+				return "redirect:/";
+			}
 
 		} catch (Exception e) {
 			logger.error("Failed in deleteShare");

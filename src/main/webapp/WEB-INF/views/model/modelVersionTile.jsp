@@ -9,13 +9,26 @@
 		<a class="hero-a" href="<c:url value="#"/>"> <img
 			src="${workflowImg }" alt="">
 		</a>
+		${ workflowVersion.svg }
 		<div class="caption">
 			<div class="hero-content">
 				<h4>
-					<span class="badge"> <c:if
-							test="${workflowVersion.status == 0}">Editing</c:if> <c:if
-							test="${workflowVersion.status == 1}">Published</c:if>
-					</span> <a class="hero-a" href="<c:url value="#"/>">
+					<c:if test="${workflowVersion.status == 0}">
+					<span class="badge"> 
+					Editing 
+					</span>
+					</c:if> 
+					<c:if test="${workflowVersion.status == 1 && workflowVersion.workflowInformation.defaultVersion.id == workflowVersion.id}">
+					<span class="badge" style="background-color:#d9534F;"> 
+						Default
+					</span>
+					</c:if> 
+					<c:if test="${workflowVersion.status == 1 && workflowVersion.workflowInformation.defaultVersion.id != workflowVersion.id}">
+					<span class="badge" style="background-color:#337ab7;"> 
+						Published
+					</span>
+					</c:if>
+					<a class="hero-a" href="<c:url value="#"/>">
 						${workflowVersion.versionName} </a>
 				</h4>
 				<h5>
@@ -33,7 +46,7 @@
 							     Publish 
 							</a>
 						<a type="button" class="btn btn-info btn-sm"
-							href="<c:url value="./edit"/>"> Edit </a>
+                            href="<c:url value="/graph_model/editor/graph/page/index.html?model_version=${workflowVersion.id}"/>"> Edit </a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
 							href="<c:url value="./version/${workflowVersion.id}/delete"/>"> Delete </a>
@@ -43,7 +56,7 @@
                                  Publish 
                             </a>
                         <a type="button" disabled="disabled" class="btn btn-info btn-sm"
-                            href="<c:url value="./edit"/>"> Edit </a>
+                            href="<c:url value="/graph_model/editor/graph/page/index.html?model_version=${workflowVersion.id}"/>"> Edit </a>
                         <!-- TODO change delete method -->
                         <a type="button" class="btn btn-danger btn-sm"
                             href="<c:url value="./version/${workflowVersion.id}/delete"/>"> Delete </a>

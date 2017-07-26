@@ -143,9 +143,9 @@
 						<div class="btn-group btn-group-justified btn-group-sm"
 							role="group" aria-label="...">
 							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPageId}"/>"
-							<c:if test="workflowInformation.defaultVersion == null">
-							disabled="disabled"
-							</c:if>
+								<c:if test="${workflowInformation.defaultVersion == null}">
+								disabled="disabled"
+								</c:if>
 							>
 							     Execute 
 							 </a> 
@@ -234,7 +234,7 @@
 		
 		
 	}
-	function searchAjax(performanceId, workflowInformationId, wikiPageId, modelWellId, modelFormGroupId, modelTextAreaId, modelRditBtnId) {
+	/* function searchAjax(performanceId, workflowInformationId, wikiPageId, modelWellId, modelFormGroupId, modelTextAreaId, modelRditBtnId) {
 		var data = {}
 		data["performance"] = $(performanceId).val();
 		data["workflowInformationId"] = workflowInformationId;
@@ -260,6 +260,32 @@
 			done : function(e) {
 				console.log("DONE");
 			}
-		});
+		}); */
+		function searchAjax(performanceId, workflowInformationId, wikiPageId, modelWellId, modelFormGroupId, modelTextAreaId, modelRditBtnId) {
+        var data = {}
+        data["performance"] = $(performanceId).val();
+        data["workflowInformationId"] = workflowInformationId;
+        data["wikiPageId"] = wikiPageId;
+        $.ajax({
+            type : "POST",
+            url : "edit_performance",
+            contentType : "application/json",
+            data : JSON.stringify(data),
+            dataType : 'jsonp',
+            success : function(data) {
+                console.log("SUCCESS: ", data);
+                $(modelWellId).show();
+                $(modelRditBtnId).show();
+                $(modelWellId).html($(modelTextAreaId).val());
+                $(modelFormGroupId).hide();
+            },
+            error : function(e) {
+                console.log("ERROR: ", e);
+
+            },
+            done : function(e) {
+                console.log("DONE");
+            }
+        }); 
 	}
 </script>

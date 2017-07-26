@@ -38,6 +38,7 @@ public class WorkflowVersion implements java.io.Serializable {
 	private WorkflowInformation workflowInformation;
 	
 	private String xml;
+	private String svg;
 	private String url;
 
 	private String versionName;
@@ -264,6 +265,16 @@ public class WorkflowVersion implements java.io.Serializable {
 
 	public void setXml(String xml) {
 		this.xml = xml;
+	}
+	
+	
+	@Column(name = "svg", length = 65535)
+	public String getSvg() {
+		return this.svg;
+	}
+
+	public void setSvg(String svg) {
+		this.svg = svg;
 	}
 	
 	@Column(name = "url", length = 65535)

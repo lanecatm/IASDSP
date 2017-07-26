@@ -179,6 +179,7 @@ public class ModelService {
 		editModelDto.setCreationTime(workflowInformation.getCreatedAt());
 		editModelDto.setUpdateTime(workflowInformation.getUpdatedAt());
 		editModelDto.setWorkflowVersions(new ArrayList<WorkflowVersion>(workflowInformation.getWorkflowVersions()));
+		editModelDto.setWorkflowInformationId(workflowInformation.getId());
 
 		// Category
 		for (WorkflowCategory workflowCategory : allWorkflowCategories) {

@@ -94,13 +94,23 @@ public class PanelService {
 	public void updateVersionGraph(int id, UpdateVersionGraphDto updateVersionGraphDto) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
 		if(workflowVersion != null){
-			workflowVersion.setXml(updateVersionGraphDto.getXml());
+			workflowVersion.setXml(updateVersionGraphDto.getGraph_xml());
 			workflowVersionHome.attachDirty(workflowVersion);
 		}
 		else{
 			throw(new NullPointerException("Can not find workflow version with id:" + id));
 		}
 	}
-	
+	@Transactional
+	public void updateVersionSvg(int id, UpdateVersionGraphDto updateVersionGraphDto) {
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
+		if(workflowVersion != null){
+			workflowVersion.setSvg(updateVersionGraphDto.getGraph_svg());
+			workflowVersionHome.attachDirty(workflowVersion);
+		}
+		else{
+			throw(new NullPointerException("Can not find workflow version with id:" + id));
+		}
+	}	
 	
 }

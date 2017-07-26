@@ -15,6 +15,7 @@ public class EditModelDto {
 	
 	
 	//Basic information
+	private Integer workflowInformationId;
 	private String title;
 	private String introduction;
 	private String detailedInformation;
@@ -67,6 +68,18 @@ public class EditModelDto {
 		
 
 	}
+	
+	
+	public Integer getWorkflowInformationId() {
+		return workflowInformationId;
+	}
+
+
+	public void setWorkflowInformationId(Integer workflowInformationId) {
+		this.workflowInformationId = workflowInformationId;
+	}
+
+
 	public List<WorkflowVersion> getWorkflowVersions() {
 		return workflowVersions;
 	}

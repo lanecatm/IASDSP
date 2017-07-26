@@ -64,15 +64,15 @@ public class PanelController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/{id}/post_graph", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
-	//public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody UpdateVersionGraphDto updateVersionGraphDto) {
-	public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody String xml) {
-		log.debug("Into postGraph, param:" + xml);
+	public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody UpdateVersionGraphDto updateVersionGraphDto) {
+	//public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody String xml) {
+		log.debug("Into postGraph, param:" + updateVersionGraphDto);
 		int versionId = Integer.parseInt(id);
-		UpdateVersionGraphDto updateVersionGraphDto = new UpdateVersionGraphDto();
-		updateVersionGraphDto.setXml(xml);
-		log.debug("change xml:" + xml);
+		updateVersionGraphDto.setGraph_xml(updateVersionGraphDto.getGraph_xml());
+
 
 		panelService.updateVersionGraph(versionId, updateVersionGraphDto);
+		panelService.updateVersionSvg(versionId, updateVersionGraphDto);
 		return ResponseEntity.accepted().body(new MessageDto("succ"));
 	}
 }

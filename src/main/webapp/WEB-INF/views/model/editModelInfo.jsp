@@ -92,8 +92,8 @@
 
 	<div class="form-group">
 		<div class="col-md-offset-6 col-md-3">
-			<input type="button" name="cancel" value="Cancel"
-				class="btn btn-default btn-block" />
+           <a class="btn btn-default btn-block" href="<c:url value="/model/${editModelDto.workflowInformationId}/show"/>"> Cancel </a>
+
 		</div>
 		<div class="col-md-3">
 			<input type="submit" name="save" class="btn btn-primary btn-block"

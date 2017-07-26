@@ -46,8 +46,11 @@
 		<%@ include file="modelVersionTile.jsp"%>
 	</c:forEach>
 </div>
-
-
+<div class="form-group">
+	<div class="col-md-offset-9 col-md-3">
+	   <a class="btn btn-default btn-block" href="<c:url value="/model/${editModelDto.workflowInformationId}/show"/>"> Go to Model </a>
+	</div>
+</div>
 <script>
 function publishVersion(versionId) {
     var data = {}
