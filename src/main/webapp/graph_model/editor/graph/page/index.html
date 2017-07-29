@@ -78,6 +78,25 @@
 						this.actions.get('save').setEnabled(enabled || Graph.fileSupport);
 						this.actions.get('saveAs').setEnabled(enabled);
 						this.actions.get('export').setEnabled(enabled);
+						var model_version = "";//default value
+						if(window.urlParams.model_version!=null)
+							model_version = window.urlParams.model_version;
+						if(model_version.length>0){
+							try{
+								var url = "/sjtu/panel/"+model_version+"/get_graph";
+								var graph_msg = ShapeFormatPanel.ajaxRequest(url,"GET",null);
+								if(graph_msg!=null){
+									var graph_xml = graph_msg.message;
+									if(graph_xml!=null){
+										var xml = mxUtils.parseXml(graph_xml);
+										if(xml.children.length>0)
+											this.editor.setGraphXml(xml.children[0]);
+									}
+								}
+							}catch(e){
+								throw e;
+							}
+						}
 					}));
 				}
 			};
