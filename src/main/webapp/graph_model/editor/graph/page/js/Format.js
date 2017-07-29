@@ -1669,11 +1669,27 @@ ShapeFormatPanel.prototype.addValue = function(div)
 
 	if(ss.vertices.length>0)
 	{
+		var selectNodeValue = ss.vertices[0].getValue();
 		// 设置xmlnode，暂时只能设置一个
-		if(ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		if(selectNodeValue == '<font style="display:none">task</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
 		{
 			var doc = mxUtils.createXmlDocument();
 			var algorithmNode = doc.createElement('AlgorithmNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
+		else if(selectNodeValue == '<font style="display:none">start</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		{
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('StartNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
+		else if(selectNodeValue == '<font style="display:none">end</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		{
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('EndNode');
 			ss.vertices[0].setValue(algorithmNode);
 		}
 		
@@ -1702,9 +1718,14 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 {
 	var ss = this.format.getSelectionState();
 	var thisPanel = this;
+	var selectType;
+	if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'AlgorithmNode')
+	{
+		selectType = "Algorithm";
+	}
 	for(i in msg.panelCategoryList)
 	{
-		if(msg.panelCategoryList[i].categoryName == "Algorithm")
+		if(msg.panelCategoryList[i].categoryName == selectType)
 		{
 			var algorithmList = msg.panelCategoryList[i].algorithmList;
 			var div = this.createPanel();
@@ -1802,9 +1823,9 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 		$.ajax({
 				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 				//url: "http://10.181.225.236:8080/test_ajax.json",
-				url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+// 				url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
 	// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
-// 				url: detailUrl,
+				url: detailUrl,
 				dataType: "jsonp",
 				jsonpCallback:"callback",
 				type: "GET",
@@ -1828,18 +1849,23 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 var detailDiv = document.createElement("div");
 ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 {
+	var ss = this.format.getSelectionState();
 	// 情况3: 选择框选择新元素。移除前面的放入新选的
 	if(this.container.contains(detailDiv))
 	{
 		// 移除旧的div，添加新的
 		this.container.removeChild(detailDiv);
 		detailDiv = document.createElement("div");
+	
+		var selectNodeValue = ss.vertices[0].getValue().tagName;
+		if(selectNodeValue == "AlgorithmNode" )
+		{
+			// 移除旧的algorithmNode，添加新的
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('AlgorithmNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
 		
-		// 移除旧的algorithmNode，添加新的
-		var doc = mxUtils.createXmlDocument();
-		var algorithmNode = doc.createElement('AlgorithmNode');
-		var ss = this.format.getSelectionState();
-		ss.vertices[0].setValue(algorithmNode);
 
 		// 排序,暂时先不用
 // 		var sortPanelOptions = new Array();
