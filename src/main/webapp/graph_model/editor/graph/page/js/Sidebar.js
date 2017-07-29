@@ -910,7 +910,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	 	// Explicit strokecolor/fillcolor=none is a workaround to maintain transparent background regardless of current style
 	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=2;', 43, 43, '<font style="display:none">start</font>', 'Start Node', null, null, 'bpmn start node'),
 	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=4;', 43, 43, '<font style="display:none">end</font>', 'End Node', null, null, 'bpmn end node'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;', 120, 80, 'task', 'Bpmn Task', null, null, 'bpmn task'),
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;', 120, 80, '<font style="display:none">task</font>', 'Bpmn Task', null, null, 'bpmn task'),
 	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.exclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">xor</font>', 'Exclusive Gateway', null, null, 'bpmn exclusive gateway'),
 	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.parallel_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">or</font>', 'Parallel Gateway', null, null, 'bpmn parallel gateway'),
 	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.inclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">and</font>', 'Inclusive Gateway', null, null, 'bpmn inclusive gateway'),
