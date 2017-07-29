@@ -90,8 +90,9 @@ Sidebar.prototype.init = function()
 {
 	var dir = STENCIL_PATH;
 	
-	this.addSearchPalette(true);
+	//this.addSearchPalette(true);
 	this.addGeneralPalette(true);
+	/*
 	this.addMiscPalette(false);
 	this.addAdvancedPalette(false);
 	this.addBasicPalette(dir);
@@ -109,6 +110,7 @@ Sidebar.prototype.init = function()
 		 'Worker1', 'Soldier1', 'Doctor1', 'Tech1', 'Security1', 'Telesales1'], null,
 		 {'Wireless_Router_N': 'wireless router switch wap wifi access point wlan',
 		  'Router_Icon': 'router switch'});
+	 */
 };
 
 /**
@@ -905,9 +907,17 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	var lineTags = 'line lines connector connectors connection connections arrow arrows ';
 	
 	var fns = [
+	 	// Explicit strokecolor/fillcolor=none is a workaround to maintain transparent background regardless of current style
+	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=2;', 43, 43, '<font style="display:none">start</font>', 'Start Node', null, null, 'bpmn start node'),
+	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=4;', 43, 43, '<font style="display:none">end</font>', 'End Node', null, null, 'bpmn end node'),
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;', 120, 80, 'task', 'Bpmn Task', null, null, 'bpmn task'),
+	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.exclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">xor</font>', 'Exclusive Gateway', null, null, 'bpmn exclusive gateway'),
+	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.parallel_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">or</font>', 'Parallel Gateway', null, null, 'bpmn parallel gateway'),
+	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.inclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">and</font>', 'Inclusive Gateway', null, null, 'bpmn inclusive gateway'),
+	 	this.createEdgeTemplateEntry('endArrow=block;endFill=1;endSize=6;html=1;', 100, 0, '<font style="display:none">sequence</font>', 'Sequence Flow', null, 'bpmn sequence flow'),
+	 	this.createEdgeTemplateEntry('startArrow=oval;startFill=0;startSize=7;endArrow=block;endFill=0;endSize=10;dashed=1;html=1;', 100, 0, '<font style="display:none">message</font>', 'Message Flow 1', null, 'bpmn message flow'),
 	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
 	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
-	 	// Explicit strokecolor/fillcolor=none is a workaround to maintain transparent background regardless of current style
 	 	this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;',
  			40, 20, 'Text', 'Text', null, null, 'text textbox textarea label'),
 	 	this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;', 190, 120,
