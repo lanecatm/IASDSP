@@ -8,8 +8,11 @@
 		style="background-color: #f8f8f8; border: #f8f8f8;">
 		<div style="height:100px;display: table-cell; vertical-align: middle;text-align: center;">
 		<a class="hero-a"
-			href="<c:url value="/model/${workflowInformation.id}/show"/>" style="weight:auto;vertical-align:middle;">
-			<img src="${workflowImg }" alt="" style="weight:auto;vertical-align:middle;">
+			href="<c:url value="/model/${workflowInformation.id}/show"/>" style="vertical-align:middle;">
+			<c:if test="${workflowInformation.defaultVersion != null &&workflowInformation.defaultVersion.svg!= null }">
+            <img src="<c:url value="/upload/${workflowInformation.defaultVersion.svg }"/>" alt="" style="weight:auto;vertical-align:middle;">
+            </c:if>
+            
 		</a>
 		</div>
 		<div class="caption">

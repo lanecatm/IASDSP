@@ -1,8 +1,13 @@
 package cn.edu.sjtu.iasdsp.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,82 +40,104 @@ public class PanelService {
 
 	@Autowired
 	private NodeFunctionHome nodeFunctionHome;
-	
+
 	@Autowired
 	private NodeCategoryHome nodeCategoryHome;
-	
+
 	@Autowired
 	private WorkflowVersionHome workflowVersionHome;
-
+	@Autowired
+    private HttpServletRequest request;
 
 	@Transactional
 	public PanelAlgorithmDto getSample(int panelId) {
 		NodeFunction nodeFunction = nodeFunctionHome.findById(panelId);
 
-		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(nodeFunction.getName(), nodeFunction.getDescription());
+		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(nodeFunction.getName(),
+				nodeFunction.getDescription());
 		log.info("node option" + nodeFunction.getNodeOptions());
 		for (NodeOption nodeOption : nodeFunction.getNodeOptions()) {
 			Set<PanelAlgorithmDto.PanelChoice> panelChoices = new HashSet<PanelAlgorithmDto.PanelChoice>(0);
-			for(NodeOptionChoice choice : nodeOption.getNodeOptionChoices()){
-				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(choice.getName(), choice.getValue());
-				panelChoices.add(panelChocice);    
+			for (NodeOptionChoice choice : nodeOption.getNodeOptionChoices()) {
+				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(choice.getName(),
+						choice.getValue());
+				panelChoices.add(panelChocice);
 			}
 			PanelAlgorithmDto.PanelOption panelOption = panelAlgorithmDto.new PanelOption(nodeOption.getNodeIndex(),
-					nodeOption.getName(), nodeOption.getLabel(), nodeOption.getDescription(), nodeOption.getDefaultValue(),
-					nodeOption.getNodeOptionType().getName(), panelChoices);
+					nodeOption.getName(), nodeOption.getLabel(), nodeOption.getDescription(),
+					nodeOption.getDefaultValue(), nodeOption.getNodeOptionType().getName(), panelChoices);
 			log.info("add panelOption:" + panelOption);
-			
+
 			panelAlgorithmDto.getPanelOptions().add(panelOption);
 		}
 		return panelAlgorithmDto;
 	}
-	
+
 	@Transactional
 	public PanelAllAlgorithmDto getAlgorithmList() {
 		List<NodeCategory> nodeCategoryList = nodeCategoryHome.findByExample(new NodeCategory());
 		PanelAllAlgorithmDto panelAllAlgorithmDto = new PanelAllAlgorithmDto();
-		for(NodeCategory nodeCategory : nodeCategoryList){
-			PanelAllAlgorithmDto.PanelCategory panelCategory = panelAllAlgorithmDto.new PanelCategory(nodeCategory.getName(), nodeCategory.getId());
-			for(NodeFunction nodeFunction : nodeCategory.getNodeFunctions()){
-				panelCategory.addPanelAlgorithm(nodeFunction.getName(), nodeFunction.getId(), nodeFunction.getDescription());
+		for (NodeCategory nodeCategory : nodeCategoryList) {
+			PanelAllAlgorithmDto.PanelCategory panelCategory = panelAllAlgorithmDto.new PanelCategory(
+					nodeCategory.getName(), nodeCategory.getId());
+			for (NodeFunction nodeFunction : nodeCategory.getNodeFunctions()) {
+				panelCategory.addPanelAlgorithm(nodeFunction.getName(), nodeFunction.getId(),
+						nodeFunction.getDescription());
 			}
 			panelAllAlgorithmDto.addPanelCategory(panelCategory);
 		}
 		return panelAllAlgorithmDto;
 	}
-	
-	
+
 	@Transactional
 	public GetVersionGraphDto getVersionGraph(int id) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
 		GetVersionGraphDto getVersionGraphDto = new GetVersionGraphDto();
-		if(workflowVersion != null){
+		if (workflowVersion != null) {
 			getVersionGraphDto.setXml(workflowVersion.getXml());
 		}
 		return getVersionGraphDto;
 	}
-	
+
 	@Transactional
 	public void updateVersionGraph(int id, UpdateVersionGraphDto updateVersionGraphDto) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
-		if(workflowVersion != null){
+		if (workflowVersion != null) {
 			workflowVersion.setXml(updateVersionGraphDto.getGraph_xml());
 			workflowVersionHome.attachDirty(workflowVersion);
-		}
-		else{
-			throw(new NullPointerException("Can not find workflow version with id:" + id));
+		} else {
+			throw (new NullPointerException("Can not find workflow version with id:" + id));
 		}
 	}
+
 	@Transactional
 	public void updateVersionSvg(int id, UpdateVersionGraphDto updateVersionGraphDto) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
-		if(workflowVersion != null){
-			workflowVersion.setSvg(updateVersionGraphDto.getGraph_svg());
+		if (workflowVersion != null) {
+			String fileName = saveFile(workflowVersion.getId().toString() + ".svg", updateVersionGraphDto.getGraph_svg());
+			workflowVersion.setSvg(fileName);
+			//workflowVersion.setSvg(updateVersionGraphDto.getGraph_svg());
 			workflowVersionHome.attachDirty(workflowVersion);
+		} else {
+			throw (new NullPointerException("Can not find workflow version with id:" + id));
 		}
-		else{
-			throw(new NullPointerException("Can not find workflow version with id:" + id));
-		}
-	}	
-	
+	}
+
+	public String saveFile(String name, String content) {
+		try {
+			UUID fileId = UUID.randomUUID(); 
+			String savedDir = request.getSession().getServletContext().getRealPath("upload");
+			
+	        byte[] data = content.getBytes();
+
+	        File file = new File(savedDir, fileId + "_" + name);
+	        FileOutputStream fos = new FileOutputStream(file);
+	        fos.write(data);
+	        fos.close();
+	        return file.getName();
+	    } catch (Exception e) {
+	        log.error("Error writing request", e);
+	        return null;
+	    }
+	}
 }

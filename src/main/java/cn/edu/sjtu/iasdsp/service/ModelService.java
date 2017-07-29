@@ -126,6 +126,7 @@ public class ModelService {
 		
 		
 		showModelDto.setWikiPages(new ArrayList<WikiPage>(workflowInformation.getWikiPages()));
+		showModelDto.setWorkflowInformation(workflowInformation);
 		
 		for(SharedProcessRecord sharedProcessRecord : workflowInformation.getSharedProcessRecords()){
 			if(sharedProcessRecord.getProcessInformation() == null){

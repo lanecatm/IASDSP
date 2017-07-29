@@ -8,7 +8,7 @@
 		<div class="col-md-12">
 		
 		  <s:url value="/resources/image/Example1.png" var="workflowImg" />
-			<img src="${workflowImg }" alt="" style="max-width: 100%; max-height: 100%;">
+			<img src="<c:url value="/upload/${workflowVersion.svg }"/>" alt="" style="max-width: 100%; max-height: 100%;">
 		</div>
 		<div class="col-md-2 col-md-offset-10">
 			<a class="btn btn-primary btn-block" onClick="runAjax(${param.model_version}, ${param.running_case})">Run</a>
