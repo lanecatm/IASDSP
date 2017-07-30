@@ -62,7 +62,7 @@
 			<div class="row">
 				<c:forEach items="${searchApplicationResultDto.wikiPageList}"
 					var="wikiPage" varStatus="status">
-					<s:url value="/resources/image/stock.jpg" var="applicationImg" />
+					<s:url value="${wikiPage.imgUrl }" var="applicationImg" />
 					<%@ include file="application_tile.jsp"%>
 				</c:forEach>
 			</div>

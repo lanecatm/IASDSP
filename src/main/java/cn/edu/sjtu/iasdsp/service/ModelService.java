@@ -81,9 +81,12 @@ public class ModelService {
 	@Transactional
 	public Integer save(CreateModelDto createModelDto) {
 		logger.debug("Into save service, param:" + createModelDto);
+		User user = userHome.findById(UserType.DEFAULT_USER_ID);
 		// create name and introduction
 		WorkflowInformation workflowInformation = new WorkflowInformation(createModelDto.getName(),
 				createModelDto.getIntroduction(), new Date(), new Date(), 0, 0, 0);
+		workflowInformation.setAuthor(user);
+		workflowInformation.setUpdator(user);
 		workflowInformationHome.persist(workflowInformation);
 		logger.debug("Save service, workflowInformation:" + workflowInformation);
 		return workflowInformation.getId();

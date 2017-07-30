@@ -1,19 +1,28 @@
 package cn.edu.sjtu.iasdsp.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessStarHome;
 import cn.edu.sjtu.iasdsp.dao.SharedProcessRecordHome;
+import cn.edu.sjtu.iasdsp.dao.UploadFileHome;
 import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowInformationHome;
@@ -25,6 +34,7 @@ import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.ProcessStar;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
+import cn.edu.sjtu.iasdsp.model.UploadFile;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
@@ -69,6 +79,12 @@ public class ProcessService {
 
 	@Autowired
 	private DeleteService deleteService;
+	
+	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
+	UploadFileHome uploadFileHome;
 
 	@Transactional
 	public ShareExecuteDto showShare() {
@@ -113,10 +129,65 @@ public class ProcessService {
 		}
 
 		processInformationHome.persist(processInformation);
+		if(runModelDto.getUploadFileId()!= null){
+			UploadFile uploadFile = uploadFileHome.findById(runModelDto.getUploadFileId());
+			uploadFile.setProcessInformation(processInformation);
+			uploadFileHome.attachDirty(uploadFile);
+		}
 
 		return new ReturnRunModelDto(processInformation.getId());
 
 	}
+	
+	
+	@Transactional
+	public String getFilePathFromUploadFileId(int uploadFileId){
+		UploadFile uploadFile = uploadFileHome.findById(uploadFileId);
+		if(uploadFile != null){
+			return uploadFile.getAbstractPath();
+		}
+		return null;
+	}
+	
+	@Transactional
+	public void updateEngineProcessId(int processId, String engineProcessId){
+		ProcessInformation processInformation = processInformationHome.findById(processId);
+		processInformation.setEngineProcessId(engineProcessId);
+		processInformationHome.attachDirty(processInformation);
+	}
+	
+	@Transactional
+	public String getEngineProcessIdFromProcessId(int processId){
+		ProcessInformation processInformation = processInformationHome.findById(processId);
+		if(processInformation == null){
+			return null;
+		}
+		else{
+			return processInformation.getEngineProcessId();
+		}
+
+	}
+	
+	@Transactional
+	public void setDownloadFilePath(String path, int processId){
+		ProcessInformation processInformation = processInformationHome.findById(processId);
+		processInformation.setDownloadFilePath(path);
+		processInformationHome.attachDirty(processInformation);
+	}
+	
+	@Transactional
+	public File downloadFile(int processId){
+		ProcessInformation processInformation = processInformationHome.findById(processId);
+		String filePath = processInformation.getDownloadFilePath();
+		if(filePath != null && !filePath.isEmpty()){
+			File file = new File(filePath);
+			logger.debug("return file:" + filePath);
+			return file;
+		}
+		logger.debug("return null file");
+		return null;
+	}
+	
 
 	@Transactional
 	public int getWorkflowVersionIdFromWorkflowInformationId(int workflowInformationId) {
@@ -269,5 +340,23 @@ public class ProcessService {
 		}
 		return wikiPage.getPath();
 	}
+	
+
+	@Transactional
+	public Integer uploadFiles(List<MultipartFile> multipartFiles) throws IOException {
+		String directory = request.getSession().getServletContext().getRealPath("upload");
+		File file = new File(directory);
+		file.mkdirs();
+		for (MultipartFile multipartFile : multipartFiles) {
+			logger.debug("create file");
+			UUID fileId = UUID.randomUUID();
+			file = new File(directory + "/execute_file", fileId + "_" + multipartFile.getOriginalFilename());
+			IOUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
+			UploadFile uploadFile = new UploadFile(null, file.getName(), file.getAbsolutePath(), "/upload/execute_file/" + file.getName(), new Date(), new Date()); 
+			uploadFileHome.persist(uploadFile);
+			return uploadFile.getId();
+		}
+		return null;
+	  }
 
 }

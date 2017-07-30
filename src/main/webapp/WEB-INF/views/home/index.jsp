@@ -66,7 +66,6 @@
 		<div class="row">
 			<c:forEach items="${showHomePageDto.popularWorkflowInformationList}"
 				var="workflowInformation" varStatus="status">
-				<s:url value="${showHomePageDto.popularWorkflowInformationImageUrlList[status.index]}" var="workflowImg" />
 				<s:url value="/resources/image/user.jpg" var="userImg" />
 				<%@ include file="model.jsp"%>
 			</c:forEach>
@@ -91,7 +90,7 @@
 			<c:forEach items="${showHomePageDto.popularWikiPageList}"
 				var="wikiPage" varStatus="status">
 				<s:url
-					value="${showHomePageDto.popularWikiPageImageUrlList[status.index]}"
+					value="${wikiPage.imgUrl}"
 					var="applicationImg" />
 				<%@ include file="application.jsp"%>
 			</c:forEach>
@@ -118,7 +117,6 @@
 		<div class="row">
 			<c:forEach items="${showHomePageDto.latestWorkflowInformationList}"
 				var="workflowInformation" varStatus="status">
-				<s:url value="${showHomePageDto.latestWorkflowInformationImageUrlList[status.index]}" var="workflowImg" />
                 <%@ include file="model.jsp"%>
 			</c:forEach>
 		</div>
@@ -142,7 +140,7 @@
 			<c:forEach items="${showHomePageDto.latestWikiPageList}"
 				var="wikiPage" varStatus="status">
 				<s:url
-					value="${showHomePageDto.latestWikiPageImageUrlList[status.index]}"
+					value="${wikiPage.imgUrl}"
 					var="applicationImg" />
 				<%@ include file="application.jsp"%>
 			</c:forEach>

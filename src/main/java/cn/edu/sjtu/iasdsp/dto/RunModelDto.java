@@ -11,7 +11,8 @@ public class RunModelDto {
 	private Integer workflowVersionId;
 	
 	private Integer sharedProcessRecordId;
-
+	
+	private Integer uploadFileId;
 	
 	
 	
@@ -36,6 +37,19 @@ public class RunModelDto {
 
 	public void setSharedProcessRecordId(Integer sharedProcessRecordId) {
 		this.sharedProcessRecordId = sharedProcessRecordId;
+	}
+
+	public Integer getUploadFileId() {
+		return uploadFileId;
+	}
+
+	public void setUploadFileId(Integer uploadFileId) {
+		this.uploadFileId = uploadFileId;
+	}
+
+	public String toString() {
+		return "RunModelDto [workflowVersionId=" + workflowVersionId + ", sharedProcessRecordId="
+				+ sharedProcessRecordId + ", uploadFileId=" + uploadFileId + "]";
 	}
 	
 	

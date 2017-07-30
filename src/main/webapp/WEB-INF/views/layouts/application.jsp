@@ -49,9 +49,11 @@
     <s:url value="/resources/javascript/star-rating.min.js" var="starRatingJs" />
     <s:url value="/resources/javascript/Chart.js" var="chartJs" />
     <s:url value="/resources/javascript/bootstrap-filestyle.js" var="bootstrapFilestyleJs" />
+    
 
 
 	<script src="http://libs.baidu.com/jquery/2.1.3/jquery.min.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script>
 	<script src="${bootstrapJs}"></script>
 	<script src="${applicationJs}"></script>
 	<script src="${ieEmulationModesWarningJs}"></script>

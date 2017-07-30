@@ -43,7 +43,6 @@ public class ProcessStar implements java.io.Serializable{
 	}
 	
 	public ProcessStar(ProcessInformation processInformation, Integer rate, User user, Date createdAt, Date updatedAt) {
-		super();
 		this.processInformation = processInformation;
 		this.rate = rate;
 		this.user = user;
