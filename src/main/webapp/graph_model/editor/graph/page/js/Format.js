@@ -1669,6 +1669,31 @@ ShapeFormatPanel.prototype.addValue = function(div)
 
 	if(ss.vertices.length>0)
 	{
+		var selectNodeValue = ss.vertices[0].getValue();
+		// 设置xmlnode，暂时只能设置一个
+		if(selectNodeValue == '<font style="display:none">task</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		{
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('AlgorithmNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
+		else if(selectNodeValue == '<font style="display:none">start</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		{
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('StartNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
+		else if(selectNodeValue == '<font style="display:none">end</font>' 
+			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+		{
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('EndNode');
+			ss.vertices[0].setValue(algorithmNode);
+		}
+		
+		// ajax接收消息
 		var xmlhttp=new XMLHttpRequest();
 		var ajax_content = null;
 		$.ajax({
@@ -1691,10 +1716,16 @@ ShapeFormatPanel.prototype.addValue = function(div)
 
 ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 {
+	var ss = this.format.getSelectionState();
 	var thisPanel = this;
+	var selectType;
+	if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'AlgorithmNode')
+	{
+		selectType = "Algorithm";
+	}
 	for(i in msg.panelCategoryList)
 	{
-		if(msg.panelCategoryList[i].categoryName == "Algorithm")
+		if(msg.panelCategoryList[i].categoryName == selectType)
 		{
 			var algorithmList = msg.panelCategoryList[i].algorithmList;
 			var div = this.createPanel();
@@ -1732,7 +1763,9 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 					if(ipt.options[m].selected)
 					{
 						algorithmId = ipt.options[m].value;
-						thisPanel.receiveDetailedAlgorithm(algorithmId);
+						ss.vertices[0].setAttribute("algorithmName", ipt.options[m].id);
+						ss.vertices[0].setAttribute("algorithmId", ipt.options[m].value);
+						thisPanel.receiveDetailedAlgorithm(algorithmId, false);
 						break;
 					}
 				}
@@ -1750,319 +1783,146 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 // 					algorithmId = ipt.options[m].value;
 // 				}
 // 			}
-			for(m in ipt.options)
+			// 再次选中  应该是再次选中导致没有删除div
+			if(ss.vertices[0].getAttribute("algorithmName") != null)
 			{
-				if(ipt.options[m].selected)
-				{
-					algorithmId = ipt.options[m].value;
-					thisPanel.receiveDetailedAlgorithm(algorithmId);
-					break;
-// 					console.log(ipt.options[m].text + ":" + m +" : " +ipt.options[m].selected);
-				}
+// 				var toSelect = document.getElementById(ss.vertices[0].getAttribute("algorithmName"));
+				var selectAlgorithm = ss.vertices[0].getAttribute("algorithmName");
+				var toSelect = ipt.options[selectAlgorithm];
+				toSelect.selected = true;
+				thisPanel.receiveDetailedAlgorithm(toSelect.value, true);
 			}
-		}
-	}
-}
-
-
-ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId)
-{
-	var thisPanel = this;
-	var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
-	$.ajax({
-			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
-			//url: "http://10.181.225.236:8080/test_ajax.json",
-// 			url: "http://localhost/javascript/examples/grapheditor/www/test_input.json",
-// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
-			url: detailUrl,
-			dataType: "jsonp",
-			jsonpCallback:"callback",
-			type: "GET",
-			async:false,
-			processData:false,
-			success: function(msg){
-				thisPanel.addDetailedAlgorithm(msg);
-				//var new_div = format.createPanel();
-				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
-				//div.appendChild(new_div);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
-            }
-		});
-
-}
-
-// 全局变量，每次重画之前要删除前一个
-var detailDiv = document.createElement("div");
-ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
-{
-		// 移除前面的放入新选的
-		if(this.container.contains(detailDiv))
-		{
-			this.container.removeChild(detailDiv);
-			detailDiv = document.createElement("div");
-		}
-		for(var i=0;i<msg.panelOptions.length;i++)
-		{
-			var nodePanel = msg.panelOptions[i];
-// 				if(nodePanel.nodeOptionTypeName)
-// 					this.container.appendChild(this.addSelection(this.createPanel(),nodePanel));
-			this.addNodePanel(nodePanel);
-		}
-// 		}
-}
-
-
-ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
-{
-	if(nodePanel.nodeOptionTypeName == "String")
-	{
-		var div = this.createPanel();
-		div.appendChild(this.createTitle(nodePanel.label));
-		var ipt = document.createElement("input");
-		ipt.setAttribute("type", "text");
-		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
-		
-		// 设置位置
-		ipt.style.paddingTop = '2px';
-		ipt.style.paddingBottom = '2px';
-		ipt.style.position = 'relative';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.borderWidth = '0px';
-		ipt.style.width = '180px';
-		ipt.style.height = '20px';
-
-		div.appendChild(ipt);
-
-		detailDiv.appendChild(div);
-// 		this.container.appendChild(div);
-// 		this.container.remove(div);
-	}
-	else if(nodePanel.nodeOptionTypeName == "Numeric")
-	{
-		var div = this.createPanel();
-		div.appendChild(this.createTitle(nodePanel.label));
-		var ipt = document.createElement("input");
-		ipt.setAttribute("type", "text");
-		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
-
-		// 设置位置
-		ipt.style.paddingTop = '2px';
-		ipt.style.paddingBottom = '2px';
-		ipt.style.position = 'relative';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.borderWidth = '0px';
-		ipt.style.width = '180px';
-		ipt.style.height = '20px';
-
-		EventUtil.addHandler(ipt, "keypress", function(event){
-			event = EventUtil.getEvent(event);
-			var target = EventUtil.getTarget(event);
-			var charCode = EventUtil.getCharCode(event);
-
-			if(!/\d/.test(String.fromCharCode(charCode)) && charCode > 9 &&
-				!event.ctrlKey && charCode != 46) {
-					EventUtil.preventDefault(event);
-			}
-
-		});
-		div.appendChild(ipt);
-		detailDiv.appendChild(div);
-// 		this.container.appendChild(div);
-	}
-	else if(nodePanel.nodeOptionTypeName == "Nominal specification")
-	{
-		var div = this.createPanel();
-		div.appendChild(this.createTitle(nodePanel.label));
-		var ipt = document.createElement("select");
-		ipt.setAttribute("type", "text");
-		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
-		
-		// 设置位置
-		ipt.style.paddingTop = '2px';
-		ipt.style.paddingBottom = '2px';
-		ipt.style.position = 'relative';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.marginLeft = '-2px';
-		ipt.style.borderWidth = '0px';
-		ipt.style.width = '180px';
-		ipt.style.height = '20px';
-
-		for(i in nodePanel.panelChoices)
-		{
-			var choice = nodePanel.panelChoices[i];
-			var panelOption = document.createElement("option");
-			panelOption.setAttribute('value', choice.value);
-			panelOption.setAttribute('name', choice.name);
-			panelOption.text = choice.name;
-// 			panelOption.style.position = 'absolute';
-// 			panelOption.style.left = '10px';
-// 			panelOption.style.right = '10px';
-// 			panelOption.style.color = 'rgb(112, 112, 112)';
-// 			panelOption.style.whiteSpace = 'nowrap';
-// 			panelOption.style.overflow = 'hidden';
-// 			panelOption.style.margin = '0px';
-// 			this.addArrow(panelOption);
-// 			panelOption.style.width = '192px';
-// 			panelOption.style.height = '15px';
-			ipt.appendChild(panelOption);
-		}
-		div.appendChild(ipt);
-		detailDiv.appendChild(div);
-// 		this.container.appendChild(div);
-	}
-	this.container.appendChild(detailDiv);
-}
-
-ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
-{
-	var thisPanel = this;
-	for(i in msg.panelCategoryList)
-	{
-		if(msg.panelCategoryList[i].categoryName == "Algorithm")
-		{
-			var algorithmList = msg.panelCategoryList[i].algorithmList;
-			var div = this.createPanel();
-			div.appendChild(this.createTitle(msg.panelCategoryList[i].categoryName));
-			var ipt = document.createElement("select");
-// 			ipt.setAttribute("type", "text");
-			ipt.setAttribute("name", msg.panelCategoryList[i].categoryName);
-// 				ipt.setAttribute("value", nodePanel.defaultValue);
-
-			// 设置位置
-			ipt.style.paddingTop = '2px';
-			ipt.style.paddingBottom = '2px';
-			ipt.style.position = 'relative';
-			ipt.style.marginLeft = '-2px';
-			ipt.style.marginLeft = '-2px';
-			ipt.style.borderWidth = '0px';
-			ipt.style.width = '180px';
-			ipt.style.height = '20px';
-			for(j in algorithmList)
+			else // 初始化
 			{
-				var choice = algorithmList[j];
-				var panelOption = document.createElement("option");
-				panelOption.setAttribute('value', choice.algorithmId);
-				panelOption.setAttribute('name', choice.algorithmName);
-				panelOption.setAttribute('id', choice.algorithmName);
-				panelOption.text = choice.algorithmName;
-				ipt.appendChild(panelOption);
-			}
-			ipt.onchange = function()
-			{
- 				var algorithmId = 0;
- 				var tempIpt = ipt;
 				for(m in ipt.options)
 				{
 					if(ipt.options[m].selected)
 					{
 						algorithmId = ipt.options[m].value;
-						thisPanel.receiveDetailedAlgorithm(algorithmId);
+						ss.vertices[0].setAttribute("algorithmName", ipt.options[m].id);
+						ss.vertices[0].setAttribute("algorithmId", ipt.options[m].value);
+						thisPanel.receiveDetailedAlgorithm(algorithmId, false);
 						break;
+	// 					console.log(ipt.options[m].text + ":" + m +" : " +ipt.options[m].selected);
 					}
-				}
- 				
-			};
-			div.appendChild(ipt);
-			this.container.appendChild(div);
-			// 第一次初始化显示下面的算法具体细节，可能需要改
-			// 同时接受可能也需要一个参数，表示要接收的是哪个算法
-			var algorithmId;
-// 			for(var m = 0; m < ipt.options.length; m++)
-// 			{
-// 				if(ipt.options[m].selected)
-// 				{
-// 					algorithmId = ipt.options[m].value;
-// 				}
-// 			}
-			for(m in ipt.options)
-			{
-				if(ipt.options[m].selected)
-				{
-					algorithmId = ipt.options[m].value;
-					thisPanel.receiveDetailedAlgorithm(algorithmId);
-					break;
-// 					console.log(ipt.options[m].text + ":" + m +" : " +ipt.options[m].selected);
 				}
 			}
 		}
 	}
 }
 
-
-ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId)
+//记录之前选中的algorithm
+var lastAlgorithmId;
+ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, needDraw)
 {
-	var thisPanel = this;
-	var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
-	$.ajax({
-			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
-			//url: "http://10.181.225.236:8080/test_ajax.json",
-// 			url: "http://localhost/javascript/examples/grapheditor/www/test_input.json",
-// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
-			url: detailUrl,
-			dataType: "jsonp",
-			jsonpCallback:"callback",
-			type: "GET",
-			async:false,
-			processData:false,
-			success: function(msg){
-				thisPanel.addDetailedAlgorithm(msg);
-				//var new_div = format.createPanel();
-				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
-				//div.appendChild(new_div);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
-            }
-		});
+	if(lastAlgorithmId != algorithmId || needDraw)
+	{
+		lastAlgorithmId = algorithmId;
+		var thisPanel = this;
+		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
+		$.ajax({
+				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
+				//url: "http://10.181.225.236:8080/test_ajax.json",
+// 				url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+	// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
+				url: detailUrl,
+				dataType: "jsonp",
+				jsonpCallback:"callback",
+				type: "GET",
+				async:false,
+				processData:false,
+				success: function(msg){
+					thisPanel.addDetailedAlgorithm(msg);
+					//var new_div = format.createPanel();
+					//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
+					//div.appendChild(new_div);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+	                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+	            }
+			});
+	}
+
 }
 
 // 全局变量，每次重画之前要删除前一个
 var detailDiv = document.createElement("div");
 ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 {
-// 	if(ajax_content!=null){
-// 			var graphJson = this.xmlToJson(this.editorUi.editor.getGraphXml());
-// 			console.log(JSON.stringify(graphJson));
-// 			var graphData = "callback("+JSON.stringify(graphJson)+");";
-
-			//alert("the msg:"+ajax_content.name);
-// 			var new_div = this.createPanel();
-// 			mxUtils.write(new_div, mxResources.get('new_div',null,ajax_content.name));
-// 			div.appendChild(new_div);
-// 		detailDiv.clear();
-// 		this.container.remove(detailDiv);
-		// 移除前面的放入新选的
-		if(this.container.contains(detailDiv))
+	var ss = this.format.getSelectionState();
+	// 情况3: 选择框选择新元素。移除前面的放入新选的
+	if(this.container.contains(detailDiv))
+	{
+		// 移除旧的div，添加新的
+		this.container.removeChild(detailDiv);
+		detailDiv = document.createElement("div");
+	
+		var selectNodeValue = ss.vertices[0].getValue().tagName;
+		if(selectNodeValue == "AlgorithmNode" )
 		{
-			this.container.removeChild(detailDiv);
-			detailDiv = document.createElement("div");
+			// 移除旧的algorithmNode，添加新的
+			var doc = mxUtils.createXmlDocument();
+			var algorithmNode = doc.createElement('AlgorithmNode');
+			ss.vertices[0].setValue(algorithmNode);
 		}
+		
+
+		// 排序,暂时先不用
+// 		var sortPanelOptions = new Array();
+// 		for(var i=0;i<msg.panelOptions.length;i++)
+// 		{
+// 			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
+// 		}
+// 		for(var i=0;i<sortPanelOptions.length;i++)
+// 		{
+// 			var nodePanel = sortPanelOptions[i];
+// 			this.addNodePanel(nodePanel);
+// 		}
 		for(var i=0;i<msg.panelOptions.length;i++)
 		{
 			var nodePanel = msg.panelOptions[i];
-// 				if(nodePanel.nodeOptionTypeName)
-// 					this.container.appendChild(this.addSelection(this.createPanel(),nodePanel));
 			this.addNodePanel(nodePanel);
 		}
+	}
+	// 情况2: 点了其它地方在点回来；或者是移动了该点
+	else if(detailDiv.hasChildNodes())
+	{
+//			detailDiv = document.createElement("div");
+		this.container.appendChild(detailDiv);
+	}
+	// 情况1: 第一次新建
+	else
+	{
+		// 将元素按照index顺序重新排序
+// 		var sortPanelOptions = new Array();
+// 		for(var i=0;i<msg.panelOptions.length;i++)
+// 		{
+// 			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
 // 		}
+// 		for(var i=0;i<sortPanelOptions.length;i++)
+// 		{
+// 			var nodePanel = sortPanelOptions[i];
+// 			this.addNodePanel(nodePanel);
+// 		}
+		for(var i=0;i<msg.panelOptions.length;i++)
+		{
+			var nodePanel = msg.panelOptions[i];
+			this.addNodePanel(nodePanel);
+		}	
+	}
 }
 
 
 ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 {
+	var ss = this.format.getSelectionState();
 	if(nodePanel.nodeOptionTypeName == "String")
 	{
 		var div = this.createPanel();
 		div.appendChild(this.createTitle(nodePanel.label));
 		var ipt = document.createElement("input");
 		ipt.setAttribute("type", "text");
+		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
 		ipt.setAttribute("value", nodePanel.defaultValue);
 		
@@ -2079,6 +1939,14 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 		div.appendChild(ipt);
 
 		detailDiv.appendChild(div);
+		
+		// 设置属性
+		ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		// 设置监听器
+		ipt.onchange = function()
+		{
+			ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		}
 // 		this.container.appendChild(div);
 // 		this.container.remove(div);
 	}
@@ -2088,6 +1956,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 		div.appendChild(this.createTitle(nodePanel.label));
 		var ipt = document.createElement("input");
 		ipt.setAttribute("type", "text");
+		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
 		ipt.setAttribute("value", nodePanel.defaultValue);
 
@@ -2110,9 +1979,15 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 				!event.ctrlKey && charCode != 46) {
 					EventUtil.preventDefault(event);
 			}
+
 		});
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
+		ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		ipt.onchange = function()
+		{
+			ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		}
 // 		this.container.appendChild(div);
 	}
 	else if(nodePanel.nodeOptionTypeName == "Nominal specification")
@@ -2121,6 +1996,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 		div.appendChild(this.createTitle(nodePanel.label));
 		var ipt = document.createElement("select");
 		ipt.setAttribute("type", "text");
+		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
 		ipt.setAttribute("value", nodePanel.defaultValue);
 		
@@ -2141,20 +2017,29 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 			panelOption.setAttribute('value', choice.value);
 			panelOption.setAttribute('name', choice.name);
 			panelOption.text = choice.name;
-// 			panelOption.style.position = 'absolute';
-// 			panelOption.style.left = '10px';
-// 			panelOption.style.right = '10px';
-// 			panelOption.style.color = 'rgb(112, 112, 112)';
-// 			panelOption.style.whiteSpace = 'nowrap';
-// 			panelOption.style.overflow = 'hidden';
-// 			panelOption.style.margin = '0px';
-// 			this.addArrow(panelOption);
-// 			panelOption.style.width = '192px';
-// 			panelOption.style.height = '15px';
 			ipt.appendChild(panelOption);
 		}
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
+		
+		for(m in ipt.options)
+		{
+			if(ipt.options[m].selected)
+			{
+				ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.options[m].value);
+			}
+		}
+
+		ipt.onchange = function()
+		{
+			for(n in ipt.options)
+			{
+				if(ipt.options[n].selected)
+				{
+					ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.options[n].value);
+				}
+			}
+		}
 // 		this.container.appendChild(div);
 	}
 	this.container.appendChild(detailDiv);

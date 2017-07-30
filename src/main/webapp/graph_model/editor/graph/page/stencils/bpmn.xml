@@ -1159,4 +1159,86 @@
         <fillstroke/>
     </foreground>
 </shape>
+<shape h="60" name="Exclusive Gateway" strokewidth="inherit" w="60">
+    <connections>
+		<constraint x="0.5" y="0" perimeter="0" name="N"/>
+		<constraint x="0.5" y="1" perimeter="0" name="S"/>
+		<constraint x="0" y="0.5" perimeter="0" name="W"/>
+		<constraint x="1" y="0.5" perimeter="0" name="E"/>
+	</connections>
+    <background>
+        <path>
+            <move x="30" y="0"/>
+            <line x="0" y="30"/>
+            <line x="30" y="60"/>
+            <line x="60" y="30"/>
+            <close/>
+        </path>
+    </background>
+    <foreground>
+        <fillstroke/>
+        <path>
+			<move x="20" y="20"/>
+			<line x="40" y="40"/>
+		</path>
+		<stroke/>
+		<path>
+			<move x="20" y="40"/>
+			<line x="40" y="20"/>
+		</path>
+		<stroke/>
+    </foreground>
+</shape>
+<shape h="60" name="Parallel Gateway" strokewidth="inherit" w="60">
+    <connections>
+		<constraint x="0.5" y="0" perimeter="0" name="N"/>
+		<constraint x="0.5" y="1" perimeter="0" name="S"/>
+		<constraint x="0" y="0.5" perimeter="0" name="W"/>
+		<constraint x="1" y="0.5" perimeter="0" name="E"/>
+	</connections>
+    <background>
+        <path>
+            <move x="30" y="0"/>
+            <line x="0" y="30"/>
+            <line x="30" y="60"/>
+            <line x="60" y="30"/>
+            <close/>
+        </path>
+    </background>
+    <foreground>
+        <fillstroke/>
+        <path>
+			<move x="30" y="10"/>
+			<line x="30" y="50"/>
+		</path>
+		<stroke/>
+		<path>
+			<move x="10" y="30"/>
+			<line x="50" y="30"/>
+		</path>
+		<stroke/>
+    </foreground>
+</shape>
+<shape h="60" name="Inclusive Gateway" strokewidth="inherit" w="60">
+    <connections>
+		<constraint x="0.5" y="0" perimeter="0" name="N"/>
+		<constraint x="0.5" y="1" perimeter="0" name="S"/>
+		<constraint x="0" y="0.5" perimeter="0" name="W"/>
+		<constraint x="1" y="0.5" perimeter="0" name="E"/>
+	</connections>
+    <background>
+        <path>
+            <move x="30" y="0"/>
+            <line x="0" y="30"/>
+            <line x="30" y="60"/>
+            <line x="60" y="30"/>
+            <close/>
+        </path>
+    </background>
+    <foreground>
+        <fillstroke/>
+        <ellipse x="12.5" y="12.5" w="35" h="35"/>
+        <stroke/>
+    </foreground>
+</shape>
 </shapes>
