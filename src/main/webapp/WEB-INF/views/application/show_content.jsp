@@ -19,7 +19,7 @@
 				<c:forEach items="${showApplicationDto.referenceList}"
 					var="reference" varStatus="status">
 					<div class="col-md-1 "><h5>[${status.index+1}]</h5></div>
-					<div class="col-md-8">
+					<div class="col-md-11">
 					<h5>
 						<a href="<c:url value="${reference.url }"/>">${reference.content}</a>
 					</h5>
