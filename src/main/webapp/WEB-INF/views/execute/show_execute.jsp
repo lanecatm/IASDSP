@@ -56,6 +56,7 @@ function runAjax(workflowVersionId, sharedProcessRecordId) {
     data["workflowVersionId"] = workflowVersionId;
     data["sharedProcessRecordId"] = sharedProcessRecordId;
     data["uploadFileId"] = $("#uploadFileId").val();
+    data["param"] = $("#run_param").val();
     
     $.ajax({
         type : "POST",

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
+import cn.edu.sjtu.iasdsp.dao.NodeFunctionHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessStarHome;
 import cn.edu.sjtu.iasdsp.dao.SharedProcessRecordHome;
@@ -31,6 +32,7 @@ import cn.edu.sjtu.iasdsp.dto.ReturnRunModelDto;
 import cn.edu.sjtu.iasdsp.dto.RunModelDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
+import cn.edu.sjtu.iasdsp.model.NodeFunction;
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.ProcessStar;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
@@ -85,6 +87,9 @@ public class ProcessService {
 	
 	@Autowired
 	UploadFileHome uploadFileHome;
+	
+	@Autowired
+	NodeFunctionHome nodeFunctionHome;
 
 	@Transactional
 	public ShareExecuteDto showShare() {
@@ -359,4 +364,54 @@ public class ProcessService {
 		return null;
 	  }
 
+	@Transactional
+	public Integer getWorkflowIdFromProcessId(Integer processId){
+		ProcessInformation processInformation = processInformationHome.findById(processId);
+		if(processInformation != null && processInformation.getWorkflowVersion() != null
+				&& processInformation.getWorkflowVersion().getWorkflowInformation() != null){
+			return processInformation.getWorkflowVersion().getWorkflowInformation().getId();
+		}
+		return null;
+	}
+	
+	@Transactional
+	public Integer getWorkflowIdFromWorkflowVersionId(Integer workflowVersionId){
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(workflowVersionId);
+		return workflowVersion.getWorkflowInformation().getId();
+	}
+	
+	@Transactional
+	public NodeFunction getNodeFunctionFromWorkflowId(int workflowId){
+		String nodeFunctionName = "KMean";
+		switch (workflowId) {
+		case 3:
+			nodeFunctionName = "KMean";
+			break;
+		case 267:
+			nodeFunctionName = "Linear regression";
+			break;
+		case 269:
+			nodeFunctionName = "SMOreg";
+			break;
+		case 270:
+			nodeFunctionName = "Hierarchical Clusterer";
+			break;
+		case 271:
+			nodeFunctionName = "Canopy clusterer";
+			break;
+		default:
+			nodeFunctionName = "KMean";
+			break;
+		}
+		NodeFunction nodeFunctionExample = new NodeFunction();
+		nodeFunctionExample.setName(nodeFunctionName);
+		List<NodeFunction> nodeFunctions = nodeFunctionHome.findByExample(nodeFunctionExample);
+		if(nodeFunctions.size() == 0){
+			return null;
+		}
+		else{
+			return nodeFunctions.get(0);
+		}
+	
+	}
 }

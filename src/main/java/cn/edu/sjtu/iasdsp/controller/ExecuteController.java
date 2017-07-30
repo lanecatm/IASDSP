@@ -43,6 +43,8 @@ import cn.edu.sjtu.iasdsp.dto.ReturnRunModelDto;
 import cn.edu.sjtu.iasdsp.dto.RunBackFromEngineDto;
 import cn.edu.sjtu.iasdsp.dto.RunModelDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
+import cn.edu.sjtu.iasdsp.model.NodeFunction;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 import cn.edu.sjtu.iasdsp.service.ProcessService;
 import cn.edu.sjtu.iasdsp.service.RefreshCountService;
 
@@ -82,8 +84,14 @@ public class ExecuteController {
 					shareExecuteDto.setDefaultApplicationId(Integer.parseInt(applicationId));
 				}
 				model.addAttribute("shareExecuteDto", shareExecuteDto);
-				model.addAttribute("workflowVersion",
-						processService.getWorkflowVersion(Integer.parseInt(workflowVersionId)));
+				WorkflowVersion workflowVersion = processService.getWorkflowVersion(Integer.parseInt(workflowVersionId));
+				model.addAttribute("workflowVersion",workflowVersion);
+				
+				
+				NodeFunction nodeFunction = processService.getNodeFunctionFromWorkflowId(
+						processService.getWorkflowIdFromWorkflowVersionId(workflowVersion.getId()));
+				model.addAttribute("nodeFunction", nodeFunction);
+				
 				return "execute/show";
 			} else if (workflowInformationId != null) {
 
@@ -119,7 +127,37 @@ public class ExecuteController {
 
 			// TODO 写一些丑陋的代码
 			String filePath = processService.getFilePathFromUploadFileId(runModelDto.getUploadFileId());
-			MqSenderSimple.run(3, 0, filePath, "3", returnRunModelDto.getProcessInformationId());
+
+			Integer workflowId = processService.getWorkflowIdFromProcessId(returnRunModelDto.getProcessInformationId());
+			Integer algorithmId = 0;
+			switch (workflowId) {
+				case 3:
+					algorithmId = 0;
+					break;
+				case 267:
+					algorithmId = 2;
+					break;
+				case 269:
+					algorithmId = 3;
+					break;
+				case 270:
+					algorithmId = 4;
+					break;
+				case 271:
+					algorithmId = 5;
+					break;
+				default:
+					algorithmId = 0;
+					break;
+			}
+			
+			
+			String param = runModelDto.getParam().isEmpty() ? "3" : runModelDto.getParam();
+
+			MqSenderSimple.run(3, algorithmId, filePath, param, returnRunModelDto.getProcessInformationId());
+			// TODO delete sleep
+			Thread.sleep(500);
+			
 			String returnMsg = MqReceiverThread
 					.receiveProcessId(Integer.toString(returnRunModelDto.getProcessInformationId()));
 			logger.debug("get message:" + returnMsg);
@@ -154,11 +192,12 @@ public class ExecuteController {
 				ResultBackFromEngineDto resultBackFromEngineDto = new ObjectMapper().readValue(returnMsg,
 						ResultBackFromEngineDto.class);
 				logger.debug("resultBackFromEngineDto:" + resultBackFromEngineDto);
-				detailStr = resultBackFromEngineDto.getDetail().getFinalClusterCentroids();
+				detailStr = resultBackFromEngineDto.getDetail().getSummary();
 				detailStr = detailStr.replace("\n", "<br />\n");
-				detailStr = detailStr.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;\t");
-				detailStr = detailStr.replace(" ", "&nbsp; ");
-				processService.setDownloadFilePath(resultBackFromEngineDto.getDetail().getResultFileName(), receiveProcessDto.getProcessId());
+				detailStr = detailStr.replace("\t", "&nbsp;\t");
+				// detailStr = detailStr.replace(" ", "&nbsp; ");
+				processService.setDownloadFilePath(resultBackFromEngineDto.getDetail().getResultFileName(),
+						receiveProcessDto.getProcessId());
 
 			}
 
@@ -285,12 +324,12 @@ public class ExecuteController {
 	}
 
 	@RequestMapping(value = "/download/{processId}", method = RequestMethod.GET)
-	public void download(HttpServletResponse response,@PathVariable("processId") String processId) throws IOException {
+	public void download(HttpServletResponse response, @PathVariable("processId") String processId) throws IOException {
 		logger.debug("into download : " + processId);
 		String dfileName = "result.txt";
 
 		File file = processService.downloadFile(Integer.parseInt(processId));
-		if(!file.exists()){
+		if (!file.exists()) {
 			String errorMessage = "Sorry. The file you are looking for does not exist";
 			System.out.println(errorMessage);
 			OutputStream outputStream = response.getOutputStream();
@@ -298,31 +337,39 @@ public class ExecuteController {
 			outputStream.close();
 			return;
 		}
-		
-		String mimeType= URLConnection.guessContentTypeFromName(file.getName());
-		if(mimeType==null){
+
+		String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+		if (mimeType == null) {
 			System.out.println("mimetype is not detectable, will take default");
 			mimeType = "application/octet-stream";
 		}
-		
-		System.out.println("mimetype : "+mimeType);
-		
-        response.setContentType(mimeType);
-        
-        /* "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser 
-            while others(zip e.g) will be directly downloaded [may provide save as popup, based on your browser setting.]*/
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + dfileName +"\""));
 
-        
-        /* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
-        //response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
-        
-        response.setContentLength((int)file.length());
+		System.out.println("mimetype : " + mimeType);
+
+		response.setContentType(mimeType);
+
+		/*
+		 * "Content-Disposition : inline" will show viewable types [like
+		 * images/text/pdf/anything viewable by browser] right on browser while
+		 * others(zip e.g) will be directly downloaded [may provide save as
+		 * popup, based on your browser setting.]
+		 */
+		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + dfileName + "\""));
+
+		/*
+		 * "Content-Disposition : attachment" will be directly download, may
+		 * provide save as popup, based on your browser setting
+		 */
+		// response.setHeader("Content-Disposition", String.format("attachment;
+		// filename=\"%s\"", file.getName()));
+
+		response.setContentLength((int) file.length());
 
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
 
-        //Copy bytes from source to destination(outputstream in this example), closes both streams.
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+		// Copy bytes from source to destination(outputstream in this example),
+		// closes both streams.
+		FileCopyUtils.copy(inputStream, response.getOutputStream());
 	}
 
 }

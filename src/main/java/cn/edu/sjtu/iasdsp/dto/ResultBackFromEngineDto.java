@@ -9,7 +9,7 @@ package cn.edu.sjtu.iasdsp.dto;
 public class ResultBackFromEngineDto {
 	public class Detail{
 		private String resultFileName;
-		private String finalClusterCentroids;
+		private String summary;
 		private String modelFileName;
 		public String getResultFileName() {
 			return resultFileName;
@@ -17,11 +17,11 @@ public class ResultBackFromEngineDto {
 		public void setResultFileName(String resultFileName) {
 			this.resultFileName = resultFileName;
 		}
-		public String getFinalClusterCentroids() {
-			return finalClusterCentroids;
+		public String getSummary() {
+			return summary;
 		}
-		public void setFinalClusterCentroids(String finalClusterCentroids) {
-			this.finalClusterCentroids = finalClusterCentroids;
+		public void setSummary(String finalClusterCentroids) {
+			this.summary = finalClusterCentroids;
 		}
 		public String getModelFileName() {
 			return modelFileName;
@@ -30,7 +30,7 @@ public class ResultBackFromEngineDto {
 			this.modelFileName = modelFileName;
 		}
 		public String toString() {
-			return "Detail [resultFileName=" + resultFileName + ", finalClusterCentroids=" + finalClusterCentroids
+			return "Detail [resultFileName=" + resultFileName + ", finalClusterCentroids=" + summary
 					+ ", modelFileName=" + modelFileName + "]";
 		}
 		

@@ -7,6 +7,20 @@
 	id="uploadFileForm" name="uploadFileForm" action="execute/upload"
 	method="post">
 
+<!--     <div class="form-group">
+        <div class="col-md-12">
+            <label class="">N</label> 
+			<input type="text" class="form-control" id="run_param"/>        
+		</div>
+    </div> -->
+    
+    
+    
+   <%@ include file="node_fields.jsp"%>
+    
+    
+    
+    
 	<div class="form-group">
 		<div class="col-md-12">
 			<label class="">Input file</label> <input name="files"
@@ -19,6 +33,7 @@
 			<input type="button" value="Upload" name="submit" onclick="uploadJqueryForm()"
 				class="btn btn-success btn-block">
 		</div>
+		<label class="col-md-12" id="upload_status"></label> 
 	</div>
 </form>
 
@@ -35,6 +50,7 @@
 				console.log("Files Uploaded:" + data)
 				var jsonData = JSON.parse(data);
 			    $("#uploadFileId").val(jsonData["message"]);
+			    $("#upload_status").html("Upload succ!");
 			},
 			dataType : "text"
 		}).submit();

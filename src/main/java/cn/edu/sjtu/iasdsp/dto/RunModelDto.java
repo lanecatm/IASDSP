@@ -14,6 +14,7 @@ public class RunModelDto {
 	
 	private Integer uploadFileId;
 	
+	private String param;
 	
 	
 	public RunModelDto() {
@@ -46,11 +47,22 @@ public class RunModelDto {
 	public void setUploadFileId(Integer uploadFileId) {
 		this.uploadFileId = uploadFileId;
 	}
+	
+	
+
+	public String getParam() {
+		return param;
+	}
+
+	public void setParam(String param) {
+		this.param = param;
+	}
 
 	public String toString() {
 		return "RunModelDto [workflowVersionId=" + workflowVersionId + ", sharedProcessRecordId="
-				+ sharedProcessRecordId + ", uploadFileId=" + uploadFileId + "]";
+				+ sharedProcessRecordId + ", uploadFileId=" + uploadFileId + ", param=" + param + "]";
 	}
+
 	
 	
 
