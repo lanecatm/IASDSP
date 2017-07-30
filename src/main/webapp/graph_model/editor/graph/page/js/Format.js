@@ -1822,9 +1822,10 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 	{
 		lastAlgorithmId = lastAlgorithmIdList[selectNodeId];
 	}
+	lastAlgorithmIdList[selectNodeId] = algorithmId;
+	
 	if(lastAlgorithmId != algorithmId || needDraw)
 	{
-		lastAlgorithmId = algorithmId;
 		var thisPanel = this;
 		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
 		$.ajax({
