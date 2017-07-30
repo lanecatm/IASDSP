@@ -3266,7 +3266,7 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
-					var prefix_url = "http://localhost:8080/sjtu/panel/";
+					var prefix_url = "/sjtu/panel/";
 					var model_version = "1";//default value
 					if(window.urlParams.model_version!=null)
 						model_version = window.urlParams.model_version;
