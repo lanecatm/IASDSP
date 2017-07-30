@@ -1811,10 +1811,17 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 	}
 }
 
-//记录之前选中的algorithm
-var lastAlgorithmId;
+var lastAlgorithmIdList = Array();
 ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, needDraw)
 {
+	var ss = this.format.getSelectionState();
+	var selectNodeId = ss.vertices[0].getId();
+	//记录之前选中的algorithm
+	var lastAlgorithmId;
+	if(lastAlgorithmIdList[selectNodeId])
+	{
+		lastAlgorithmId = lastAlgorithmIdList[selectNodeId];
+	}
 	if(lastAlgorithmId != algorithmId || needDraw)
 	{
 		lastAlgorithmId = algorithmId;
@@ -1846,9 +1853,20 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 }
 
 // 全局变量，每次重画之前要删除前一个
-var detailDiv = document.createElement("div");
+var detailDivList = Array();
 ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 {
+	var ss = this.format.getSelectionState();
+	var selectNodeId = ss.vertices[0].getId();
+	var detailDiv;
+	if(detailDivList[selectNodeId])
+	{
+		detailDiv = detailDivList[selectNodeId];
+	}
+	else
+	{
+		detailDiv = document.createElement("div");
+	}
 	var ss = this.format.getSelectionState();
 	// 情况3: 选择框选择新元素。移除前面的放入新选的
 	if(this.container.contains(detailDiv))
@@ -1881,14 +1899,18 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 		for(var i=0;i<msg.panelOptions.length;i++)
 		{
 			var nodePanel = msg.panelOptions[i];
-			this.addNodePanel(nodePanel);
+			this.addNodePanel(nodePanel, detailDiv);
 		}
+		this.container.appendChild(detailDiv);
+		detailDivList[selectNodeId]	= detailDiv;
 	}
 	// 情况2: 点了其它地方在点回来；或者是移动了该点
 	else if(detailDiv.hasChildNodes())
 	{
 //			detailDiv = document.createElement("div");
 		this.container.appendChild(detailDiv);
+		this.container.appendChild(detailDiv);
+		detailDivList[selectNodeId]	= detailDiv;
 	}
 	// 情况1: 第一次新建
 	else
@@ -1907,13 +1929,15 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 		for(var i=0;i<msg.panelOptions.length;i++)
 		{
 			var nodePanel = msg.panelOptions[i];
-			this.addNodePanel(nodePanel);
-		}	
+			this.addNodePanel(nodePanel, detailDiv);
+		}
+		this.container.appendChild(detailDiv);
+		detailDivList[selectNodeId]	= detailDiv;
 	}
 }
 
 
-ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
+ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 {
 	var ss = this.format.getSelectionState();
 	if(nodePanel.nodeOptionTypeName == "String")
@@ -2042,7 +2066,8 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel)
 		}
 // 		this.container.appendChild(div);
 	}
-	this.container.appendChild(detailDiv);
+	// 这个不会报错吗？append了好几次
+// 	this.container.appendChild(detailDiv);
 }
 
 /**
