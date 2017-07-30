@@ -53,14 +53,16 @@ public class HomeService {
 
 		
 		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(267));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(269));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(270));
 
 		
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(74));
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(70));
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(20));
-		
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(267));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(269));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(270));
+
 
 		
 		logger.debug("show succ, return" + showHomePageDto);

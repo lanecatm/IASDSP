@@ -11,6 +11,7 @@
 		  <s:url value="/resources/image/Example1.png" var="workflowImg" />
 			<img src="<c:url value="/upload/${workflowVersion.svg }"/>" alt="" style="max-width: 100%; max-height: 100%;">
 		</div>
+		<div class="col-md-12"> &nbsp;</div>
 		<div class="col-md-2 col-md-offset-10">
 			<a class="btn btn-primary btn-block" onClick="runAjax(${param.model_version}, ${param.running_case})">Run</a>
 		</div>
@@ -36,9 +37,12 @@
 		<div class="col-md-12">
 			<div class="well" id="processResult"></div>
 		</div>
-		<div class="col-md-2 col-md-offset-10">
+		<div class="col-md-3 col-md-offset-9">
 		      <a type="button" class="btn btn-default btn-block" onclick="downloadAjax()"> Download</a>
         </div>
+<!-- 		<div class="col-md-2">
+		  <a type="button" class="btn btn-default btn-block" onclick="refreshAjax()"> Refresh</a>
+        </div> -->
 	</div>
 
 </form>
@@ -56,7 +60,11 @@ function runAjax(workflowVersionId, sharedProcessRecordId) {
     data["workflowVersionId"] = workflowVersionId;
     data["sharedProcessRecordId"] = sharedProcessRecordId;
     data["uploadFileId"] = $("#uploadFileId").val();
-    data["param"] = $("#run_param").val();
+    if($("#run_param").val()==null){
+    	data["param"] = "3";
+    } else{
+        data["param"] = $("#run_param").val();
+    }
     
     $.ajax({
         type : "POST",
@@ -71,7 +79,7 @@ function runAjax(workflowVersionId, sharedProcessRecordId) {
             $("#other").css("display", "block");
             $(function(){
             	setInterval(refreshAjax,100);
-            })
+            }) 
             
         },
         error : function(e) {

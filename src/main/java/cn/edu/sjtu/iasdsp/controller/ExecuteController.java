@@ -156,11 +156,17 @@ public class ExecuteController {
 
 			MqSenderSimple.run(3, algorithmId, filePath, param, returnRunModelDto.getProcessInformationId());
 			// TODO delete sleep
-			Thread.sleep(500);
 			
 			String returnMsg = MqReceiverThread
 					.receiveProcessId(Integer.toString(returnRunModelDto.getProcessInformationId()));
 			logger.debug("get message:" + returnMsg);
+			int index = 0;
+			while (returnMsg == null && index < 10){
+				returnMsg = MqReceiverThread
+						.receiveProcessId(Integer.toString(returnRunModelDto.getProcessInformationId()));
+				++index;
+				Thread.sleep(1000);
+			}
 			RunBackFromEngineDto runBackFromEngineDto = new ObjectMapper().readValue(returnMsg,
 					RunBackFromEngineDto.class);
 			logger.debug("runBackFromEngineDto:" + runBackFromEngineDto);
@@ -181,7 +187,8 @@ public class ExecuteController {
 		try {
 			String returnMsg = null;
 			if (!receiveProcessDto.getIsReceiveResult()) {
-				returnMsg = MqReceiverThread.receiveProcessId(Integer.toString(receiveProcessDto.getProcessId()));
+				returnMsg = MqReceiverThread.receiveResult(Integer.toString(receiveProcessDto.getProcessId()));
+				logger.debug("get result msg:" + returnMsg);
 			}
 
 			String engineProcessID = processService.getEngineProcessIdFromProcessId(receiveProcessDto.getProcessId());
