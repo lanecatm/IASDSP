@@ -20,7 +20,7 @@
 							<ul class="nav nav-tabs nav-bordered" data-spy="affix"
 								role="tablist">
 
-								<li role="presentation"><a href="#version"
+								<li role="presentation" class="active"><a href="#version"
 									aria-controls="version" role="tab" data-toggle="tab"> <span
 										class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
 										Model and Version
@@ -53,7 +53,7 @@
 			<div class="row">
 				<!-- Nav tabs -->
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active " id="introduction">
+					<div role="tabpanel" class="tab-pane " id="introduction">
 						<%--                         <%@ include file="showModelIntroduction.jsp"%>
  --%>
 					</div>
@@ -65,7 +65,7 @@
 						<%--                         <%@ include file="showModelDiagram.jsp"%>
  --%>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="version">
+					<div role="tabpanel" class="tab-pane active" id="version">
 						<%@ include file="show_model.jsp"%>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="case">

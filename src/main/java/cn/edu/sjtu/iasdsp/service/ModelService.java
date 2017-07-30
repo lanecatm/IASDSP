@@ -142,7 +142,27 @@ public class ModelService {
 				showModelDto.getSharedProcessRecordMap().get(wikiPageId).add(sharedProcessRecord);
 			}
 		}
-
+		
+		
+		String versionLabelListStr = "[";
+		String versionStarListStr = "[";
+		String versionTimeListStr = "[";
+		
+		for(WorkflowVersion workflowVersion : workflowInformation.getWorkflowVersions()){
+			versionLabelListStr = versionLabelListStr + "\"" + workflowVersion.getVersionName() + "\", ";
+			Float starNum =   (float) ((workflowVersion.getStarUserNumber() == 0 ||  workflowVersion.getStarUserNumber() == null) ?
+					0:
+					workflowVersion.getAllStar() / workflowVersion.getStarUserNumber());
+			versionStarListStr = versionStarListStr + starNum.toString()+ ", ";
+			versionTimeListStr = versionTimeListStr + workflowVersion.getRunningTime() + ", ";
+		}
+		versionLabelListStr = versionLabelListStr + "]";
+		versionStarListStr = versionStarListStr + "]";
+		versionTimeListStr = versionTimeListStr + "]";
+		showModelDto.setVersionLabelListStr(versionLabelListStr);
+		showModelDto.setVersionStarListStr(versionStarListStr);
+		showModelDto.setVersionTimeListStr(versionTimeListStr);
+		
 		logger.debug("Show function succ, return:" + showModelDto);
 		return showModelDto;
 

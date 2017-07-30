@@ -39,6 +39,9 @@ public class WikiPage implements java.io.Serializable {
 	private String path;
 	private String title;
 	private String content;
+	
+	private String imgUrl;
+	
 	private Date createdAt;
 	private Date updatedAt;
 	// private Set<TaskPerformance> taskPerformances = new
@@ -155,6 +158,16 @@ public class WikiPage implements java.io.Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+		
+	
+	@Column(name = "img_url")
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

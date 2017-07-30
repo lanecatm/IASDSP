@@ -25,7 +25,6 @@ import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
  */
 public class TestWikiPage {
 
-	@Test
 	public void test() {
 		// 测试WikiPages WikiReferences WikiRelationships
 		int testWikiPageId = -1;

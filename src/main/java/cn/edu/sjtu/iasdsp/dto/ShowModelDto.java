@@ -50,6 +50,10 @@ public class ShowModelDto {
 	//diagram
 	private String xml;
 	
+	private String versionLabelListStr;
+	private String versionStarListStr;
+	private String versionTimeListStr;
+	
 
 	public ShowModelDto() {
 		
@@ -244,6 +248,36 @@ public class ShowModelDto {
 
 	
 
+
+
+	public String getVersionLabelListStr() {
+		return versionLabelListStr;
+	}
+
+
+	public void setVersionLabelListStr(String versionLabelListStr) {
+		this.versionLabelListStr = versionLabelListStr;
+	}
+
+
+	public String getVersionStarListStr() {
+		return versionStarListStr;
+	}
+
+
+	public void setVersionStarListStr(String versionStarListStr) {
+		this.versionStarListStr = versionStarListStr;
+	}
+
+
+	public String getVersionTimeListStr() {
+		return versionTimeListStr;
+	}
+
+
+	public void setVersionTimeListStr(String versionTimeListStr) {
+		this.versionTimeListStr = versionTimeListStr;
+	}
 
 
 	public String toString() {

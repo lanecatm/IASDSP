@@ -16,8 +16,20 @@ import cn.edu.sjtu.iasdsp.model.NodeOptionValue;
 * Introduction
 */
 public class PanelAlgorithmDto {
+		
+	private Integer algorithmId;
+	private String name;
+	private String description;
+	private Set<PanelOption> panelOptions = new HashSet<PanelOption>(0);
+	
+	public PanelAlgorithmDto(Integer algorithmId, String name, String description) {
+		this.algorithmId = algorithmId;
+		this.name = name;
+		this.description = description;
+	}
 	
 	public class PanelOption{
+		private Integer nodeId;
 		private Integer nodeIndex;
 		private String name;
 		private String label;
@@ -26,8 +38,9 @@ public class PanelAlgorithmDto {
 		private String nodeOptionTypeName;
 		private Set<PanelChoice> panelChoices = new HashSet<PanelChoice>(0);
 		
-		public PanelOption(Integer nodeIndex, String name, String label, String description, String defaultValue,
+		public PanelOption(Integer nodeId, Integer nodeIndex, String name, String label, String description, String defaultValue,
 				String nodeOptionTypeName, Set<PanelChoice> panelChoices) {
+			this.nodeId = nodeId;
 			this.nodeIndex = nodeIndex;
 			this.name = name;
 			this.label = label;
@@ -37,6 +50,17 @@ public class PanelAlgorithmDto {
 			this.panelChoices = panelChoices;
 		}
 		
+		
+		
+		
+		public Integer getNodeId() {
+			return nodeId;
+		}
+
+		public void setNodeId(Integer nodeId) {
+			this.nodeId = nodeId;
+		}
+
 		public Integer getNodeIndex() {
 			return nodeIndex;
 		}
@@ -102,19 +126,12 @@ public class PanelAlgorithmDto {
 			this.value = value;
 		}
 	}
-	
-	private String name;
-	private String description;
-	private Set<PanelOption> panelOptions = new HashSet<PanelOption>(0);
-	
-	
-	
-	
-	public PanelAlgorithmDto(String name, String description) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.panelOptions = panelOptions;
+
+	public Integer getAlgorithmId() {
+		return algorithmId;
+	}
+	public void setAlgorithmId(Integer algorithmId) {
+		this.algorithmId = algorithmId;
 	}
 	public String getName() {
 		return name;

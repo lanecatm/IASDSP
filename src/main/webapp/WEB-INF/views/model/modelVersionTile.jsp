@@ -48,11 +48,15 @@
 							<a type="button" class="btn btn-success btn-sm" id="version${status.index}PublishBtn" onClick="publishVersion(${workflowVersion.id})"> 
 							     Publish 
 							</a>
-						<a type="button" class="btn btn-info btn-sm"
-                            href="<c:url value="/graph_model/editor/graph/page/index.html?model_version=${workflowVersion.id}"/>"> Edit </a>
+						<a type="button" class="btn btn-info btn-sm" target="_blank"
+                            href="<c:url value="/graph_model/editor/graph/page/index.html?model_version=${workflowVersion.id}"/>">
+                             Edit 
+                        </a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="./version/${workflowVersion.id}/delete"/>"> Delete </a>
+							href="<c:url value="./version/${workflowVersion.id}/delete"/>"> 
+							Delete 
+						</a>
 						</c:if> 
 						  <c:if test="${workflowVersion.status == 1}">
                             <a type="button" disabled="disabled" class="btn btn-success btn-sm" id="version${status.index}PublishBtn" onClick="publishVersion(${workflowVersion.id})"> 
