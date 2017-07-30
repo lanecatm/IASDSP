@@ -29,15 +29,20 @@
 				<li><s:url value="/search/application/"
 						var="searchApplicationUrl" /> <a href="${searchApplicationUrl}">
 						Analytics Application </a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown"> My space <span class="caret"></span>
+				<li class="dropdown">
+				    <s:url value="/my_space/show/" var="mySpaceUrl" />
+				    <a href="${mySpaceUrl}">
+					<!-- class="dropdown-toggle" data-toggle="dropdown"> --> 
+					My space 
+					<%-- <span class="caret"></span> --%>
 				</a>
-					<ul class="dropdown-menu" role="menu">
+					<!-- <ul class="dropdown-menu" role="menu">
 						<li><a href="#"> Models </a></li>
 						<li><a href="#"> Analytics Applications </a></li>
 						<li><a href="#"> Running case </a></li>
 						<li><a href="#"> Running record </a></li>
-					</ul></li>
+					</ul> -->
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<!-- 有用户登录 -->

@@ -8,10 +8,7 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
                 <h2>Execute Model</h2>
-                <h4>
-                    <small>Revised on ${editModelDto.creationTime } by
-                        ${editModelDto.author.userName}</small>
-                </h4>
+                
                 <hr />
         </div>
     </div>
@@ -81,7 +78,7 @@
         </c:otherwise>
         </c:choose>
                 <div class="col-md-offset-3 col-md-6">
-                    <%-- <%@ include file="editModelInfo.jsp"%> --%>
+                    <%@ include file="show_prepare.jsp"%>
                 </div>
             </div>
         <!-- tab -->

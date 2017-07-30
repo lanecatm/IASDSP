@@ -12,6 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	
 	<s:url value="/resources/stylesheet/bootstrap.min.css" var="bootstrapCss" />
 	<s:url value="/resources/stylesheet/animate.css" var="animateCss" />
 	<s:url value="/resources/stylesheet/app.css" var="appCss" />
@@ -46,6 +47,8 @@
     <s:url value="/resources/javascript/ie10-viewport-bug-workaround.js" var="ie10ViewportBugWorkaroundJs" />
     <s:url value="/resources/javascript/juheweb.com.js" var="juhewebJs" />
     <s:url value="/resources/javascript/star-rating.min.js" var="starRatingJs" />
+    <s:url value="/resources/javascript/Chart.js" var="chartJs" />
+    <s:url value="/resources/javascript/bootstrap-filestyle.js" var="bootstrapFilestyleJs" />
 
 
 	<script src="http://libs.baidu.com/jquery/2.1.3/jquery.min.js"></script>
@@ -55,6 +58,8 @@
 	<script src="${ie10ViewportBugWorkaroundJs}"></script>
 	<script src="${juhewebJs}"></script>
 	<script src="${starRatingJs}"></script>
+    <script src="${chartJs}"></script>
+    <script src="${bootstrapFilestyleJs}"></script>
 
 
     <s:url value="/resources/image/LOGO_2_s.png" var="logoSmall" />

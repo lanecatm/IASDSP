@@ -44,7 +44,7 @@
 					<td>${workflowInformation.runningTime}</td>
 					<td>
 					   <a class="btn btn-sm btn-success"
-						href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPageId}"/>">
+						href="<c:url value="/execute?model_version=${workflowVersion.id}"/>">
 							Execute </a>
 					<a class="btn btn-sm btn-danger"
                         href="<c:url value="/model/${workflowInformation}/version/${workflowVersion.id}/delete?back_path=my_space"/>">

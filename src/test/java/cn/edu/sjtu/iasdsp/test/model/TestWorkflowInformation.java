@@ -28,7 +28,6 @@ import cn.edu.sjtu.iasdsp.model.WorkflowTag;
  */
 public class TestWorkflowInformation {
 
-	@Test
 	public void test() {
 		// 测试WikiPages WikiReferences WikiRelationships
 		Transaction transaction = null;

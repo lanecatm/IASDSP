@@ -86,8 +86,28 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Contributor</div>
                         <div class="panel-body">
-                            <s:url value="/resources/image/user.jpg" var="userImg" />
-							<img src="${userImg}" alt="" style="width: 40px; height: 40px;">
+                            <div class = "row">
+								<div class="col-md-12">
+                            
+									<s:url value="/resources/image/user.jpg" var="userImg" />
+									<img src="${userImg}" alt="" style="width: 40px; height: 40px;">
+									<s:url value="/resources/image/user1.png" var="userImg1" />
+									<img src="${userImg1}" alt="" style="width: 40px; height: 40px;">
+									<s:url value="/resources/image/user3.jpg" var="userImg3" />
+									<img src="${userImg3}" alt="" style="width: 40px; height: 40px;">
+							   </div>
+                            </div>
+                            <div class = "row">
+                                <div class="col-md-12"> &nbsp;</div>
+                            
+                                <div class="col-md-12">
+                                    
+									<s:url value="/resources/image/user4.jpg" var="userImg4" />
+									<img src="${userImg4}" alt="" style="width: 40px; height: 40px;">
+									<s:url value="/resources/image/user8.jpg" var="userImg8" />
+									<img src="${userImg8}" alt="" style="width: 40px; height: 40px;">
+								</div>
+                            </div>
                         </div>
                     </div>
                 </div>

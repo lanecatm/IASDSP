@@ -53,19 +53,28 @@ public class PanelService {
 	public PanelAlgorithmDto getSample(int panelId) {
 		NodeFunction nodeFunction = nodeFunctionHome.findById(panelId);
 
-		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(nodeFunction.getName(),
+		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(
+				nodeFunction.getId(), 
+				nodeFunction.getName(),
 				nodeFunction.getDescription());
 		log.info("node option" + nodeFunction.getNodeOptions());
 		for (NodeOption nodeOption : nodeFunction.getNodeOptions()) {
 			Set<PanelAlgorithmDto.PanelChoice> panelChoices = new HashSet<PanelAlgorithmDto.PanelChoice>(0);
 			for (NodeOptionChoice choice : nodeOption.getNodeOptionChoices()) {
-				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(choice.getName(),
+				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(
+						choice.getName(),
 						choice.getValue());
 				panelChoices.add(panelChocice);
 			}
-			PanelAlgorithmDto.PanelOption panelOption = panelAlgorithmDto.new PanelOption(nodeOption.getNodeIndex(),
-					nodeOption.getName(), nodeOption.getLabel(), nodeOption.getDescription(),
-					nodeOption.getDefaultValue(), nodeOption.getNodeOptionType().getName(), panelChoices);
+			PanelAlgorithmDto.PanelOption panelOption = panelAlgorithmDto.new PanelOption(
+					nodeOption.getId(), 
+					nodeOption.getNodeIndex(),
+					nodeOption.getName(), 
+					nodeOption.getLabel(), 
+					nodeOption.getDescription(),
+					nodeOption.getDefaultValue(), 
+					nodeOption.getNodeOptionType().getName(), 
+					panelChoices);
 			log.info("add panelOption:" + panelOption);
 
 			panelAlgorithmDto.getPanelOptions().add(panelOption);

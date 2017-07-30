@@ -58,12 +58,10 @@ public class HomeService {
 		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/stock.png");
 		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/user.jpg");
 		
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(74));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(70));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(20));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(76));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
 		
-		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
@@ -71,10 +69,8 @@ public class HomeService {
 		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(74));
 		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(70));
 		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(20));
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(76));
 		
 		
-		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
 		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");

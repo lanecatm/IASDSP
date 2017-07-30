@@ -119,7 +119,7 @@
 			<c:forEach items="${showHomePageDto.latestWorkflowInformationList}"
 				var="workflowInformation" varStatus="status">
 				<s:url value="${showHomePageDto.latestWorkflowInformationImageUrlList[status.index]}" var="workflowImg" />
-				<%@ include file="model.jsp"%>
+                <%@ include file="model.jsp"%>
 			</c:forEach>
 		</div>
 		<!-- /.row -->
