@@ -1671,26 +1671,29 @@ ShapeFormatPanel.prototype.addValue = function(div)
 	{
 		var selectNodeValue = ss.vertices[0].getValue();
 		// 设置xmlnode，暂时只能设置一个
-		if(selectNodeValue == '<font style="display:none">task</font>' 
+		if(selectNodeValue == 'Task' 
 			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
 		{
 			var doc = mxUtils.createXmlDocument();
 			var algorithmNode = doc.createElement('AlgorithmNode');
 			ss.vertices[0].setValue(algorithmNode);
+			ss.vertices[0].setAttribute("label", "Task");
 		}
-		else if(selectNodeValue == '<font style="display:none">start</font>' 
+		else if(selectNodeValue == 'Start' 
 			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
 		{
 			var doc = mxUtils.createXmlDocument();
 			var algorithmNode = doc.createElement('StartNode');
 			ss.vertices[0].setValue(algorithmNode);
+			ss.vertices[0].setAttribute("label", "Start");
 		}
-		else if(selectNodeValue == '<font style="display:none">end</font>' 
+		else if(selectNodeValue == 'End' 
 			&& ss.vertices[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
 		{
 			var doc = mxUtils.createXmlDocument();
 			var algorithmNode = doc.createElement('EndNode');
 			ss.vertices[0].setValue(algorithmNode);
+			ss.vertices[0].setAttribute("label", "End");
 		}
 		
 		// ajax接收消息
@@ -1762,9 +1765,18 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 				{
 					if(ipt.options[m].selected)
 					{
+						var selectNodeValue = ss.vertices[0].getValue().tagName;
+						if(selectNodeValue == "AlgorithmNode" )
+						{
+							// 移除旧的algorithmNode，添加新的
+							var doc = mxUtils.createXmlDocument();
+							var algorithmNode = doc.createElement('AlgorithmNode');
+							ss.vertices[0].setValue(algorithmNode);
+						}
 						algorithmId = ipt.options[m].value;
 						ss.vertices[0].setAttribute("algorithmName", ipt.options[m].id);
 						ss.vertices[0].setAttribute("algorithmId", ipt.options[m].value);
+						ss.vertices[0].setAttribute("label", "Task");
 						thisPanel.receiveDetailedAlgorithm(algorithmId, false);
 						break;
 					}
@@ -1875,16 +1887,6 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 		// 移除旧的div，添加新的
 		this.container.removeChild(detailDiv);
 		detailDiv = document.createElement("div");
-	
-		var selectNodeValue = ss.vertices[0].getValue().tagName;
-		if(selectNodeValue == "AlgorithmNode" )
-		{
-			// 移除旧的algorithmNode，添加新的
-			var doc = mxUtils.createXmlDocument();
-			var algorithmNode = doc.createElement('AlgorithmNode');
-			ss.vertices[0].setValue(algorithmNode);
-		}
-		
 
 		// 排序,暂时先不用
 // 		var sortPanelOptions = new Array();
