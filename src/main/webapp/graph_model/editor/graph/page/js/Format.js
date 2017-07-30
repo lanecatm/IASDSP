@@ -1617,7 +1617,7 @@ ShapeFormatPanel.ajaxRequest = function(url,method_type,post_data)
 			ajax_content = msg;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+            console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
         }
 	});
 	return ajax_content;
@@ -1700,7 +1700,7 @@ ShapeFormatPanel.prototype.addValue = function(div)
 		var xmlhttp=new XMLHttpRequest();
 		var ajax_content = null;
 		$.ajax({
-			url: "http://localhost:8080/sjtu/panel/get_all_node",
+			url: "/sjtu/panel/get_all_node",
 			dataType: "jsonp",
 			jsonpCallback:"callback",
 			type: "GET",
@@ -1710,7 +1710,7 @@ ShapeFormatPanel.prototype.addValue = function(div)
 				thisPanel.addSelectAlgorithm(msg);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+                console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
             }
 		});
 	}
@@ -1839,7 +1839,7 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 	if(lastAlgorithmId != algorithmId || needDraw)
 	{
 		var thisPanel = this;
-		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
+		var detailUrl = "/sjtu/panel/get_node/" + algorithmId;
 		$.ajax({
 				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 				//url: "http://10.181.225.236:8080/test_ajax.json",
@@ -1858,7 +1858,7 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 					//div.appendChild(new_div);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+					console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
 	            }
 			});
 	}
