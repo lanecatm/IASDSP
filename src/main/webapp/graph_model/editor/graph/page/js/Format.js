@@ -1645,27 +1645,10 @@ ShapeFormatPanel.prototype.addValue = function(div)
 	var btn = null;
 	var thisPanel = this;
 
-
-// 	if (ss.edges.length == 0)
-// 	{
-// 		mxUtils.write(span, mxResources.get('value',null,'Value'));
-// 		div.appendChild(span);
-// 		str = '';
-// 		if(ss.vertices.length > 0){
-// 			str = ss.vertices[0].getValue();
-// 		}
-// 		input = this.addUnitInput(div, str, 20, 44, function()
-// 		{
-// 			update.apply(this, arguments);
-// 		});
-		
-// 		mxUtils.br(div);
-// 		div.style.paddingTop = '10px';
-// 	}
-// 	else
-// 	{
-// 		div.style.paddingTop = '8px';
-// 	}
+	if(ss.edges.length > 0)
+	{
+		this.addEdgeOptions();
+	}
 
 	if(ss.vertices.length>0)
 	{
@@ -1696,39 +1679,128 @@ ShapeFormatPanel.prototype.addValue = function(div)
 			ss.vertices[0].setAttribute("label", "End");
 		}
 		
-		// ajax接收消息
-		var xmlhttp=new XMLHttpRequest();
-		var ajax_content = null;
-		$.ajax({
-			url: "http://localhost:8080/sjtu/panel/get_all_node",
+		// 从这边切开好点
+// 		var selectType;
+		if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'AlgorithmNode')
+		{
+			// selectType = "Algorithm";
+			// ajax接收消息
+			var xmlhttp=new XMLHttpRequest();
+			var ajax_content = null;
+			$.ajax({
+				url: "http://localhost:8080/sjtu/panel/get_all_node",
+				dataType: "jsonp",
+				jsonpCallback:"callback",
+				type: "GET",
+				async:false,
+				processData:false,
+				success: function(msg){
+					thisPanel.addSelectAlgorithm(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+				}
+			});
+		}
+		else if(ss.vertices[0] && (ss.vertices[0].getValue().tagName == 'StartNode' 
+			|| ss.vertices[0].getValue().tagName == 'EndNode'))
+		{
+			if(ss.vertices[0].getValue().tagName == 'StartNode')
+			{
+				var deliverNodeId = "187";
+			}
+			else if(ss.vertices[0].getValue().tagName == 'EndNode')
+			{
+				var deliverNodeId = "188";
+			}
+			//selectType = "StartNode"; or EndNode
+			var thisPanel = this;
+			
+			var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + deliverNodeId;
+			$.ajax({
+					//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
+					//url: "http://10.181.225.236:8080/test_ajax.json",
+					url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+		// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
+		// 			url: detailUrl,
+					dataType: "jsonp",
+					jsonpCallback:"callback",
+					type: "GET",
+					async:false,
+					processData:false,
+					success: function(msg){
+						thisPanel.addDetailedAlgorithm(msg);
+						//var new_div = format.createPanel();
+						//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
+						//div.appendChild(new_div);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+					}
+				});
+
+		}
+// 		else if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'EndNode')
+// 		{
+// 			//selectType = "EndNode";
+// 		}
+
+		
+	}
+	return div;
+}
+
+ShapeFormatPanel.prototype.addEdgeOptions = function()
+{
+	var ss = this.format.getSelectionState();
+
+	if(!ss.edges[0].getValue() || ss.edges[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
+	{
+		var doc = mxUtils.createXmlDocument();
+		var customeEdge = doc.createElement('Edge');
+		ss.edges[0].setValue(customeEdge);
+		ss.edges[0].setAttribute("label", "");
+	}
+	
+	var thisPanel = this;
+	var edgeId = "28";
+	var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + edgeId;
+	$.ajax({
+			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
+			//url: "http://10.181.225.236:8080/test_ajax.json",
+				url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
+// 			url: detailUrl,
 			dataType: "jsonp",
 			jsonpCallback:"callback",
 			type: "GET",
 			async:false,
 			processData:false,
 			success: function(msg){
-				thisPanel.addSelectAlgorithm(msg);
+				thisPanel.addDetailedAlgorithm(msg);
+				//var new_div = format.createPanel();
+				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
+				//div.appendChild(new_div);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
-            }
+				alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+			}
 		});
-	}
-	return div;
+}
+
+ShapeFormatPanel.prototype.addEdgePanel = function(msg)
+{
+
 }
 
 ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 {
 	var ss = this.format.getSelectionState();
 	var thisPanel = this;
-	var selectType;
-	if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'AlgorithmNode')
-	{
-		selectType = "Algorithm";
-	}
+	
 	for(i in msg.panelCategoryList)
 	{
-		if(msg.panelCategoryList[i].categoryName == selectType)
+		if(msg.panelCategoryList[i].categoryName == "Algorithm")
 		{
 			var algorithmList = msg.panelCategoryList[i].algorithmList;
 			var div = this.createPanel();
@@ -1820,6 +1892,10 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 				}
 			}
 		}
+// 		else if(selectType == "StartNode" && msg.panelCategoryList[i].categoryName == selectType)
+// 		{
+
+// 		}
 	}
 }
 
@@ -1870,7 +1946,18 @@ var detailDivList = Array();
 ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 {
 	var ss = this.format.getSelectionState();
-	var selectNodeId = ss.vertices[0].getId();
+	
+	// 之后可以改成传递参数进来
+	if(ss.vertices[0])
+	{
+		var selectNodeId = ss.vertices[0].getId();
+	}
+	else if(ss.edges[0])
+	{
+		var selectNodeId = ss.edges[0].getId();
+	}
+	
+	
 	var detailDiv;
 	if(detailDivList[selectNodeId])
 	{
@@ -1943,6 +2030,16 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 {
 	var ss = this.format.getSelectionState();
+	var graphObject;
+	if (ss.vertices[0])
+	{
+		graphObject = ss.vertices[0];
+	}
+	else if(ss.edges[0])
+	{
+		graphObject = ss.edges[0];
+	}
+	
 	if(nodePanel.nodeOptionTypeName == "String")
 	{
 		var div = this.createPanel();
@@ -1968,11 +2065,11 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		detailDiv.appendChild(div);
 		
 		// 设置属性
-		ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		graphObject.setAttribute("Algorithm_"+ipt.id, ipt.value);
 		// 设置监听器
 		ipt.onchange = function()
 		{
-			ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+			graphObject.setAttribute("Algorithm_"+ipt.id, ipt.value);
 		}
 // 		this.container.appendChild(div);
 // 		this.container.remove(div);
@@ -2010,10 +2107,10 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		});
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
-		ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+		graphObject.setAttribute("Algorithm_"+ipt.id, ipt.value);
 		ipt.onchange = function()
 		{
-			ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.value);
+			graphObject.setAttribute("Algorithm_"+ipt.id, ipt.value);
 		}
 // 		this.container.appendChild(div);
 	}
@@ -2053,7 +2150,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		{
 			if(ipt.options[m].selected)
 			{
-				ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.options[m].value);
+				graphObject.setAttribute("Algorithm_"+ipt.id, ipt.options[m].value);
 			}
 		}
 
@@ -2063,7 +2160,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 			{
 				if(ipt.options[n].selected)
 				{
-					ss.vertices[0].setAttribute("Algorithm_"+ipt.id, ipt.options[n].value);
+					graphObject.setAttribute("Algorithm_"+ipt.id, ipt.options[n].value);
 				}
 			}
 		}
