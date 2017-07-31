@@ -15,7 +15,7 @@
 				<h1 class="text-center">Analysis Applications</h1>
 			</div>
 			<hr />
-			<sf:form method="post" modelAttribute="searchDto" action="application"
+			<sf:form method="post" modelAttribute="searchDto" action="/sjtu/search/application"
 				cssClass="form-horizontal">
 
 				<div class="input-group">
