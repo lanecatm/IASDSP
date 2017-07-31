@@ -15,7 +15,7 @@
 				<h1 class="text-center">Analysis Applications</h1>
 			</div>
 			<hr />
-			<sf:form method="post" modelAttribute="searchDto" action="application"
+			<sf:form method="post" modelAttribute="searchDto" action="/sjtu/search/application"
 				cssClass="form-horizontal">
 
 				<div class="input-group">
@@ -62,7 +62,7 @@
 			<div class="row">
 				<c:forEach items="${searchApplicationResultDto.wikiPageList}"
 					var="wikiPage" varStatus="status">
-					<s:url value="/resources/image/stock.jpg" var="applicationImg" />
+					<s:url value="${wikiPage.imgUrl }" var="applicationImg" />
 					<%@ include file="application_tile.jsp"%>
 				</c:forEach>
 			</div>

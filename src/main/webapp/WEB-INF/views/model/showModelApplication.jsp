@@ -12,8 +12,8 @@
 			<div class="panel-body"> -->
 				<table class="table table-bordered">
 				<tr>
-					<th>Id</th>
-					<th>Name</th>
+<!-- 					<th>Id</th>
+ -->					<th>Name</th>
 					<th>Model version</th>
 					<th>Share group</th>
 					<th>Share input file</th>
@@ -26,8 +26,8 @@
 				<c:forEach items="${showModelDto.sharedProcessRecordMap[wikiPage.id]}" 
 				    var="sharedProcessRecord">
 				    <tr>
-						<td>${sharedProcessRecord.id}</td>
-						<td>${sharedProcessRecord.name}</td>
+<%-- 						<td>${sharedProcessRecord.id}</td>
+ --%>						<td>${sharedProcessRecord.name}</td>
 						<td>${sharedProcessRecord.workflowVersion.versionName}</td>
 						<td>${sharedProcessRecord.executeDepartment.name}</td>
 						<td>${sharedProcessRecord.isSharedSampleInput}</td>

@@ -40,40 +40,30 @@ public class HomeService {
 		ShowHomePageDto showHomePageDto = new ShowHomePageDto();
 		showHomePageDto.getPopularWikiPageList().add(wikiPageHome.findById(33));
 		showHomePageDto.getPopularWikiPageList().add(wikiPageHome.findById(35));
-		showHomePageDto.getPopularWikiPageList().add(wikiPageHome.findById(36));
+		showHomePageDto.getPopularWikiPageList().add(wikiPageHome.findById(249));
 		showHomePageDto.getPopularWikiPageList().add(wikiPageHome.findById(37));
 		
-		showHomePageDto.getPopularWikiPageImageUrlList().add("/resources/image/cpu.png");
-		showHomePageDto.getPopularWikiPageImageUrlList().add("/resources/image/memory.jpg");
-		showHomePageDto.getPopularWikiPageImageUrlList().add("/resources/image/stock.png");
-		showHomePageDto.getPopularWikiPageImageUrlList().add("/resources/image/user.jpg");
+
 		
 		showHomePageDto.getLatestWikiPageList().add(wikiPageHome.findById(33));
 		showHomePageDto.getLatestWikiPageList().add(wikiPageHome.findById(35));
-		showHomePageDto.getLatestWikiPageList().add(wikiPageHome.findById(36));
+		showHomePageDto.getLatestWikiPageList().add(wikiPageHome.findById(249));
 		showHomePageDto.getLatestWikiPageList().add(wikiPageHome.findById(37));
 		
-		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/cpu.png");
-		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/memory.jpg");
-		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/stock.png");
-		showHomePageDto.getLatestWikiPageImageUrlList().add("/resources/image/user.jpg");
+
 		
 		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
-		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(267));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(269));
+		showHomePageDto.getPopularWorkflowInformationList().add(workflowInformationHome.findById(270));
+
 		
-		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
-		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
-		showHomePageDto.getPopularWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
-		
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(74));
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(70));
-		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(20));
-		
-		
-		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
-		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
-		showHomePageDto.getLatestWorkflowInformationImageUrlList().add("/resources/image/Example1.png");
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(3));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(267));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(269));
+		showHomePageDto.getLatestWorkflowInformationList().add(workflowInformationHome.findById(270));
+
+
 		
 		logger.debug("show succ, return" + showHomePageDto);
 		return showHomePageDto;

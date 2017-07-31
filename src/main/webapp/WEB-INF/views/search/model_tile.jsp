@@ -6,7 +6,7 @@
 <div class="col-md-4 col-sm-6 hero-feature">
 	<div class="thumbnail "
 		style="background-color: #f8f8f8; border: #f8f8f8;">
-		<div style="height:100px;display: table-cell; vertical-align: middle;text-align: center;">
+		<div style="height:250px;display: table-cell; vertical-align: middle;text-align: center;">
 		<a class="hero-a"
 			href="<c:url value="/model/${workflowInformation.id}/show"/>" style="vertical-align:middle;">
 			<c:if test="${workflowInformation.defaultVersion != null &&workflowInformation.defaultVersion.svg!= null }">

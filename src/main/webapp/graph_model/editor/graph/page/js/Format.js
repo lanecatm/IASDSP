@@ -1617,7 +1617,7 @@ ShapeFormatPanel.ajaxRequest = function(url,method_type,post_data)
 			ajax_content = msg;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+            console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
         }
 	});
 	return ajax_content;
@@ -1688,7 +1688,8 @@ ShapeFormatPanel.prototype.addValue = function(div)
 			var xmlhttp=new XMLHttpRequest();
 			var ajax_content = null;
 			$.ajax({
-				url: "http://localhost:8080/sjtu/panel/get_all_node",
+//				url: "http://localhost:8080/sjtu/panel/get_all_node",
+				url: "/sjtu/panel/get_all_node",
 				dataType: "jsonp",
 				jsonpCallback:"callback",
 				type: "GET",
@@ -1716,7 +1717,7 @@ ShapeFormatPanel.prototype.addValue = function(div)
 			//selectType = "StartNode"; or EndNode
 			var thisPanel = this;
 			
-			var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + deliverNodeId;
+			var detailUrl = "/sjtu/panel/get_node/" + deliverNodeId;
 			$.ajax({
 					//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 					//url: "http://10.181.225.236:8080/test_ajax.json",
@@ -1764,11 +1765,11 @@ ShapeFormatPanel.prototype.addEdgeOptions = function()
 	
 	var thisPanel = this;
 	var edgeId = "28";
-	var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + edgeId;
+	var detailUrl = "/sjtu/panel/get_node/" + edgeId;
 	$.ajax({
 			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 			//url: "http://10.181.225.236:8080/test_ajax.json",
-				url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+			url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
 // 			url: "http://localhost:8080/sjtu/panel/get_node/20",
 // 			url: detailUrl,
 			dataType: "jsonp",
@@ -1783,15 +1784,15 @@ ShapeFormatPanel.prototype.addEdgeOptions = function()
 				//div.appendChild(new_div);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+				console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
 			}
 		});
 }
 
-ShapeFormatPanel.prototype.addEdgePanel = function(msg)
-{
-
-}
+//ShapeFormatPanel.prototype.addEdgePanel = function(msg)
+//{
+//
+//}
 
 ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 {
@@ -1915,7 +1916,7 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 	if(lastAlgorithmId != algorithmId || needDraw)
 	{
 		var thisPanel = this;
-		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
+		var detailUrl = "/sjtu/panel/get_node/" + algorithmId;
 		$.ajax({
 				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 				//url: "http://10.181.225.236:8080/test_ajax.json",
@@ -1934,7 +1935,7 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 					//div.appendChild(new_div);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+					console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
 	            }
 			});
 	}

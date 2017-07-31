@@ -58,8 +58,8 @@
 							<h5>Running cases</h5>
 							<table class="table table-bordered">
 								<tr>
-                                <th>Id</th>
-								<th>Name</th>
+<!--                                 <th>Id</th>
+ -->								<th>Name</th>
 								<th>Model version</th>
 								<th>Share group</th>
 								<th>Share input file</th>
@@ -72,8 +72,8 @@
 								<c:forEach items="${showApplicationDto.shareRecordMap[workflowInformation.id]}"
 							var="shareRecord" varStatus="status2">
 								<tr>
-									<td>${shareRecord.id}</td>
-									<td>${shareRecord.name}</td>
+<%-- 									<td>${shareRecord.id}</td>
+ --%>									<td>${shareRecord.name}</td>
 									<td>${shareRecord.workflowVersion.versionName}</td>
 									<td>${shareRecord.executeDepartment.name}</td>
 									<td>${shareRecord.isSharedSampleInput}</td>
@@ -104,8 +104,8 @@
                             <h5>History versions</h5>
                             <table class="table table-bordered">
                                 <tr>
-                                <th>Id</th>
-                                <th>Version name</th>
+<!--                                 <th>Id</th>
+ -->                                <th>Version name</th>
                                 <th>Description</th>
                                 <th><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 								</th>
@@ -117,8 +117,8 @@
 									var="workflowVersion" varStatus="status1">
                                 <c:if test="${workflowVersion.status == 1}">
                                 <tr>
-                                    <td>${workflowVersion.id}</td>
-                                    <td>${workflowVersion.versionName}</td>
+<%--                                     <td>${workflowVersion.id}</td>
+ --%>                                    <td>${workflowVersion.versionName}</td>
                                     <td>${workflowVersion.versionDescription}</td>
                                     <td>
 									   <c:if test="${workflowVersion.starUserNumber!=0}">

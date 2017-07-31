@@ -10,6 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +25,8 @@ public class UploadFile implements java.io.Serializable {
 	private Integer id;
 	private ProcessInformation processInformation;
 	private String name;
-	private String path;
+	private String abstractPath;
+	private String relativePath;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -36,11 +38,14 @@ public class UploadFile implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public UploadFile(ProcessInformation processInformation, String name, String path, Date createdAt,
-			Date updatedAt) {
+	
+
+	public UploadFile(ProcessInformation processInformation, String name, String abstractPath, String relativePath,
+			Date createdAt, Date updatedAt) {
 		this.processInformation = processInformation;
 		this.name = name;
-		this.path = path;
+		this.abstractPath = abstractPath;
+		this.relativePath = relativePath;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -57,15 +62,7 @@ public class UploadFile implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "process_information_id")
-	public ProcessInformation getProcessInformations() {
-		return this.processInformation;
-	}
 
-	public void setProcessInformations(ProcessInformation processInformation) {
-		this.processInformation = processInformation;
-	}
 
 	@Column(name = "name", length = 65535)
 	public String getName() {
@@ -76,14 +73,7 @@ public class UploadFile implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "path", length = 65535)
-	public String getPath() {
-		return this.path;
-	}
 
-	public void setPath(String path) {
-		this.path = path;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, length = 19)
@@ -94,6 +84,36 @@ public class UploadFile implements java.io.Serializable {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "process_information_id")
+	public ProcessInformation getProcessInformation() {
+		return processInformation;
+	}
+
+	public void setProcessInformation(ProcessInformation processInformation) {
+		this.processInformation = processInformation;
+	}
+
+	@Column(name = "abstract_path", length = 65535)
+	public String getAbstractPath() {
+		return abstractPath;
+	}
+
+	public void setAbstractPath(String abstractPath) {
+		this.abstractPath = abstractPath;
+	}
+
+	@Column(name = "relative_path", length = 65535)
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
+	}
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false, length = 19)
