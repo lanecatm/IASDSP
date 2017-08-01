@@ -1645,12 +1645,12 @@ ShapeFormatPanel.prototype.addValue = function(div)
 	var btn = null;
 	var thisPanel = this;
 
-	if(ss.edges.length > 0)
+	if(ss.edges.length == 1)
 	{
 		this.addEdgeOptions();
 	}
 
-	if(ss.vertices.length>0)
+	if(ss.vertices.length == 1)
 	{
 		var selectNodeValue = ss.vertices[0].getValue();
 		// 设置xmlnode，暂时只能设置一个
@@ -1686,10 +1686,9 @@ ShapeFormatPanel.prototype.addValue = function(div)
 			// selectType = "Algorithm";
 			// ajax接收消息
 			var xmlhttp=new XMLHttpRequest();
-			var ajax_content = null;
 			$.ajax({
 //				url: "http://localhost:8080/sjtu/panel/get_all_node",
-				url: "/sjtu/panel/get_all_node",
+ 				url: "/sjtu/panel/get_all_node",
 				dataType: "jsonp",
 				jsonpCallback:"callback",
 				type: "GET",
@@ -1699,54 +1698,25 @@ ShapeFormatPanel.prototype.addValue = function(div)
 					thisPanel.addSelectAlgorithm(msg);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+					console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
 				}
 			});
 		}
 		else if(ss.vertices[0] && (ss.vertices[0].getValue().tagName == 'StartNode' 
 			|| ss.vertices[0].getValue().tagName == 'EndNode'))
 		{
+			var nodeType;
 			if(ss.vertices[0].getValue().tagName == 'StartNode')
 			{
-				var deliverNodeId = "187";
+				nodeType = "StartNode";
 			}
 			else if(ss.vertices[0].getValue().tagName == 'EndNode')
 			{
-				var deliverNodeId = "188";
+				nodeType = "EndNode";
 			}
-			//selectType = "StartNode"; or EndNode
-			var thisPanel = this;
-			
-			var detailUrl = "/sjtu/panel/get_node/" + deliverNodeId;
-			$.ajax({
-					//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
-					//url: "http://10.181.225.236:8080/test_ajax.json",
-					url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
-		// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
-		// 			url: detailUrl,
-					dataType: "jsonp",
-					jsonpCallback:"callback",
-					type: "GET",
-					async:false,
-					processData:false,
-					success: function(msg){
-						thisPanel.addDetailedAlgorithm(msg);
-						//var new_div = format.createPanel();
-						//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
-						//div.appendChild(new_div);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
-					}
-				});
-
+			//selectType = "StartNode"; or EndNode			
+			this.receiveSingleId(nodeType);
 		}
-// 		else if(ss.vertices[0] && ss.vertices[0].getValue().tagName == 'EndNode')
-// 		{
-// 			//selectType = "EndNode";
-// 		}
-
-		
 	}
 	return div;
 }
@@ -1754,6 +1724,7 @@ ShapeFormatPanel.prototype.addValue = function(div)
 ShapeFormatPanel.prototype.addEdgeOptions = function()
 {
 	var ss = this.format.getSelectionState();
+	var thisPanel = this;
 
 	if(!ss.edges[0].getValue() || ss.edges[0].getValue().nodeType != mxConstants.NODETYPE_ELEMENT)
 	{
@@ -1763,36 +1734,70 @@ ShapeFormatPanel.prototype.addEdgeOptions = function()
 		ss.edges[0].setAttribute("label", "");
 	}
 	
-	var thisPanel = this;
-	var edgeId = "28";
-	var detailUrl = "/sjtu/panel/get_node/" + edgeId;
-	$.ajax({
-			//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
-			//url: "http://10.181.225.236:8080/test_ajax.json",
-			url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
-// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
-// 			url: detailUrl,
-			dataType: "jsonp",
-			jsonpCallback:"callback",
-			type: "GET",
-			async:false,
-			processData:false,
-			success: function(msg){
-				thisPanel.addDetailedAlgorithm(msg);
-				//var new_div = format.createPanel();
-				//mxUtils.write(new_div, mxResources.get('new_div',null,msg.name));
-				//div.appendChild(new_div);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
-			}
-		});
+	this.receiveSingleId("Edge");
 }
 
-//ShapeFormatPanel.prototype.addEdgePanel = function(msg)
-//{
-//
-//}
+ShapeFormatPanel.prototype.receiveSingleId = function(nodeType)
+{
+	var thisPanel = this;
+	var xmlhttp=new XMLHttpRequest();
+	$.ajax({
+//		url: "http://localhost:8080/sjtu/panel/get_all_node",
+		url: "/sjtu/panel/get_all_node",
+		dataType: "jsonp",
+		jsonpCallback:"callback",
+		type: "GET",
+		async:false,
+		processData:false,
+		success: function(msg){
+			thisPanel.addSingelId(msg, nodeType);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+		}
+	});
+}
+
+ShapeFormatPanel.prototype.addSingelId = function(msg, nodeType)
+{
+	var thisPanel = this;
+	var deliverNodeId;
+	for(i in msg.panelCategoryList)
+	{
+		if(msg.panelCategoryList[i].categoryName == nodeType)
+		{
+			if(msg.panelCategoryList[i].algorithmList[0])
+			{
+				deliverNodeId = msg.panelCategoryList[i].algorithmList[0].algorithmId;
+				break;	
+			}
+		}
+	}
+
+	if(deliverNodeId)
+	{
+	 	var detailUrl = "/sjtu/panel/get_node/" + deliverNodeId;
+//		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + deliverNodeId;
+		$.ajax({
+				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
+				//url: "http://10.181.225.236:8080/test_ajax.json",
+	// 			url: "http://localhost/javascript/examples/grapheditor/www/new_input.json",
+	// 			url: "http://localhost:8080/sjtu/panel/get_node/20",
+				url: detailUrl,
+				dataType: "jsonp",
+				jsonpCallback:"callback",
+				type: "GET",
+				async:false,
+				processData:false,
+				success: function(msg){
+					thisPanel.addDetailedAlgorithm(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest.status+","+XMLHttpRequest.readyState+textStatus+errorThrown);
+				}
+			});	
+	}
+}
 
 ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 {
@@ -1916,7 +1921,8 @@ ShapeFormatPanel.prototype.receiveDetailedAlgorithm = function(algorithmId, need
 	if(lastAlgorithmId != algorithmId || needDraw)
 	{
 		var thisPanel = this;
-		var detailUrl = "/sjtu/panel/get_node/" + algorithmId;
+ 		var detailUrl = "/sjtu/panel/get_node/" + algorithmId;
+//		var detailUrl = "http://localhost:8080/sjtu/panel/get_node/" + algorithmId;
 		$.ajax({
 				//url: "http://192.168.1.110:8080/sjtu/panel/get_node/25",
 				//url: "http://10.181.225.236:8080/test_ajax.json",
