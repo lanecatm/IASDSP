@@ -133,38 +133,14 @@ public class ExecuteController {
 		try {
 			ReturnRunModelDto returnRunModelDto = processService.createProcessInformation(runModelDto);
 			refreshCountService.refreshAll();
+			
 
 			// TODO 写一些丑陋的代码
 			String filePath = processService.getFilePathFromUploadFileId(runModelDto.getUploadFileId());
 
-			Integer workflowId = processService.getWorkflowIdFromProcessId(returnRunModelDto.getProcessInformationId());
 			Integer algorithmId = 0;
-			switch (workflowId) {
-				case 3:
-					algorithmId = 0;
-					break;
-				case 267:
-					algorithmId = 2;
-					break;
-				case 269:
-					algorithmId = 3;
-					break;
-				case 270:
-					algorithmId = 4;
-					break;
-				case 271:
-					algorithmId = 5;
-					break;
-				default:
-					algorithmId = 0;
-					break;
-			}
-			
-			
-			String param = runModelDto.getParam().isEmpty() ? "3" : runModelDto.getParam();
 
-			MqSenderSimple.run(3, algorithmId, filePath, param, returnRunModelDto.getProcessInformationId());
-			// TODO delete sleep
+			MqSenderSimple.run(3, algorithmId, filePath, "3", returnRunModelDto.getProcessInformationId());
 			
 			String returnMsg = MqReceiverThread
 					.receiveProcessId(Integer.toString(returnRunModelDto.getProcessInformationId()));
@@ -372,11 +348,14 @@ public class ExecuteController {
 
 	@ResponseBody
 	@RequestMapping(value = "/save_param", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MessageDto> saveParam(SaveProcessParamDto saveProcessParamDto) {
+	public ResponseEntity<List<Integer>> saveParam(SaveProcessParamDto saveProcessParamDto) {
 		logger.debug("into saveParam, param:" + saveProcessParamDto);
-		
-		
-		return ResponseEntity.accepted().body(new MessageDto("succ"));
+		try {
+			List<Integer> nodeProcessInformationList = processService.saveNodeProcessInformation(saveProcessParamDto);
+			return ResponseEntity.accepted().body(nodeProcessInformationList);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 }

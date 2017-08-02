@@ -66,6 +66,7 @@
 		}).submit();
 	}
 
+	var nodeInformationList;
 
 	function submitParamAjax() {
             $.ajax({
@@ -73,7 +74,8 @@
                 url:'/sjtu/execute/save_param',
                 data:$('#saveProcessParamDto').serialize(),
                 success:function(data){
-                    alert(data);
+                    console.log(data);
+                    nodeInformationList = data;
                 },
                 error:function()
                 {

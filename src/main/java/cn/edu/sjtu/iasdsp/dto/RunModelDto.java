@@ -1,4 +1,8 @@
 package cn.edu.sjtu.iasdsp.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn
@@ -15,6 +19,8 @@ public class RunModelDto {
 	private Integer uploadFileId;
 	
 	private String param;
+	
+	private List<Integer> nodeInformationList = new ArrayList<Integer>(0);
 	
 	
 	public RunModelDto() {
@@ -58,11 +64,21 @@ public class RunModelDto {
 		this.param = param;
 	}
 
-	public String toString() {
-		return "RunModelDto [workflowVersionId=" + workflowVersionId + ", sharedProcessRecordId="
-				+ sharedProcessRecordId + ", uploadFileId=" + uploadFileId + ", param=" + param + "]";
+	public List<Integer> getNodeInformationList() {
+		return nodeInformationList;
 	}
 
+	public void setNodeInformationList(List<Integer> nodeInformationList) {
+		this.nodeInformationList = nodeInformationList;
+	}
+
+	@Override
+	public String toString() {
+		return "RunModelDto [workflowVersionId=" + workflowVersionId + ", sharedProcessRecordId="
+				+ sharedProcessRecordId + ", uploadFileId=" + uploadFileId + ", param=" + param
+				+ ", nodeInformationList=" + nodeInformationList + "]";
+	}
+	
 	
 	
 

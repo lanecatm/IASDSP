@@ -60,6 +60,7 @@ function runAjax(workflowVersionId, sharedProcessRecordId) {
     data["workflowVersionId"] = workflowVersionId;
     data["sharedProcessRecordId"] = sharedProcessRecordId;
     data["uploadFileId"] = $("#uploadFileId").val();
+    data["nodeInformationList"] = nodeInformationList;
     if($("#run_param").val()==null){
     	data["param"] = "3";
     } else{

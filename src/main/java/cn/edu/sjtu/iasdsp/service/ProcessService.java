@@ -3,6 +3,7 @@ package cn.edu.sjtu.iasdsp.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.NodeFunctionHome;
+import cn.edu.sjtu.iasdsp.dao.NodeOptionHome;
+import cn.edu.sjtu.iasdsp.dao.NodeOptionValueHome;
 import cn.edu.sjtu.iasdsp.dao.NodeProcessInformationHome;
 import cn.edu.sjtu.iasdsp.dao.NodeProcessOptionValueHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
@@ -38,6 +41,7 @@ import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
+import cn.edu.sjtu.iasdsp.model.NodeOption;
 import cn.edu.sjtu.iasdsp.model.NodeProcessInformation;
 import cn.edu.sjtu.iasdsp.model.NodeProcessOptionValue;
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
@@ -104,6 +108,13 @@ public class ProcessService {
 	@Autowired
 	NodeProcessOptionValueHome nodeProcessOptionValueHome;
 
+	@Autowired
+	NodeOptionHome nodeOptionHome;
+	
+	@Autowired
+	NodeOptionValueHome nodeOptionValueHome;
+	
+	
 	@Transactional
 	public ShareExecuteDto showShare() {
 		ShareExecuteDto shareExecuteDto = new ShareExecuteDto();
@@ -151,6 +162,15 @@ public class ProcessService {
 			UploadFile uploadFile = uploadFileHome.findById(runModelDto.getUploadFileId());
 			uploadFile.setProcessInformation(processInformation);
 			uploadFileHome.attachDirty(uploadFile);
+		}
+		
+		
+		for(Integer nodeProcessInformationId :runModelDto.getNodeInformationList()){
+			NodeProcessInformation nodeProcessInformation = nodeProcessInformationHome.findById(nodeProcessInformationId);
+			if(nodeProcessInformation != null){
+				nodeProcessInformation.setProcessInformation(processInformation);
+				nodeProcessInformationHome.persist(nodeProcessInformation);
+			}
 		}
 
 		return new ReturnRunModelDto(processInformation.getId());
@@ -395,7 +415,8 @@ public class ProcessService {
 	
 	
 	@Transactional
-	public Integer saveNodeProcessInformation(SaveProcessParamDto saveProcessParamDto){
+	public List<Integer> saveNodeProcessInformation(SaveProcessParamDto saveProcessParamDto){
+		List<Integer> processInformationIdList = new ArrayList<Integer>(0);
 		for (NodeProcessInformationDto nodeProcessInformationDto : saveProcessParamDto.getNodeProcessInformations()){
 			NodeFunction nodeFunction = nodeFunctionHome.findById(nodeProcessInformationDto.getNodeFunctionId());
 			NodeProcessInformation nodeProcessInformation = new NodeProcessInformation(
@@ -403,13 +424,16 @@ public class ProcessService {
 					nodeProcessInformationDto.getName(), 
 					new Date(), new Date());
 			nodeProcessInformationHome.persist(nodeProcessInformation);
+			processInformationIdList.add(nodeProcessInformation.getId());
 			for(NodeProcessOptionValueDto nodeProcessOptionValueDto : nodeProcessInformationDto.getNodeProcessOptionValues()){
-				NodeProcessOptionValue nodeProcessOptionValue = new NodeProcessOptionValue();
-			}
+				NodeOption nodeOption = nodeOptionHome.findById(nodeProcessOptionValueDto.getNodeOptionId());
+				NodeProcessOptionValue nodeProcessOptionValue = new NodeProcessOptionValue(
+						nodeProcessInformation,nodeOption, 
+						nodeProcessOptionValueDto.getValue(), new Date(), new Date());
+				nodeProcessOptionValueHome.persist(nodeProcessOptionValue);	}
 		}
 		
-		
-		return 0;
+		return processInformationIdList;
 	}
 	
 	

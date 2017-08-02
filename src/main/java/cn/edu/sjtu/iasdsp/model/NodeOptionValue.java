@@ -35,6 +35,8 @@ public class NodeOptionValue implements java.io.Serializable {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+	
+	
 
 	public NodeOptionValue(NodeInformation nodeInformations, NodeOption nodeOptions, String value, Date createdAt,
 			Date updatedAt) {
