@@ -3,6 +3,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 
 <hr />
+<form class="form-horizontal" id="saveProcessParamDto" onsubmit="return submitParamAjax()"
+    action="/sjtu/execute/save_param" method="POST">
+	<%@ include file="node_fields.jsp"%>
+    <div class="form-group">
+        <div class="col-md-offset-9 col-md-3">
+            <input type="submit" value="Submit" name="submit" 
+                class="btn btn-success btn-block"/>
+        </div>
+        <label class="col-md-12" id="upload_status"></label> 
+    </div>
+</form>
 <form class="form-horizontal" enctype="multipart/form-data"
 	id="uploadFileForm" name="uploadFileForm" action="execute/upload"
 	method="post">
@@ -16,7 +27,6 @@
     
     
     
-   <%@ include file="node_fields.jsp"%>
     
     
     
@@ -31,7 +41,7 @@
 	<div class="form-group">
 		<div class="col-md-offset-9 col-md-3">
 			<input type="button" value="Upload" name="submit" onclick="uploadJqueryForm()"
-				class="btn btn-success btn-block">
+				class="btn btn-success btn-block"/>
 		</div>
 		<label class="col-md-12" id="upload_status"></label> 
 	</div>
@@ -56,6 +66,24 @@
 		}).submit();
 	}
 
+
+	function submitParamAjax() {
+            $.ajax({
+                type:'POST',
+                url:'/sjtu/execute/save_param',
+                data:$('#saveProcessParamDto').serialize(),
+                success:function(data){
+                    alert(data);
+                },
+                error:function()
+                {
+                    alert("error");
+                    
+                }
+            });
+            return false;
+       
+    }
 /* 	function getXMLHTTP() {
 		var x = false;
 		try {

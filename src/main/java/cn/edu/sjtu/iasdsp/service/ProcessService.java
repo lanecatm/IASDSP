@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.NodeFunctionHome;
+import cn.edu.sjtu.iasdsp.dao.NodeProcessInformationHome;
+import cn.edu.sjtu.iasdsp.dao.NodeProcessOptionValueHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessStarHome;
 import cn.edu.sjtu.iasdsp.dao.SharedProcessRecordHome;
@@ -28,11 +30,16 @@ import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowInformationHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowVersionHome;
+import cn.edu.sjtu.iasdsp.dto.NodeProcessInformationDto;
+import cn.edu.sjtu.iasdsp.dto.NodeProcessOptionValueDto;
 import cn.edu.sjtu.iasdsp.dto.ReturnRunModelDto;
 import cn.edu.sjtu.iasdsp.dto.RunModelDto;
+import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
+import cn.edu.sjtu.iasdsp.model.NodeProcessInformation;
+import cn.edu.sjtu.iasdsp.model.NodeProcessOptionValue;
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.ProcessStar;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
@@ -90,6 +97,12 @@ public class ProcessService {
 	
 	@Autowired
 	NodeFunctionHome nodeFunctionHome;
+	
+	@Autowired
+	NodeProcessInformationHome nodeProcessInformationHome;
+	
+	@Autowired
+	NodeProcessOptionValueHome nodeProcessOptionValueHome;
 
 	@Transactional
 	public ShareExecuteDto showShare() {
@@ -380,6 +393,29 @@ public class ProcessService {
 		return workflowVersion.getWorkflowInformation().getId();
 	}
 	
+	
+	@Transactional
+	public Integer saveNodeProcessInformation(SaveProcessParamDto saveProcessParamDto){
+		for (NodeProcessInformationDto nodeProcessInformationDto : saveProcessParamDto.getNodeProcessInformations()){
+			NodeFunction nodeFunction = nodeFunctionHome.findById(nodeProcessInformationDto.getNodeFunctionId());
+			NodeProcessInformation nodeProcessInformation = new NodeProcessInformation(
+					nodeFunction, 
+					nodeProcessInformationDto.getName(), 
+					new Date(), new Date());
+			nodeProcessInformationHome.persist(nodeProcessInformation);
+			for(NodeProcessOptionValueDto nodeProcessOptionValueDto : nodeProcessInformationDto.getNodeProcessOptionValues()){
+				NodeProcessOptionValue nodeProcessOptionValue = new NodeProcessOptionValue();
+			}
+		}
+		
+		
+		return 0;
+	}
+	
+	
+	
+	
+	// TODO delete
 	@Transactional
 	public NodeFunction getNodeFunctionFromWorkflowId(int workflowId){
 		String nodeFunctionName = "KMean";

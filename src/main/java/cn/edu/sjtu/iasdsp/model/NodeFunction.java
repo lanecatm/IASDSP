@@ -33,6 +33,7 @@ public class NodeFunction implements java.io.Serializable {
 	private Date updatedAt;
 	private Set<NodeInformation> nodeInformations = new HashSet<NodeInformation>(0);
 	private Set<NodeOption> nodeOptions = new HashSet<NodeOption>(0);
+	private Set<NodeProcessInformation> nodeProcessInformations = new HashSet<NodeProcessInformation>(0);
 
 
 	public NodeFunction() {
@@ -142,6 +143,15 @@ public class NodeFunction implements java.io.Serializable {
 
 	public void setNodeOptions(Set<NodeOption> nodeOptionses) {
 		this.nodeOptions = nodeOptionses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeFunction")
+	public Set<NodeProcessInformation> getNodeProcessInformations() {
+		return nodeProcessInformations;
+	}
+
+	public void setNodeProcessInformations(Set<NodeProcessInformation> nodeProcessInformations) {
+		this.nodeProcessInformations = nodeProcessInformations;
 	}
 
 

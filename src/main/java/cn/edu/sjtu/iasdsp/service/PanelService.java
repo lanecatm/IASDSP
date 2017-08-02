@@ -53,6 +53,7 @@ public class PanelService {
 	public PanelAlgorithmDto getSample(int panelId) {
 		NodeFunction nodeFunction = nodeFunctionHome.findById(panelId);
 
+
 		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(
 				nodeFunction.getId(), 
 				nodeFunction.getName(),

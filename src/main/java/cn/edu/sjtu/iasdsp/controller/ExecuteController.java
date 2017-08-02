@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,7 @@ import cn.edu.sjtu.iasdsp.dto.ReturnReceiveProcessDto;
 import cn.edu.sjtu.iasdsp.dto.ReturnRunModelDto;
 import cn.edu.sjtu.iasdsp.dto.RunBackFromEngineDto;
 import cn.edu.sjtu.iasdsp.dto.RunModelDto;
+import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
 import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
@@ -90,17 +92,24 @@ public class ExecuteController {
 				
 				NodeFunction nodeFunction = processService.getNodeFunctionFromWorkflowId(
 						processService.getWorkflowIdFromWorkflowVersionId(workflowVersion.getId()));
-				model.addAttribute("nodeFunction", nodeFunction);
 				
+				List<NodeFunction> nodeFunctions = new ArrayList<NodeFunction>(0);
+				nodeFunctions.add(nodeFunction);
+				model.addAttribute("nodeFunctions", nodeFunctions);
+				
+				SaveProcessParamDto saveProcessParamDto = new SaveProcessParamDto();
+				model.addAttribute("saveProcessParamDto", saveProcessParamDto);
+
 				return "execute/show";
 			} else if (workflowInformationId != null) {
-
+				//通过跳转变成workflowVersionId
 				int modelVersionId = processService
 						.getWorkflowVersionIdFromWorkflowInformationId(Integer.parseInt(workflowInformationId));
 				String applicationStr = applicationId == null ? "" : "application=" + applicationId;
 				return "redirect:/execute?model_version=" + modelVersionId + "&" + applicationStr;
 
 			} else if (shareProcessId != null) {
+				//通过跳转变成workflowVersionId
 				// TODO 这里要通过shareProcessId加上拿到的参数宝宝们
 				int modelVersionId = processService
 						.getWorkflowVersionIdFromSharedProcessRecord(Integer.parseInt(shareProcessId));
@@ -314,7 +323,7 @@ public class ExecuteController {
 
 	// @ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public ResponseEntity<MessageDto> submitPapers(MultipartHttpServletRequest request) {
+	public ResponseEntity<MessageDto> uploadFiles(MultipartHttpServletRequest request) {
 		logger.debug("into upload");
 		List<MultipartFile> papers = request.getFiles("files");
 		try {
@@ -344,39 +353,30 @@ public class ExecuteController {
 			outputStream.close();
 			return;
 		}
-
 		String mimeType = URLConnection.guessContentTypeFromName(file.getName());
 		if (mimeType == null) {
 			System.out.println("mimetype is not detectable, will take default");
 			mimeType = "application/octet-stream";
 		}
-
 		System.out.println("mimetype : " + mimeType);
 
 		response.setContentType(mimeType);
-
-		/*
-		 * "Content-Disposition : inline" will show viewable types [like
-		 * images/text/pdf/anything viewable by browser] right on browser while
-		 * others(zip e.g) will be directly downloaded [may provide save as
-		 * popup, based on your browser setting.]
-		 */
 		response.setHeader("Content-Disposition", String.format("inline; filename=\"" + dfileName + "\""));
-
-		/*
-		 * "Content-Disposition : attachment" will be directly download, may
-		 * provide save as popup, based on your browser setting
-		 */
-		// response.setHeader("Content-Disposition", String.format("attachment;
-		// filename=\"%s\"", file.getName()));
-
 		response.setContentLength((int) file.length());
 
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
 
-		// Copy bytes from source to destination(outputstream in this example),
-		// closes both streams.
 		FileCopyUtils.copy(inputStream, response.getOutputStream());
+	}
+	
+
+	@ResponseBody
+	@RequestMapping(value = "/save_param", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MessageDto> saveParam(SaveProcessParamDto saveProcessParamDto) {
+		logger.debug("into saveParam, param:" + saveProcessParamDto);
+		
+		
+		return ResponseEntity.accepted().body(new MessageDto("succ"));
 	}
 
 }

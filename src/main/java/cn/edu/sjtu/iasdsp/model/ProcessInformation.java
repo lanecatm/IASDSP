@@ -58,6 +58,8 @@ public class ProcessInformation implements java.io.Serializable {
 	private Set<DownloadFile> downloadFiles = new HashSet<DownloadFile>(0);
 	private Set<ProcessResult> processResults = new HashSet<ProcessResult>(0);
 	private Set<ProcessFile> processFiles = new HashSet<ProcessFile>(0);
+	
+	private NodeProcessInformation nodeProcessInformation = new NodeProcessInformation();
 
 	private ProcessStar processStar;
 	
@@ -314,6 +316,18 @@ public class ProcessInformation implements java.io.Serializable {
 	public void setEngineProcessId(String engineProcessId) {
 		this.engineProcessId = engineProcessId;
 	}
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "processInformation")
+	@Cascade(CascadeType.DELETE)
+	public NodeProcessInformation getNodeProcessInformation() {
+		return nodeProcessInformation;
+	}
+
+	public void setNodeProcessInformation(NodeProcessInformation nodeProcessInformation) {
+		this.nodeProcessInformation = nodeProcessInformation;
+	}
+
+
 
 
 	

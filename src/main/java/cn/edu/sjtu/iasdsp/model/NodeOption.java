@@ -36,6 +36,7 @@ public class NodeOption implements java.io.Serializable {
 	private Date updatedAt;
 	private Set<NodeOptionChoice> nodeOptionChoices = new HashSet<NodeOptionChoice>(0);
 	private Set<NodeOptionValue> nodeOptionValues = new HashSet<NodeOptionValue>(0);
+	private Set<NodeProcessOptionValue> nodeProcessOptionValues = new HashSet<NodeProcessOptionValue>(0);
 	
 	public NodeOption() {
 	}
@@ -175,6 +176,15 @@ public class NodeOption implements java.io.Serializable {
 
 	public void setNodeOptionValues(Set<NodeOptionValue> nodeOptionValueses) {
 		this.nodeOptionValues = nodeOptionValueses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nodeOption")
+	public Set<NodeProcessOptionValue> getNodeProcessOptionValues() {
+		return nodeProcessOptionValues;
+	}
+
+	public void setNodeProcessOptionValues(Set<NodeProcessOptionValue> nodeProcessOptionValues) {
+		this.nodeProcessOptionValues = nodeProcessOptionValues;
 	}
 
 	
