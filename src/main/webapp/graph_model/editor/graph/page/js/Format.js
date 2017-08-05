@@ -2129,7 +2129,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		ipt.setAttribute("type", "text");
 		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
+// 		ipt.setAttribute("value", nodePanel.defaultValue);
 		
 		// 设置位置
 		ipt.style.paddingTop = '2px';
@@ -2149,6 +2149,10 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 			panelOption.setAttribute('name', choice.name);
 			panelOption.text = choice.name;
 			ipt.appendChild(panelOption);
+			if(choice.value == nodePanel.defaultValue)
+			{
+				panelOption.selected = true;
+			}
 		}
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
