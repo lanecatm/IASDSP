@@ -18,6 +18,9 @@ public class MxRoot {
 	private List<MxCell> mxCell;
 	private List<MxObject> MxObject;
 	private List<MxObject> algorithmNodeList;
+	private List<MxObject> startNodeList;
+	private List<MxObject> endNodeList;
+	private List<MxObject> edgeList;
 
     @XmlElement(name="mxCell")
 	public List<MxCell> getMxCell() {
@@ -30,7 +33,35 @@ public class MxRoot {
 	
 	
 	
-    @XmlElement(name="object")
+	
+    @XmlElement(name="StartNode")
+    public List<MxObject> getStartNodeList() {
+		return startNodeList;
+	}
+
+	public void setStartNodeList(List<MxObject> startNodeList) {
+		this.startNodeList = startNodeList;
+	}
+
+    @XmlElement(name="EndNode")
+	public List<MxObject> getEndNodeList() {
+		return endNodeList;
+	}
+
+	public void setEndNodeList(List<MxObject> endNodeList) {
+		this.endNodeList = endNodeList;
+	}
+
+    @XmlElement(name="Edge")
+	public List<MxObject> getEdgeList() {
+		return edgeList;
+	}
+
+	public void setEdgeList(List<MxObject> edgeList) {
+		this.edgeList = edgeList;
+	}
+
+	@XmlElement(name="object")
 	public List<MxObject> getMxObject() {
 		return MxObject;
 	}
@@ -49,8 +80,11 @@ public class MxRoot {
 	}
 
 	public String toString() {
-		return "MxRoot [mxCell=" + mxCell + ", MxObject=" + MxObject + "]";
+		return "MxRoot [mxCell=" + mxCell + ", MxObject=" + MxObject + ", algorithmNodeList=" + algorithmNodeList
+				+ ", startNodeList=" + startNodeList + ", endNodeList=" + endNodeList + ", edgeList=" + edgeList + "]";
 	}
+
+
 
 
 

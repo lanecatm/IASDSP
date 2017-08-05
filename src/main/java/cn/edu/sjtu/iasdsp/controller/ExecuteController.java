@@ -70,6 +70,7 @@ public class ExecuteController {
 	@Autowired
 	private HttpServletRequest request;
 
+	//执行页面展示
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String show(@RequestParam(value = "active_page", required = false) String activePage,
 			@RequestParam(value = "model_version", required = false) String workflowVersionId,
@@ -86,6 +87,8 @@ public class ExecuteController {
 					shareExecuteDto.setDefaultApplicationId(Integer.parseInt(applicationId));
 				}
 				model.addAttribute("shareExecuteDto", shareExecuteDto);
+				
+				
 				WorkflowVersion workflowVersion = processService.getWorkflowVersion(Integer.parseInt(workflowVersionId));
 				model.addAttribute("workflowVersion",workflowVersion);
 				
@@ -93,13 +96,16 @@ public class ExecuteController {
 				NodeFunction nodeFunction = processService.getNodeFunctionFromWorkflowId(
 						processService.getWorkflowIdFromWorkflowVersionId(workflowVersion.getId()));
 				
+				//显示的参数列表
 				List<NodeFunction> nodeFunctions = new ArrayList<NodeFunction>(0);
 				nodeFunctions.add(nodeFunction);
 				model.addAttribute("nodeFunctions", nodeFunctions);
 				
+				//回填的参数
 				SaveProcessParamDto saveProcessParamDto = new SaveProcessParamDto();
 				model.addAttribute("saveProcessParamDto", saveProcessParamDto);
 
+				logger.debug("show succ");
 				return "execute/show";
 			} else if (workflowInformationId != null) {
 				//通过跳转变成workflowVersionId
@@ -131,20 +137,18 @@ public class ExecuteController {
 	public ResponseEntity<ReturnRunModelDto> run(@RequestBody RunModelDto runModelDto) {
 		logger.debug("Into run, param:" + runModelDto);
 		try {
+			//新建一个process并且更新star和runtime
 			ReturnRunModelDto returnRunModelDto = processService.createProcessInformation(runModelDto);
 			refreshCountService.refreshAll();
-			
-
-			// TODO 写一些丑陋的代码
-			String filePath = processService.getFilePathFromUploadFileId(runModelDto.getUploadFileId());
-
-			Integer algorithmId = 0;
-
-			MqSenderSimple.run(3, algorithmId, filePath, "3", returnRunModelDto.getProcessInformationId());
+			Integer workflowInformaionId= processService.getWorkflowIdFromWorkflowVersionId(runModelDto.getWorkflowVersionId());
+			//TODO 修改发送消息的消息
+			MqSenderSimple.run(workflowInformaionId, 0, "no file fath", "3", returnRunModelDto.getProcessInformationId());
 			
 			String returnMsg = MqReceiverThread
 					.receiveProcessId(Integer.toString(returnRunModelDto.getProcessInformationId()));
 			logger.debug("get message:" + returnMsg);
+			
+			//没收到回显消息重复读多次
 			int index = 0;
 			while (returnMsg == null && index < 10){
 				returnMsg = MqReceiverThread
@@ -152,12 +156,16 @@ public class ExecuteController {
 				++index;
 				Thread.sleep(1000);
 			}
+			
+			//把收到的字符串id存入数据库
 			RunBackFromEngineDto runBackFromEngineDto = new ObjectMapper().readValue(returnMsg,
 					RunBackFromEngineDto.class);
 			logger.debug("runBackFromEngineDto:" + runBackFromEngineDto);
 			processService.updateEngineProcessId(returnRunModelDto.getProcessInformationId(),
 					runBackFromEngineDto.getProcessID());
 			logger.debug("run succ, return:" + returnRunModelDto + ",back:" + runBackFromEngineDto);
+			
+			
 			return ResponseEntity.accepted().body(returnRunModelDto);
 		} catch (Exception e) {
 			logger.error("Failed in run");
@@ -177,7 +185,7 @@ public class ExecuteController {
 			}
 
 			String engineProcessID = processService.getEngineProcessIdFromProcessId(receiveProcessDto.getProcessId());
-			String processMsg = MqReceiverThread.receiveProcessId(engineProcessID);
+			String processMsg = MqReceiverThread.receiveInfo(engineProcessID);
 
 			String detailStr = null;
 			if (returnMsg != null) {
@@ -248,9 +256,7 @@ public class ExecuteController {
 
 	@RequestMapping(value = "/share_cancel", method = RequestMethod.GET)
 	public String shareCancel(ShareExecuteDto shareExecuteDto) {
-
 		logger.debug("Into shareCancel, param:" + shareExecuteDto);
-
 		try {
 			String path = processService.findBackPath(shareExecuteDto);
 			if (shareExecuteDto.getHasApplication()) {
@@ -323,7 +329,7 @@ public class ExecuteController {
 		File file = processService.downloadFile(Integer.parseInt(processId));
 		if (!file.exists()) {
 			String errorMessage = "Sorry. The file you are looking for does not exist";
-			System.out.println(errorMessage);
+			logger.error(errorMessage);
 			OutputStream outputStream = response.getOutputStream();
 			outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
 			outputStream.close();
@@ -331,7 +337,7 @@ public class ExecuteController {
 		}
 		String mimeType = URLConnection.guessContentTypeFromName(file.getName());
 		if (mimeType == null) {
-			System.out.println("mimetype is not detectable, will take default");
+			logger.error("mimetype is not detectable, will take default");
 			mimeType = "application/octet-stream";
 		}
 		System.out.println("mimetype : " + mimeType);
@@ -352,8 +358,10 @@ public class ExecuteController {
 		logger.debug("into saveParam, param:" + saveProcessParamDto);
 		try {
 			List<Integer> nodeProcessInformationList = processService.saveNodeProcessInformation(saveProcessParamDto);
+			logger.debug("saveParam succ");
 			return ResponseEntity.accepted().body(nodeProcessInformationList);
 		} catch (Exception e) {
+			logger.error("saveParam failed");
 			return ResponseEntity.badRequest().body(null);
 		}
 	}

@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <div class="col-md-12">
-<c:forEach items="${showModelDto.workflowVersions}"
+<c:forEach items="${showModelDto.workflowInformation.workflowVersions}"
         var="workflowVersion" varStatus="status">
         <s:url value="/resources/image/user.jpg" var="userImg" />
         <s:url value="/resources/image/Example1.png" var="workflowImg" />

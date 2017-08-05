@@ -21,7 +21,7 @@ public class MqReceiverThread {
   	}
 	
 	public static String receiveProcessId(String processId) throws Exception {
-		MQMessageReceiverThread messageReceiverThread = new MQMessageReceiverThread("INFO","process_id = '" + processId + "'",1);
+		MQMessageReceiverThread messageReceiverThread = new MQMessageReceiverThread("PROCESSID","process_id = '" + processId + "'",1);
 		messageReceiverThread.start();
 		messageReceiverThread.join(2000);
 		ActiveMQBytesMessage msg = messageReceiverThread.getMsg();
@@ -37,6 +37,22 @@ public class MqReceiverThread {
 		}
   	}
 	
+	public static String receiveInfo(String processId) throws Exception {
+		MQMessageReceiverThread messageReceiverThread = new MQMessageReceiverThread("INFO","process_id = '" + processId + "'",1);
+		messageReceiverThread.start();
+		messageReceiverThread.join(2000);
+		ActiveMQBytesMessage msg = messageReceiverThread.getMsg();
+
+		if (msg != null) {
+			//Convert to string and print it out
+			byte[] byteArr = new byte[(int)msg.getBodyLength()];
+			msg.readBytes(byteArr); 
+			String str = new String(byteArr, "UTF-8");  
+			return str;
+		} else {
+			return null;
+		}
+  	}
 	
 	public static String receiveResult(String processId) throws Exception {
 		MQMessageReceiverThread messageReceiverThread = new MQMessageReceiverThread("RESULT","process_id = '" + processId + "'",1);

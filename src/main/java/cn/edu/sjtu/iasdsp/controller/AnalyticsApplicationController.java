@@ -142,9 +142,11 @@ public class AnalyticsApplicationController {
 		log.debug("Into editPerformance function where search = " + editPerformanceDto);
 		try {
 			EditPerformanceDto editPerformanceDtoBack = analyticsApplicationService.editPerformance(editPerformanceDto);
+			log.debug("editPerformance succ");
 			return new ResponseEntity<EditPerformanceDto>(editPerformanceDtoBack, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("editPerformance failed");
 			return new ResponseEntity<EditPerformanceDto>(editPerformanceDto, HttpStatus.BAD_REQUEST);
 		}
 	}

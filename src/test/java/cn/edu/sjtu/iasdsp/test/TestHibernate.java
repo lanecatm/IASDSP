@@ -79,6 +79,7 @@ public class TestHibernate {
 		WikiPage wikiPage = null;
 		Transaction transaction = null;
 
+		int workflowId = -1;
 		SessionFactory sessionFactory = null;
 		try {
 			// 使用此方法获取并初始化我们的spring容器，注意pring-datasource.xml必须存放在类路径的根目录下。
@@ -98,6 +99,7 @@ public class TestHibernate {
 
 			WorkflowInformation workflowInformation = new WorkflowInformation(new Date(), new Date());
 			session.save(workflowInformation);
+			workflowId = workflowInformation.getId();
 			wikiPage = new WikiPage(creator, updator, path, title, content, new Date(), new Date());
 			wikiPage.getWorkflowInformations().add(workflowInformation);
 			session.save(wikiPage);
@@ -132,6 +134,8 @@ public class TestHibernate {
 				session.delete(wikiReferenceTmp);
 			}
 			session.delete(wikiPageNew);
+			WorkflowInformation workflowInformation = session.load(WorkflowInformation.class,workflowId);
+			session.delete(workflowInformation);
 			transaction.commit();
 			session.close();
 		} catch (Exception e) {

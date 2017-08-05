@@ -345,11 +345,9 @@ public class AnalyticsApplicationService {
 		if (wikiPage == null) {
 			return new ShowApplicationDto();
 		}
-		String userName = wikiPage.getUserByCreatorId() == null ? "Author"
-				: wikiPage.getUserByCreatorId().getUserName();
-		ShowApplicationDto showApplicationDto = new ShowApplicationDto(wikiPage.getId(), wikiPage.getTitle(),
-				wikiPage.getCreatedAt(), userName, wikiPage.getContent(), wikiPage.getPath(),
-				wikiPage.getWikiReferences(), wikiPage.getWorkflowInformations(), wikiPage.getRelatedWikiPages());
+//		String userName = wikiPage.getUserByCreatorId() == null ? "Author"
+//				: wikiPage.getUserByCreatorId().getUserName();
+		ShowApplicationDto showApplicationDto = new ShowApplicationDto();
 		for (WorkflowPerformance workflowPerformance : wikiPage.getWorkflowPerformances()) {
 			if (workflowPerformance.getWorkflowInformation() == null) {
 				logger.error("Can not find workflowPerformance belongs to which workflowinformation, "
@@ -366,6 +364,7 @@ public class AnalyticsApplicationService {
 			}
 			showApplicationDto.getShareRecordMap().get(workflowInformationId).add(sharedProcessRecord);
 		}
+		showApplicationDto.setWikiPage(wikiPage);
 		return showApplicationDto;
 	}
 

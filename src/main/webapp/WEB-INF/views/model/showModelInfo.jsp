@@ -7,15 +7,15 @@
 		<tr>
 			<th rowspan="3">Basic information</th>
 			<th>Model name</th>
-			<td>${showModelDto.title}</td>
+			<td>${showModelDto.workflowInformation.name}</td>
 		</tr>
 		<tr>
 			<th>Model introduction</th>
-			<td>${showModelDto.introduction}</td>
+			<td>${showModelDto.workflowInformation.introduction}</td>
 		</tr>
 		<tr>
 			<th>Category</th>
-			<td>${showModelDto.category}</td>
+			<td>${showModelDto.workflowInformation.workflowCategory.name}</td>
 
 		</tr>
 
@@ -23,34 +23,34 @@
 		<tr>
 			<th rowspan="5">Authorization</th>
 			<th>Author</th>
-			<td>${showModelDto.author.userName}</td>
+			<td>${showModelDto.workflowInformation.author.userName}</td>
 		</tr>
 		<tr>
 			<th>Last editor</th>
-			<td>${showModelDto.lastEditor.userName}</td>
+			<td>${showModelDto.workflowInformation.updator.userName}</td>
 		</tr>
 		<tr>
 			<th>Edit user group</th>
-			<td>${showModelDto.editUserGroup}</td>
+			<td>${showModelDto.workflowInformation.workflowPrivilege.editDepartment.name}</td>
 		</tr>
 		<tr>
 			<th>Delete user group</th>
-			<td>${showModelDto.deleteUserGroup}</td>
+			<td>${showModelDto.workflowInformation.workflowPrivilege.executeDepartment.name}</td>
 		</tr>
 		<tr>
 			<th>Execute user group</th>
-			<td>${showModelDto.exectuteUserGroup}</td>
+			<td>${showModelDto.workflowInformation.workflowPrivilege.deleteDepartment.name}</td>
 		</tr>
 
 		<tr>
 			<th rowspan="2">Time</th>
 			<th>Create time</th>
-			<td>${showModelDto.creationTime}</td>
+			<td>${showModelDto.workflowInformation.createdAt}</td>
 		</tr>
 
 		<tr>
 			<th>Update time</th>
-			<td>${showModelDto.updateTime}</td>
+			<td>${showModelDto.workflowInformation.updatedAt}</td>
 		</tr>
 		<!--
     <tr>

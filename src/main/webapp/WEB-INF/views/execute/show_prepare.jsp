@@ -11,26 +11,12 @@
             <input type="submit" value="Submit" name="submit" 
                 class="btn btn-success btn-block"/>
         </div>
-        <label class="col-md-12" id="upload_status"></label> 
     </div>
 </form>
 <form class="form-horizontal" enctype="multipart/form-data"
-	id="uploadFileForm" name="uploadFileForm" action="execute/upload"
+	id="uploadFileForm" name="uploadFileForm" action="/sjtu/execute/upload"
 	method="post">
 
-<!--     <div class="form-group">
-        <div class="col-md-12">
-            <label class="">N</label> 
-			<input type="text" class="form-control" id="run_param"/>        
-		</div>
-    </div> -->
-    
-    
-    
-    
-    
-    
-    
 	<div class="form-group">
 		<div class="col-md-12">
 			<label class="">Input file</label> <input name="files"

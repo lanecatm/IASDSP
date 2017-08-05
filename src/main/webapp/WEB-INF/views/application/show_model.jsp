@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <div class="col-md-12">
-	<c:forEach items="${showApplicationDto.workflowInformationList}"
+	<c:forEach items="${showApplicationDto.wikiPage.workflowInformations}"
 		var="workflowInformation" varStatus="status">
 
 
@@ -45,7 +45,7 @@
 							<div class="col-md-12">&nbsp;</div>
 							<div class="col-md-offset-10 col-md-2">
 							     <button class="btn btn-block btn-sm btn-primary" 
-							         onClick="searchAjax('#modelTextArea${status.index}', ${workflowInformation.id},${showApplicationDto.wikiPageId }, '#modelWell${status.index}', 
+							         onClick="searchAjax('#modelTextArea${status.index}', ${workflowInformation.id},${showApplicationDto.wikiPage.id}, '#modelWell${status.index}', 
 							         '#modelFormGroup${status.index}', '#modelTextArea${status.index}', '#modelEditBtn${status.index}')">
 							         Submit
 							     </button>
@@ -87,11 +87,11 @@
                                     </td>
 									<td>
 									   <a class="btn btn-sm btn-success" 
-									       href="<c:url value="/execute?running_case=${shareRecord.id}&application=${showApplicationDto.wikiPageId}"/>">
+									       href="<c:url value="/execute?running_case=${shareRecord.id}&application=${showApplicationDto.wikiPage.id}"/>">
 									        Execute 
 									   </a>
 									   <a class="btn btn-sm btn-danger" 
-									       href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.path}"/>"> 
+									       href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.wikiPage.path}"/>"> 
 									       Delete </a>
 									</td>
 								</tr>
@@ -129,7 +129,7 @@
                                     <td>
                                         ${workflowInformation.runningTime}
                                     </td>
-                                    <td><a class="btn btn-sm btn-success" href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPageId}"/>"> Execute </a></td>
+                                    <td><a class="btn btn-sm btn-success" href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPage.id}"/>"> Execute </a></td>
                                 </tr>
                                 </c:if>
                                 </c:forEach>
@@ -142,7 +142,7 @@
 					<div class="col-md-4 ">
 						<div class="btn-group btn-group-justified btn-group-sm"
 							role="group" aria-label="...">
-							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPageId}"/>"
+							<a class="btn btn-sm btn-success" href="<c:url value="/execute?model=${workflowInformation.id}&application=${showApplicationDto.wikiPage.id}"/>"
 								<c:if test="${workflowInformation.defaultVersion == null}">
 								disabled="disabled"
 								</c:if>

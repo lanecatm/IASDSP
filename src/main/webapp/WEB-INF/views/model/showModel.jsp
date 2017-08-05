@@ -61,12 +61,12 @@
 		<div class="col-md-8">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>${showModelDto.title}</h2>
+					<h2>${showModelDto.workflowInformation.name}</h2>
 				</div>
 				<div class="col-md-8">
 					<h4>
-						<small>Revised on ${showModelDto.creationTime } by
-							${showModelDto.author.userName}</small>
+						<small>Revised on ${showModelDto.workflowInformation.createdAt } by
+							${showModelDto.workflowInformation.author.userName}</small>
 					</h4>
 				</div>
 				<div class="col-md-4">
@@ -77,12 +77,12 @@
 						  Execute
 						</a>  --%>
 						<a type="button" class="btn btn-primary btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformationId}/edit"/>"> 
+							href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>"> 
 							Edit 
 						</a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformationId}/delete"/>"> 
+							href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>"> 
 							Delete 
 						</a>
 					</div>
@@ -153,11 +153,11 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Tag</div>
 						<ul class="list-group ">
-							<c:forEach items="${showModelDto.workflowTags}" var="tag">
+							<c:forEach items="${showModelDto.workflowInformation.workflowTags}" var="tag">
 								<li class="list-group-item">${tag.name}</li>
 							</c:forEach>
 
-							<c:if test="${fn:length(showModelDto.workflowTags) == 0}" >
+							<c:if test="${fn:length(showModelDto.workflowInformation.workflowTags) == 0}" >
 								<li class="list-group-item">&nbsp;</li>
 							</c:if>
 						</ul>

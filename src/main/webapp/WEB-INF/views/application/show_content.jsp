@@ -5,7 +5,7 @@
 		<div class="panel-heading">
 			<h4>Introduction</h4>
 		</div>
-		<div class="panel-body">${showApplicationDto.introduction }</div>
+		<div class="panel-body">${showApplicationDto.wikiPage.content }</div>
 	</div>
 </div>
 <div class="col-md-12">
@@ -16,7 +16,7 @@
 		<div class="panel-body">
 			<div class="row">
 
-				<c:forEach items="${showApplicationDto.referenceList}"
+				<c:forEach items="${showApplicationDto.wikiPage.wikiReferences}"
 					var="reference" varStatus="status">
 					<div class="col-md-1 "><h5>[${status.index+1}]</h5></div>
 					<div class="col-md-11">
@@ -41,7 +41,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<p>
-						<c:forEach items="${showApplicationDto.relatedWikiPageList}"
+						<c:forEach items="${showApplicationDto.wikiPage.relatedWikiPages}"
 							var="relatedPage">
 							<a href="<c:url value="/application/${relatedPage.path }/show"/>"><span class="label label-default" style="display:inline-block;" >${relatedPage.title}</span></a>
 						</c:forEach>

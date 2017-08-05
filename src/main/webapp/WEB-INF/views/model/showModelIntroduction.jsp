@@ -18,5 +18,5 @@
 </div>
 
 <div class="col-md-12">
-	<div class="well">${showModelDto.detailedInformation}</div>
+	<div class="well">${showModelDto.workflowInformation.detailDescription}</div>
 </div>

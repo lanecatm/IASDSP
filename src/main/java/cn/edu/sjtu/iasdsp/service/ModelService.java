@@ -96,39 +96,9 @@ public class ModelService {
 	public ShowModelDto show(int id) {
 		logger.debug("Into ModelService show function");
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
-
-		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege();
-		boolean isNullWorkflowPrivilege = (workflowInformation.getWorkflowPrivilege() == null);
-
-		//TODO set admin User
-		User defaultUserInfo = userHome.findById(UserType.DEFAULT_USER_ID);
 		
 		ShowModelDto showModelDto = new ShowModelDto();
-		showModelDto.setWorkflowInformationId(workflowInformation.getId());
-		showModelDto.setIntroduction(workflowInformation.getIntroduction());
-		showModelDto.setTitle(workflowInformation.getName());
-		showModelDto.setAuthor(workflowInformation.getAuthor() == null ? defaultUserInfo :workflowInformation.getAuthor() );
-		showModelDto.setLastEditor(workflowInformation.getUpdator() == null ? defaultUserInfo : workflowInformation.getAuthor());
-		showModelDto.setVersionName(workflowInformation.getVersionName());
-		showModelDto.setVersionDescription(workflowInformation.getVersionDescription());
-		showModelDto.setDetailedInformation(workflowInformation.getDetailDescription());
-		showModelDto.setCreationTime(workflowInformation.getCreatedAt());
-		showModelDto.setUpdateTime(workflowInformation.getUpdatedAt());
-		showModelDto.setCategory(workflowInformation.getWorkflowCategory() == null ? "No category"
-				: workflowInformation.getWorkflowCategory().getName());
-		showModelDto.setWorkflowTags(new ArrayList<WorkflowTag>(workflowInformation.getWorkflowTags()));
-
-		showModelDto.setEditUserGroup(isNullWorkflowPrivilege || workflowPrivilege.getEditDepartment() == null
-				? "No Edit Department" : workflowPrivilege.getEditDepartment().getName());
-		showModelDto.setExectuteUserGroup(isNullWorkflowPrivilege || workflowPrivilege.getEditDepartment() == null
-				? "No Execute Department" : workflowPrivilege.getExecuteDepartment().getName());
-		showModelDto.setDeleteUserGroup(isNullWorkflowPrivilege || workflowPrivilege.getEditDepartment() == null
-				? "No Delete Department" : workflowPrivilege.getDeleteDepartment().getName());
-		showModelDto.setDetailedInformation(workflowInformation.getDetailDescription());
-		showModelDto.setWorkflowVersions(new ArrayList<WorkflowVersion>(workflowInformation.getWorkflowVersions()));
 		
-		
-		showModelDto.setWikiPages(new ArrayList<WikiPage>(workflowInformation.getWikiPages()));
 		showModelDto.setWorkflowInformation(workflowInformation);
 		
 		for(SharedProcessRecord sharedProcessRecord : workflowInformation.getSharedProcessRecords()){

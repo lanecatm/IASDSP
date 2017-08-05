@@ -2,12 +2,16 @@ package cn.edu.sjtu.iasdsp.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashSet;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +26,8 @@ import cn.edu.sjtu.iasdsp.dto.GetVersionGraphDto;
 import cn.edu.sjtu.iasdsp.dto.PanelAlgorithmDto;
 import cn.edu.sjtu.iasdsp.dto.PanelAllAlgorithmDto;
 import cn.edu.sjtu.iasdsp.dto.UpdateVersionGraphDto;
+import cn.edu.sjtu.iasdsp.dto.xml.MxGraphModel;
+import cn.edu.sjtu.iasdsp.dto.xml.MxObject;
 import cn.edu.sjtu.iasdsp.model.NodeCategory;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
 import cn.edu.sjtu.iasdsp.model.NodeOption;
@@ -47,38 +53,50 @@ public class PanelService {
 	@Autowired
 	private WorkflowVersionHome workflowVersionHome;
 	@Autowired
-    private HttpServletRequest request;
+	private HttpServletRequest request;
 
 	@Transactional
 	public PanelAlgorithmDto getSample(int panelId) {
 		NodeFunction nodeFunction = nodeFunctionHome.findById(panelId);
 
-
-		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(
-				nodeFunction.getId(), 
-				nodeFunction.getName(),
+		PanelAlgorithmDto panelAlgorithmDto = new PanelAlgorithmDto(nodeFunction.getId(), nodeFunction.getName(),
 				nodeFunction.getDescription());
 		log.info("node option" + nodeFunction.getNodeOptions());
-		for (NodeOption nodeOption : nodeFunction.getNodeOptions()) {
-			Set<PanelAlgorithmDto.PanelChoice> panelChoices = new HashSet<PanelAlgorithmDto.PanelChoice>(0);
+		
+		//排序nodeOption
+		List<NodeOption> nodeOptionList = new ArrayList<NodeOption>(nodeFunction.getNodeOptions());
+		Collections.sort(nodeOptionList, new Comparator<NodeOption>() {
+			public int compare(NodeOption p1, NodeOption p2) {
+				return p1.getId().compareTo(p2.getId());
+			}
+		});
+		
+		int nodeIndex = 0;
+		for (NodeOption nodeOption : nodeOptionList) {
+			List<PanelAlgorithmDto.PanelChoice> panelChoices = new ArrayList<PanelAlgorithmDto.PanelChoice>(0);
 			for (NodeOptionChoice choice : nodeOption.getNodeOptionChoices()) {
-				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(
-						choice.getName(),
-						choice.getValue());
+				PanelAlgorithmDto.PanelChoice panelChocice = panelAlgorithmDto.new PanelChoice(choice.getId(),
+						choice.getName(), choice.getValue());
 				panelChoices.add(panelChocice);
 			}
-			PanelAlgorithmDto.PanelOption panelOption = panelAlgorithmDto.new PanelOption(
-					nodeOption.getId(), 
-					nodeOption.getNodeIndex(),
-					nodeOption.getName(), 
-					nodeOption.getLabel(), 
-					nodeOption.getDescription(),
-					nodeOption.getDefaultValue(), 
-					nodeOption.getNodeOptionType().getName(), 
-					panelChoices);
+			Collections.sort(panelChoices, new Comparator<PanelAlgorithmDto.PanelChoice>() {
+				public int compare(PanelAlgorithmDto.PanelChoice p1, PanelAlgorithmDto.PanelChoice p2) {
+					return p1.getId().compareTo(p2.getId());
+				}
+			});
+			//Notice nodeIndex 在这段代码里被添加
+			PanelAlgorithmDto.PanelOption panelOption = panelAlgorithmDto.new PanelOption(nodeOption.getId(),
+					nodeIndex, nodeOption.getName(), nodeOption.getLabel(), nodeOption.getDescription(),
+					nodeOption.getDefaultValue(), nodeOption.getNodeOptionType().getName(), panelChoices);
+			if (nodeOption.getNodeOptionType().getName().equals("Nominal specification")) {
+				if(panelChoices.size() > 0){
+					panelOption.setDefaultValue(panelChoices.get(0).getValue());
+				}
+			}
 			log.info("add panelOption:" + panelOption);
 
 			panelAlgorithmDto.getPanelOptions().add(panelOption);
+			++nodeIndex;
 		}
 		return panelAlgorithmDto;
 	}
@@ -113,10 +131,35 @@ public class PanelService {
 	public void updateVersionGraph(int id, UpdateVersionGraphDto updateVersionGraphDto) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
 		if (workflowVersion != null) {
-			workflowVersion.setXml(updateVersionGraphDto.getGraph_xml());
+			String xml = updateVersionGraphDto.getGraph_xml();
+			workflowVersion.setXml(xml);
 			workflowVersionHome.attachDirty(workflowVersion);
+			MxGraphModel mxGraphModel = getMxGraphModelFromXml(xml);
+			try{
+				List<MxObject> mxAlgorithmNodeList = mxGraphModel.getMxRoot().getAlgorithmNodeList();
+				
+			}catch (NullPointerException e) {
+				log.error("Wrong MxGraphModel format, xml:" + xml);
+				throw (new NullPointerException("Can not find mxGraphModel.getMxRoot(), may be wrong xml"));
+			}
+			
+			
 		} else {
 			throw (new NullPointerException("Can not find workflow version with id:" + id));
+		}
+	}
+
+	private MxGraphModel getMxGraphModelFromXml(String xml) {
+		JAXBContext jc = null;
+		try {
+			jc = JAXBContext.newInstance(MxGraphModel.class);
+			StringReader reader = new StringReader(xml);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			MxGraphModel mxGraphModel = (MxGraphModel) unmarshaller.unmarshal(reader);
+			return mxGraphModel;
+		} catch (Exception e) {
+			log.error("can not prase xml, xml:" + xml);
+			return null;
 		}
 	}
 
@@ -124,9 +167,10 @@ public class PanelService {
 	public void updateVersionSvg(int id, UpdateVersionGraphDto updateVersionGraphDto) {
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
 		if (workflowVersion != null) {
-			String fileName = saveFile(workflowVersion.getId().toString() + ".svg", updateVersionGraphDto.getGraph_svg());
+			String fileName = saveFile(workflowVersion.getId().toString() + ".svg",
+					updateVersionGraphDto.getGraph_svg());
 			workflowVersion.setSvg(fileName);
-			//workflowVersion.setSvg(updateVersionGraphDto.getGraph_svg());
+			// workflowVersion.setSvg(updateVersionGraphDto.getGraph_svg());
 			workflowVersionHome.attachDirty(workflowVersion);
 		} else {
 			throw (new NullPointerException("Can not find workflow version with id:" + id));
@@ -135,19 +179,19 @@ public class PanelService {
 
 	public String saveFile(String name, String content) {
 		try {
-			UUID fileId = UUID.randomUUID(); 
+			UUID fileId = UUID.randomUUID();
 			String savedDir = request.getSession().getServletContext().getRealPath("upload");
-			
-	        byte[] data = content.getBytes();
 
-	        File file = new File(savedDir, fileId + "_" + name);
-	        FileOutputStream fos = new FileOutputStream(file);
-	        fos.write(data);
-	        fos.close();
-	        return file.getName();
-	    } catch (Exception e) {
-	        log.error("Error writing request", e);
-	        return null;
-	    }
+			byte[] data = content.getBytes();
+
+			File file = new File(savedDir, fileId + "_" + name);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(data);
+			fos.close();
+			return file.getName();
+		} catch (Exception e) {
+			log.error("Error writing request", e);
+			return null;
+		}
 	}
 }

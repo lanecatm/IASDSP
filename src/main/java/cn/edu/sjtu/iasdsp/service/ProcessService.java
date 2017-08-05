@@ -442,10 +442,10 @@ public class ProcessService {
 	// TODO delete
 	@Transactional
 	public NodeFunction getNodeFunctionFromWorkflowId(int workflowId){
-		String nodeFunctionName = "KMean";
+		String nodeFunctionName = "KMeans";
 		switch (workflowId) {
 		case 3:
-			nodeFunctionName = "KMean";
+			nodeFunctionName = "KMeans";
 			break;
 		case 267:
 			nodeFunctionName = "Linear regression";
@@ -460,7 +460,7 @@ public class ProcessService {
 			nodeFunctionName = "Canopy clusterer";
 			break;
 		default:
-			nodeFunctionName = "KMean";
+			nodeFunctionName = "KMeans";
 			break;
 		}
 		NodeFunction nodeFunctionExample = new NodeFunction();

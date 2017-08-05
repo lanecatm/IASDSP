@@ -27,6 +27,7 @@ public class User implements java.io.Serializable {
 	private Integer id;
 	private String email;
 	private String encryptedPassword;
+	private String password;
 	private String userName;
 	private String personName;
 	private String gender;
@@ -35,7 +36,7 @@ public class User implements java.io.Serializable {
 	private String resetPasswordToken;
 	private Date resetPasswordSentAt;
 	private Date rememberCreatedAt;
-	private int signInCount;
+	private Integer signInCount;
 	private Date currentSignInAt;
 	private Date lastSignInAt;
 	private String currentSignInIp;
@@ -51,14 +52,14 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	public User(String email, String encryptedPassword, String userName, int signInCount) {
+	public User(String email, String encryptedPassword, String userName, Integer signInCount) {
 		this.email = email;
 		this.encryptedPassword = encryptedPassword;
 		this.userName = userName;
 		this.signInCount = signInCount;
 	}
 
-	public User(String email, String encryptedPassword, String userName, int signInCount, Date createdAt,
+	public User(String email, String encryptedPassword, String userName, Integer signInCount, Date createdAt,
 			Date updatedAt) {
 		super();
 		this.email = email;
@@ -71,7 +72,7 @@ public class User implements java.io.Serializable {
 
 	public User(String email, String encryptedPassword, String userName, String personName, String gender,
 			Date birthday, String phoneNumber, String resetPasswordToken, Date resetPasswordSentAt,
-			Date rememberCreatedAt, int signInCount, Date currentSignInAt, Date lastSignInAt, String currentSignInIp,
+			Date rememberCreatedAt, Integer signInCount, Date currentSignInAt, Date lastSignInAt, String currentSignInIp,
 			String lastSignInIp, Date createdAt, Date updatedAt, String role, Set<UserPicture> userPictureses,
 			Set<WikiPage> wikiPagesesForUpdatorId, 
 			Set<WorkflowInformation> workflowInformationses, Set<WikiPage> wikiPagesesForCreatorId) {
@@ -127,6 +128,17 @@ public class User implements java.io.Serializable {
 
 	public void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
+	}
+
+	
+	
+	@Column(name = "password")
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Column(name = "user_name", nullable = false)
@@ -205,7 +217,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "sign_in_count", nullable = false)
-	public int getSignInCount() {
+	public Integer getSignInCount() {
 		return this.signInCount;
 	}
 

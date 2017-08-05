@@ -40,21 +40,21 @@
         <div class="col-md-8">
             <div class = "row">
                 <div class="col-md-12">
-                    <h2>${showApplicationDto.title}</h2>
+                    <h2>${showApplicationDto.wikiPage.title}</h2>
                 </div>
                 <div class="col-md-8">
                     <h4>
-                        <small>Revised on ${showApplicationDto.time} by ${showApplicationDto.authorName}</small>
+                        <small>Revised on ${showApplicationDto.wikiPage.updatedAt} by ${showApplicationDto.wikiPage.userByCreatorId.userName}</small>
                     </h4>
                 </div>
                 <div class="col-md-4">
                     <div class="btn-group btn-group-justified  btn-group-sm"
                         role="group" aria-label="...">
                         <a type="button" class="btn btn-primary btn-sm"
-                            href="<c:url value="/application/${showApplicationDto.path}/edit"/>"> Edit </a>
+                            href="<c:url value="/application/${showApplicationDto.wikiPage.path}/edit"/>"> Edit </a>
                         <!-- TODO change delete method -->
                         <a type="button" class="btn btn-danger btn-sm"
-                            href="<c:url value="/application/${showApplicationDto.path}/delete"/>"> Delete </a>
+                            href="<c:url value="/application/${showApplicationDto.wikiPage.path}/delete"/>"> Delete </a>
                     </div>
                 </div>
             </div>
