@@ -37,9 +37,12 @@ public class EditModelDto {
 	private String deleteUserGroupId;
 	private String editUserGroupId;
 	private String executeUserGroupId;
+	private String showUserGroupId;
+
 	private Map<Integer,String> departementList = new HashMap<Integer,String>(0);
 	
 	private String exectuteUserGroup;
+	private String showUserGroup;
 	
 	private String activePage;
 	
@@ -304,6 +307,31 @@ public class EditModelDto {
 	public void setActivePage(String activePage) {
 		this.activePage = activePage;
 	}
+	
+	
+	
+	
+	
+	public String getShowUserGroupId() {
+		return showUserGroupId;
+	}
+
+
+	public void setShowUserGroupId(String showUserGroupId) {
+		this.showUserGroupId = showUserGroupId;
+	}
+
+
+	public String getShowUserGroup() {
+		return showUserGroup;
+	}
+
+
+	public void setShowUserGroup(String showUserGroup) {
+		this.showUserGroup = showUserGroup;
+	}
+
+
 	@Override
 	public String toString() {
 		return "EditModelDto [title=" + title + ", introduction=" + introduction + ", detailedInformation="

@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.EditPerformanceDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowPerformance;
 import cn.edu.sjtu.iasdsp.service.AnalyticsApplicationService;
 import cn.edu.sjtu.iasdsp.service.RefreshCountService;
+import cn.edu.sjtu.iasdsp.service.UserService;
 
 /**
  * @author xfhuang
@@ -40,6 +42,8 @@ public class AnalyticsApplicationController {
 	private AnalyticsApplicationService analyticsApplicationService;
 	@Autowired
 	private RefreshCountService refreshCountService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/{wikiPath}/show", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("wikiPath") String wikiPath) {
@@ -74,7 +78,8 @@ public class AnalyticsApplicationController {
 	public String update(EditApplicationDto editApplicationDto, @PathVariable("wikiPath") String wikiPath) {
 		log.debug("Into update function where wikiPath = " + wikiPath + ", editApplicationDto = " + editApplicationDto);
 		try {
-			analyticsApplicationService.update(editApplicationDto);
+			User user = userService.findLoginUser();
+			analyticsApplicationService.update(editApplicationDto, user);
 			log.debug("Update Succ");
 			return "redirect:/application/{wikiPath}/show";
 		} catch (Exception e) {
@@ -141,7 +146,8 @@ public class AnalyticsApplicationController {
 	public ResponseEntity<EditPerformanceDto> editPerformance(@RequestBody EditPerformanceDto editPerformanceDto) {
 		log.debug("Into editPerformance function where search = " + editPerformanceDto);
 		try {
-			EditPerformanceDto editPerformanceDtoBack = analyticsApplicationService.editPerformance(editPerformanceDto);
+			User user = userService.findLoginUser();
+			EditPerformanceDto editPerformanceDtoBack = analyticsApplicationService.editPerformance(editPerformanceDto, user);
 			log.debug("editPerformance succ");
 			return new ResponseEntity<EditPerformanceDto>(editPerformanceDtoBack, HttpStatus.OK);
 		} catch (Exception e) {

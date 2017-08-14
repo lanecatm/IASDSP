@@ -3,36 +3,49 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 
 <hr />
-<form class="form-horizontal" id="saveProcessParamDto" onsubmit="return submitParamAjax()"
-    action="/sjtu/execute/save_param" method="POST">
-	<%@ include file="node_fields.jsp"%>
-    <div class="form-group">
-        <div class="col-md-offset-9 col-md-3">
-            <input type="submit" value="Submit" name="submit" 
-                class="btn btn-success btn-block"/>
-        </div>
-    </div>
-</form>
-<form class="form-horizontal" enctype="multipart/form-data"
-	id="uploadFileForm" name="uploadFileForm" action="/sjtu/execute/upload"
-	method="post">
+<img src="<c:url value="/upload/${workflowVersion.svg }"/>" alt="" style="max-width: 100%; max-height: 100%;">
 
-	<div class="form-group">
-		<div class="col-md-12">
-			<label class="">Input file</label> <input name="files"
-				id="uploadFiles" type="file" class="filestyle" data-input="true"
-				data-buttonText="Find file">
-		</div>
+<br/>
+<hr />
+
+<div class="panel panel-default">
+	<div class="panel-heading" role="tab" >
+		Start
 	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" enctype="multipart/form-data"
+			id="uploadFileForm" name="uploadFileForm" action="/sjtu/execute/upload"
+			method="post">
+
+			<div class="form-group">
+				<div class="col-md-12">
+					<label class="">Input file</label> <input name="files"
+						id="uploadFiles" type="file" class="filestyle" data-input="true"
+						data-buttonText="Find file">
+				</div>
+			</div>
+		<!-- 	<div class="form-group">
+				<div class="col-md-offset-9 col-md-3">
+					<input type="button" value="Upload" name="submit" onclick="uploadJqueryForm()"
+						class="btn btn-success btn-block"/>
+				</div>
+				<label class="col-md-12" id="upload_status"></label> 
+			</div> -->
+		</form>
+</div>
+</div>
+
+<form class="form-horizontal" id="saveProcessParamDto" onsubmit="return submitParamAjax()"
+	action="/sjtu/execute/save_param" method="POST">
+	<%@ include file="node_fields.jsp"%>
 	<div class="form-group">
 		<div class="col-md-offset-9 col-md-3">
-			<input type="button" value="Upload" name="submit" onclick="uploadJqueryForm()"
+			<input type="submit" value="Submit" name="submit" 
 				class="btn btn-success btn-block"/>
 		</div>
 		<label class="col-md-12" id="upload_status"></label> 
 	</div>
 </form>
-
 <script>
 	function uploadJqueryForm() {
 		var fileElement = document.getElementById("uploadFiles");
@@ -46,7 +59,7 @@
 				console.log("Files Uploaded:" + data)
 				var jsonData = JSON.parse(data);
 			    $("#uploadFileId").val(jsonData["message"]);
-			    $("#upload_status").html("Upload succ!");
+			    $("#upload_status").html("Upload file succ!");
 			},
 			dataType : "text"
 		}).submit();
@@ -62,6 +75,9 @@
                 success:function(data){
                     console.log(data);
                     nodeInformationList = data;
+                    $("#upload_status").html("Upload param succ!");
+                    uploadJqueryForm();
+                    
                 },
                 error:function()
                 {

@@ -1,5 +1,7 @@
 package cn.edu.sjtu.iasdsp.controller;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,10 @@ import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelDto;
 import cn.edu.sjtu.iasdsp.dto.MessageDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.service.ModelService;
 import cn.edu.sjtu.iasdsp.service.RefreshCountService;
+import cn.edu.sjtu.iasdsp.service.UserService;
 
 @Controller
 @RequestMapping("/model")
@@ -32,6 +36,9 @@ public class ModelController {
 	@Autowired
 	private RefreshCountService refreshCountService;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(@ModelAttribute("createDto") CreateModelDto createModelDto) {
@@ -44,7 +51,8 @@ public class ModelController {
 	public String save(@ModelAttribute("createDto") CreateModelDto createModelDto) {
 		logger.debug("Into save function" + createModelDto);
 		try {
-			int id = modelService.save(createModelDto);
+			User user = userService.findLoginUser();
+			int id = modelService.save(createModelDto, user);
 			logger.debug("Create Successful where createModelDto:" + createModelDto + ", id:" + id);
 			return "redirect:/model/" + id + "/edit?active_page=info";
 		} catch (Exception e) {
@@ -56,6 +64,17 @@ public class ModelController {
 	@RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
 	public String show(Model model, @PathVariable("id") String id) {
 		logger.debug("Into show function, id:" + id);
+		logger.debug("into permission");
+		Subject subject;
+		try {
+			subject = SecurityUtils.getSubject();
+			subject.checkPermissions("model:query:" + id); 
+			logger.debug("permission succ");
+		} catch (Exception e) {
+			model.addAttribute("message", "You do not have the permission.");
+			logger.debug("permission failed");
+			return "error/permission";
+		}  
 		ShowModelDto showModelDto = modelService.show(Integer.parseInt(id));
 		model.addAttribute("showModelDto", showModelDto);
 		logger.debug("Show function succ, return " + showModelDto);
@@ -66,6 +85,19 @@ public class ModelController {
 	public String edit(Model model, @PathVariable("id") String id,
 			@RequestParam(value = "active_page", required = false) String activePage) {
 		logger.debug("Into edit function, id:" + id, "active page:" + activePage);
+		
+		logger.debug("into permission");
+		Subject subject;
+		try {
+			subject = SecurityUtils.getSubject();
+			subject.checkPermissions("model:edit:" + id); 
+			logger.debug("permission succ");
+		} catch (Exception e) {
+			model.addAttribute("message", "You do not have the permission.");
+			logger.debug("permission failed");
+			return "error/permission";
+		} 
+		
 		EditModelDto editModelDto = modelService.edit(Integer.parseInt(id));
 		editModelDto.setActivePage(activePage);
 		model.addAttribute("editModelDto", editModelDto);
@@ -77,8 +109,10 @@ public class ModelController {
 	public String editInfo(Model model, @PathVariable("id") String id,
 			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
 		logger.debug("Into editInfo function, id:" + id, "editModelDto:" + editModelDto);
+		
 		try {
-			modelService.update(editModelDto, Integer.parseInt(id));
+			User user = userService.findLoginUser();
+			modelService.update(editModelDto, Integer.parseInt(id), user);
 			// model.addAttribute("editModelDto", editModelDto);
 			logger.debug("EditInfo function succ");
 			return "redirect:/model/" + id + "/edit?active_page=detail";
@@ -87,14 +121,16 @@ public class ModelController {
 		}
 	}
 	
-	
+
 
 	@RequestMapping(value = "/{id}/updateDetail", method = RequestMethod.POST)
 	public String editDetail(Model model, @PathVariable("id") String id,
 			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
 		logger.debug("Into editDetail function, id:" + id, "editModelDto:" + editModelDto);
 		try {
-			modelService.updateDetail(editModelDto, Integer.parseInt(id));
+			User user = userService.findLoginUser();
+
+			modelService.updateDetail(editModelDto, Integer.parseInt(id), user);
 			// model.addAttribute("editModelDto", editModelDto);
 			logger.debug("editDetail function succ");
 			return "redirect:/model/" + id + "/edit?active_page=jurisdiction";
@@ -108,7 +144,8 @@ public class ModelController {
 			@ModelAttribute("editModelDto") EditModelDto editModelDto) {
 		logger.debug("Into createVersion function, id:" + id + "editModelDto:" + editModelDto);
 		try {
-			modelService.createVersion(editModelDto, Integer.parseInt(id));
+			User user = userService.findLoginUser();
+			modelService.createVersion(editModelDto, Integer.parseInt(id), user);
 			logger.debug("createVersion function succ");
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
@@ -140,6 +177,7 @@ public class ModelController {
 			@PathVariable("id") String id, 
 			@PathVariable("versionId") String versionId) {
 		logger.debug("Into deleteVersion function, workflow id:" + id + "versionId:" + versionId);
+		
 		try {
 			int workflowVersionId = Integer.parseInt(versionId);
 			modelService.deleteVersion(workflowVersionId);
@@ -165,7 +203,8 @@ public class ModelController {
 		logger.info(id);
 
 		try {
-			modelService.updateAuthorization(editModelDto, Integer.parseInt(id));
+			User user = userService.findLoginUser();
+			modelService.updateAuthorization(editModelDto, Integer.parseInt(id), user);
 			model.addAttribute("editModelDto", editModelDto);
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
@@ -178,6 +217,20 @@ public class ModelController {
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
 	public String delete(Model model, @PathVariable("id") String id) {
 		logger.debug("Into delete function, id:" + id);
+		
+		logger.debug("into permission");
+		Subject subject;
+		try {
+			subject = SecurityUtils.getSubject();
+			subject.checkPermissions("model:edit:" + id); 
+			logger.debug("permission succ");
+		} catch (Exception e) {
+			model.addAttribute("message", "You do not have the permission.");
+			logger.debug("permission failed");
+			return "error/permission";
+		} 
+		
+		
 		try {
 			int deleteId = Integer.parseInt(id);
 			boolean isSucc = modelService.delete(deleteId);

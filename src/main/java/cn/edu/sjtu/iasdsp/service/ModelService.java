@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.sjtu.iasdsp.common.CommonValue;
 import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.common.WorkflowStatus;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
@@ -79,15 +80,23 @@ public class ModelService {
 	private DeleteService deleteService;
 	
 	@Transactional
-	public Integer save(CreateModelDto createModelDto) {
+	public Integer save(CreateModelDto createModelDto, User user) {
 		logger.debug("Into save service, param:" + createModelDto);
-		User user = userHome.findById(UserType.DEFAULT_USER_ID);
 		// create name and introduction
 		WorkflowInformation workflowInformation = new WorkflowInformation(createModelDto.getName(),
 				createModelDto.getIntroduction(), new Date(), new Date(), 0, 0, 0);
 		workflowInformation.setAuthor(user);
 		workflowInformation.setUpdator(user);
+		addContributor(user, workflowInformation);
 		workflowInformationHome.persist(workflowInformation);
+		WorkflowPrivilege workflowPrivilege = new WorkflowPrivilege(new Date(), new Date());
+		DepartmentInformation departmentInformation = departmentInformationHome.findById(CommonValue.ADMIN_DEPARTMENT_ID);
+		workflowPrivilege.setExecuteDepartment(departmentInformation);
+		workflowPrivilege.setShowDepartment(departmentInformation);
+		workflowPrivilege.setDeleteDepartment(departmentInformation);
+		workflowPrivilege.setEditDepartment(departmentInformation);
+		workflowPrivilege.setWorkflowInformation(workflowInformation);
+		workflowPrivilegeHome.persist(workflowPrivilege);
 		logger.debug("Save service, workflowInformation:" + workflowInformation);
 		return workflowInformation.getId();
 	}
@@ -208,15 +217,16 @@ public class ModelService {
 		// Selected authorization
 		String editDepartmentId = isNullWorkflowPrivilege || workflowPrivilege.getEditDepartment() == null ? "1"
 				: workflowPrivilege.getEditDepartment().getId().toString();
-		editModelDto.setEditUserGroupId(editDepartmentId);
 		String executeDepartmentId = isNullWorkflowPrivilege || workflowPrivilege.getExecuteDepartment() == null ? "1"
 				: workflowPrivilege.getExecuteDepartment().getId().toString();
-		editModelDto.setEditUserGroupId(executeDepartmentId);
 		String deleteDepartmentId = isNullWorkflowPrivilege || workflowPrivilege.getDeleteDepartment() == null ? "1"
 				: workflowPrivilege.getDeleteDepartment().getId().toString();
+		String showDepartmentId = isNullWorkflowPrivilege || workflowPrivilege.getShowDepartment() == null ? "1"
+				: workflowPrivilege.getShowDepartment().getId().toString();
 		editModelDto.setEditUserGroupId(editDepartmentId);
 		editModelDto.setExecuteUserGroupId(executeDepartmentId);
 		editModelDto.setDeleteUserGroupId(deleteDepartmentId);
+		editModelDto.setShowUserGroupId(showDepartmentId);
 
 		logger.debug("finish edit, return:" + editModelDto);
 
@@ -225,19 +235,21 @@ public class ModelService {
 	
 	
 	@Transactional
-	public void  updateDetail(EditModelDto editModelDto, int id) {
+	public void  updateDetail(EditModelDto editModelDto, int id, User user) {
 		logger.debug("Into ModelService updateDetail function");
 
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
 		workflowInformation.setDetailDescription(editModelDto.getDetailedInformation());
 		workflowInformation.setUpdatedAt(new Date());
+		workflowInformation.setUpdator(user);
+		addContributor(user, workflowInformation);
 		workflowInformationHome.attachDirty(workflowInformation);
 		logger.debug(" ModelService updateDetail Succ");
 
 	}
 
 	@Transactional
-	public void update(EditModelDto editModelDto, int id) {
+	public void update(EditModelDto editModelDto, int id, User user) {
 		logger.debug("Into ModelService update function");
 
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
@@ -361,16 +373,20 @@ public class ModelService {
 		}
 
 		workflowInformation.setWorkflowTags(new HashSet<WorkflowTag>(oldTagList));
+		workflowInformation.setUpdator(user);
+		addContributor(user, workflowInformation);
 		workflowInformationHome.attachDirty(workflowInformation);
 		logger.debug("uodate succ:");
 	}
 
 
 	@Transactional
-	public void createVersion(EditModelDto editModelDto, int id) {
+	public void createVersion(EditModelDto editModelDto, int id, User user) {
 		logger.debug("Into createVersion function");
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
-
+		workflowInformation.setUpdator(user);
+		addContributor(user, workflowInformation);
+		workflowInformationHome.persist(workflowInformation);
 		//TODO set admin User
 		User defaultUserInfo = userHome.findById(UserType.DEFAULT_USER_ID);
 		
@@ -425,10 +441,13 @@ public class ModelService {
 	}	
 	
 	@Transactional
-	public void updateAuthorization(EditModelDto editModelDto, int id) {
+	public void updateAuthorization(EditModelDto editModelDto, int id, User user) {
 		logger.debug("Into ModelService Update Authorization, param:" + editModelDto + ", id:" + id);
 
 		WorkflowInformation workflowInformation = workflowInformationHome.findById(id);
+		workflowInformation.setUpdator(user);
+		addContributor(user, workflowInformation);
+		workflowInformationHome.persist(workflowInformation);
 		WorkflowPrivilege workflowPrivilege = workflowInformation.getWorkflowPrivilege() == null
 				? new WorkflowPrivilege(new Date(), new Date()) : workflowInformation.getWorkflowPrivilege();
 		logger.debug("The privilege :" + workflowPrivilege);
@@ -440,6 +459,8 @@ public class ModelService {
 				departmentInformationHome.findById(Integer.parseInt(editModelDto.getExecuteUserGroupId())));
 		workflowPrivilege.setEditDepartment(
 				departmentInformationHome.findById(Integer.parseInt(editModelDto.getEditUserGroupId())));
+		workflowPrivilege.setShowDepartment(
+				departmentInformationHome.findById(Integer.parseInt(editModelDto.getShowUserGroupId())));
 		workflowPrivilege.setWorkflowInformation(workflowInformation);
 		workflowPrivilegeHome.persist(workflowPrivilege);
 		logger.debug("updateAuthorization succ, workflowPrivilege after persist :" + workflowPrivilege);
@@ -457,6 +478,21 @@ public class ModelService {
 		else{
 			logger.error("Delete model failed, id:" + id);
 			return false;
+		}
+	}
+	
+	
+	private void addContributor(User user, WorkflowInformation workflowInformation){
+		Set<User> contributors = workflowInformation.getContributors();
+		boolean isFound = false;
+		for(User contributor : contributors){
+			if(user.getId() == contributor.getId()){
+				isFound = true;
+				break;
+			}
+		}
+		if(!isFound){
+			workflowInformation.getContributors().add(user);
 		}
 	}
 

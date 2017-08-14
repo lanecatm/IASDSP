@@ -59,6 +59,8 @@ public class WikiPage implements java.io.Serializable {
 	private Set<WorkflowPerformance> workflowPerformances = new HashSet<WorkflowPerformance>(0);
 	
 	private Set<SharedProcessRecord> sharedProcessRecords = new HashSet<SharedProcessRecord>(0);
+	
+	private Set<User> contributors = new HashSet<User>(0);
 
 	private WikiCategory wikiCategory;
 
@@ -272,6 +274,21 @@ public class WikiPage implements java.io.Serializable {
 
 	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
 		this.sharedProcessRecords = sharedProcessRecords;
+	}
+	
+	
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "wiki_page_contributors", joinColumns = {
+			@JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(referencedColumnName = "id") })
+	public Set<User> getContributors() {
+		return contributors;
+	}
+
+	public void setContributors(Set<User> contributors) {
+		this.contributors = contributors;
 	}
 
 	public String toString() {

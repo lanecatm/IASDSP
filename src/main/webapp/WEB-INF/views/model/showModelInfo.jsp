@@ -21,7 +21,7 @@
 
 
 		<tr>
-			<th rowspan="5">Authorization</th>
+			<th rowspan="6">Authorization</th>
 			<th>Author</th>
 			<td>${showModelDto.workflowInformation.author.userName}</td>
 		</tr>
@@ -41,7 +41,10 @@
 			<th>Execute user group</th>
 			<td>${showModelDto.workflowInformation.workflowPrivilege.deleteDepartment.name}</td>
 		</tr>
-
+        <tr>
+            <th>Show user group</th>
+            <td>${showModelDto.workflowInformation.workflowPrivilege.showDepartment.name}</td>
+        </tr>
 		<tr>
 			<th rowspan="2">Time</th>
 			<th>Create time</th>

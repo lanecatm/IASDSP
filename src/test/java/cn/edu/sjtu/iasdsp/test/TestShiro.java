@@ -78,6 +78,7 @@ public class TestShiro {
 	
 	
 	
+	@Test
     public void testJDBCRealm() {
 		logger.info("into testJDBCRealm");
 

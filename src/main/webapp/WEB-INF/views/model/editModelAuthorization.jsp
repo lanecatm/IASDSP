@@ -67,6 +67,26 @@
 			</select>
 		</div>
 	</div>
+	<div class="form-group">
+        <label class="col-md-12">Show User Group</label>
+        <div class="col-md-12">
+            <select id="showUserGroupId" name="showUserGroupId"
+                class="form-control">
+                <c:forEach items="${editModelDto.departementList}"
+                    var="departementList">
+                    <c:choose>
+                        <c:when
+                            test="${editModelDto.showUserGroupId == departementList.key}">
+                            <option selected="true" value="${departementList.key }">${departementList.value}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${departementList.key }">${departementList.value}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
 	<hr/>
 
 <div class="form-group">

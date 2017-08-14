@@ -69,6 +69,8 @@ public class WorkflowVersion implements java.io.Serializable {
 	private Set<ProcessInformation> processInformations = new HashSet<ProcessInformation>(0);
 
 	private Set<SharedProcessRecord> sharedProcessRecords = new HashSet<SharedProcessRecord>(0);
+	
+	private Set<NodeInformation> nodeInformations = new HashSet<NodeInformation>(0);
 
 	public WorkflowVersion() {
 	}
@@ -343,8 +345,18 @@ public class WorkflowVersion implements java.io.Serializable {
 	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
 		this.sharedProcessRecords = sharedProcessRecords;
 	}
-	
-	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowVersion")
+	@Cascade(CascadeType.DELETE)
+	public Set<NodeInformation> getNodeInformations() {
+		return nodeInformations;
+	}
+
+	public void setNodeInformations(Set<NodeInformation> nodeInformations) {
+		this.nodeInformations = nodeInformations;
+	}
+
+
 
 
 }

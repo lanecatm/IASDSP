@@ -29,6 +29,7 @@ public class WorkflowPrivilege implements java.io.Serializable {
 	private DepartmentInformation editDepartment;
 	private DepartmentInformation executeDepartment;
 	private DepartmentInformation deleteDepartment;
+	private DepartmentInformation showDepartment;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -97,16 +98,27 @@ public class WorkflowPrivilege implements java.io.Serializable {
 	}
 
 
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 
-
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "show_department_id")
+	public DepartmentInformation getShowDepartment() {
+		return showDepartment;
+	}
+
+	public void setShowDepartment(DepartmentInformation showDepartment) {
+		this.showDepartment = showDepartment;
+	}
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false, length = 19)

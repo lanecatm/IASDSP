@@ -10,18 +10,26 @@ package cn.edu.sjtu.iasdsp.test.xml;
 import static org.junit.Assert.fail;
 
 import java.io.StringReader;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.edu.sjtu.iasdsp.dto.xml.MxGraphModel;
+import cn.edu.sjtu.iasdsp.dto.xml.MxObject;
 import cn.edu.sjtu.iasdsp.dto.xml.MxRoot;
+import cn.edu.sjtu.iasdsp.service.PanelService;
 
 public class TestXml {
+	private static final Logger log = LoggerFactory.getLogger(TestXml.class);
 
 	@Test
 	public void test() {
@@ -41,6 +49,28 @@ public class TestXml {
 			Marshaller marshaller = jc.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(mxRoot, System.out);
+			
+			
+			
+			List<MxObject> mxAlgorithmNodeList;
+			try {
+				mxAlgorithmNodeList = mxRoot.getMxRoot().getAlgorithmNodeList();
+
+			} catch (NullPointerException e) {
+				log.error("Wrong MxGraphModel format, xml:" + str);
+				throw (new NullPointerException(
+						"Can not find mxGraphModel.getMxRoot().getAlgorithmNodeList(), may be wrong xml"));
+			}
+			if (mxAlgorithmNodeList.size() == 0) {
+				log.error("Empty mxAlgorithmNodeList");
+			}
+			//TODO 改变成遍历整个list
+			String label = mxAlgorithmNodeList.get(0).getLabel();
+			Map<QName, String> attributes = mxAlgorithmNodeList.get(0).getExtendAttributes();
+			QName algorithmName = new QName("algorithmName");
+			log.info(attributes.get(algorithmName));
+			
+			
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

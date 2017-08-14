@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.sjtu.iasdsp.model.UserPicture;
 
@@ -19,11 +21,13 @@ import cn.edu.sjtu.iasdsp.model.UserPicture;
  * @see cn.edu.sjtu.iasdsp.dao.UserPicture
  * @author Hibernate Tools
  */
+@Repository
 public class UserPictureHome {
 
 	private static final Log log = LogFactory.getLog(UserPictureHome.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Autowired
+	private  SessionFactory sessionFactory;
 
 	protected SessionFactory getSessionFactory() {
 		try {
@@ -94,7 +98,7 @@ public class UserPictureHome {
 		log.debug("getting UserPicture instance with id: " + id);
 		try {
 			UserPicture instance = (UserPicture) sessionFactory.getCurrentSession()
-					.get("cn.edu.sjtu.iasdsp.dao.UserPicture", id);
+					.get("cn.edu.sjtu.iasdsp.model.UserPicture", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,7 +115,7 @@ public class UserPictureHome {
 		log.debug("finding UserPicture instance by example");
 		try {
 			List<UserPicture> results = (List<UserPicture>) sessionFactory.getCurrentSession()
-					.createCriteria("cn.edu.sjtu.iasdsp.dao.UserPicture").add(create(instance)).list();
+					.createCriteria("cn.edu.sjtu.iasdsp.model.UserPicture").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

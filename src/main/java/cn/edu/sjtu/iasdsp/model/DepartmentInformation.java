@@ -35,6 +35,10 @@ public class DepartmentInformation implements java.io.Serializable {
 	private Set<WorkflowPrivilege> editWorkflowInformations;
 	private Set<WorkflowPrivilege> deleteWorkflowInformations;
 	private Set<WorkflowPrivilege> executeWorkflowInformations;
+	private Set<WorkflowPrivilege> showWorkflowInformations;
+	private Set<SharedProcessRecord> executeSharedProcessRecords;
+
+	private Set<User> users;
 
 	public DepartmentInformation() {
 	}
@@ -180,6 +184,35 @@ public class DepartmentInformation implements java.io.Serializable {
 		this.executeWorkflowInformations = executeWorkflowInformations;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "showDepartment")
+	public Set<WorkflowPrivilege> getShowWorkflowInformations() {
+		return showWorkflowInformations;
+	}
+
+	public void setShowWorkflowInformations(Set<WorkflowPrivilege> showWorkflowInformations) {
+		this.showWorkflowInformations = showWorkflowInformations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departmentInformation")
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "executeDepartment")
+	public Set<SharedProcessRecord> getExecuteSharedProcessRecords() {
+		return executeSharedProcessRecords;
+	}
+
+	public void setExecuteSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
+		this.executeSharedProcessRecords = sharedProcessRecords;
+	}
 
 	public String toString() {
 		return "DepartmentInformation [id=" + id + ", name=" + name + "]";

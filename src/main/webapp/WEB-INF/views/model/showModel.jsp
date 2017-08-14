@@ -65,26 +65,25 @@
 				</div>
 				<div class="col-md-8">
 					<h4>
-						<small>Revised on ${showModelDto.workflowInformation.createdAt } by
+						<small>Revised on
+							${showModelDto.workflowInformation.createdAt } by
 							${showModelDto.workflowInformation.author.userName}</small>
 					</h4>
 				</div>
 				<div class="col-md-4">
 					<div class="btn-group btn-group-justified  btn-group-sm"
 						role="group" aria-label="...">
-<%-- 						<a type="button" class="btn btn-success btn-sm" 
+						<%-- 						<a type="button" class="btn btn-success btn-sm" 
 						  href="<c:url value="/execute?model=${showModelDto. }"/>"> 
 						  Execute
 						</a>  --%>
 						<a type="button" class="btn btn-primary btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>"> 
-							Edit 
-						</a>
+							href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>">
+							Edit </a>
 						<!-- TODO change delete method -->
 						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>"> 
-							Delete 
-						</a>
+							href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>">
+							Delete </a>
 					</div>
 				</div>
 			</div>
@@ -108,8 +107,8 @@
 						<%@ include file="showModelApplication.jsp"%>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="execution">
-					   <%@ include file="showModelExecutionHistory.jsp"%>
-			
+						<%@ include file="showModelExecutionHistory.jsp"%>
+
 						<%-- <%@ include file="show_forum.jsp"%> --%>
 					</div>
 				</div>
@@ -127,25 +126,16 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Contributor</div>
 						<div class="panel-body">
-							<div class = "row">
-                                <div class="col-md-12">
-                                    <s:url value="/resources/image/user.jpg" var="userImg" />
-                                    <img src="${userImg}" alt="" style="width: 40px; height: 40px;">
-                                    <s:url value="/resources/image/user1.png" var="userImg1" />
-                                    <img src="${userImg1}" alt="" style="width: 40px; height: 40px;">
-                                    <s:url value="/resources/image/user3.jpg" var="userImg3" />
-                                    <img src="${userImg3}" alt="" style="width: 40px; height: 40px;">
-                               </div>
-                            </div>
-                            <div class = "row">
-                                <div class="col-md-12"> &nbsp;</div>
-                                <div class="col-md-12">
-                                    <s:url value="/resources/image/user4.jpg" var="userImg4" />
-                                    <img src="${userImg4}" alt="" style="width: 40px; height: 40px;">
-                                    <s:url value="/resources/image/user8.jpg" var="userImg8" />
-                                    <img src="${userImg8}" alt="" style="width: 40px; height: 40px;">
-                                </div>
-                            </div>
+							<c:forEach
+								items="${showModelDto.workflowInformation.contributors}"
+								var="contributor" varStatus="status">
+								<s:url value="/resources/image/user.jpg" var="userImg" />
+								<c:if test="${contributor.userPicture != null }">
+									<s:url value="${contributor.userPicture.path}" var="userImg" />
+								</c:if>
+									<img src="${userImg}" alt="${contributor.userName}"
+										style="width: 40px; height: 40px;">
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -153,11 +143,14 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Tag</div>
 						<ul class="list-group ">
-							<c:forEach items="${showModelDto.workflowInformation.workflowTags}" var="tag">
+							<c:forEach
+								items="${showModelDto.workflowInformation.workflowTags}"
+								var="tag">
 								<li class="list-group-item">${tag.name}</li>
 							</c:forEach>
 
-							<c:if test="${fn:length(showModelDto.workflowInformation.workflowTags) == 0}" >
+							<c:if
+								test="${fn:length(showModelDto.workflowInformation.workflowTags) == 0}">
 								<li class="list-group-item">&nbsp;</li>
 							</c:if>
 						</ul>

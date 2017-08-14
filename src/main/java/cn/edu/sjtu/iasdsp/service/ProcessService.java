@@ -41,6 +41,7 @@ import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
+import cn.edu.sjtu.iasdsp.model.NodeInformation;
 import cn.edu.sjtu.iasdsp.model.NodeOption;
 import cn.edu.sjtu.iasdsp.model.NodeProcessInformation;
 import cn.edu.sjtu.iasdsp.model.NodeProcessOptionValue;
@@ -436,42 +437,16 @@ public class ProcessService {
 		return processInformationIdList;
 	}
 	
-	
-	
-	
-	// TODO delete
 	@Transactional
-	public NodeFunction getNodeFunctionFromWorkflowId(int workflowId){
-		String nodeFunctionName = "KMeans";
-		switch (workflowId) {
-		case 3:
-			nodeFunctionName = "KMeans";
-			break;
-		case 267:
-			nodeFunctionName = "Linear regression";
-			break;
-		case 269:
-			nodeFunctionName = "SMOreg";
-			break;
-		case 270:
-			nodeFunctionName = "Hierarchical Clusterer";
-			break;
-		case 271:
-			nodeFunctionName = "Canopy clusterer";
-			break;
-		default:
-			nodeFunctionName = "KMeans";
-			break;
+	public List<NodeInformation> getNodeInformationListFromWorkflowVersionId(int workflowVersionId){
+		WorkflowVersion workflowVersion = workflowVersionHome.findById(workflowVersionId);
+		if(workflowVersion == null){
+			throw (new NullPointerException("Can not find workflow version with id:" + workflowVersionId));
 		}
-		NodeFunction nodeFunctionExample = new NodeFunction();
-		nodeFunctionExample.setName(nodeFunctionName);
-		List<NodeFunction> nodeFunctions = nodeFunctionHome.findByExample(nodeFunctionExample);
-		if(nodeFunctions.size() == 0){
-			return null;
-		}
-		else{
-			return nodeFunctions.get(0);
-		}
-	
+		List<NodeInformation> nodeInformations = new ArrayList<NodeInformation>(workflowVersion.getNodeInformations());
+		return nodeInformations;
 	}
+	
+	
+
 }

@@ -14,6 +14,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,7 @@ import cn.edu.sjtu.iasdsp.dto.RunModelDto;
 import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
 import cn.edu.sjtu.iasdsp.model.NodeFunction;
+import cn.edu.sjtu.iasdsp.model.NodeInformation;
 import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 import cn.edu.sjtu.iasdsp.service.ProcessService;
 import cn.edu.sjtu.iasdsp.service.RefreshCountService;
@@ -82,6 +85,9 @@ public class ExecuteController {
 				+ ", applicationId" + applicationId + ", workflowInformationId" + workflowInformationId);
 		try {
 			if (workflowVersionId != null) {
+
+				
+				
 				ShareExecuteDto shareExecuteDto = processService.showShare();
 				if (applicationId != null) {
 					shareExecuteDto.setDefaultApplicationId(Integer.parseInt(applicationId));
@@ -93,18 +99,44 @@ public class ExecuteController {
 				model.addAttribute("workflowVersion",workflowVersion);
 				
 				
-				NodeFunction nodeFunction = processService.getNodeFunctionFromWorkflowId(
-						processService.getWorkflowIdFromWorkflowVersionId(workflowVersion.getId()));
 				
-				//显示的参数列表
-				List<NodeFunction> nodeFunctions = new ArrayList<NodeFunction>(0);
-				nodeFunctions.add(nodeFunction);
-				model.addAttribute("nodeFunctions", nodeFunctions);
+				List<NodeInformation> nodeInformations = processService.getNodeInformationListFromWorkflowVersionId(workflowVersion.getId());
+				model.addAttribute("nodeInformations", nodeInformations);
 				
 				//回填的参数
 				SaveProcessParamDto saveProcessParamDto = new SaveProcessParamDto();
 				model.addAttribute("saveProcessParamDto", saveProcessParamDto);
 
+				
+								
+				
+				if(shareProcessId != null){
+					logger.debug("into permission");
+					Subject subject;
+					try {
+						subject = SecurityUtils.getSubject();
+						subject.checkPermissions("sharedProcess:execute:" + shareProcessId); 
+						logger.debug("permission succ");
+					} catch (Exception e) {
+						model.addAttribute("message", "You do not have the execute shared process permission.");
+						logger.debug("permission failed");
+						return "error/permission";
+					} 
+				}
+				else{
+					logger.debug("into permission");
+					Subject subject;
+					try {
+						subject = SecurityUtils.getSubject();
+						subject.checkPermissions("model:execute:" + workflowVersion.getWorkflowInformation().getId()); 
+						logger.debug("permission succ");
+					} catch (Exception e) {
+						model.addAttribute("message", "You do not have the execute model permission.");
+						logger.debug("permission failed");
+						return "error/permission";
+					} 
+				}
+				
 				logger.debug("show succ");
 				return "execute/show";
 			} else if (workflowInformationId != null) {
@@ -116,6 +148,19 @@ public class ExecuteController {
 
 			} else if (shareProcessId != null) {
 				//通过跳转变成workflowVersionId
+
+				logger.debug("into permission");
+				Subject subject;
+				try {
+					subject = SecurityUtils.getSubject();
+					subject.checkPermissions("sharedProcess:execute:" + shareProcessId); 
+					logger.debug("permission succ");
+				} catch (Exception e) {
+					model.addAttribute("message", "You do not have the execute shared process permission.");
+					logger.debug("permission failed");
+					return "error/permission";
+				} 
+				
 				// TODO 这里要通过shareProcessId加上拿到的参数宝宝们
 				int modelVersionId = processService
 						.getWorkflowVersionIdFromSharedProcessRecord(Integer.parseInt(shareProcessId));
@@ -307,9 +352,9 @@ public class ExecuteController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ResponseEntity<MessageDto> uploadFiles(MultipartHttpServletRequest request) {
 		logger.debug("into upload");
-		List<MultipartFile> papers = request.getFiles("files");
+		List<MultipartFile> uploadDatas = request.getFiles("files");
 		try {
-			Integer fileId = processService.uploadFiles(papers);
+			Integer fileId = processService.uploadFiles(uploadDatas);
 			if (fileId != null) {
 				return ResponseEntity.accepted().body(new MessageDto(fileId.toString()));
 			} else {

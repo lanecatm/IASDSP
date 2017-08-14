@@ -1,15 +1,18 @@
 package cn.edu.sjtu.iasdsp.model;
 // Generated 2017-7-5 20:36:16 by Hibernate Tools 5.2.3.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,10 +41,10 @@ public class NodeOptionValue implements java.io.Serializable {
 	
 	
 
-	public NodeOptionValue(NodeInformation nodeInformations, NodeOption nodeOptions, String value, Date createdAt,
+	public NodeOptionValue(NodeInformation nodeInformation, NodeOption nodeOption, String value, Date createdAt,
 			Date updatedAt) {
-		this.nodeInformation = nodeInformations;
-		this.nodeOption = nodeOptions;
+		this.nodeInformation = nodeInformation;
+		this.nodeOption = nodeOption;
 		this.value = value;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -65,8 +68,8 @@ public class NodeOptionValue implements java.io.Serializable {
 		return this.nodeInformation;
 	}
 
-	public void setNodeInformation(NodeInformation nodeInformations) {
-		this.nodeInformation = nodeInformations;
+	public void setNodeInformation(NodeInformation nodeInformation) {
+		this.nodeInformation = nodeInformation;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -75,8 +78,8 @@ public class NodeOptionValue implements java.io.Serializable {
 		return this.nodeOption;
 	}
 
-	public void setNodeOption(NodeOption nodeOptions) {
-		this.nodeOption = nodeOptions;
+	public void setNodeOption(NodeOption nodeOption) {
+		this.nodeOption = nodeOption;
 	}
 
 	@Column(name = "value")

@@ -9,7 +9,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4>${workflowInformation.name }</h4>
+				<h1 class="panel-title">${workflowInformation.name }</h1>
 			</div>
 			<div class="panel-body">
 				<div class="row">

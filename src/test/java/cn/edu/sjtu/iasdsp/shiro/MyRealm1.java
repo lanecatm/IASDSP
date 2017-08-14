@@ -38,26 +38,27 @@ public class MyRealm1 extends AuthorizingRealm {
 
 	// 为当前登陆成功的用户授予权限和角色，已经登陆成功了
 	@Transactional
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String username = (String) principals.getPrimaryPrincipal(); // 获取用户名
-		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Connection conn = null;
-		try {
-			// authorizationInfo.setRoles(); //设置角色
-			// authorizationInfo.setStringPermissions(userDao.getPerms(conn,
-			// username)); //设置权限
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				// DbUtil.closeConnection(conn);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return authorizationInfo;
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+		//获取登录时输入的用户名
+        String loginName = (String) principalCollection.fromRealm(getName()).iterator().next();
+        //到数据库查是否有此对象
+        User userExample = new User();
+		userExample.setUserName(loginName);
+		List<User> users = userHome.findByExample(userExample);
+        if (users.size() != 0) {
+        	
+            //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            //用户的角色集合
+            //info.setRoles();
+            //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
+            //List<Role> roleList = user.getRoleList();
+            //for (Role role : roleList) {
+                info.addStringPermission("model:query:269");
+            //}
+            return info;
+        }
+        return null;
 	}
 
 	@Transactional

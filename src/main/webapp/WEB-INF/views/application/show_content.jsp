@@ -3,7 +3,7 @@
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Introduction</h4>
+			<h1 class="panel-title">Introduction</h1>
 		</div>
 		<div class="panel-body">${showApplicationDto.wikiPage.content }</div>
 	</div>
@@ -11,7 +11,7 @@
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Reference</h4>
+			<h1 class="panel-title">Reference</h1>
 		</div>
 		<div class="panel-body">
 			<div class="row">
@@ -35,7 +35,7 @@
 <div class="col-md-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Related applications</h4>
+			<h1 class="panel-title">Related applications</h1>
 		</div>
 		<div class="panel-body">
 			<div class="row">

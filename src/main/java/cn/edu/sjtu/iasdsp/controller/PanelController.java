@@ -34,45 +34,48 @@ public class PanelController {
 
 	@Autowired
 	private PanelService panelService;
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/get_node/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	@RequestMapping(value = "/get_node/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PanelAlgorithmDto> getNode(@PathVariable("id") String id) {
 		log.debug("Into getNode, id:" + id);
 		int panelId = Integer.parseInt(id);
 		PanelAlgorithmDto panelAlgorithmDto = panelService.getSample(panelId);
 		return ResponseEntity.accepted().body(panelAlgorithmDto);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/get_all_node", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	@RequestMapping(value = "/get_all_node", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PanelAllAlgorithmDto> getAllNode() {
 		log.debug("Into getAllNode");
 		PanelAllAlgorithmDto panelAllAlgorithmDto = panelService.getAlgorithmList();
 		return ResponseEntity.accepted().body(panelAllAlgorithmDto);
 	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/{id}/get_graph", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	@RequestMapping(value = "/{id}/get_graph", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MessageDto> getGraph(@PathVariable("id") String id) {
 		log.debug("Into getGraph");
 		int versionId = Integer.parseInt(id);
 		GetVersionGraphDto getVersionGraphDto = panelService.getVersionGraph(versionId);
 		return ResponseEntity.accepted().body(new MessageDto(getVersionGraphDto.getXml()));
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/{id}/post_graph", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody UpdateVersionGraphDto updateVersionGraphDto) {
-	//public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id, @RequestBody String xml) {
+	@RequestMapping(value = "/{id}/post_graph", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MessageDto> postGraph(@PathVariable("id") String id,
+			@RequestBody UpdateVersionGraphDto updateVersionGraphDto) {
+		// public ResponseEntity<MessageDto> postGraph(@PathVariable("id")
+		// String id, @RequestBody String xml) {
 		log.debug("Into postGraph, param:" + updateVersionGraphDto);
-		int versionId = Integer.parseInt(id);
-		updateVersionGraphDto.setGraph_xml(updateVersionGraphDto.getGraph_xml());
-
-
-		panelService.updateVersionGraph(versionId, updateVersionGraphDto);
-		panelService.updateVersionSvg(versionId, updateVersionGraphDto);
-		return ResponseEntity.accepted().body(new MessageDto("succ"));
+		try {
+			int versionId = Integer.parseInt(id);
+			updateVersionGraphDto.setGraph_xml(updateVersionGraphDto.getGraph_xml());
+			panelService.updateVersionGraph(versionId, updateVersionGraphDto);
+			panelService.updateVersionSvg(versionId, updateVersionGraphDto);
+			return ResponseEntity.accepted().body(new MessageDto("succ"));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new MessageDto("failed"));
+		}
 	}
 }

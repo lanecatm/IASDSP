@@ -147,11 +147,8 @@ public class AnalyticsApplicationService {
 	}
 
 	@Transactional
-	public void update(EditApplicationDto editApplicationDto) {
+	public void update(EditApplicationDto editApplicationDto, User user) {
 		logger.debug("Into update service, param:" + editApplicationDto);
-		// TODO 获取当前用户
-		User user = userHome.findById(1);
-
 		WikiPage wikiPage = wikiPageHome.findById(editApplicationDto.getWikiPageId());
 		if (wikiPage == null) {
 			logger.error("Can not find a wikiPage id:" + editApplicationDto.getWikiPageId());
@@ -164,7 +161,7 @@ public class AnalyticsApplicationService {
 
 		saveReferencelist(wikiPage, editApplicationDto.getReferenceList());
 		saveRelatedPageList(wikiPage, editApplicationDto.getRelatedWikiPageList());
-
+		addContributor(user, wikiPage);
 		wikiPageHome.attachDirty(wikiPage);
 
 	}
@@ -183,7 +180,7 @@ public class AnalyticsApplicationService {
 	}
 
 	@Transactional
-	public EditPerformanceDto editPerformance(EditPerformanceDto editPerformanceDto) {
+	public EditPerformanceDto editPerformance(EditPerformanceDto editPerformanceDto, User user) {
 		logger.debug("Into editPerformance service, param:" + editPerformanceDto);
 
 		WorkflowInformation workflowInformation = workflowInformationHome
@@ -198,6 +195,9 @@ public class AnalyticsApplicationService {
 			logger.error("can not find wikiPage:" + editPerformanceDto.getWikiPageId());
 			throw (new NullPointerException("can not find wikiPage:" + editPerformanceDto.getWikiPageId()));
 		}
+		
+		addContributor(user, wikiPage);
+		
 
 		List<WorkflowPerformance> workflowPerformanceList = workflowPerformanceHome
 				.findByWikiPageIdAndWorkflowInformationId(wikiPage.getId(), workflowInformation.getId());
@@ -395,6 +395,21 @@ public class AnalyticsApplicationService {
 		logger.info("to " + path);
 		return path;
 
+	}
+	
+	
+	private void addContributor(User user,  WikiPage wikiPage){
+		Set<User> contributors = wikiPage.getContributors();
+		boolean isFound = false;
+		for(User contributor : contributors){
+			if(user.getId() == contributor.getId()){
+				isFound = true;
+				break;
+			}
+		}
+		if(!isFound){
+			wikiPage.getContributors().add(user);
+		}
 	}
 
 }

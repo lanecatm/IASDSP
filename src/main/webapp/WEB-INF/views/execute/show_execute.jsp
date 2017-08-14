@@ -13,7 +13,7 @@
 		</div>
 		<div class="col-md-12"> &nbsp;</div>
 		<div class="col-md-2 col-md-offset-10">
-			<a class="btn btn-primary btn-block" onClick="runAjax(${param.model_version}, ${param.running_case})">Run</a>
+			<a class="btn btn-primary btn-block" id="run_btn" onClick="runAjax(${param.model_version}, ${param.running_case})">Run</a>
 		</div>
 		     
 	</div>
@@ -56,6 +56,7 @@ function downloadAjax() {
 }
 
 function runAjax(workflowVersionId, sharedProcessRecordId) {
+	$("#run_btn").hide();
     var data = {}
     data["workflowVersionId"] = workflowVersionId;
     data["sharedProcessRecordId"] = sharedProcessRecordId;
@@ -92,7 +93,7 @@ var processPercentage = 0;
 var receiveMessageNum = 0;
 var isReceiveResult = false;
 function refreshAjax() {
-	if(receiveMessageNum == 6){
+	if(receiveMessageNum >= 6){
         console.log("receive all");
 		return;
 	}

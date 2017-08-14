@@ -72,12 +72,13 @@ public class WorkflowInformation implements java.io.Serializable {
 	// private Set<XWikiAndWorkflowInformation> xWikiAndWorkflowInformations =
 	// new HashSet<XWikiAndWorkflowInformation>(
 	// 0);
-	private Set<NodeInformation> nodeInformations = new HashSet<NodeInformation>(0);
 	private Set<WikiPage> wikiPages = new HashSet<WikiPage>(0);
 	private Set<WorkflowPerformance> workflowPerformances = new HashSet<WorkflowPerformance>(0);
 	private Set<WorkflowTag> workflowTags = new HashSet<WorkflowTag>(0);
 	private Set<WorkflowVersion> workflowVersions = new HashSet<WorkflowVersion>(0);
 	private Set<SharedProcessRecord> sharedProcessRecords  = new HashSet<SharedProcessRecord>(0);
+	
+	private Set<User> contributors = new HashSet<User>(0);
 	
 	private WorkflowVersion defaultVersion;
 	
@@ -314,15 +315,7 @@ public class WorkflowInformation implements java.io.Serializable {
 		this.xml = xml;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
-	@Cascade(CascadeType.DELETE)
-	public Set<NodeInformation> getNodeInformations() {
-		return this.nodeInformations;
-	}
 
-	public void setNodeInformations(Set<NodeInformation> nodeInformationses) {
-		this.nodeInformations = nodeInformationses;
-	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workflowInformation")
 	public Set<WorkflowVersion> getWorkflowVersions() {
@@ -390,7 +383,18 @@ public class WorkflowInformation implements java.io.Serializable {
 //	
 	
 	
-	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "workflow_information_contributors", joinColumns = {
+			@JoinColumn(referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(referencedColumnName = "id") })
+	public Set<User> getContributors() {
+		return contributors;
+	}
+
+	public void setContributors(Set<User> contributors) {
+		this.contributors = contributors;
+	}
+
 	@Column(name = "running_time")
 	public Integer getRunningTime() {
 		return runningTime;

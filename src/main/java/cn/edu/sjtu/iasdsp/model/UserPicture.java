@@ -1,15 +1,17 @@
 package cn.edu.sjtu.iasdsp.model;
 // Generated 2017-7-5 20:36:16 by Hibernate Tools 5.2.3.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,9 +24,10 @@ import javax.persistence.TemporalType;
 public class UserPicture implements java.io.Serializable {
 
 	private Integer id;
-	private User users;
+	private User user;
 	private String name;
 	private String path;
+	private String abstractPath;
 	private Date createdAt;
 	private Date updatedAt;
 
@@ -36,10 +39,11 @@ public class UserPicture implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public UserPicture(User users, String name, String path, Date createdAt, Date updatedAt) {
-		this.users = users;
+	public UserPicture(User users, String name, String path,String abstractPath, Date createdAt, Date updatedAt) {
+		this.user = users;
 		this.name = name;
 		this.path = path;
+		this.abstractPath = abstractPath;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -56,14 +60,14 @@ public class UserPicture implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	public User getUsers() {
-		return this.users;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setUsers(User users) {
-		this.users = users;
+	public void setUser(User users) {
+		this.user = users;
 	}
 
 	@Column(name = "name", length = 65535)
@@ -82,6 +86,17 @@ public class UserPicture implements java.io.Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	
+	
+	@Column(name = "abstract_path", length = 65535)
+	public String getAbstractPath() {
+		return abstractPath;
+	}
+
+	public void setAbstractPath(String abstractPath) {
+		this.abstractPath = abstractPath;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -104,4 +119,10 @@ public class UserPicture implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public String toString() {
+		return "UserPicture [id=" + id + ", name=" + name + ", path=" + path + ", abstractPath=" + abstractPath + "]";
+	}
+
+	
+	
 }
