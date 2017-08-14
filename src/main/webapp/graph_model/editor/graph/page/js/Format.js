@@ -1982,22 +1982,22 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 		this.container.removeChild(detailDiv);
 		detailDiv = document.createElement("div");
 
-		// 排序,暂时先不用
-// 		var sortPanelOptions = new Array();
-// 		for(var i=0;i<msg.panelOptions.length;i++)
-// 		{
-// 			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
-// 		}
-// 		for(var i=0;i<sortPanelOptions.length;i++)
-// 		{
-// 			var nodePanel = sortPanelOptions[i];
-// 			this.addNodePanel(nodePanel);
-// 		}
+		// 排序
+		var sortPanelOptions = new Array();
 		for(var i=0;i<msg.panelOptions.length;i++)
 		{
-			var nodePanel = msg.panelOptions[i];
+			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
+		}
+		for(var i=0;i<sortPanelOptions.length;i++)
+		{
+			var nodePanel = sortPanelOptions[i];
 			this.addNodePanel(nodePanel, detailDiv);
 		}
+// 		for(var i=0;i<msg.panelOptions.length;i++)
+// 		{
+// 			var nodePanel = msg.panelOptions[i];
+// 			this.addNodePanel(nodePanel, detailDiv);
+// 		}
 		this.container.appendChild(detailDiv);
 		detailDivList[selectNodeId]	= detailDiv;
 	}
@@ -2013,21 +2013,21 @@ ShapeFormatPanel.prototype.addDetailedAlgorithm = function(msg)
 	else
 	{
 		// 将元素按照index顺序重新排序
-// 		var sortPanelOptions = new Array();
-// 		for(var i=0;i<msg.panelOptions.length;i++)
-// 		{
-// 			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
-// 		}
-// 		for(var i=0;i<sortPanelOptions.length;i++)
-// 		{
-// 			var nodePanel = sortPanelOptions[i];
-// 			this.addNodePanel(nodePanel);
-// 		}
+		var sortPanelOptions = new Array();
 		for(var i=0;i<msg.panelOptions.length;i++)
 		{
-			var nodePanel = msg.panelOptions[i];
+			sortPanelOptions[msg.panelOptions[i].nodeIndex] = msg.panelOptions[i];
+		}
+		for(var i=0;i<sortPanelOptions.length;i++)
+		{
+			var nodePanel = sortPanelOptions[i];
 			this.addNodePanel(nodePanel, detailDiv);
 		}
+// 		for(var i=0;i<msg.panelOptions.length;i++)
+// 		{
+// 			var nodePanel = msg.panelOptions[i];
+// 			this.addNodePanel(nodePanel, detailDiv);
+// 		}
 		this.container.appendChild(detailDiv);
 		detailDivList[selectNodeId]	= detailDiv;
 	}
@@ -2129,7 +2129,7 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		ipt.setAttribute("type", "text");
 		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
+// 		ipt.setAttribute("value", nodePanel.defaultValue);
 		
 		// 设置位置
 		ipt.style.paddingTop = '2px';
@@ -2149,6 +2149,10 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 			panelOption.setAttribute('name', choice.name);
 			panelOption.text = choice.name;
 			ipt.appendChild(panelOption);
+			if(choice.value == nodePanel.defaultValue)
+			{
+				panelOption.selected = true;
+			}
 		}
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
