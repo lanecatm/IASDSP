@@ -911,11 +911,15 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=2;', 43, 43, 'Start', 'Start Node', null, null, 'bpmn start node'),
 	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=4;', 43, 43, 'End', 'End Node', null, null, 'bpmn end node'),
 	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;', 120, 80, 'Task', 'Bpmn Task', null, null, 'bpmn task'),
-	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.exclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">xor</font>', 'Exclusive Gateway', null, null, 'bpmn exclusive gateway'),
-	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.parallel_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">or</font>', 'Parallel Gateway', null, null, 'bpmn parallel gateway'),
-	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.inclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">and</font>', 'Inclusive Gateway', null, null, 'bpmn inclusive gateway'),
 	 	this.createEdgeTemplateEntry('endArrow=block;endFill=1;endSize=6;html=1;', 100, 0, '<font style="display:none">sequence</font>', 'Sequence Flow', null, 'bpmn sequence flow'),
-	 	this.createEdgeTemplateEntry('startArrow=oval;startFill=0;startSize=7;endArrow=block;endFill=0;endSize=10;dashed=1;html=1;', 100, 0, '<font style="display:none">message</font>', 'Message Flow 1', null, 'bpmn message flow'),
+	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.and_or_node;fillColor=#ffffff;strokeWidth=2;strokeColor=#000000;html=1;', 50, 50, '<font style="display:none">xor</font>', 'AND OR', null, null, 'bpmn and or'),
+	 	this.createVertexTemplateEntry('shape=mxgraph.bpmn.or_and_node;fillColor=#ffffff;strokeWidth=2;strokeColor=#000000;html=1;', 50, 50, '<font style="display:none">or</font>', 'OR AND', null, null, 'bpmn or and'),
+	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;fillColor=#000000;aspect=fixed;strokeWidth=2;', 50, 50, '<font style="display:none">andand</font>', 'AND AND', null, null, 'bpmn and and'),
+	 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=2;', 50, 50, '<font style="display:none">oror</font>', 'OR OR', null, null, 'bpmn or or'),
+	 	//this.createVertexTemplateEntry('shape=mxgraph.bpmn.inclusive_gateway;strokeWidth=2;strokeColor=#000000;html=1;', 60, 60, '<font style="display:none">and</font>', 'Inclusive Gateway', null, null, 'bpmn inclusive gateway'),
+	 	//this.createEdgeTemplateEntry('endArrow=block;endFill=1;endSize=6;html=1;', 100, 0, '<font style="display:none">sequence</font>', 'Sequence Flow', null, 'bpmn sequence flow'),
+	 	//this.createEdgeTemplateEntry('startArrow=oval;startFill=0;startSize=7;endArrow=block;endFill=0;endSize=10;dashed=1;html=1;', 100, 0, '<font style="display:none">message</font>', 'Message Flow 1', null, 'bpmn message flow'),
+	 	/*
 	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
 	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
 	 	this.createVertexTemplateEntry('text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;',
@@ -951,6 +955,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 	 	this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
 	 	this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional')
+	 	*/
 	 ];
 	
 	this.addPaletteFunctions('general', mxResources.get('general'), (expand != null) ? expand : true, fns);

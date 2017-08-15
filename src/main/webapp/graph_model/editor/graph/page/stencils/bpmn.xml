@@ -1241,4 +1241,54 @@
         <stroke/>
     </foreground>
 </shape>
+<shape h="50" name="And Or Node" strokewidth="inherit" w="50">
+    <connections>
+        <constraint name="N" perimeter="0" x="0.5" y="0"/>
+        <constraint name="S" perimeter="0" x="0.5" y="1"/>
+        <constraint name="W" perimeter="0" x="0" y="0.5"/>
+        <constraint name="E" perimeter="0" x="1" y="0.5"/>
+        <constraint name="NW" perimeter="0" x="0.145" y="0.145"/>
+        <constraint name="SW" perimeter="0" x="0.145" y="0.855"/>
+        <constraint name="NE" perimeter="0" x="0.855" y="0.145"/>
+        <constraint name="SE" perimeter="0" x="0.855" y="0.855"/>
+    </connections>
+    <background>
+        <ellipse h="50" w="50" x="0" y="0"/>
+    </background>
+    <foreground>
+        <fillstroke/>
+        <fillcolor color="#000000"/>
+        <path>
+			<move x="25" y="0"/>
+			<arc rx="25" ry="25" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="25" y="50"/>
+			<close/>
+		</path>
+		<fillstroke/>
+    </foreground>
+</shape>
+<shape h="50" name="Or And Node" strokewidth="inherit" w="50">
+    <connections>
+        <constraint name="N" perimeter="0" x="0.5" y="0"/>
+        <constraint name="S" perimeter="0" x="0.5" y="1"/>
+        <constraint name="W" perimeter="0" x="0" y="0.5"/>
+        <constraint name="E" perimeter="0" x="1" y="0.5"/>
+        <constraint name="NW" perimeter="0" x="0.145" y="0.145"/>
+        <constraint name="SW" perimeter="0" x="0.145" y="0.855"/>
+        <constraint name="NE" perimeter="0" x="0.855" y="0.145"/>
+        <constraint name="SE" perimeter="0" x="0.855" y="0.855"/>
+    </connections>
+    <background>
+        <ellipse h="50" w="50" x="0" y="0"/>
+    </background>
+    <foreground>
+        <fillstroke/>
+        <fillcolor color="#000000"/>
+        <path>
+			<move x="25" y="50"/>
+			<arc rx="25" ry="25" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="25" y="0"/>
+			<close/>
+		</path>
+		<fillstroke/>
+    </foreground>
+</shape>
 </shapes>
