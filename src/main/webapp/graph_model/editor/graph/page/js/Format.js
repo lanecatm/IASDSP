@@ -1873,7 +1873,7 @@ ShapeFormatPanel.prototype.addSelectAlgorithm = function(msg)
 // 					algorithmId = ipt.options[m].value;
 // 				}
 // 			}
-			// 再次选中  应该是再次选中导致没有删除div
+			// 再次选中  或者重新接收时也可以
 			if(ss.vertices[0].getAttribute("algorithmName") != null)
 			{
 // 				var toSelect = document.getElementById(ss.vertices[0].getAttribute("algorithmName"));
@@ -2055,7 +2055,14 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		ipt.setAttribute("type", "text");
 		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
+		if(graphObject.getAttribute("Algorithm_"+ipt.id) != undefined)
+		{
+			ipt.setAttribute("value", graphObject.getAttribute("Algorithm_"+ipt.id));
+		}
+		else
+		{
+			ipt.setAttribute("value", nodePanel.defaultValue);	
+		}
 		
 		// 设置位置
 		ipt.style.paddingTop = '2px';
@@ -2089,7 +2096,15 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 		ipt.setAttribute("type", "text");
 		ipt.setAttribute("id", nodePanel.nodeId);
 		ipt.setAttribute("name", nodePanel.name);
-		ipt.setAttribute("value", nodePanel.defaultValue);
+		if(graphObject.getAttribute("Algorithm_"+ipt.id) != undefined)
+		{
+			ipt.setAttribute("value", graphObject.getAttribute("Algorithm_"+ipt.id));
+		}
+		else
+		{
+			ipt.setAttribute("value", nodePanel.defaultValue);	
+		}
+// 		ipt.setAttribute("value", nodePanel.defaultValue);
 
 		// 设置位置
 		ipt.style.paddingTop = '2px';
@@ -2154,6 +2169,18 @@ ShapeFormatPanel.prototype.addNodePanel = function(nodePanel, detailDiv)
 				panelOption.selected = true;
 			}
 		}
+
+		if(graphObject.getAttribute("Algorithm_"+ipt.id) != undefined)
+		{
+			for(var mm in ipt.options)
+			{
+				if(ipt.options[mm].value ==  graphObject.getAttribute("Algorithm_"+ipt.id))
+				{
+					ipt.options[mm].selected = true;
+				}
+			}
+		}
+
 		div.appendChild(ipt);
 		detailDiv.appendChild(div);
 		
