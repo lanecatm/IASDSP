@@ -107,7 +107,8 @@ public class AnalyticsApplicationController {
 		log.debug("Into save function where editApplicationDto = " + editApplicationDto);
 		log.debug("BindingResult:" + backResult);
 		try {
-			String path = analyticsApplicationService.save(editApplicationDto);
+			User user = userService.findLoginUser();
+			String path = analyticsApplicationService.save(editApplicationDto, user);
 			if (path != null) {
 				log.debug("Save succ, go to show page, path:" + path);
 				return "redirect:/application/" + path + "/show";

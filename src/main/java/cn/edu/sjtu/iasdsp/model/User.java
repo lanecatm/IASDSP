@@ -60,10 +60,13 @@ public class User implements java.io.Serializable {
 	private String role;
 	private DepartmentInformation departmentInformation;
 	private UserPicture userPicture ;
-	private Set<WikiPage> wikiPagesesForUpdatorId = new HashSet<WikiPage>(0);
+	private Set<WikiPage> wikiPagesForUpdatorId = new HashSet<WikiPage>(0);
+	private Set<WikiPage> wikiPagesForCreatorId = new HashSet<WikiPage>(0);
 	private Set<WorkflowInformation> workflowInformations = new HashSet<WorkflowInformation>(0);
-	private Set<WikiPage> wikiPagesesForCreatorId = new HashSet<WikiPage>(0);
-	
+	private Set<WorkflowVersion> workflowVersions = new HashSet<WorkflowVersion>(0);
+	private Set<SharedProcessRecord> sharedProcessRecords = new HashSet<SharedProcessRecord>(0);
+	private Set<ProcessInformation>  processInformations = new HashSet<ProcessInformation>(0);
+
 	private Set<WorkflowInformation> contributedWorkflowInformations = new HashSet<WorkflowInformation>(0);
 	private Set<WikiPage> contributedWikiPages = new HashSet<WikiPage>(0);
 
@@ -113,9 +116,9 @@ public class User implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 		this.role = role;
 		this.userPicture = userPicture;
-		this.wikiPagesesForUpdatorId = wikiPagesesForUpdatorId;
+		this.wikiPagesForUpdatorId = wikiPagesesForUpdatorId;
 		this.workflowInformations = workflowInformationses;
-		this.wikiPagesesForCreatorId = wikiPagesesForCreatorId;
+		this.wikiPagesForCreatorId = wikiPagesesForCreatorId;
 	}
 
 	@Id
@@ -320,12 +323,12 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByUpdatorId")
-	public Set<WikiPage> getWikiPagesesForUpdatorId() {
-		return this.wikiPagesesForUpdatorId;
+	public Set<WikiPage> getWikiPagesForUpdatorId() {
+		return this.wikiPagesForUpdatorId;
 	}
 
-	public void setWikiPagesesForUpdatorId(Set<WikiPage> wikiPagesesForUpdatorId) {
-		this.wikiPagesesForUpdatorId = wikiPagesesForUpdatorId;
+	public void setWikiPagesForUpdatorId(Set<WikiPage> wikiPagesesForUpdatorId) {
+		this.wikiPagesForUpdatorId = wikiPagesesForUpdatorId;
 	}
 
 	
@@ -341,14 +344,43 @@ public class User implements java.io.Serializable {
 	public void setWorkflowInformations(Set<WorkflowInformation> workflowInformations) {
 		this.workflowInformations = workflowInformations;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByCreatorId")
-	public Set<WikiPage> getWikiPagesesForCreatorId() {
-		return this.wikiPagesesForCreatorId;
+	
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+	public Set<SharedProcessRecord> getSharedProcessRecords() {
+		return sharedProcessRecords;
 	}
 
-	public void setWikiPagesesForCreatorId(Set<WikiPage> wikiPagesesForCreatorId) {
-		this.wikiPagesesForCreatorId = wikiPagesesForCreatorId;
+	public void setSharedProcessRecords(Set<SharedProcessRecord> sharedProcessRecords) {
+		this.sharedProcessRecords = sharedProcessRecords;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<ProcessInformation> getProcessInformations() {
+		return processInformations;
+	}
+
+	public void setProcessInformations(Set<ProcessInformation> processInformations) {
+		this.processInformations = processInformations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
+	public Set<WorkflowVersion> getWorkflowVersions() {
+		return workflowVersions;
+	}
+
+	public void setWorkflowVersions(Set<WorkflowVersion> workflowVersions) {
+		this.workflowVersions = workflowVersions;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userByCreatorId")
+	public Set<WikiPage> getWikiPagesForCreatorId() {
+		return this.wikiPagesForCreatorId;
+	}
+
+	public void setWikiPagesForCreatorId(Set<WikiPage> wikiPagesesForCreatorId) {
+		this.wikiPagesForCreatorId = wikiPagesesForCreatorId;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

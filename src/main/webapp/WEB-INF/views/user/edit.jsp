@@ -10,7 +10,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-offset-3 col-md-6">
-			<h2>Edit user</h2>
+			<h2>Setting</h2>
 			<hr />
 
 			<form class="form-horizontal" enctype="multipart/form-data"

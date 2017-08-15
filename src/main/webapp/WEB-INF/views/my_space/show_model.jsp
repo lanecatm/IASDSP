@@ -7,16 +7,16 @@
 	varStatus="workflowInformationStatus">
 	<div class="col-md-offset-1 col-md-11">
 		<h4>
-		<a class="hero-a"
-            href="<c:url value="/model/${workflowInformation.id}/show"/>" >
-			${workflowInformation.name}
-		</a>
+			<a class="hero-a"
+				href="<c:url value="/model/${workflowInformation.id}/show"/>">
+				${workflowInformation.name} </a>
 		</h4>
-		<hr/>
+		<hr />
 		<table class="table table-bordered">
 			<tr>
-<!-- 				<th>ID</th>
- -->				<th>Version name</th>
+				<!-- 				<th>ID</th>
+ -->
+				<th>Version name</th>
 				<th>Author</th>
 				<th><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 				</th>
@@ -25,32 +25,27 @@
 				<th>Action</th>
 			</tr>
 
-			<c:forEach items="${workflowInformation.workflowVersions}"
-				var="workflowVersion" varStatus="workflowVersionStatus">
-				<tr>
-<%-- 					<td>${workflowVersion.id}</td>
- --%>					<td>
-					   ${workflowVersion.versionName}
-					</td>
-					<td>${workflowVersion.author.userName}</td>
-					
-					<td>
-					   <c:if test="${workflowVersion.starUserNumber!=0}">
-							<fmt:formatNumber maxFractionDigits="1"
-								value="${workflowVersion.allStar/workflowVersion.starUserNumber}" />
+			<c:forEach items="${workflowVersionList}" var="workflowVersion"
+				varStatus="workflowVersionStatus">
+				<c:if
+					test="${workflowVersion.workflowInformation.id ==  workflowInformation.id}">
+					<tr>
+						<td>${workflowVersion.versionName}</td>
+						<td>${workflowVersion.author.userName}</td>
 
-						</c:if>
-					</td>
-					<td>${workflowInformation.runningTime}</td>
-					<td>
-					   <a class="btn btn-sm btn-success"
-						href="<c:url value="/execute?model_version=${workflowVersion.id}"/>">
-							Execute </a>
-					<a class="btn btn-sm btn-danger"
-                        href="<c:url value="/model/${workflowInformation}/version/${workflowVersion.id}/delete?back_path=my_space"/>">
-                            Delete </a>
-					</td>
-				</tr>
+						<td><c:if test="${workflowVersion.starUserNumber!=0}">
+								<fmt:formatNumber maxFractionDigits="1"
+									value="${workflowVersion.allStar/workflowVersion.starUserNumber}" />
+
+							</c:if></td>
+						<td>${workflowInformation.runningTime}</td>
+						<td><a class="btn btn-sm btn-success"
+							href="<c:url value="/execute?model_version=${workflowVersion.id}"/>">
+								Execute </a> <a class="btn btn-sm btn-danger"
+							href="<c:url value="/model/${workflowInformation}/version/${workflowVersion.id}/delete?back_path=my_space"/>">
+								Delete </a></td>
+					</tr>
+				</c:if>
 			</c:forEach>
 
 		</table>

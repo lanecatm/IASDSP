@@ -388,12 +388,11 @@ public class ModelService {
 		addContributor(user, workflowInformation);
 		workflowInformationHome.persist(workflowInformation);
 		//TODO set admin User
-		User defaultUserInfo = userHome.findById(UserType.DEFAULT_USER_ID);
 		
 		String xml = null;
 		String url = null;
 		WorkflowVersion workflowVersion = new WorkflowVersion(
-				defaultUserInfo, defaultUserInfo, 
+				user, user, 
 				workflowInformation,
 				xml, url, 
 				editModelDto.getVersionName(), editModelDto.getVersionDescription(), 

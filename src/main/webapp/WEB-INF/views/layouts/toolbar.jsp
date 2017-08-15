@@ -88,12 +88,16 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
+                            <s:url value="/user/edit" var="settingUrl" /> 
+                            <a href="${settingUrl}">  Setting </a>
+                        </li>
+                        <li>
                             <s:url value="/user/logout" var="logoutUrl" /> 
                             <a href="${logoutUrl}">  Logout </a>
                         </li>
-                        <li><s:url value="/" var="" /> 
+<%--                         <li><s:url value="/" var="" /> 
                             <a href=""> Myspace</a>
-                        </li>
+                        </li> --%>
                     </ul>
                   </li>
 				</shiro:user>

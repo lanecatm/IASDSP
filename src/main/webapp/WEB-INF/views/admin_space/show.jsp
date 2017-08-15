@@ -30,11 +30,6 @@
 										class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 										Analytics Application
 								</a></li>
-								<li role="presentation"><a href="#share"
-                                    aria-controls="share" role="tab" data-toggle="tab"> <span
-                                        class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        Shared record
-                                </a></li>
 								<li role="presentation"><a href="#execution"
 									aria-controls="execution" role="tab" data-toggle="tab"> <span
 										class="glyphicon glyphicon-time" aria-hidden="true"></span>
@@ -84,11 +79,6 @@
 					
 						<%-- <%@ include file="show_forum.jsp"%> --%>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="share">
-                        <%@ include file="show_shared_record.jsp"%>
-                    
-                        <%-- <%@ include file="show_forum.jsp"%> --%>
-                    </div>
 				</div>
 			</div>
 

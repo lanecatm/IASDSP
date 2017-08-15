@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.NodeFunctionHome;
 import cn.edu.sjtu.iasdsp.dao.NodeOptionHome;
@@ -134,9 +133,7 @@ public class ProcessService {
 	}
 
 	@Transactional
-	public ReturnRunModelDto createProcessInformation(RunModelDto runModelDto) {
-		// TODO change user
-		User user = UserHome.findById(UserType.DEFAULT_USER_ID);
+	public ReturnRunModelDto createProcessInformation(RunModelDto runModelDto, User user) {
 
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(runModelDto.getWorkflowVersionId());
 		if (workflowVersion == null) {
@@ -264,7 +261,7 @@ public class ProcessService {
 	}
 
 	@Transactional
-	public String starAndShare(ShareExecuteDto shareExecuteDto) {
+	public String starAndShare(ShareExecuteDto shareExecuteDto, User user) {
 		ProcessInformation processInformation = processInformationHome
 				.findById(shareExecuteDto.getProcessInformationId());
 		if (processInformation == null) {
@@ -272,7 +269,6 @@ public class ProcessService {
 					"Can not find processInformation, id:" + shareExecuteDto.getProcessInformationId()));
 		}
 		// TODO change user
-		User user = userHome.findById(UserType.DEFAULT_USER_ID);
 		createSharedProcess(processInformation, user, shareExecuteDto);
 		newStar(processInformation, user, shareExecuteDto);
 
@@ -285,15 +281,13 @@ public class ProcessService {
 	}
 
 	@Transactional
-	public String starOnly(ShareExecuteDto shareExecuteDto) {
+	public String starOnly(ShareExecuteDto shareExecuteDto, User user) {
 		ProcessInformation processInformation = processInformationHome
 				.findById(shareExecuteDto.getProcessInformationId());
 		if (processInformation == null) {
 			throw (new NullPointerException(
 					"Can not find processInformation, id:" + shareExecuteDto.getProcessInformationId()));
 		}
-		// TODO change user
-		User user = userHome.findById(UserType.DEFAULT_USER_ID);
 		newStar(processInformation, user, shareExecuteDto);
 
 		if (shareExecuteDto.getHasApplication()) {
@@ -447,6 +441,33 @@ public class ProcessService {
 		return nodeInformations;
 	}
 	
+	@Transactional
+	public List<NodeProcessInformation> getNodeInformationListFromSharedRecordId(int sharedRecordId){
+		SharedProcessRecord sharedProcessRecord = sharedProcessRecordHome.findById(sharedRecordId);
+		if(sharedProcessRecord == null){
+			throw (new NullPointerException("Can not find shared running record with id:" + sharedRecordId));
+		}
+		List<NodeProcessInformation> nodeInformations = new ArrayList<NodeProcessInformation>(0);
+		nodeInformations.add(sharedProcessRecord.getProcessInformation().getNodeProcessInformation());
+		return nodeInformations;
+	}	
 	
-
+	@Transactional
+	public SharedProcessRecord getSharedProcessRecordFromId(int sharedRecordId){
+		SharedProcessRecord sharedProcessRecord = sharedProcessRecordHome.findById(sharedRecordId);
+		return sharedProcessRecord;
+	}	
+	
+	
+	@Transactional
+	public Integer copyOriginFile(Integer sharedProcessRecordId) throws IOException {
+		SharedProcessRecord sharedProcessRecord = sharedProcessRecordHome.findById(sharedProcessRecordId);
+		if(sharedProcessRecord!= null && sharedProcessRecord.getProcessInformation()!= null && sharedProcessRecord.getProcessInformation().getUploadFile()!= null){
+			UploadFile originFile = sharedProcessRecord.getProcessInformation().getUploadFile();
+			UploadFile uploadFile = new UploadFile(null, originFile.getName(), originFile.getAbstractPath(), originFile.getRelativePath(), new Date(), new Date()); 
+			uploadFileHome.persist(uploadFile);
+			return uploadFile.getId();
+		}
+		return null;
+	  }
 }

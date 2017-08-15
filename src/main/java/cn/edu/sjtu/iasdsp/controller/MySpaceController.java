@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.edu.sjtu.iasdsp.common.SearchForType;
 import cn.edu.sjtu.iasdsp.dto.SearchDto;
 import cn.edu.sjtu.iasdsp.dto.SearchModelResultDto;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.service.MySpaceService;
+import cn.edu.sjtu.iasdsp.service.UserService;
 
 /**
  * @author xfhuang
@@ -28,16 +30,19 @@ public class MySpaceController {
 
 	@Autowired
 	private MySpaceService mySpaceService;
-
+	
+	@Autowired
+	private UserService userService;
 	
 
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String show(Model model) {
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String admin(Model model) {
 		logger.debug("in show");
 		try {
-			model.addAttribute("workflowInformationList", mySpaceService.getWorkflowInformationList());
-			model.addAttribute("processInformationList", mySpaceService.getProcessInformationList());
-			model.addAttribute("wikiPageList", mySpaceService.getWikiPageList());
+			User user = userService.findLoginUser();
+			model.addAttribute("workflowInformationList", mySpaceService.getAllWorkflowInformationList());
+			model.addAttribute("processInformationList", mySpaceService.getAllProcessInformationList());
+			model.addAttribute("wikiPageList", mySpaceService.getAllWikiPageList());
 			logger.debug("show succ " );
 			return "my_space/show";
 		} catch (Exception e) {
@@ -47,6 +52,23 @@ public class MySpaceController {
 		}
 	}
 
-	
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public String show(Model model) {
+		logger.debug("in show");
+		try {
+			User user = userService.findLoginUser();
+			model.addAttribute("workflowInformationList", mySpaceService.getWorkflowInformationListByContributor(user));
+			model.addAttribute("workflowVersionList", mySpaceService.getWorkflowVersionListByAuthor(user));
+			model.addAttribute("processInformationList", mySpaceService.getProcessInformationList(user));
+			model.addAttribute("sharedRuningRecordList", mySpaceService.getSharedProcessRecordList(user));
+			model.addAttribute("wikiPageList", mySpaceService.getWikiPageListByContributor(user));
+			logger.debug("show succ " );
+			return "my_space/show";
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Error occured in showSearchApplication");
+			return "my_space/error";
+		}
+	}	
 
 }

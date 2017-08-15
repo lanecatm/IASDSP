@@ -1,5 +1,6 @@
 package cn.edu.sjtu.iasdsp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -17,8 +18,11 @@ import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowInformationHome;
 import cn.edu.sjtu.iasdsp.dao.WorkflowVersionHome;
 import cn.edu.sjtu.iasdsp.model.ProcessInformation;
+import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
+import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 
 /**
  * @author xfhuang
@@ -58,19 +62,54 @@ public class MySpaceService {
 	ClearCacheHome clearCacheHome;
 	
 	@Transactional
-	public List<WorkflowInformation> getWorkflowInformationList(){
+public List<WorkflowInformation> getAllWorkflowInformationList(){
 		return workflowInformationHome.findByExample(new WorkflowInformation());
 	}
 
 	@Transactional
-	public List<ProcessInformation> getProcessInformationList(){
+	public List<ProcessInformation> getAllProcessInformationList(){
 		return processInformationHome.findByExample(new ProcessInformation());
 	}
 	
 	
 	@Transactional
-	public List<WikiPage> getWikiPageList(){
+	public List<WikiPage> getAllWikiPageList(){
 		return wikiPageHome.findByExample(new WikiPage());
 	}
+	
+	
+	@Transactional
+	public List<WorkflowInformation> getWorkflowInformationListByAuthor(User user){
+		logger.debug("getWorkflowInformationListByAuthor find " + user.getWorkflowInformations().size() + " records");
+		return new ArrayList<WorkflowInformation>(user.getWorkflowInformations());
+	}
+	
+	@Transactional
+	public List<WorkflowInformation> getWorkflowInformationListByContributor(User user){
+		logger.debug("getWorkflowInformationListByContributor find " + user.getContributedWorkflowInformations().size() + " records");
+		return new ArrayList<WorkflowInformation>(user.getContributedWorkflowInformations());
+	}
+	
+	@Transactional
+	public List<WikiPage> getWikiPageListByContributor(User user){
+		logger.debug("getWikiPageListByContributor find " + user.getContributedWikiPages().size() + " records");
+		return new ArrayList<WikiPage>(user.getContributedWikiPages());
+	}
 
+	@Transactional
+	public List<ProcessInformation> getProcessInformationList(User user){
+		logger.debug("getProcessInformationList find " + user.getProcessInformations().size() + " records");
+		return new ArrayList<ProcessInformation>(user.getProcessInformations());
+	}
+	
+	@Transactional
+	public List<SharedProcessRecord> getSharedProcessRecordList(User user){
+		logger.debug("getSharedProcessRecordList find " + user.getSharedProcessRecords().size() + " records");
+		return new ArrayList<SharedProcessRecord>(user.getSharedProcessRecords());
+	}
+	@Transactional
+	public List<WorkflowVersion> getWorkflowVersionListByAuthor(User user){
+		logger.debug("getWorkflowVersionListByAuthor find " + user.getWorkflowVersions().size() + " records");
+		return  new ArrayList<WorkflowVersion>(user.getWorkflowVersions());
+	}
 }

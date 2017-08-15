@@ -51,6 +51,7 @@ public class AnalyticsApplicationService {
 	private WorkflowPerformanceHome workflowPerformanceHome;
 	@Autowired
 	private DeleteService deleteService;
+
 	@Transactional
 	public EditApplicationDto create() {
 		logger.debug("Into create service");
@@ -62,7 +63,7 @@ public class AnalyticsApplicationService {
 
 	// return whether have same name page or not
 	@Transactional
-	public String save(EditApplicationDto editApplicationDto) throws Exception {
+	public String save(EditApplicationDto editApplicationDto, User user) throws Exception {
 		logger.debug("Into save service, param:" + editApplicationDto);
 		try {
 			// 创建WikiPage
@@ -85,10 +86,9 @@ public class AnalyticsApplicationService {
 			wikiPage.setCreatedAt(new Date());
 			wikiPage.setUpdatedAt(new Date());
 
-			// TODO 获取当前用户
-			User user = userHome.findById(1);
 			wikiPage.setUserByCreatorId(user);
 			wikiPage.setUserByUpdatorId(user);
+			wikiPage.getContributors().add(user);
 
 			// TODO 增加wikiCategory
 			// wikiPage.setWikiCategory(wikiCategory);
@@ -195,9 +195,8 @@ public class AnalyticsApplicationService {
 			logger.error("can not find wikiPage:" + editPerformanceDto.getWikiPageId());
 			throw (new NullPointerException("can not find wikiPage:" + editPerformanceDto.getWikiPageId()));
 		}
-		
+
 		addContributor(user, wikiPage);
-		
 
 		List<WorkflowPerformance> workflowPerformanceList = workflowPerformanceHome
 				.findByWikiPageIdAndWorkflowInformationId(wikiPage.getId(), workflowInformation.getId());
@@ -345,8 +344,8 @@ public class AnalyticsApplicationService {
 		if (wikiPage == null) {
 			return new ShowApplicationDto();
 		}
-//		String userName = wikiPage.getUserByCreatorId() == null ? "Author"
-//				: wikiPage.getUserByCreatorId().getUserName();
+		// String userName = wikiPage.getUserByCreatorId() == null ? "Author"
+		// : wikiPage.getUserByCreatorId().getUserName();
 		ShowApplicationDto showApplicationDto = new ShowApplicationDto();
 		for (WorkflowPerformance workflowPerformance : wikiPage.getWorkflowPerformances()) {
 			if (workflowPerformance.getWorkflowInformation() == null) {
@@ -357,9 +356,9 @@ public class AnalyticsApplicationService {
 			showApplicationDto.getPerformanceMap().put(workflowPerformance.getWorkflowInformation().getId(),
 					workflowPerformance.getContent());
 		}
-		for (SharedProcessRecord sharedProcessRecord : wikiPage.getSharedProcessRecords()){
+		for (SharedProcessRecord sharedProcessRecord : wikiPage.getSharedProcessRecords()) {
 			int workflowInformationId = sharedProcessRecord.getWorkflowInformation().getId();
-			if (!showApplicationDto.getShareRecordMap().containsKey(workflowInformationId)){
+			if (!showApplicationDto.getShareRecordMap().containsKey(workflowInformationId)) {
 				showApplicationDto.getShareRecordMap().put(workflowInformationId, new ArrayList<SharedProcessRecord>());
 			}
 			showApplicationDto.getShareRecordMap().get(workflowInformationId).add(sharedProcessRecord);
@@ -396,18 +395,17 @@ public class AnalyticsApplicationService {
 		return path;
 
 	}
-	
-	
-	private void addContributor(User user,  WikiPage wikiPage){
+
+	private void addContributor(User user, WikiPage wikiPage) {
 		Set<User> contributors = wikiPage.getContributors();
 		boolean isFound = false;
-		for(User contributor : contributors){
-			if(user.getId() == contributor.getId()){
+		for (User contributor : contributors) {
+			if (user.getId() == contributor.getId()) {
 				isFound = true;
 				break;
 			}
 		}
-		if(!isFound){
+		if (!isFound) {
 			wikiPage.getContributors().add(user);
 		}
 	}

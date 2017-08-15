@@ -7,10 +7,9 @@
 	<table class="table table-bordered">
 		<tr>
 			<th>ID</th>
-			<th>Model</th>
-			<th>Version</th>
 			<th>Author</th>
 			<th>CreatedAt</th>
+			<th>Star</th>
 		</tr>
 
 
@@ -18,11 +17,10 @@
 			<tr>
 				<td>${processInformation.id}</td>
 				
-				<td>${processInformation.workflowVersion.workflowInformation.name}</td>
-				<td>${processInformation.workflowVersion.versionName}</td>
 				<td>${processInformation.user.userName}</td>
 				<td>${processInformation.createdAt}</td>
 
+				<td>${processInformation.processStar.rate }</td>
 			</tr>
 		</c:forEach>
 

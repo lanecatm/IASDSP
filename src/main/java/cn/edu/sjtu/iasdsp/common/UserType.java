@@ -8,7 +8,7 @@ package cn.edu.sjtu.iasdsp.common;
 */
 public class UserType {
 
-	public static final int DEFAULT_USER_ID = 1;
-	public static final int ADMIN_USER_ID = 1;
+//	public static final int DEFAULT_USER_ID = 1;
+//	public static final int ADMIN_USER_ID = 1;
 
 }

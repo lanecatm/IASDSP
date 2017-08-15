@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.edu.sjtu.iasdsp.activemq.MqReceiverThread;
 import cn.edu.sjtu.iasdsp.activemq.MqSenderSimple;
+import cn.edu.sjtu.iasdsp.dto.CopyOriginFileDto;
 import cn.edu.sjtu.iasdsp.dto.MessageDto;
 import cn.edu.sjtu.iasdsp.dto.ProcessStatusBackFromEngineDto;
 import cn.edu.sjtu.iasdsp.dto.ReceiveProcessDto;
@@ -47,11 +47,13 @@ import cn.edu.sjtu.iasdsp.dto.RunBackFromEngineDto;
 import cn.edu.sjtu.iasdsp.dto.RunModelDto;
 import cn.edu.sjtu.iasdsp.dto.SaveProcessParamDto;
 import cn.edu.sjtu.iasdsp.dto.ShareExecuteDto;
-import cn.edu.sjtu.iasdsp.model.NodeFunction;
 import cn.edu.sjtu.iasdsp.model.NodeInformation;
+import cn.edu.sjtu.iasdsp.model.NodeProcessInformation;
+import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WorkflowVersion;
 import cn.edu.sjtu.iasdsp.service.ProcessService;
 import cn.edu.sjtu.iasdsp.service.RefreshCountService;
+import cn.edu.sjtu.iasdsp.service.UserService;
 
 /**
  * @author xfhuang
@@ -72,6 +74,9 @@ public class ExecuteController {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	UserService userService;
 
 	//执行页面展示
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -100,8 +105,17 @@ public class ExecuteController {
 				
 				
 				
-				List<NodeInformation> nodeInformations = processService.getNodeInformationListFromWorkflowVersionId(workflowVersion.getId());
-				model.addAttribute("nodeInformations", nodeInformations);
+				if(shareProcessId == null){
+					List<NodeInformation> nodeInformations = processService.getNodeInformationListFromWorkflowVersionId(workflowVersion.getId());
+					model.addAttribute("nodeInformations", nodeInformations);
+					model.addAttribute("fromShared", false);
+				}
+				else{
+					List<NodeProcessInformation> nodeProcessInformations = processService.getNodeInformationListFromSharedRecordId(Integer.parseInt(shareProcessId));
+					model.addAttribute("nodeProcessInformations", nodeProcessInformations);
+					model.addAttribute("fromShared", true);
+					model.addAttribute("sharedProcessRecord", processService.getSharedProcessRecordFromId(Integer.parseInt(shareProcessId)));
+				}
 				
 				//回填的参数
 				SaveProcessParamDto saveProcessParamDto = new SaveProcessParamDto();
@@ -182,8 +196,9 @@ public class ExecuteController {
 	public ResponseEntity<ReturnRunModelDto> run(@RequestBody RunModelDto runModelDto) {
 		logger.debug("Into run, param:" + runModelDto);
 		try {
+			User user = userService.findLoginUser();
 			//新建一个process并且更新star和runtime
-			ReturnRunModelDto returnRunModelDto = processService.createProcessInformation(runModelDto);
+			ReturnRunModelDto returnRunModelDto = processService.createProcessInformation(runModelDto, user);
 			refreshCountService.refreshAll();
 			Integer workflowInformaionId= processService.getWorkflowIdFromWorkflowVersionId(runModelDto.getWorkflowVersionId());
 			//TODO 修改发送消息的消息
@@ -270,12 +285,13 @@ public class ExecuteController {
 		Thread a = Thread.currentThread();
 		logger.debug("Into showShare, thread id:" + a.getId());
 		try {
+			User user = userService.findLoginUser();
 			String path;
 			if (shareExecuteDto.getHasApplication() && shareExecuteDto.getIsShare()) {
-				path = processService.starAndShare(shareExecuteDto);
+				path = processService.starAndShare(shareExecuteDto, user);
 				logger.debug("showShare succ start and share, return:" + shareExecuteDto);
 			} else {
-				path = processService.starOnly(shareExecuteDto);
+				path = processService.starOnly(shareExecuteDto, user);
 				logger.debug("showShare succ only star, return:" + shareExecuteDto);
 			}
 			refreshCountService.refreshAll();
@@ -363,9 +379,23 @@ public class ExecuteController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(new MessageDto("failed"));
 		}
-
 	}
-
+	
+	@RequestMapping(value = "/copy_origin_file", method = RequestMethod.POST)
+	public ResponseEntity<MessageDto> copyOriginFile(@RequestBody CopyOriginFileDto copyOriginFileDto) {
+		logger.debug("into copyOriginFile");
+		try {
+			Integer fileId = processService.copyOriginFile(copyOriginFileDto.getSharedProcessRecordId());
+			if (fileId != null) {
+				return ResponseEntity.accepted().body(new MessageDto(fileId.toString()));
+			} else {
+				return ResponseEntity.badRequest().body(new MessageDto("failed"));
+			}
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new MessageDto("failed"));
+		}
+	}
+	
 	@RequestMapping(value = "/download/{processId}", method = RequestMethod.GET)
 	public void download(HttpServletResponse response, @PathVariable("processId") String processId) throws IOException {
 		logger.debug("into download : " + processId);
