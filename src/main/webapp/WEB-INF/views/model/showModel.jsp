@@ -50,7 +50,11 @@
 										class="glyphicon glyphicon-time" aria-hidden="true"></span>
 										Execution History
 								</a></li>
-
+                                <li role="presentation"><a href="#comment"
+                                    aria-controls="comment" role="tab" data-toggle="tab"> <span
+                                        class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                                        Comment
+                                </a></li>
 							</ul>
 						</div>
 					</div>
@@ -131,6 +135,9 @@
 
 						<%-- <%@ include file="show_forum.jsp"%> --%>
 					</div>
+					<div role="tabpanel" class="tab-pane" id="comment">
+                        <%@ include file="showModelComment.jsp"%>
+                    </div>
 				</div>
 			</div>
 
@@ -155,6 +162,11 @@
 								</c:if>
 									<img src="${userImg}" alt="${contributor.userName}"
 										style="width: 40px; height: 40px;">
+							    <c:if test="${status.index % 3 == 2 }">
+                                    <div class="row">
+                                        <div class="col-md-12">&nbsp;</div>
+                                    </div>
+                                </c:if>
 							</c:forEach>
 						</div>
 					</div>

@@ -52,7 +52,7 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in showSearchApplication");
-			return "search/error";
+			return "error/error";
 		}
 	}
 
@@ -66,7 +66,7 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in searchApplication");
-			return "search/error";
+			return "error/error";
 		}
 	}
 
@@ -91,7 +91,7 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in showSearchModel");
-			return "search/error";
+			return "error/error";
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class SearchController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in searchModel");
-			return "search/error";
+			return "error/error";
 		}
 	}
 	
@@ -125,12 +125,12 @@ public class SearchController {
 			}
 			else{
 				logger.error("Cannot find searchFor page, searchDto:" + searchDto);
-				return "search/error";
+				return "error/error";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in searchAll");
-			return "search/error";
+			return "error/error";
 		}
 	}
 	

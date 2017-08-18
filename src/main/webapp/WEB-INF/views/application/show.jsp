@@ -120,6 +120,11 @@
 								</c:if>
 								<img src="${userImg}" alt="${contributor.userName}"
 									style="width: 40px; height: 40px;">
+								<c:if test="${status.index % 3 == 2 }">
+								    <div class="row">
+								        <div class="col-md-12">&nbsp;</div>
+								    </div>
+								</c:if>
 							</c:forEach>
 						</div>
 					</div>

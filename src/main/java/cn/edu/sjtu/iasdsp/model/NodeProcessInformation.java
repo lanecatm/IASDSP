@@ -127,14 +127,10 @@ public class NodeProcessInformation implements java.io.Serializable {
 		this.nodeProcessOptionValues = nodeProcessOptionValues;
 	}
 
-
-	
 	@Override
 	public String toString() {
 		return "NodeProcessInformation [id=" + id + ", nodeFunction=" + nodeFunction + ", processInformation="
 				+ processInformation + ", name=" + name + ", nodeProcessOptionValues=" + nodeProcessOptionValues + "]";
 	}
-
-	
 
 }

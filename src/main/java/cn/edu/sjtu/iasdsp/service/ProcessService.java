@@ -357,7 +357,7 @@ public class ProcessService {
 		if (shareExecuteDto.getStar() == null || shareExecuteDto.getStar() == 0) {
 			return;
 		}
-		ProcessStar processStar = new ProcessStar(processInformation, shareExecuteDto.getStar(), user, new Date(),
+		ProcessStar processStar = new ProcessStar(processInformation, shareExecuteDto.getStar(), shareExecuteDto.getComment(), user, new Date(),
 				new Date());
 		processStarHome.persist(processStar);
 		// processInformation.setProcessStar(processStar);

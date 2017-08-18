@@ -60,7 +60,7 @@ public class AnalyticsApplicationController {
 			return "application/show";
 		} catch (Exception e) {
 			log.error("Error occured in show");
-			return "application/error";
+			return "error/error";
 		}
 	}
 
@@ -74,7 +74,7 @@ public class AnalyticsApplicationController {
 			return "application/edit";
 		} catch (Exception e) {
 			log.error("Error occured in edit");
-			return "application/error";
+			return "error/error";
 
 		}
 	}
@@ -89,7 +89,7 @@ public class AnalyticsApplicationController {
 			return "redirect:/application/{wikiPath}/show";
 		} catch (Exception e) {
 			log.error("Error occured in update");
-			return "application/error";
+			return "error/error";
 		}
 	}
 
@@ -103,7 +103,7 @@ public class AnalyticsApplicationController {
 			return "application/create";
 		} catch (Exception e) {
 			log.error("Error occured in create");
-			return "application/error";
+			return "error/error";
 		}
 	}
 
@@ -123,7 +123,7 @@ public class AnalyticsApplicationController {
 			}
 		} catch (Exception e) {
 			log.error("Error occured in save");
-			return "application/error";
+			return "error/error";
 		}
 	}
 
@@ -139,11 +139,11 @@ public class AnalyticsApplicationController {
 				return "redirect:/search/application";
 			} else {
 				log.error("Delete page not exist");
-				return "application/error";
+				return "error/error";
 			}
 		} catch (Exception e) {
 			log.error("Error occured in delete");
-			return "application/error";
+			return "error/error";
 		}
 	}
 

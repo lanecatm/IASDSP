@@ -56,7 +56,7 @@ public class ModelController {
 			logger.debug("Create Successful where createModelDto:" + createModelDto + ", id:" + id);
 			return "redirect:/model/" + id + "/edit?active_page=info";
 		} catch (Exception e) {
-			return "application/error";
+			return "error/error";
 		}
 
 	}
@@ -117,7 +117,7 @@ public class ModelController {
 			logger.debug("EditInfo function succ");
 			return "redirect:/model/" + id + "/edit?active_page=detail";
 		} catch (NumberFormatException e) {
-			return "model/error";
+			return "error/error";
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class ModelController {
 			logger.debug("editDetail function succ");
 			return "redirect:/model/" + id + "/edit?active_page=jurisdiction";
 		} catch (NumberFormatException e) {
-			return "model/error";
+			return "error/error";
 		}
 	}
 
@@ -149,7 +149,7 @@ public class ModelController {
 			logger.debug("createVersion function succ");
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
-			return "model/error";
+			return "error/error";
 		}
 	}
 	
@@ -203,7 +203,7 @@ public class ModelController {
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
 			logger.debug("deleteVersion function failed");
-			return "model/error";
+			return "error/error";
 
 			
 		}
@@ -223,7 +223,7 @@ public class ModelController {
 			return "redirect:/model/" + id + "/edit?active_page=diagram";
 		} catch (NumberFormatException e) {
 
-			return "application/error";
+			return "error/error";
 
 		}
 	}
@@ -254,12 +254,12 @@ public class ModelController {
 				return "redirect:/search/model";
 			} else {
 				logger.error("Delete model not exist");
-				return "application/error";
+				return "error/error";
 
 			}
 		} catch (NumberFormatException e) {
 			logger.error("Error occured in delete");
-			return "application/error";
+			return "error/error";
 
 		}
 	}

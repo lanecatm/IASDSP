@@ -44,7 +44,7 @@ public class MySpaceController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in showSearchApplication");
-			return "my_space/error";
+			return "error/error";
 		}
 	}
 
@@ -63,7 +63,7 @@ public class MySpaceController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error occured in showSearchApplication");
-			return "my_space/error";
+			return "error/error";
 		}
 	}	
 

@@ -183,11 +183,11 @@ public class ExecuteController {
 				return "redirect:/execute?model_version=" + modelVersionId + "&" + applicationStr + "&"
 						+ shareProcessStr;
 			} else {
-				return "execute/error";
+				return "error/error";
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			return "execute/error";
+			return "error/error";
 		}
 	}
 
@@ -311,7 +311,7 @@ public class ExecuteController {
 
 		} catch (Exception e) {
 			logger.error("Failed in showShare");
-			return "execute/error";
+			return "error/error";
 		}
 	}
 
@@ -336,7 +336,7 @@ public class ExecuteController {
 
 		} catch (Exception e) {
 			logger.error("Failed in showShare");
-			return "execute/error";
+			return "error/error";
 		}
 	}
 
@@ -360,7 +360,7 @@ public class ExecuteController {
 
 		} catch (Exception e) {
 			logger.error("Failed in deleteShare");
-			return "application/error";
+			return "error/error";
 		}
 	}
 

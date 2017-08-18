@@ -31,7 +31,16 @@
 			
 		</div>
 	</div>
-
+    <div class="panel panel-default">
+        <div class="panel-heading">Comment</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <sf:textarea path="comment" value="" cssClass="form-control"/>
+                </div>
+            </div>
+        </div>
+    </div>
 	<c:if test="${param.application!=null}">
 		<div class="panel panel-default">
 			<div class="panel-heading">Share</div>

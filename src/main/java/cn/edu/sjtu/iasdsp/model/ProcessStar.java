@@ -34,6 +34,7 @@ public class ProcessStar implements java.io.Serializable{
 //	private WorkflowVersion workflowVersion;
 	
 	private Integer rate;
+	private String comment;
 	private User user;
 	
 	private Date createdAt;
@@ -42,10 +43,11 @@ public class ProcessStar implements java.io.Serializable{
 	public ProcessStar() {
 	}
 	
-	public ProcessStar(ProcessInformation processInformation, Integer rate, User user, Date createdAt, Date updatedAt) {
+	public ProcessStar(ProcessInformation processInformation, Integer rate, String comment, User user, Date createdAt, Date updatedAt) {
 		this.processInformation = processInformation;
 		this.rate = rate;
 		this.user = user;
+		this.comment = comment;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -71,6 +73,8 @@ public class ProcessStar implements java.io.Serializable{
 	
 	
 	
+	
+	
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "shared_process_record_id")
 //	public SharedProcessRecord getSharedProcessRecord() {
@@ -79,7 +83,15 @@ public class ProcessStar implements java.io.Serializable{
 //	public void setSharedProcessRecord(SharedProcessRecord sharedProcessRecord) {
 //		this.sharedProcessRecord = sharedProcessRecord;
 //	}
-	
+	@Column(name = "comment", length = 65535)
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "process_information_id")
 	public ProcessInformation getProcessInformation() {
