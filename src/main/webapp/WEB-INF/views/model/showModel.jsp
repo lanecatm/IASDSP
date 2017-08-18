@@ -73,17 +73,37 @@
 				<div class="col-md-4">
 					<div class="btn-group btn-group-justified  btn-group-sm"
 						role="group" aria-label="...">
-						<%-- 						<a type="button" class="btn btn-success btn-sm" 
-						  href="<c:url value="/execute?model=${showModelDto. }"/>"> 
-						  Execute
-						</a>  --%>
+						
+						
+						
+						<shiro:hasPermission
+                            name="model:edit:${ showModelDto.workflowInformation.id}">
 						<a type="button" class="btn btn-primary btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>">
-							Edit </a>
-						<!-- TODO change delete method -->
-						<a type="button" class="btn btn-danger btn-sm"
-							href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>">
-							Delete </a>
+                            href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>">
+                            Edit </a>
+                        </shiro:hasPermission>
+                        <shiro:lacksPermission
+                            name="model:edit:${ showModelDto.workflowInformation.id}">
+						<a type="button" class="btn btn-primary btn-sm" disabled="disabled"
+                            href="<c:url value="/model/${showModelDto.workflowInformation.id}/edit"/>">
+                            Edit </a>
+                        </shiro:lacksPermission>
+
+                        <!-- TODO change delete method -->
+                        <shiro:hasPermission
+                            name="model:delete:${ showModelDto.workflowInformation.id}">
+                        <a type="button" class="btn btn-danger btn-sm"
+                            href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>">
+                            Delete </a>
+                        </shiro:hasPermission>
+                        <shiro:lacksPermission
+                            name="model:delete:${ showModelDto.workflowInformation.id}">
+                        <a type="button" class="btn btn-danger btn-sm" disabled="disabled"
+                            href="<c:url value="/model/${showModelDto.workflowInformation.id}/delete"/>">
+                            Delete </a>
+                        </shiro:lacksPermission>
+                        
+                        
 					</div>
 				</div>
 			</div>

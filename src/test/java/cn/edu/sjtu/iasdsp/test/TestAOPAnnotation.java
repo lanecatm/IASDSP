@@ -11,7 +11,6 @@ public class TestAOPAnnotation {
 
 	private BeanFactory aopBeanFactory = new ClassPathXmlApplicationContext("TestAOPAnnotation.xml");
 
-	@Test
 	public void testAOP() {
 		try {
 			PermissionOut permissionOut = aopBeanFactory.getBean("permissionOut", PermissionOut.class);

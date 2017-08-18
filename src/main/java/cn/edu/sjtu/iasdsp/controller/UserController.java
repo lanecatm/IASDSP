@@ -52,7 +52,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	private Map<String, User> users = new HashMap<String, User>();
+	//private Map<String, User> users = new HashMap<String, User>();
 
 	// @Resource(type=SessionFactory.class)
 	// private SessionFactory sessionFactory;
@@ -159,67 +159,67 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
-		users.put("user1", new User("user1@sjtu.edu.cn", "password1", "user1", 1));
-		users.put("user2", new User("user2@sjtu.edu.cn", "password2", "user2", 1));
-		users.put("user3", new User("user3@sjtu.edu.cn", "password3", "user3", 1));
-		users.put("user4", new User("user4@sjtu.edu.cn", "password4", "user4", 1));
-		model.addAttribute("users", users);
-		return "user/show";
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public String list(Model model) {
+//		users.put("user1", new User("user1@sjtu.edu.cn", "password1", "user1", 1));
+//		users.put("user2", new User("user2@sjtu.edu.cn", "password2", "user2", 1));
+//		users.put("user3", new User("user3@sjtu.edu.cn", "password3", "user3", 1));
+//		users.put("user4", new User("user4@sjtu.edu.cn", "password4", "user4", 1));
+//		model.addAttribute("users", users);
+//		return "user/show";
+//
+//	}
 
-	}
+//	/**
+//	 * 例子: form表单提交值 Sample: Form submit
+//	 */
+//	@RequestMapping(value = "/create", method = RequestMethod.GET)
+//	public String create(Model model) {
+//		model.addAttribute("user", new User());
+//		// 服务器端跳转
+//		return "user/create";
+//	}
 
-	/**
-	 * 例子: form表单提交值 Sample: Form submit
-	 */
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String create(Model model) {
-		model.addAttribute("user", new User());
-		// 服务器端跳转
-		return "user/create";
-	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(@Validated User user, BindingResult backResult) {
-		System.out.println(backResult);
-		if (backResult.hasErrors()) {
-			return "/user/create1";
-		}
-		users.put(user.getUserName(), user);
-		// 客户端跳转
-		return "redirect:/user/list";
-		// return "redirect:/user/create1";
-	}
-
-	/**
-	 * 例子: JSR303 form表单提交值 Sample: JSR303 Form submit
-	 */
-	@RequestMapping(value = "/create1", method = RequestMethod.GET)
-	public String create1(@ModelAttribute("user") User user) {
-
-		return "user/create1";
-	}
-
-	@RequestMapping(value = "/create1", method = RequestMethod.POST)
-	// 验证model权限
-	// 一定要紧跟Validated写
-	public String create1(@ModelAttribute("user") @Validated User user, BindingResult backResult) {
-		System.out.println(backResult);
-		if (backResult.hasErrors()) {
-			return "/user/create1";
-		}
-		users.put(user.getUserName(), user);
-		// 客户端跳转
-		return "redirect:/user/list";
-		// return "redirect:/user/create1";
-	}
-
-	@RequestMapping(value = "/{userName}", method = RequestMethod.GET)
-	public String show(@PathVariable String userName, Model model) {
-		model.addAttribute(users.get(userName));
-		return "user/show";
-	}
+//	@RequestMapping(value = "/create", method = RequestMethod.POST)
+//	public String create(@Validated User user, BindingResult backResult) {
+//		System.out.println(backResult);
+//		if (backResult.hasErrors()) {
+//			return "/user/create1";
+//		}
+//		users.put(user.getUserName(), user);
+//		// 客户端跳转
+//		return "redirect:/user/list";
+//		// return "redirect:/user/create1";
+//	}
+//
+//	/**
+//	 * 例子: JSR303 form表单提交值 Sample: JSR303 Form submit
+//	 */
+//	@RequestMapping(value = "/create1", method = RequestMethod.GET)
+//	public String create1(@ModelAttribute("user") User user) {
+//
+//		return "user/create1";
+//	}
+//
+//	@RequestMapping(value = "/create1", method = RequestMethod.POST)
+//	// 验证model权限
+//	// 一定要紧跟Validated写
+//	public String create1(@ModelAttribute("user") @Validated User user, BindingResult backResult) {
+//		System.out.println(backResult);
+//		if (backResult.hasErrors()) {
+//			return "/user/create1";
+//		}
+//		users.put(user.getUserName(), user);
+//		// 客户端跳转
+//		return "redirect:/user/list";
+//		// return "redirect:/user/create1";
+//	}
+//
+//	@RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+//	public String show(@PathVariable String userName, Model model) {
+//		model.addAttribute(users.get(userName));
+//		return "user/show";
+//	}
 
 
 

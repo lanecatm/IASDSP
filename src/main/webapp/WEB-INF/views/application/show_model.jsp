@@ -1,3 +1,4 @@
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
@@ -85,14 +86,27 @@
                                     <td>
                                         ${shareRecord.runningTime}
                                     </td>
-									<td>
+									<td style="width: 150px;">
+									<div class="btn-group btn-group-sm"
+									role="group" aria-label="...">
 									   <a class="btn btn-sm btn-success" 
 									       href="<c:url value="/execute?running_case=${shareRecord.id}&application=${showApplicationDto.wikiPage.id}"/>">
 									        Execute 
 									   </a>
-									   <a class="btn btn-sm btn-danger" 
-									       href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.wikiPage.path}"/>"> 
-									       Delete </a>
+									   <shiro:hasPermission
+                                            name="sharedProcess:delete:${ shareRecord.id}">
+									       <a class="btn btn-sm btn-danger" 
+									           href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.wikiPage.path}"/>"> 
+									           &nbsp;Delete&nbsp; </a>
+									   </shiro:hasPermission>
+									   <shiro:lacksPermission
+                                            name="sharedProcess:delete:${ shareRecord.id}">
+                                           <a class="btn btn-sm btn-danger" disabled="disabled"
+                                               href="<c:url value="/execute/running_case/${shareRecord.id}/delete?application=${showApplicationDto.wikiPage.path}"/>"> 
+                                               &nbsp;Delete&nbsp; </a>
+                                       </shiro:lacksPermission>
+								    </div>
+									       
 									</td>
 								</tr>
 								</c:forEach>
@@ -129,7 +143,7 @@
                                     <td>
                                         ${workflowInformation.runningTime}
                                     </td>
-                                    <td><a class="btn btn-sm btn-success" href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPage.id}"/>"> Execute </a></td>
+                                    <td style="width: 70px;"><a class="btn btn-sm btn-success" href="<c:url value="/execute?model_version=${workflowVersion.id}&application=${showApplicationDto.wikiPage.id}"/>"> Execute </a></td>
                                 </tr>
                                 </c:if>
                                 </c:forEach>

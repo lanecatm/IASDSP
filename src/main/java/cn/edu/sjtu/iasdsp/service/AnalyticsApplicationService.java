@@ -1,16 +1,24 @@
 package cn.edu.sjtu.iasdsp.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.sjtu.iasdsp.dao.UserHome;
 import cn.edu.sjtu.iasdsp.dao.WikiPageHome;
@@ -22,6 +30,7 @@ import cn.edu.sjtu.iasdsp.dto.EditPerformanceDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
+import cn.edu.sjtu.iasdsp.model.UserPicture;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
 import cn.edu.sjtu.iasdsp.model.WikiReference;
 import cn.edu.sjtu.iasdsp.model.WorkflowInformation;
@@ -51,6 +60,9 @@ public class AnalyticsApplicationService {
 	private WorkflowPerformanceHome workflowPerformanceHome;
 	@Autowired
 	private DeleteService deleteService;
+	
+	@Autowired
+	private HttpServletRequest request;
 
 	@Transactional
 	public EditApplicationDto create() {
@@ -83,6 +95,7 @@ public class AnalyticsApplicationService {
 			logger.debug("Save service, set param");
 			wikiPage.setTitle(editApplicationDto.getTitle());
 			wikiPage.setContent(editApplicationDto.getIntroduction());
+			wikiPage.setImgUrl(editApplicationDto.getImgUrl());
 			wikiPage.setCreatedAt(new Date());
 			wikiPage.setUpdatedAt(new Date());
 
@@ -157,6 +170,7 @@ public class AnalyticsApplicationService {
 
 		wikiPage.setUserByUpdatorId(user);
 		wikiPage.setContent(editApplicationDto.getIntroduction());
+		wikiPage.setImgUrl(editApplicationDto.getImgUrl());
 		wikiPage.setUpdatedAt(new Date());
 
 		saveReferencelist(wikiPage, editApplicationDto.getReferenceList());
@@ -370,7 +384,7 @@ public class AnalyticsApplicationService {
 	private EditApplicationDto wikiPageToEditApplicationDto(WikiPage wikiPage) {
 		logger.debug("Into wikiPageToEditApplicationDto param:" + wikiPage);
 		EditApplicationDto editApplicationDto = new EditApplicationDto(wikiPage.getId(), wikiPage.getTitle(),
-				wikiPage.getContent(), wikiPage.getWikiReferences(), wikiPage.getRelatedWikiPages());
+				wikiPage.getContent(), wikiPage.getImgUrl(), wikiPage.getWikiReferences(), wikiPage.getRelatedWikiPages());
 
 		logger.debug("wikiPageToEditApplicationDto return:" + editApplicationDto);
 		return editApplicationDto;
@@ -409,5 +423,19 @@ public class AnalyticsApplicationService {
 			wikiPage.getContributors().add(user);
 		}
 	}
-
+	
+	@Transactional
+	public String uploadFiles(List<MultipartFile> multipartFiles) throws IOException {
+		String directory = request.getSession().getServletContext().getRealPath("upload");
+		File file = new File(directory);
+		file.mkdirs();
+		for (MultipartFile multipartFile : multipartFiles) {
+			logger.debug("create file");
+			UUID fileId = UUID.randomUUID();
+			file = new File(directory + "/user_picture", fileId + "_" + multipartFile.getOriginalFilename());
+			IOUtils.copy(multipartFile.getInputStream(), new FileOutputStream(file));
+			return "/upload/user_picture/" + file.getName();
+		}
+		return null;
+	  }
 }

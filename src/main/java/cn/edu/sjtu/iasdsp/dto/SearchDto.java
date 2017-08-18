@@ -1,7 +1,5 @@
 package cn.edu.sjtu.iasdsp.dto;
 
-import cn.edu.sjtu.iasdsp.common.SearchForType;
-
 /** 
 * @author xfhuang 
 * @email lanecatm@sjtu.edu.cn

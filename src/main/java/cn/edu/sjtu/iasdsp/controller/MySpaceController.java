@@ -7,11 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.edu.sjtu.iasdsp.common.SearchForType;
-import cn.edu.sjtu.iasdsp.dto.SearchDto;
-import cn.edu.sjtu.iasdsp.dto.SearchModelResultDto;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.service.MySpaceService;
 import cn.edu.sjtu.iasdsp.service.UserService;

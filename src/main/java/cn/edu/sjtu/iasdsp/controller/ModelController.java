@@ -178,6 +178,20 @@ public class ModelController {
 			@PathVariable("versionId") String versionId) {
 		logger.debug("Into deleteVersion function, workflow id:" + id + "versionId:" + versionId);
 		
+		
+		logger.debug("into permission");
+		Subject subject;
+		try {
+			subject = SecurityUtils.getSubject();
+			subject.checkPermissions("model:delete:" + id); 
+			logger.debug("permission succ");
+		} catch (Exception e) {
+			model.addAttribute("message", "You do not have the permission.");
+			logger.debug("permission failed");
+			return "error/permission";
+		} 
+		
+		
 		try {
 			int workflowVersionId = Integer.parseInt(versionId);
 			modelService.deleteVersion(workflowVersionId);
@@ -222,7 +236,7 @@ public class ModelController {
 		Subject subject;
 		try {
 			subject = SecurityUtils.getSubject();
-			subject.checkPermissions("model:edit:" + id); 
+			subject.checkPermissions("model:delete:" + id); 
 			logger.debug("permission succ");
 		} catch (Exception e) {
 			model.addAttribute("message", "You do not have the permission.");

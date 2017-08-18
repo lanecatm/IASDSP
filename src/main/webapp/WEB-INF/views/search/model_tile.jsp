@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+
 
 <div class="col-md-4 col-sm-6 hero-feature">
 	<div class="thumbnail "
@@ -28,8 +30,16 @@
 				<p>${workflowInformation.introduction}&nbsp;</p>
 			</div>
 			<h5>
-				<img src="${userImg}" alt="" style="width: 30px; height: 30px;"
-					class="img-circle"> 
+			     <c:if test="${workflowInformation.author.userPicture == null }">
+                <img src="${userImg}" alt="" style="width: 30px; height: 30px;"
+                    class="img-circle">
+                </c:if>
+                <c:if test="${workflowInformation.author.userPicture != null }">
+                    <s:url value="${workflowInformation.author.userPicture.path}" var="userImgFound" />
+                    <img src="${userImgFound}" alt="" style="width: 30px; height: 30px;"
+                        class="img-circle">
+                </c:if>
+
 				<small> &nbsp;By ${workflowInformation.author.userName} &nbsp; 
 					<span class="glyphicon glyphicon-star"></span> 
 					<c:if test="${workflowInformation.starUserNumber!=0}">

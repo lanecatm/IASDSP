@@ -51,7 +51,7 @@
 <!-- Page Content -->
 
 
-<div class="content-section-b">
+<%-- <div class="content-section-b">
 	<div class="container">
 		<br />
 		<!-- Title -->
@@ -99,7 +99,7 @@
 		<br /> <br />
 	</div>
 </div>
-
+ --%>
 
 
 <div class="content-section-b">
@@ -163,7 +163,7 @@
 					set, and share your model to your partner.</p>
 
 
-				<a class="btn btn-default" href="./Example1.htm" role="button">Start
+				<a class="btn btn-default" href="#" role="button">Start
 					now >></a>
 			</div>
 			<div class="col-lg-5 col-lg-offset-2 col-sm-6">
@@ -186,7 +186,7 @@
 				<div class="clearfix"></div>
 				<h2 class="section-heading">Turtorial</h2>
 				<p class="lead">Here you can learn how to use the platform.</p>
-				<a class="btn btn-default" href="./Example1.htm" role="button">Learn
+				<a class="btn btn-default" href="#" role="button">Learn
 					More >></a>
 			</div>
 			<div class="col-lg-5 col-sm-pull-6  col-sm-6">

@@ -35,7 +35,6 @@ public class TestShiro {
 
 	@Autowired
     private org.apache.shiro.mgt.SecurityManager securityManager;
-	@Test  
 	public void testHelloworld() {  
 	    //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager  
 	    Factory<org.apache.shiro.mgt.SecurityManager> factory =  
@@ -78,7 +77,6 @@ public class TestShiro {
 	
 	
 	
-	@Test
     public void testJDBCRealm() {
 		logger.info("into testJDBCRealm");
 

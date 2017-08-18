@@ -26,6 +26,8 @@ public class EditApplicationDto {
 	
 	String introduction;
 	
+	String imgUrl;
+	
 	List<WikiReference> referenceList = new ArrayList<WikiReference>(0);
 	List<WikiPage> relatedWikiPageList = new ArrayList<WikiPage>(0);
 	Map<Integer, String> allWikiPageList = new HashMap<Integer, String>(0);
@@ -33,13 +35,14 @@ public class EditApplicationDto {
 	public EditApplicationDto() {
 	}
 
-	public EditApplicationDto(int wikiPageId, String title, String introduction, Set<WikiReference> referenceList,
+	public EditApplicationDto(int wikiPageId, String title, String introduction, String imgUrl,  Set<WikiReference> referenceList,
 			Set<WikiPage> relatedPageIdList) {
 		this.wikiPageId = wikiPageId;
 		this.title = title;
 		this.introduction = introduction;
 		this.referenceList = new ArrayList<WikiReference>(referenceList);
 		this.relatedWikiPageList = new ArrayList<WikiPage>(relatedPageIdList);
+		this.imgUrl = imgUrl;
 	}
 
 	public int getWikiPageId() {
@@ -100,6 +103,15 @@ public class EditApplicationDto {
 
 	public void setAllWikiPageList(Map<Integer, String> allWikiPageList) {
 		this.allWikiPageList = allWikiPageList;
+	}
+
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String toString() {

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.iasdsp.common.CommonValue;
-import cn.edu.sjtu.iasdsp.common.UserType;
 import cn.edu.sjtu.iasdsp.common.WorkflowStatus;
 import cn.edu.sjtu.iasdsp.dao.DepartmentInformationHome;
 import cn.edu.sjtu.iasdsp.dao.ProcessInformationHome;
@@ -31,7 +30,6 @@ import cn.edu.sjtu.iasdsp.dto.CreateModelDto;
 import cn.edu.sjtu.iasdsp.dto.EditModelDto;
 import cn.edu.sjtu.iasdsp.dto.ShowModelDto;
 import cn.edu.sjtu.iasdsp.model.DepartmentInformation;
-import cn.edu.sjtu.iasdsp.model.ProcessInformation;
 import cn.edu.sjtu.iasdsp.model.SharedProcessRecord;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;

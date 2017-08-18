@@ -82,11 +82,13 @@
 		});
 	});
 </script>
+<c:if test="${ sharedProcessRecord != null}">
 <script>
 
 
 function copyOriginFile() {
     var data = {}
+    
     data["sharedProcessRecordId"] = ${sharedProcessRecord.id};
     
     $.ajax({
@@ -109,7 +111,9 @@ function copyOriginFile() {
         }
     });
 }
-
+</script>
+</c:if>
+<script>
 
 	function uploadJqueryForm() {
 		var fileElement = document.getElementById("uploadFiles");

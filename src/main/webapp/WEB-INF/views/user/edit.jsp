@@ -18,25 +18,32 @@
 				action="/sjtu/user/upload" method="post">
 
 				<div class="form-group">
-					<div class="col-md-12">
-						<label class="">User picture</label> <input name="files"
-							id="uploadUserPics" type="file" class="filestyle"
-							data-input="true" data-buttonText="Find file">
+
+					<label class="col-md-12">User picture</label>
+					<div class="col-md-1">
+						<s:url value="${user.userPicture.path}" var="userToolBarImg" />
+						<img src="${userToolBarImg}" alt="${contributor.userName}"
+							style="width: 35px; height: 35px;">
+					</div>
+					<div class="col-md-11">
+						<input name="files" id="uploadUserPics" type="file"
+							class="filestyle" data-input="true" data-buttonText="Find file" />
 					</div>
 				</div>
+
 				<div class="form-group">
 					<label class="col-md-9" id="upload_status"></label>
-                    <div class="col-md-3">
+					<div class="col-md-3">
 						<input type="button" value="Upload" name="submit"
 							onclick="uploadUserPicFunction()"
 							class="btn btn-success btn-block" />
 					</div>
 				</div>
 			</form>
-			<hr/>
+			<hr />
 			<form action="/sjtu/user/update" method="post"
 				class="form-horizontal">
-				<input type="hidden" name="id" value="${user.id }"/>
+				<input type="hidden" name="id" value="${user.id }" />
 				<div class="form-group">
 					<label class="col-md-12">Department</label>
 					<div class="col-md-12">
@@ -56,7 +63,7 @@
 						</select>
 					</div>
 				</div>
-<!-- 				<div class="form-group">
+				<!-- 				<div class="form-group">
 					<label class="col-md-12">Password</label>
 					<div class="col-md-12">
 						<input class="form-control" type="password" name="password" />

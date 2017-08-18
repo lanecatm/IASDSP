@@ -8,7 +8,6 @@ import cn.edu.sjtu.iasdsp.Aop.HelloWorld;
 
 public class TestAOPXML {
 
-	@Test
 	public void test() {
 		ApplicationContext ctx = 
 	            new ClassPathXmlApplicationContext("TestAOPXML.xml");

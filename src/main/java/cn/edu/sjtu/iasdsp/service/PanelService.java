@@ -145,6 +145,7 @@ public class PanelService {
 	@Transactional
 	public void updateVersionGraph(int id, UpdateVersionGraphDto updateVersionGraphDto) throws Exception {
 		
+		log.debug("Into updateVersionGraph");
 		//把xml保存到workflowVersion中
 		WorkflowVersion workflowVersion = workflowVersionHome.findById(id);
 		if (workflowVersion != null) {
@@ -154,6 +155,7 @@ public class PanelService {
 			
 			
 			
+			try {
 			//解析xml
 			MxGraphModel mxGraphModel = getMxGraphModelFromXml(xml);
 			List<MxObject> mxAlgorithmNodeList;
@@ -170,7 +172,6 @@ public class PanelService {
 				throw (new Exception("Empty mxAlgorithmNodeList"));
 			}
 			//TODO 改变成遍历整个list
-			try {
 				String label = mxAlgorithmNodeList.get(0).getLabel();
 				Map<QName, String> attributes = mxAlgorithmNodeList.get(0).getExtendAttributes();
 				String algorithmIdStr = attributes.get(new QName("algorithmId"));
@@ -196,7 +197,7 @@ public class PanelService {
 				}
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				log.error("Generate node information and node option values failed");
 			}
 			

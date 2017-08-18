@@ -34,11 +34,11 @@
 			<td>${showModelDto.workflowInformation.workflowPrivilege.editDepartment.name}</td>
 		</tr>
 		<tr>
-			<th>Delete user group</th>
+			<th>Execute user group</th>
 			<td>${showModelDto.workflowInformation.workflowPrivilege.executeDepartment.name}</td>
 		</tr>
 		<tr>
-			<th>Execute user group</th>
+			<th>Delete user group</th>
 			<td>${showModelDto.workflowInformation.workflowPrivilege.deleteDepartment.name}</td>
 		</tr>
         <tr>

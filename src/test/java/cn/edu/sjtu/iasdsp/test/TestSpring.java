@@ -10,7 +10,6 @@ import cn.edu.sjtu.iasdsp.Spring.TestModel;
 public class TestSpring {
 
 	private BeanFactory beanFactory = new ClassPathXmlApplicationContext("TestBean.xml");
-	@Test
 	public void testGetModel() {
 		try {
 			TestModel testModel = beanFactory.getBean("testModel", TestModel.class);
@@ -21,7 +20,6 @@ public class TestSpring {
 		}
 	}
 
-	@Test
 	public void testGetInput() {
 		try {
 			TestModel testModel = beanFactory.getBean("testModel", TestModel.class);
@@ -31,7 +29,6 @@ public class TestSpring {
 			e.printStackTrace();
 		}
 	}
-	@Test
 	public void testGetInput1() {
 		try {
 			TestModel testModel = beanFactory.getBean("testModel", TestModel.class);
@@ -42,7 +39,6 @@ public class TestSpring {
 		}
 	}
 	
-	@Test
 	public void testGetModelValue() {
 		try {
 			TestModel testModel = beanFactory.getBean("testModel", TestModel.class);

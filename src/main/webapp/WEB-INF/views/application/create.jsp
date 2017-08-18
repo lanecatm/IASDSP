@@ -15,6 +15,32 @@
 
 			<div class="row">
 				<hr />
+				<form class="form-horizontal" enctype="multipart/form-data"
+					id="uploadApplicationPicForm" name="uploadApplicationPicForm"
+					action="/sjtu/application/upload" method="post">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Image</h4>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="col-md-12">
+									<input name="files" id="uploadApplicationPics" type="file"
+										class="filestyle" data-input="true"
+										data-buttonText="Find file" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-9" id="upload_application_pic_status"></label>
+								<div class="col-md-3">
+									<input type="button" value="Upload" name="submit"
+										onclick="uploadApplicationPicFunction()"
+										class="btn btn-success btn-block" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
 				<sf:form method="post" modelAttribute="editApplicationDto"
 					cssClass="form-horizontal" role="form" action="save">
 					<sf:hidden path="wikiPageId" />
@@ -143,11 +169,13 @@
 
 					<div class="form-group">
 						<div class="col-md-offset-9 col-md-3">
-							
+
 							<input type="submit" name="save"
 								class="btn btn-primary btn-block" value="Create" />
 						</div>
 					</div>
+					<sf:hidden path="imgUrl" />
+
 				</sf:form>
 			</div>
 		</div>
@@ -161,6 +189,7 @@
 	value="${fn:length(editApplicationDto.relatedWikiPageList)}"></c:set>
 <p id="tagSize" style="display: none">${tagSize}</p>
 
+<%@ include file="../layouts/footer.jsp"%>
 <script>
 
     var room = document.getElementById('listSize').innerHTML - 1;
@@ -226,4 +255,23 @@
         $('.tag' + rid).remove();
     } 
     
+</script>
+<script>
+    function uploadApplicationPicFunction() {
+        var fileElement = document.getElementById("uploadApplicationPics");
+
+        if (!fileElement.value) {
+            console.log("No files selected.")
+            return;
+        }
+        $("#uploadApplicationPicForm").ajaxForm({
+            success : function(data) {
+                console.log("Files Uploaded:" + data)
+                var jsonData = JSON.parse(data);
+                $("#imgUrl").val(jsonData["message"]);
+                $("#upload_application_pic_status").html("Upload file succ!");
+            },
+            dataType : "text"
+        }).submit();
+    }
 </script>

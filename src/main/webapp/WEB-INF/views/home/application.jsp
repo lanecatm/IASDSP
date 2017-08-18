@@ -4,7 +4,7 @@
 
 <div class="col-md-3 col-sm-6 ">
 
-	<img src="${ applicationImg}" alt="" style="width: 80px; height: 80px;"
+	<img src="${applicationImg}" alt="" style="width: 80px; height: 80px;"
 		class="img-circle">
 	<c:url value="/application/${wikiPage.path}/show" var="applicationUrl">
 	</c:url>

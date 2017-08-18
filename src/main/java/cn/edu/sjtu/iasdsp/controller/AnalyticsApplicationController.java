@@ -1,5 +1,7 @@
 package cn.edu.sjtu.iasdsp.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.edu.sjtu.iasdsp.dto.EditApplicationDto;
 import cn.edu.sjtu.iasdsp.dto.EditPerformanceDto;
+import cn.edu.sjtu.iasdsp.dto.MessageDto;
 import cn.edu.sjtu.iasdsp.dto.ShowApplicationDto;
 import cn.edu.sjtu.iasdsp.model.User;
 import cn.edu.sjtu.iasdsp.model.WikiPage;
@@ -158,7 +163,22 @@ public class AnalyticsApplicationController {
 		}
 	}
 	
-	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public ResponseEntity<MessageDto> uploadFiles(MultipartHttpServletRequest request) {
+		log.debug("into upload");
+		List<MultipartFile> pictures = request.getFiles("files");
+		try {
+			String fileName = analyticsApplicationService.uploadFiles(pictures);
+			if (fileName != null) {
+				return ResponseEntity.accepted().body(new MessageDto(fileName));
+			} else {
+				return ResponseEntity.badRequest().body(new MessageDto("failed"));
+			}
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new MessageDto("failed"));
+		}
+
+	}	
 
 	
 

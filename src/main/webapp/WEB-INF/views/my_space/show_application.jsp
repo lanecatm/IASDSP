@@ -6,8 +6,8 @@
 <div class="col-md-offset-1 col-md-11">
 	<table class="table table-bordered">
 		<tr>
-<!-- 			<th>ID</th>
- -->			<th>Application name</th>
+			
+			<th>Application name</th>
 			<th>Author</th>
 			<th>CreatedAt</th>
 			<th>Action</th>
@@ -16,12 +16,11 @@
 
 		<c:forEach items="${wikiPageList}" var="wikiPage" varStatus="status">
 			<tr>
-<%-- 				<td>${wikiPage.id}</td>
- --%>				<td>
-				    <a href="<c:url value="/application/${wikiPage.path}/show"/>">
-						${wikiPage.title} 
-					</a>
-				</td>
+				<%-- 				<td>${wikiPage.id}</td>
+ --%>
+				<td><a
+					href="<c:url value="/application/${wikiPage.path}/show"/>">
+						${wikiPage.title} </a></td>
 				<td>${wikiPage.userByCreatorId.userName}</td>
 				<td>${wikiPage.createdAt}</td>
 
